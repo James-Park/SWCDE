@@ -26,6 +26,7 @@
 			<param-name>contextConfigLocation</param-name>
 			<param-value>/WEB-INF/spring/appServlet/servlet-context.xml</param-value>
 		</init-param>
+		<load-on-startup>1</load-on-startup>
 	</servlet>
 
 	<servlet-mapping>
@@ -39,10 +40,10 @@
 		<servlet-class>websquare.http.DefaultRequestDispatcher</servlet-class>
 		<init-param>
 			<param-name>WEBSQUARE_HOME</param-name>
-			<param-value>E:\Eclipse_Workspace\GitHub_workspace_2020\SWCDE\src\main\webapp\WEB-INF\websquare_home</param-value>
+			<param-value>/xvfs/html/ser-wrmd/webapps/ROOT/WEB-INF/websquare_home</param-value>
 		</init-param>
 	</servlet>
-	
+
 	<servlet-mapping>
 		<servlet-name>websquareDispatcher</servlet-name>
 		<url-pattern>*.wq</url-pattern>

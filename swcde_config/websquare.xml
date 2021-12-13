@@ -5,7 +5,7 @@
 		<useBOM value="true" />
 	</csv>
 	<upload>
-		<baseDir value="E:\Eclipse_Workspace\GitHub_workspace_2020\SWCDE\WebContent\fileUpload">
+		<baseDir value="/xvfs/html/ser-wrmd/webapps/ROOT/fileUpload">
 			<subDir value="" />
 		</baseDir>
 		<encoding value="UTF-8" />
@@ -20,7 +20,7 @@
 			exe
 		</deniedExtension>
 		<imgUpload>
-			<baseDir value="E:\Eclipse_Workspace\GitHub_workspace_2020\SWCDE\WebContent\imagesUpload" />
+			<baseDir value="/xvfs/html/ser-wrmd/webapps/ROOT/imagesUpload" />
 			<subDir value="" />
 			<allowedExtension>
 				png,jpg,gif,jpeg,tiff,bmp
@@ -87,7 +87,7 @@
 			* 한국어의 경우 baseDir/ko/ 아래파일 생성
 			* 영어의 경우 baseDir/en/ 아래파일 생성
 		-->
-		<baseDir value="E:\Eclipse_Workspace\GitHub_workspace_2020\SWCDE\WebContent\WEB-INF\lang\" />
+		<baseDir value="/xvfs/html/ser-wrmd/webapps/ROOT/WEB-INF/lang/" />
 		
 		<!-- 기본 locale 를 설정한다. 설정이 없는경우 en 을사용한다. -->
 		<defaultLocale value="ko">
@@ -107,7 +107,7 @@
 			baseDir : 웹스퀘어XML 파일이존재하는 폴더를 지정한다. 설정이 없는경우정상동작하지 않는다.
 			cache : true | false 변환된파일을 캐싱할지설정한다. 기본값은false 이다.
 		-->
-		<xmlInfo storageType="" baseDir="E:\Eclipse_Workspace\GitHub_workspace_2020\SWCDE\WebContent\" excludeList="" cache="false" autoReload="true">
+		<xmlInfo storageType="" baseDir="/xvfs/html/ser-wrmd/webapps/ROOT/" excludeList="" cache="false" autoReload="true">
 			<web2fileCacheImpl value="com.inswave.wrm.i18n.DefaultWeb2FileCacheImpl" />
 		</xmlInfo>
 		<messageInfo storageType="" baseDir="">
@@ -117,9 +117,9 @@
 	
 	<log>
 		<target console="true" description="basic log"
-			dir="E:\Eclipse_Workspace\GitHub_workspace_2020\SWCDE\websquare_home\log\websquare" filename="websquare" level="FINE"
+			dir="/xvfs/html/ser-wrmd/webapps/ROOT/WEB-INF/websquare_home/log/websquare" filename="websquare" level="FINE"
 			lineNumber="true" name="websquare" retentionPeriod="10" thread="true" />
-		<target console="true" description="error log" dir="E:\Eclipse_Workspace\GitHub_workspace_2020\SWCDE\websquare_home\log\exception"
+		<target console="true" description="error log" dir="/xvfs/html/ser-wrmd/webapps/ROOT/WEB-INF/websquare_home/log/exception"
 			filename="exception" level="FINE" lineNumber="true" name="exception" retentionPeriod="10" thread="true" />
 	</log>
 </websquare>

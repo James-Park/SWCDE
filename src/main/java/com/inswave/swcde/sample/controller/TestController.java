@@ -22,7 +22,7 @@ import com.inswave.swcde.sample.beans.UserBean;
 @RequestMapping(value = "/test")
 public class TestController {
 
-	@RequestMapping(value = "/testJsonMap", method = RequestMethod.POST)
+	@RequestMapping(value = "/testJsonMap.do", method = RequestMethod.POST)
 	public @ResponseBody Map<String, Object> testJsonMap(@RequestBody Map<String, Object> param) {
 
 		System.out.println("Param Data : " + param);
@@ -53,7 +53,7 @@ public class TestController {
 		return result;
 	}
 
-	@RequestMapping("/testJsonMap")
+	@RequestMapping("/testJsonMap.do")
 	public @ResponseBody Map<String, Object> testJsonMap() {
 		Map<String, Object> result = new HashMap<String, Object>();
 
@@ -81,7 +81,7 @@ public class TestController {
 		return result;
 	}
 
-	@RequestMapping(value = "/testJsonVO", method = RequestMethod.POST)
+	@RequestMapping(value = "/testJsonVO.do", method = RequestMethod.POST)
 	public @ResponseBody DataBean<UserBean> testJsonVO(@RequestBody ParamBean<UserBean> param) {
 		
 		System.out.println("param.getParam()).getName() : " + ((UserBean) param.getParam()).getName());
@@ -112,7 +112,7 @@ public class TestController {
 		return data;
 	}
 
-	@RequestMapping("/testJsonVO")
+	@RequestMapping("/testJsonVO.do")
 	public @ResponseBody DataBean<UserBean> testJsonVO() {
 		DataBean<UserBean> data = new DataBean<UserBean>();
 

@@ -372,7 +372,7 @@
 		<dependency>
 			<groupId>websquare</groupId>
 			<artifactId>websquare</artifactId>
-			<version>5.0_4.4500B.20210927.150048_1.5</version>
+			<version>5.0_4.4547B.20211124.201933_1.5</version>
 		</dependency>
 	</dependencies>
 	<build>

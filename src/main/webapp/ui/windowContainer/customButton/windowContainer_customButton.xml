@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:w2="http://www.inswave.com/websquare"
+	xmlns:xf="http://www.w3.org/2002/xforms">
+	<head>
+		<w2:type>DEFAULT</w2:type>
+		<w2:buildDate />
+		<xf:model>
+			<xf:instance>
+				<data xmlns="" />
+			</xf:instance>
+			<w2:dataCollection baseNode="map">
+			</w2:dataCollection>
+			<w2:workflowCollection>
+			</w2:workflowCollection>
+		</xf:model>
+		<script type="text/javascript" lazy="false"><![CDATA[
+	scwin.onpageload = function() {
+
+	};
+
+	scwin.onpageunload = function() {
+
+	};
+
+	scwin.windowIdx = 0;
+
+	/**
+	 * WidnowContainer에 윈도우를 동적으로 생성한다.
+	 */
+	scwin.btn_createWin_onclick = function(e) {
+		var windowId = "win" + scwin.windowIdx++;
+		var option = {
+			title : windowId + "-ti",
+			src : "window1.xml",
+			windowTitle : windowId + "-Title",
+			windowId : windowId,
+			openAction : "existWindow",
+			frameMode : "wframe",
+			fixed : false,
+			defaultWidth : "700px",
+			defaultHeight : "500px",
+			// nameLayerHTML 속성에 정의된 함수를 통해서 Window별 Tab에 사용자가 원하는 HTML를 삽입합니다.
+			nameLayerHTML : scwin.nameLayerHtml,
+			dataObject : {
+				type : "json",
+				name : "paramData",
+				data : {}
+			}
+		};
+		windowContainer1.createWindow(option);
+	};
+	
+	/**
+	 * Window Tab 안에 정의한 Widnow Maximize/Restore 버튼을 클릭 시 발생하는 이벤트 함수
+	 */
+	scwin.restoreWindowSize = function(e) {
+		var windowTitle = e.target.getAttribute("window_title");
+		var windowUniqueId = mf_windowContainer1.getUniqueIdByTitle(windowTitle)[0];
+		var windowScope = windowContainer1.getWindowByUniqueId(windowUniqueId);
+		
+		// getWinInfoObj API는 비공개 API 입니다. 
+		// 비공개 API의 경우 웹스퀘어 엔진이 업데이트 되면서 스펙이 변경될 수 있으니
+		// 업무 화면에서는 사용해서는 안되며 UI 공통에서만 제한적으로 사용해야 합니다.
+		var windowObj = windowContainer1.getWinInfoObj(windowUniqueId).window;
+		
+		if (windowObj.windowInfo.status === "maximized") {
+			windowObj.restore();
+		} else {
+			windowObj.maximize();
+		}
+		
+		// 버튼 클릭시, 탭이 클릭되는 이벤트를 막기 위함
+		WebSquare.event.stopPropagation(e); 
+	};
+
+	/**
+	 * Window별 Tab에 사용자가 원하는 HTML를 삽입합니다.
+	 */
+	scwin.nameLayerHtml = function(label, fix, close, layerMenu) {
+		// 아래는 HTML 코드는 시스템 UI에 맞게 디자인을 변경해서 퍼블리싱해야 합니다.
+		return "<button id='button1' style='z-index: 1; border:0px; padding:0px; float:right; margin-right:23px;' window_title ='" + label + "' onclick='" + $p.getFrameId() + "_scwin.restoreWindowSize(window.event)'>▣</button>" + fix + label + close;
+	}
+]]></script>
+	</head>
+	<body ev:onpageload="scwin.onpageload" ev:onpageunload="scwin.onpageunload">
+		
+		
+
+		<xf:group id="" style="padding:10px">
+			<xf:group id="" style="width: 100%;height: 45px;">
+				<w2:textbox id="" label="WindowContainer Custom Button Example" style="width:50%;height:23px;padding:10px;font-size:18px;font-weight:bold;float:left;"></w2:textbox>
+				<xf:trigger ev:onclick="scwin.btn_createWin_onclick" id="btn_createWin" style="width: 80px;height: 23px;float:right;margin-top: 10px;margin-right: 10px;"
+					type="button">
+					<xf:label><![CDATA[화면 생성]]></xf:label>
+				</xf:trigger></xf:group>
+			<xf:group id="grp_group1" style="width:100%;"><w2:windowContainer sequentialArrangeColNum="2" verticalArrangeNum="2" controlIconPosition="left" windowMaximizeAll="false" id="windowContainer1" useStatusMsg="true" hideTitleOnMaximize="false" spaInitCount="0" useNameContainer="false" useControlIconTitle="false" tooltipDisplay="true" style="position:relative;width:100%;height:518px;" sequentialArrangeRowNum="2" fixArrangeFullScreen="false" useFixButton="false" windowAutoResize="false" windowMaxNum="5" useCloseButton="true" stopMinimizeOnNameLayer="false" toolbarPosition="bottom" stopToggleOnLast="false" horizontalArrangeNum="2" useCustomMsg="false" tooltipGroupClass="false" windowTooltipDisplay="true" windowMoveType="overflow">
+			<w2:windowToolbar>
+				<w2:controlIconLayer>
+					<w2:controlIcon></w2:controlIcon>
+					<w2:controlIcon></w2:controlIcon>
+					<w2:controlIcon></w2:controlIcon>
+					<w2:controlIcon></w2:controlIcon>
+					<w2:controlIcon></w2:controlIcon>
+				</w2:controlIconLayer>
+				<w2:nameLayer></w2:nameLayer>
+				<w2:selectedNameLayer></w2:selectedNameLayer>
+			</w2:windowToolbar>
+		</w2:windowContainer></xf:group>
+		</xf:group>
+	</body>
+</html>

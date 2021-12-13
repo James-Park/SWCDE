@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping(value = "/restful")
 public class RestfulController {
 
-	@RequestMapping(method = RequestMethod.GET, value = "/testJsonMap2", params = {"procId", "subId", "name", "tel"})
+	@RequestMapping(method = RequestMethod.GET, value = "/testJsonMap2.do", params = {"procId", "subId", "name", "tel"})
 	public @ResponseBody Map<String, Object> testJsonMap2(@RequestParam("procId") String procId, @RequestParam("subId") String subId, 
 			@RequestParam("name") String name, @RequestParam("tel") String tel) {
 		
@@ -48,7 +48,7 @@ public class RestfulController {
 		return result;
 	}	
 	
-	@RequestMapping(method = RequestMethod.GET, value = "/testJsonMap3/{procId}/{subId}", params = {"name", "tel"})
+	@RequestMapping(method = RequestMethod.GET, value = "/testJsonMap3/{procId}/{subId}.do", params = {"name", "tel"})
 	public @ResponseBody Map<String, Object> testJsonMap3(@PathVariable("procId") String procId, @PathVariable("subId") String subId,
 			@RequestParam("name") String name, @RequestParam("tel") String tel) {
 		System.out.println(String.format("procId = %s, subId = %s, name = %s, tel = %s", procId, subId, name, tel));

@@ -22,7 +22,7 @@ public class UtilController {
 	@Autowired
 	ServletContext context;
 	
-	@RequestMapping(method = RequestMethod.GET, value = "/downloadZipFile", params = { "filePath", "fileName" } )
+	@RequestMapping(method = RequestMethod.GET, value = "/downloadZipFile.do", params = { "filePath", "fileName" } )
 	public void downloadZipFile(HttpServletRequest request, HttpServletResponse response, @RequestParam("filePath") String filePath, 
 			@RequestParam("fileName") String fileName) throws Exception {
 		try {

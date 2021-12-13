@@ -43,7 +43,7 @@
 	};
 
 	scwin.btn_srcDownload_onclick = function(e) {
-		window.open("/util/downloadZipFile?filePath=/ui/sample/widgetContainer/customButton&fileName=main_tabControl.zip");
+		window.open("/util/downloadZipFile?filePath=/ui/sample/widgetContainer/customButton&fileName=windgetContainer_customButton.zip");
 	};
 	
 	scwin.btn_playDownload_onclick = function(e) {
