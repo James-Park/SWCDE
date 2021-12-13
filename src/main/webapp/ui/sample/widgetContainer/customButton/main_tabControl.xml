@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:w2="http://www.inswave.com/websquare" xmlns:xf="http://www.w3.org/2002/xforms">
+    <head>
+    	<w2:type>DEFAULT</w2:type>
+        <w2:buildDate/>
+        <xf:model>
+        	<xf:instance>
+        		<data xmlns="" />
+        	</xf:instance>
+        	<w2:dataCollection baseNode="map">
+        	</w2:dataCollection>
+        	<w2:workflowCollection></w2:workflowCollection>
+        </xf:model>
+        <script type="text/javascript" lazy="false"><![CDATA[
+	scwin.onpageload = function() {
+	};
+
+	scwin.onpageunload = function() {
+
+	};
+
+	scwin.openMenu = function(menuId, filePath) {
+		tac_tabControl1.addTab(menuId, {
+			"label" : menuId,
+			"title" : "dataObject",
+			"openAction" : "exist",
+			"closable" : "true"
+		}, {
+			"src" : filePath,
+			"frameMode" : "wframePreload",
+			"scope" : true,
+			"alwaysDraw" : "true",
+			"dataObject" : {
+				"type" : "json",
+				"name" : "tabParam",
+				"data" : {}
+			}
+		});
+		
+		tac_tabControl1.setSelectedTabIndex(tac_tabControl1.getTabIndex(menuId));
+	};
+
+	scwin.btn_srcDownload_onclick = function(e) {
+		window.open("/util/downloadZipFile?filePath=/ui/sample/widgetContainer/customButton&fileName=main_tabControl.zip");
+	};
+	
+	scwin.btn_playDownload_onclick = function(e) {
+		window.open('/ui/sample/widgetContainer/customButton/widgetContainer_video.gif');
+	};
+	]]></script>
+    </head>
+    <body ev:onpageload="scwin.onpageload" ev:onpageunload="scwin.onpageunload">
+    <xf:group id="" style="padding:10px">
+    	<xf:group style="width: 100%;height: 45px;" id="">
+    		<w2:textbox style="width:50%;height:23px;padding:10px;font-size:18px;font-weight:bold;float:left;" id="" label="TabControl">
+    		</w2:textbox>
+    		<xf:group id="" style="width:45%;height:23px;padding:10px;font-size:18px;font-weight:bold;float:right;">
+    			<xf:trigger id="btn_playDownload" style="width:106px;height:23px;float:right;"
+    				type="button" ev:onclick="scwin.btn_playDownload_onclick">
+    				<xf:label><![CDATA[시연동영상]]></xf:label>
+    			</xf:trigger>
+    			<xf:trigger id="btn_srcDownload" style="width:106px;height:23px;float:right;margin-right:5px"
+    				type="button" ev:onclick="scwin.btn_srcDownload_onclick">
+    				<xf:label><![CDATA[소스 다운로드]]></xf:label>
+    			</xf:trigger>
+    		</xf:group>
+    	</xf:group>
+    	<xf:group style="width:100%;height:658px;" id="grp_group1">
+    		<w2:tabControl useTabKeyOnly="true" id="tac_tabControl1" useMoveNextTabFocus="false" useConfirmMessage="false" confirmTrueAction="exist"
+    			confirmFalseAction="new" alwaysDraw="false" style="width: 100%;height: 650px;">
+    			<w2:tabs disabled="false" style="width:99px;height:30px;" id="tabs1" label="Widget" closable="false"></w2:tabs>
+    			<w2:content alwaysDraw="false" style="height:600px;" id="content1" src="widgetContainer.xml"></w2:content>
+    		</w2:tabControl>
+    	</xf:group></xf:group></body>
+</html>

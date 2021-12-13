@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:w2="http://www.inswave.com/websquare" xmlns:xf="http://www.w3.org/2002/xforms">
+    <head meta_screenName="[서울대] 행정정보시스템 비표준웹(ActiveX) 전환 프로젝트 - tabControl 검증용 샘플" meta_desc="HTML 페이지에서 iframe으로 WebSquare Page를 Include하고 iframe내 WebSquare TabControl의 Tab을 추가하는 샘플 화면">
+    	<w2:type>DEFAULT</w2:type>
+        <w2:buildDate/>
+        <xf:model>
+        	<xf:instance>
+        		<data xmlns="" />
+        	</xf:instance>
+        	<w2:dataCollection baseNode="map">
+        	</w2:dataCollection>
+        	<w2:workflowCollection></w2:workflowCollection>
+        </xf:model>
+        <script type="text/javascript" lazy="false"><![CDATA[
+        
+	scwin.onpageload = function() {
+	};
+	
+	scwin.onpageunload = function() {
+		
+	};
+
+	scwin.tabIndex = 0;
+	
+	scwin.addTab = function(e) {
+		scwin.tabIndex++;
+		var tabOpt = {
+			label : "WFrame - " + scwin.tabIndex,
+			closable : true,
+		};
+
+		var contOpt = {
+			frameMode : "wframe",
+			src : "tab" + ((scwin.tabIndex % 2) + 1) + ".xml",
+			title : "WFrame - " + scwin.tabIndex
+		};
+
+		tac_tabControl1.addTab(scwin.tabIndex, tabOpt, contOpt);
+		tac_tabControl1.setSelectedTabIndex(tac_tabControl1.getTabCount()-1);
+	};
+	
+	scwin.btn_srcDownload_onclick = function(e) {
+		window.open("/util/downloadZipFile?filePath=/ui/sample/tabControl/htmlMain&fileName=htmlMain.zip");
+	};
+	]]></script>
+    </head>
+    <body ev:onpageload="scwin.onpageload" ev:onpageunload="scwin.onpageunload">
+    <xf:group id="" style="padding:10px;height: 579px;">
+    	<xf:group id="" style="width: 100%;height: 45px;">
+    		<w2:textbox id="" label="WebSquare5 프레임워크 영역"
+    			style="width:45%;height:23px;padding:10px;font-size:18px;font-weight:bold;float:left;">
+    		</w2:textbox>
+    		<xf:group id="" style="width:45%;height:23px;padding:10px;font-size:18px;font-weight:bold;float:right;">
+    			<xf:trigger id="btn_srcDownload" style="width:106px;height:23px;float:right;" type="button" ev:onclick="scwin.btn_srcDownload_onclick">
+    				<xf:label><![CDATA[소스 다운로드]]></xf:label>
+    			</xf:trigger>
+    		</xf:group>
+    	</xf:group>
+    	<xf:group style="width:100%;height:444px;" id="grp_group1">
+    		<w2:tabControl useTabKeyOnly="true" id="tac_tabControl1" useMoveNextTabFocus="false" useConfirmMessage="false"
+    			confirmTrueAction="exist" confirmFalseAction="new" alwaysDraw="false" style="width: 100%;height: 530px;" tabMove="true" tabScroll="true">
+    			<w2:tabs disabled="false" style="width:100px;height:30px;" id="tabs1" label="WFrame - 1"></w2:tabs>
+    			<w2:content alwaysDraw="false" style="height:500px;" id="content1" src="tab1.xml"></w2:content>
+    		</w2:tabControl>
+    		
+    	</xf:group></xf:group></body>
+</html>

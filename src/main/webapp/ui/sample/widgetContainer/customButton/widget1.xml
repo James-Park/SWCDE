@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:w2="http://www.inswave.com/websquare"
+	xmlns:xf="http://www.w3.org/2002/xforms">
+	<head>
+		<w2:type>DEFAULT</w2:type>
+		<w2:buildDate />
+		<xf:model>
+			<xf:instance>
+				<data xmlns="" />
+			</xf:instance>
+			<w2:dataCollection baseNode="map">
+				<w2:dataList baseNode="list" repeatNode="map" id="dlt_memberList" saveRemovedData="true" ev:oncelldatachange="">
+					<w2:columnInfo>
+						<w2:column id="id" name="아이디" dataType="text"></w2:column>
+						<w2:column id="name" name="성명" dataType="text"></w2:column>
+						<w2:column id="tel" name="연락처" dataType="text"></w2:column>
+						<w2:column id="region" name="지역" dataType="text"></w2:column>
+					</w2:columnInfo>
+					<w2:data use="true">
+						<w2:row>
+							<id><![CDATA[P0001]]></id>
+							<name><![CDATA[홍길동]]></name>
+							<tel><![CDATA[010-2323-4323]]></tel>
+							<region><![CDATA[서울]]></region>
+						</w2:row>
+						<w2:row>
+							<id><![CDATA[P0002]]></id>
+							<name><![CDATA[허균]]></name>
+							<tel><![CDATA[010-2444-2312]]></tel>
+							<region><![CDATA[인천]]></region>
+						</w2:row>
+						<w2:row>
+							<id><![CDATA[P0001]]></id>
+							<name><![CDATA[홍길동1]]></name>
+							<tel><![CDATA[010-2323-4323]]></tel>
+							<region><![CDATA[서울]]></region>
+						</w2:row>
+						<w2:row>
+							<id><![CDATA[P0002]]></id>
+							<name><![CDATA[허균1]]></name>
+							<tel><![CDATA[010-2444-2312]]></tel>
+							<region><![CDATA[인천]]></region>
+						</w2:row>
+						<w2:row>
+							<id><![CDATA[P0001]]></id>
+							<name><![CDATA[홍길동2]]></name>
+							<tel><![CDATA[010-2323-4323]]></tel>
+							<region><![CDATA[서울]]></region>
+						</w2:row>
+						<w2:row>
+							<id><![CDATA[P0002]]></id>
+							<name><![CDATA[허균2]]></name>
+							<tel><![CDATA[010-2444-2312]]></tel>
+							<region><![CDATA[인천]]></region>
+						</w2:row>
+						<w2:row>
+							<id><![CDATA[P0001]]></id>
+							<name><![CDATA[홍길동3]]></name>
+							<tel><![CDATA[010-2323-4323]]></tel>
+							<region><![CDATA[서울]]></region>
+						</w2:row>
+						<w2:row>
+							<id><![CDATA[P0002]]></id>
+							<name><![CDATA[허균3]]></name>
+							<tel><![CDATA[010-2444-2312]]></tel>
+							<region><![CDATA[인천]]></region>
+						</w2:row>
+					</w2:data>
+				</w2:dataList>
+			</w2:dataCollection>
+			<w2:workflowCollection></w2:workflowCollection>
+		</xf:model>
+		<script type="text/javascript" lazy="false"><![CDATA[
+	scwin.onpageload = function() {
+	};
+
+	scwin.openPage = function(buttonId) {
+		if (buttonId == "custombtn1") {
+			$p.top().scwin.openMenu(buttonId, "menu1.xml");
+		} else if (buttonId == "custombtn2") {
+			$p.top().scwin.openMenu(buttonId, "menu2.xml");
+		}
+	};
+
+	scwin.grd_gridView1_oncontextopen = function(row, col) {
+		// return false; // 컨텍스트 메뉴를 보여주지 않습니다.
+		// return { hideSystemMenu: false } // 전체 시스템 메뉴를 보여주지 않습니다.
+		return {
+			// hideSystemMenu 옵션을 설정하면 해당 GridView 기본 Contenxt Menu가 보이지 않도록 설정됨
+			// - ColumnHide : 선택 컬럼 숨기기
+			// - ColumnShowAll : 전체 컬럼 숨기기 해제
+			// - ColumnFix : 선택 컬럼 틀고정
+			// - ColumnUnfixAll : 전체 컬럼 틀고정 취소
+			// - ColumnAdjustWidth : 선택 컬럼 크기 자동 맞추기
+			// - ColumnAdjustAuto : 전체 컬럼 크기 자동 맞추기
+			// - FoldAll : 전체 그룹 접기
+			// - UnfoldAll : 전체 그룹 펼치기
+			// - Group : 전체 그룹 해제
+			// - Ungroup : 선택 컬럼 그룹 해제
+			// - UngroupAll : 선택 컬럼 그룹
+			// - ColumnAdjustAutoNone : 전체 컬럼 자동 맞추기 해제
+			hideSystemMenu : [ "ColumnHide", "ColumnShowAll", "ColumnFix", "ColumnUnfixAll", "ColumnAdjustWidth", "ColumnAdjustAuto", "FoldAll", "UnfoldAll", "Group", "Ungroup", "UngroupAll", "ColumnAdjustAutoNone" ],
+			appendMenu : [{
+				label : "Menu1 화면 오픈하기", // 사용자 메뉴의 표시 문자열
+				userMenuId : "custombtn1", // 사용자 메뉴의 id, 해당 컨텍스트 메뉴가 클릭될때, 입력값으로 전달됨
+				className : "userMenu" // 사용자 메뉴의 스타일 클래스 이름 
+			}, {
+				label : "Menu2 화면 오픈하기", // 사용자 메뉴의 표시 문자열
+				userMenuId : "custombtn2", // 사용자 메뉴의 id, 해당 컨텍스트 메뉴가 클릭될때, 입력값으로 전달됨
+				className : "userMenu" // 사용자 메뉴의 스타일 클래스 이름 
+			}], // 시스템 메뉴 아래에, 사용자 메뉴를 추가합니다.
+		};
+	};
+
+	// 컨텍스트 메뉴가 클릭 된 후 호출됩니다. 시스템 메뉴는 시스템 기능이 완료된 후 호출됩니다.
+	scwin.grd_gridView1_oncontextclick = function(row, col, userMenuId, isSystemMenu, systemMenu) {
+		if (isSystemMenu == false) {
+			scwin.openPage(userMenuId);
+		}
+	};
+
+	scwin.onpageunload = function() {
+
+	};
+]]></script>
+	</head>
+	<body ev:onpageload="scwin.onpageload" ev:onpageunload="scwin.onpageunload">
+		<xf:group style="padding:10px;" id="">
+			<xf:group style="width: 100%;height:40px;float:left;" id="" class="">
+				<w2:textbox style="height: 23px;font-size:20px;float:left;margin-top:5px;margin-left:5px;font-weight: bold"
+					label="Widget Contents" id="">
+				</w2:textbox>
+			</xf:group>
+			
+			<w2:gridView id="grd_gridView1" ignoreToggleOnDisabled="false" useShiftKey="true" style="width:100%;height:97px;"
+				scrollByColumn="false" defaultCellHeight="20" scrollByColumnAdaptive="false" summaryAuto="false" summaryOnlyAuto="false"
+				applyAllColumnStyle="false" dataList="data:dlt_memberList" ignoreCellClick="false" autoFit="allColumn" visibleRowNum="4"
+				contextMenu="true" ev:oncontextopen="scwin.grd_gridView1_oncontextopen" ev:oncontextclick="scwin.grd_gridView1_oncontextclick">
+				<w2:caption style="" id="caption1" value="this is a grid caption."></w2:caption>
+				<w2:header style="" id="header1">
+					<w2:row style="" id="row1">
+						<w2:column width="135" inputType="text" style="" id="column7" value="아이디" blockSelect="false" displayMode="label"></w2:column>
+						<w2:column width="113" inputType="text" style="" id="column5" value="성명" blockSelect="false" displayMode="label"></w2:column>
+						<w2:column width="114" inputType="text" style="" id="column3" value="연락처" blockSelect="false" displayMode="label"></w2:column>
+						<w2:column width="129" inputType="text" style="" id="column1" value="지역" blockSelect="false" displayMode="label"></w2:column>
+					</w2:row>
+				</w2:header>
+				<w2:gBody style="" id="gBody1">
+					<w2:row style="" id="row2">
+						<w2:column width="135" inputType="text" style="" id="id" value="" blockSelect="false" displayMode="label"></w2:column>
+						<w2:column width="113" inputType="text" style="" id="name" value="" blockSelect="false" displayMode="label"></w2:column>
+						<w2:column width="114" inputType="text" style="" id="tel" value="" blockSelect="false" displayMode="label"></w2:column>
+						<w2:column width="129" inputType="text" style="" id="region" value="" blockSelect="false" displayMode="label"></w2:column>
+					</w2:row>
+				</w2:gBody>
+			</w2:gridView></xf:group>
+	</body>
+</html>

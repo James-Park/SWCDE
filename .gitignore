@@ -1,0 +1,10 @@
+.settings/
+target/
+websquare_home/log/
+src/main/webapp/websquare/engine/
+src/main/webapp/websquare/externalJS/
+src/main/webapp/websquare/images/
+src/main/webapp/websquare/message/
+src/main/webapp/websquare/skin/
+src/main/webapp/websquare/theme/
+src/main/webapp/websquare/uiplugin/
