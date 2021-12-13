@@ -28,6 +28,13 @@ public class UtilController {
 		try {
 			String fileRealPath = context.getRealPath(filePath);
 			
+			if (filePath.equals("") || filePath.equals("/") || filePath.contains("..") || !filePath.contains("/ui")) {
+				response.setContentType("text/html");
+				response.setCharacterEncoding("UTF-8");
+				response.getWriter().write("<html><head></head><body><div>File 경로가 올바르지 않습니다.</div></body></html>");
+				return; 
+			};
+			
 			FileUtil.downloadFile(response, request, fileRealPath, fileName);
 		} catch (Exception ex) {
 			response.setContentType("text/html");
