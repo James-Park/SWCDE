@@ -70,7 +70,6 @@
 	 * 생성된 Request URL : https://swcde.inswave.kr/restful/testJsonMap2.do?procId=PR001&subId=SB002&name=Peter&tel=010-2223-4421
 	 */
 	scwin.btn_search1_onclick = function(e) {
-		// 
 		com.execute(sbm_submission1);
 	};
 	
