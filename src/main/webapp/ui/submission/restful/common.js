@@ -67,14 +67,14 @@ com.preSubmitFunction = function(sbmObj) {
 /**
  * REST API 방식 처리를 위해서 Path Variable 치환 및 QueryString으로 생성한다.
  * 
- * 1. Path Variable 처리 : Action에서 "/testJsonMap/${procId}/${seq}/"와 같이 Path Variable(${procId}, ${seq})을 선언할 경우, 
+ * 1. Path Variable 처리 : Action에서 "/testJsonMap/{procId}/{seq}/"와 같이 Path Variable(${procId}, ${seq})을 선언할 경우, 
  *    해당 변수를 DataMap이나 RequestData(JSON)에 정의된 Key의 Value으로 치환한다.
- *    DataMap이나 RequestData(JSON) 안에 Path Variable(${procId}, ${seq})에 정의된 procId와 seq Key(Column)이 존재해야 한다.
+ *    DataMap이나 RequestData(JSON) 안에 Path Variable({procId}, {seq})에 정의된 procId와 seq Key(Column)이 존재해야 한다.
  *    Key가 존재하지 않을 경우 Path Variable에 추가하지 않는다.
  *    Path Variable에 추가된 Key 값은 GET 방식일 경우 생성되는 QueryString에서 제외 시킨다.
  *    
  * 2. QueryString 처리 : GET Method으로 Action을 호출할 경우, 해당 변수를 DataMap이나 RequestData(JSON)에 정의된 Key와 Value으로 치환한다.
- *    DataMap이나 RequestData(JSON) 안에 Path Variable(${procId}, ${seq})에 정의된 procId와 seq Key(Column)이 존재해야 한다.
+ *    DataMap이나 RequestData(JSON) 안에 Path Variable({procId}, {seq})에 정의된 procId와 seq Key(Column)이 존재해야 한다.
  *    단 건 데이터(Map)만 QueryString으로 생성해서 서버에 전송하고, Array 형태의 데이터의 경우에는 QueryString으로 포함시키지 않는다.
  *    
  * @param {Object} sbmObj Submission 객체

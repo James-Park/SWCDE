@@ -54,7 +54,7 @@
 		</xf:model>
 		<script type="text/javascript" lazy="false"><![CDATA[
 	/**
-	 * https://swcde.inswave.kr/websquare/websquare.html?w2Config=/ui/submission/restful/config.xml&w2xPath=/ui/submission/restful/submission_methtod_get.xml
+	 * http://127.0.0.1:8080/websquare/websquare.html?w2Config=/ui/submission/restful/config.xml&w2xPath=/ui/submission/restful/submission_methtod_get.xml
 	 */        
 	scwin.onpageload = function() {
 		
@@ -67,7 +67,9 @@
 	/**
 	 * Submission ref 정의된 DataMap의 데이터를 QueryString 방식으로 URL에 추가해서 전달하는 예제
 	 *
-	 * 생성된 Request URL : https://swcde.inswave.kr/restful/testJsonMap2.do?procId=PR001&subId=SB002&name=Peter&tel=010-2223-4421
+	 * sbm_submission1.ref = "data:json,dma_dataMap1"
+	 * sbm_submission1.action = "/restful/testJsonMap2"
+	 * 생성된 Request URL : http://127.0.0.1:8080/restful/testJsonMap2.do?procId=PR001&subId=SB002&name=Peter&tel=010-2223-4421
 	 */
 	scwin.btn_search1_onclick = function(e) {
 		com.execute(sbm_submission1);
@@ -76,7 +78,8 @@
 	/**
 	 * JSON 객체를 QueryString 방식으로 URL에 추가해서 전달하는 예제
 	 *
-	 * 생성된 Request URL : https://swcde.inswave.kr/restful/testJsonMap2.do?procId=PR001&subId=SB002&name=Peter&tel=010-2223-4421
+	 * sbm_submission2.action = "/restful/testJsonMap2"
+	 * 생성된 Request URL : http://127.0.0.1:8080/restful/testJsonMap2.do?procId=PR001&subId=SB002&name=Peter&tel=010-2223-4421
 	 */
 	scwin.btn_search2_onclick = function(e) {
 		var param = {
@@ -93,7 +96,9 @@
 	 *
 	 * DataMap 내에 정의된 Column Id 중에서 Path Variable로 정의되지 않은 컬럼(name, tel)을 QueryString 방식으로 추가된다.
 	 *
-	 * 생성된 Request URL :https://swcde.inswave.kr/restful/testJsonMap2?procId=PR001&subId=SB002&name=Peter&tel=010-2223-4421
+	 * sbm_submission3.ref = "data:json,dma_dataMap1"
+	 * sbm_submission3.action = "/restful/testJsonMap3/{procId}/{subId}"
+	 * 생성된 Request URL : http://127.0.0.1:8080/restful/testJsonMap3/PR001/SB002.do?name=Peter&tel=010-2223-4421
 	 */
 	scwin.btn_search3_onclick = function(e) {
 		com.execute(sbm_submission3);
