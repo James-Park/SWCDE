@@ -355,7 +355,7 @@
 			<version>2.7.0</version>
 			<scope>runtime</scope>
 		</dependency>
-
+		
 		<!-- Central Maven Repository에 등록되지 않는 수동 등록 라이브러리 =============================== -->
 		<dependency>
 			<groupId>org.apache</groupId>
@@ -372,7 +372,7 @@
 		<dependency>
 			<groupId>websquare</groupId>
 			<artifactId>websquare</artifactId>
-			<version>5.0_4.4547B.20211124.201933_1.5</version>
+			<version>5.0_5.4777B.20221212.115139_1.5</version>
 		</dependency>
 	</dependencies>
 	<build>

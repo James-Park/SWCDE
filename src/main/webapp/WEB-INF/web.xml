@@ -39,7 +39,7 @@
 		<servlet-class>websquare.http.DefaultRequestDispatcher</servlet-class>
 		<init-param>
 			<param-name>WEBSQUARE_HOME</param-name>
-			<param-value>E:\Eclipse_Workspace\GitHub_workspace_2020\SWCDE\src\main\webapp\WEB-INF\websquare_home</param-value>
+			<param-value>E:\Eclipse_Workspace\GitHub_workspace\SWCDE\websquare_home</param-value>
 		</init-param>
 	</servlet>
 	
