@@ -117,7 +117,7 @@ com.sbm.executeDynamic = function(options, requestData, obj) {
 		submissionObj = com.util.getComponent(options.id);
 	}
 
-	com.sbm.execute(submissionObj, requestData, obj);
+	return com.sbm.execute(submissionObj, requestData, obj);
 };
 
 /**
@@ -299,6 +299,8 @@ com.sbm.resultMsg = function(resultData) {
 				com.win.alert(message);
 			} else if (com.util.isEmpty(message) === false) {
 				com.win.alert(message);
+			} else if (resultData.errorCode == 0) { // business logic error
+				com.win.alert(message);
 			}
 			break;
 		case msgCode.STATUS_SUCCESS :
@@ -308,9 +310,6 @@ com.sbm.resultMsg = function(resultData) {
 			break;			
 		case msgCode.STATUS_INFO :
 			com.win.showToastMessage(gcm.MESSAGE_CODE.STATUS_INFO, message); 
-			break;
-		default :
-			com.win.alert(com.data.getMessage("MSG_CM_00004"));
 			break;
 	}
 };
@@ -331,6 +330,7 @@ com.sbm.setAction = function(sbmObj, sbmAction) {
 		if (!com.util.isEmpty(sbmObj)) {
 			sbmObj.isDefultSubmissionAction = null;
 			sbmObj.action = sbmAction || "";
+			sbmObj.__action = sbmAction || "";
 		}
 	} catch(ex) {
 		console.error(ex);
@@ -354,6 +354,9 @@ com.data = {};
  * 코드성 데이터와 컴포넌트의 nodeSet(아이템 리스트)연동 기능을 제공한다.
  *
  * cdGrp별로 JSON객체를 생성하여 array에 담아 첫번째 파라메터로 넘겨준다.
+ * 
+ * com.data.setCommonCode 함수에서는 공통 코드 로딩을 위한 Submssion(_sbm_searchCode)을 생성만 한다.
+ * Submssion(_sbm_searchCode)의 실행은 config.xml의 wframe > postScript에 정의된 gcm.win.processCommonData 함수에서 실행한다.
  *
  * @date 2020.05.16
  * @param {Object} codeOptions {"cdGrp" : "코드그룹", "compID" : "적용할 컴포넌트명"}
@@ -399,7 +402,7 @@ com.data.setCommonCode = function(codeOptions, callbackFunc) {
 				dataListOption.id = dltId;
 				$p.data.create(dataListOption);
 				var dataListObj = $p.getComponentById(dataListOption.id);
-				dataListObj.setJSON(com.util.getJSON(gcm.commonCodeList[dltId]));
+				dataListObj.setJSON(gcm.commonCodeList[dltId]);
 			}
 
 			if (codeObj.compID) {
@@ -410,11 +413,19 @@ com.data.setCommonCode = function(codeOptions, callbackFunc) {
 					tmpIdArr = compArr[j].split(":"); 
 					
 					if (tmpIdArr.length === 1) {
-						var comp = $p.getComponentById(tmpIdArr[0]);
-						comp.setNodeSet("data:" + dltId, gcm.COMMON_CODE_INFO.LABEL, gcm.COMMON_CODE_INFO.VALUE);
+						var comp = com.util.getComponent(tmpIdArr[0]);
+						if (!com.util.isEmpty(comp)) {
+							comp.setNodeSet("data:" + dltId, gcm.COMMON_CODE_INFO.LABEL, gcm.COMMON_CODE_INFO.VALUE);
+						} else {
+							console.warn("[com.data.setCommonCode] Component(" + tmpIdArr[0] + ")를 찾을 수 없습니다.");
+						}
 					} else {
-						var gridObj = $p.getComponentById(tmpIdArr[0]);
-						gridObj.setColumnNodeSet(tmpIdArr[1], "data:" + dltId, gcm.COMMON_CODE_INFO.LABEL, gcm.COMMON_CODE_INFO.VALUE);
+						var gridObj = com.util.getComponent(tmpIdArr[0]);
+						if (!com.util.isEmpty(gridObj)) {
+							gridObj.setColumnNodeSet(tmpIdArr[1], "data:" + dltId, gcm.COMMON_CODE_INFO.LABEL, gcm.COMMON_CODE_INFO.VALUE);
+						} else {
+							console.warn("[com.data.setCommonCode] GridView(" + tmpIdArr[0] + ")를 찾을 수 없습니다.");
+						}
 					}
 				}
 			}
@@ -431,9 +442,9 @@ com.data.setCommonCode = function(codeOptions, callbackFunc) {
 	};
 
 	searchCodeGrpOption.submitDoneHandler = function(e) {
-		for (codeGrpDataListId in e.responseJSON) {
+		for (var codeGrpDataListId in e.responseJSON) {
 			if (codeGrpDataListId.indexOf(gcm.DATA_PREFIX) > -1) {
-				gcm.commonCodeList[codeGrpDataListId] = com.str.serialize(e.responseJSON[codeGrpDataListId]);
+				gcm.commonCodeList[codeGrpDataListId] = e.responseJSON[codeGrpDataListId];
 			}
 		}
 
@@ -658,8 +669,6 @@ com.data.getDataCollection = function(comObj) {
 		}
 	} catch (e) {
 		console.error("[com.data.getDataCollection] Exception :: " + e.message);
-	} finally {
-		dataCollection = null;
 	}
 };
 
@@ -670,15 +679,36 @@ com.data.getDataCollection = function(comObj) {
  * @memberOf com.data
  * @date 2021.07.08
  * @param {String} sysMsgId 메시지 ID , Array 형식인 경우는 첫번째 인덱스가 sysMsgId가 되고 두번째 인덱스부터 치환문자가 됨
- * @param {String} arguments 메시지 치환 문자열 (메시지 ID에서 치환이 필요한 만큼 문자열 매개변수를 전달함)
+ * @param {(String|String[])} arguments 메시지 치환 문자열 (메시지 ID에서 치환이 필요한 만큼 문자열 매개변수를 전달함)
  * @author Inswave Systems
  * @example
 com.data.getMessage("MSG_CM_00001");  // "변경된 데이터를 저장하시겠습니까?"
 com.data.getMessage("MSG_CM_00002", com.str.attachPostposition("전화번호"));  // "전화번호는 필수입력값입니다."
 com.data.getMessage("MSG_CM_00003", "세션이 종료되어");  // "세션이 종료되어 로그인 화면으로 이동하겠습니다."
+com.data.getMessage("MSG_CM_00007", "엑셀", "5M");  // 엑셀 파일의 크기가 5M를 초과 했습니다.
  */
-com.data.getMessage = function(sysMsgId, arguments) {
-	return gcm.data.getMessage(sysMsgId, arguments);
+com.data.getMessage = function(msgId) {
+	var message = ""
+	if (com.util.isEmpty(msgId) === false) {
+		message = WebSquare.WebSquareLang[msgId];
+	}
+
+	if (com.util.isEmpty(message) === false) {
+		var tmpMessage = message;
+
+		if (arguments.length > 1) {
+			for(var i = 1; i < arguments.length; i++) {
+				if (com.util.isEmpty(arguments[i]) === false) {
+					tmpMessage = (tmpMessage.indexOf("$[" + (i-1) + "]") != -1) ? com.str.replaceAll(tmpMessage, "$[" + (i-1) + "]", arguments[i]) : tmpMessage;
+				}
+			}
+			return tmpMessage;
+		} else {
+			return tmpMessage;
+		}
+	} else {
+		return "";
+	}
 };
 
 
@@ -847,7 +877,7 @@ com.data.downloadMultipleDataList = function (optionsParam, infoArrParam) {
 			}
 			
 			if (typeof dataListObj === "undefined") {
-				console.log("[com.data.downloadMultipleDataList] excelInfo.dataListId에 설정된 " + dataListId + " DataList를 찾을 수 없습니다.");
+				console.warn("[com.data.downloadMultipleDataList] excelInfo.dataListId에 설정된 DataList(" + dataListId + ")를 찾을 수 없습니다.");
 				return;
 			}
 
@@ -867,7 +897,7 @@ com.data.downloadMultipleDataList = function (optionsParam, infoArrParam) {
 			options.excelInfo.push(excelInfo);
 		}
 	} else {
-		console.log("[com.data.downloadMultipleDataList] options.excelInfo 정보가 입력되지 않았습니다.");
+		console.warn("[com.data.downloadMultipleDataList] options.excelInfo 정보가 입력되지 않았습니다.");
 		return;
 	}
 
@@ -995,7 +1025,7 @@ com.data.downloadMultipleGridView = function (optionsParam, infoArrParam) {
 			}
 			
 			if (typeof gridObj === "undefined") {
-				console.log("[com.data.downloadMultipleDataList] excelInfo.gridId에 설정된 " + gridId + " GridView를 찾을 수 없습니다.");
+				console.warn("[com.data.downloadMultipleDataList] excelInfo.gridId에 설정된 " + gridId + " GridView를 찾을 수 없습니다.");
 				return;
 			}
 
@@ -1015,7 +1045,7 @@ com.data.downloadMultipleGridView = function (optionsParam, infoArrParam) {
 			options.excelInfo.push(excelInfo);
 		}
 	} else {
-		console.log("[com.data.downloadMultipleGridView] options.excelInfo 정보가 입력되지 않았습니다.");
+		console.warn("[com.data.downloadMultipleGridView] options.excelInfo 정보가 입력되지 않았습니다.");
 		return;
 	}
 
@@ -1511,7 +1541,7 @@ if (com.data.validateGroup(tblMenuInfo, valInfo, tacMenuInfo, "tabMenuInfo1") ==
 }
 
  * @description
-필수 입력, 입력 허용 문자, 입력 허용 불가 문자, 최대, 최소 입력 문자수 설정은 컴포넌트의 속성에서 설정한다. <br/>
+필수 입력, 입력 허용 문자, 입력 허용 불가 문자, 최대 입력 문자수 설정은 컴포넌트의 속성에서 설정한다. <br/>
 - mandatory : 필수 입력 항목 여부 <br/>
 - allowChar : 입력 허용 문자 <br/>
 - ignoreChar : 입력 허용 불가 문자 <br/>
@@ -1600,7 +1630,11 @@ com.data.validateGroup = function (grpObj, valInfoArr, tacObj, tabId) {
 		if (errors.length > 0) {
 			if ((typeof tacObj !== "undefined") && (typeof tabId !== "undefined") && (tabId !== "")) {
 				var tabIndex = tacObj.getTabIndex(tabId);
-				tacObj.setSelectedTabIndex(tabIndex);
+				
+				Promise.resolve().then(function() {
+					 return tacObj.setSelectedTabIndex(tabIndex);
+				});
+				
 			}
 
 			var option = {
@@ -1721,13 +1755,10 @@ if (com.data.validateGridView(grd_MenuAuthority, valInfo, tacMenuInfo, "tabMenuI
 com.data.validateGridView = function (gridViewObj, valInfoArr, tacObj, tabId) {
 	if (gridViewObj === null) {
 		return false;
-	} else {
-		gridViewObj.removeFocusedCell();
 	}
 
 	var dataList = com.util.getGridViewDataList(gridViewObj);
 	if (dataList === null) {
-		console.log("Can not find the datalist of '" + gridViewObjId + "' object.");
 		return false;
 	}
 
@@ -1813,10 +1844,10 @@ com.data.validateGridView = function (gridViewObj, valInfoArr, tacObj, tabId) {
  *
  * @memberOf com.data
  * @date 2020.05.16
- * @param {String} dsId	:: I :: Y ::  :: DataList의 아이디
- * @param {Array} colArr   :: I :: Y ::  :: 컬럼정보
- * @param {Array} typeArr  :: I :: Y ::  :: 컬럼들의 dataType 정의
- * @param {Object} options :: I :: N ::  :: dataCollection의 속성[baseNode, repeatNode, saveRemovedData, scwinObj]
+ * @param {String} dsId DataList의 아이디
+ * @param {Array} colArr 컬럼정보
+ * @param {Array} typeArr 컬럼들의 dataType 정의
+ * @param {Object} options dataCollection의 속성[baseNode, repeatNode, saveRemovedData, scwinObj]
  * @return {Object} dataCollection(dataList)
  * @author Inswave Systems
  * @example
@@ -1884,9 +1915,9 @@ com.data.createDataList = function(dsId, colArr, typeArr, options) {
  *
  * @memberOf com.data
  * @date 2020.05.16
- * @param {String} dsId	:: I :: Y ::  :: dataMap 의 아이디
- * @param {Array} colArr   :: I :: Y ::  :: 컬럼정보
- * @param {Object} options :: I :: N ::  :: DataMap 생성 옵션
+ * @param {String} dsId dataMap 의 아이디
+ * @param {Array} colArr 컬럼정보
+ * @param {Object} options DataMap 생성 옵션
  * @author Inswave Systems
  * @return {Object} dataCollection(dataMap)
  * @example
@@ -1944,31 +1975,20 @@ com.data.createDataMap = function(dsId, colArr, typeArr, options) {
  * 초기 설정 된 데이터 란 setJSON, setXML 등과 같은 API들을 통해 설정 된 데이터가 이에 속한다.
  * 추가(C)된 행은 제거한다
  *
- * @param {String|Object} dltId DataList 객체 또는 DataList 아이디, GridView 객체 또는 GridView 아이디
+ * @param {Object|String} dltId DataList 객체 또는 DataList 아이디
  * @memberOf com.data
  * @date 2020.05.16
  * @author Inswave Systems
  * @example
 com.data.undoAll(dlt_grdAllData);
-com.data.undoAll(grd_grdAllData);
  */
 com.data.undoAll = function(dltId) {
 	try {
-		var obj = null;
 		var dltObj = null;
-		var gridViewObj = null;
-		
 		if (typeof dltId === "string") {
-			obj = com.util.getComponent(dltId);
+			dltObj = com.util.getComponent(dltId);
 		} else {
-			obj = dltId;
-		}
-		
-		if ((typeof obj.getPluginName === "function") && (obj.getPluginName() === "gridView")) {
-			gridViewObj = obj;
-			dltObj = com.util.getComponent(obj.getDataList());
-		} else {
-			dltObj = obj;
+			dltObj = dltId;
 		}
 
 		var rowCount = dltObj.getRowCount();
@@ -1984,19 +2004,11 @@ com.data.undoAll = function(dltId) {
 			}
 			undoIdx.push(i)
 		}
-		
-		if (removeIdx.length > 0) {
-			dltObj.removeRows(removeIdx);
-		}
-		
+
+		dltObj.removeRows(removeIdx);
 		dltObj.undoRows(undoIdx);
 
 		dltObj.setBroadcast(true, true);
-		
-		if ((removeIdx.length > 0) && (gridViewObj !== null)) {
-			gridViewObj.setFocusedCell(gridViewObj.getFocusedRowIndex() - removeIdx.length, gridViewObj.getFocusedColumnIndex());
-		}
-		
 	} catch (ex) {
 		console.error(ex)
 	}
@@ -2005,7 +2017,7 @@ com.data.undoAll = function(dltId) {
 /**
  * 지정한 GridView에 선택컬럼(chk)이 체크된 Row들을 취소(Undo) 처리한다.
  *
- * @param {String} dltId DataList 객체 또는 DataList 아이디
+ * @param {Object|String} dltId DataList 객체 또는 DataList 아이디
  * @memberOf com.data
  * @date 2020.05.16
  * @author Inswave Systems
@@ -2039,12 +2051,51 @@ com.data.undoRow = function(dltId) {
 	}
 };
 
+/**
+ * GridView와 바인된 DataList의 데이터의 변경된 데이터를 Undo 시킨다.
+ *
+ * @param {Object|String} grdId GridView 객체 또는 GridView 아이디
+ * @memberOf com.data
+ * @date 2022.09.21
+ * @author Inswave Systems
+ * @example
+com.data.undoGridView(dlt_grdAllData);
+ */
+com.data.undoGridView = function(grdId) {
+	try {
+		var grdObj = null;
+		if (typeof grdId === "string") {
+			grdObj = com.util.getComponent(grdId);
+		} else {
+			grdObj = grdId;
+		}
+		
+		if ((typeof grdObj === "object") && (grdObj !== "")) {
+			var dltObj = com.util.getGridViewDataList(grdObj);
+			if (dltObj === null) {
+				return;
+			}
+			
+			if (com.data.isModified(dltObj)) {
+				com.win.confirm(com.data.getMessage("MSG_CM_00052"), 
+					function(res) { 
+						if (res.clickValue === true) { 
+							com.data.undoAll(dltObj); 
+						} 
+					} 
+				);
+			}
+		}
+	} catch (ex) {
+		console.error(ex);
+	}	
+};
 
 
 /**
  * 지정한 GridView에 선택컬럼(chk)이 체크된 Row들을 삭제(Delete) 처리한다.
  *
- * @param {String} dltId DataList 객체 또는 DataList 아이디
+ * @param {Object|String} dltId DataList 객체 또는 DataList 아이디
  * @memberOf com.data
  * @date 2020.05.16
  * @author Inswave Systems
@@ -2078,6 +2129,45 @@ com.data.deleteRow = function(dltId) {
 		console.error(ex);
 	}
 };
+
+
+/**
+ * 지정한 GridView에 새로운 Row를 추가한다. 
+ *
+ * @param {Object|String} grdId GridView 객체 또는 GridView 아이디
+ * @return {Number} 새로 추가된 Row Index
+ * @memberOf com.data
+ * @date 2022.06.22
+ * @author Inswave Systems
+ * @example
+com.data.insertRow(grd_data1);
+ */
+com.data.insertRow = function(grdId) {
+	try {
+		var grdObj = null;
+		if (typeof grdId === "string") {
+			grdObj = com.util.getComponent(grdId);
+		} else {
+			grdObj = grdId;
+		}
+		
+		if ((typeof grdObj === "object") && (grdObj !== "")) {
+			var dltObj = com.util.getGridViewDataList(grdObj);
+			if (dltObj === null) {
+				return;
+			}
+			
+			var focusedRowIdx = grdObj.getFocusedRowIndex();
+			if (focusedRowIdx > -1) {
+				return dltObj.insertRow(focusedRowIdx + 1);
+			} else {
+				return dltObj.insertRow();
+			}
+		}
+	} catch (ex) {
+		console.error(ex);
+	}
+}
 
 
 /**
@@ -2220,6 +2310,57 @@ com.data.getMatchedJSON = function(dataListObj, condArr) {
 	}
 	
 	return returnData;
+};
+
+
+/**
+ * 데이터가 수정되어있는 경우 창이 닫힐때 창을 닫을 지 여부르를 묻는 컨펌창을 호출한다.
+ *
+ * @private
+ * @memberOf com.data
+ * @date 2021.12.30
+ * @param {Object} dataObjArr 창이 닫힐때 수정된 여부를 체크할 데이터컬렉션 객체(데이터 맵또는 데이터 리스트)
+ * @return {Object} topFrame 객체
+ * @author Inswave Systems
+ * @example 
+com.win.setChangeCheckedDc([dma_sample, dlt_grdAllData]);
+ */
+com.data.setChangeCheckedDc = function(dataObjArr) {
+	gcm.data.setChangeCheckedDc($p, dataObjArr);
+};
+
+
+/**
+ * 컴포넌트에 사용자 정의 데이터를 세팅한다.
+ *
+ * @memberOf com.data
+ * @date 2022.02.10
+ * @param {Object} comObj 컴포넌트 객체
+ * @param {String} key 사용자 정의 데이터 Key
+ * @param {String} value 사용자 정의 데이터 value
+ * @author Inswave Systems
+ * @example 
+com.data.setUserData(btn_search, "userId", "M000001");
+ */
+com.data.setUserData = function(comObj, key, value) {
+	comObj.setUserData("__" + key, value);
+};
+
+
+/**
+ * 컴포넌트에 저장된 사용자 정의 데이터를 반환한다.
+ *
+ * @memberOf com.data
+ * @date 2022.02.10
+ * @param {Object} comObj 컴포넌트 객체
+ * @param {String} key 사용자 정의 데이터 Key
+ * @return {String} value 사용자 정의 데이터 value
+ * @author Inswave Systems
+ * @example 
+var userId = com.data.getUserData(btn_search, "userId");
+ */
+com.data.getUserData = function(comObj, key) {
+	return comObj.getUserData("__" + key);
 };
 
 // =============================================================================
@@ -2498,7 +2639,7 @@ com.util.setGridViewDelCheckBox([grd_Menu, grd_MenuAccess]);
 com.util.setGridViewDelCheckBox = function (gridViewObjArr) {
 	try {
 		if (com.util.getObjectType(gridViewObjArr) === "array") {
-			for (idx in gridViewObjArr) {
+			for (var idx in gridViewObjArr) {
 				setGridViewDelCheckBox(gridViewObjArr[idx]);
 			}
 		} else {
@@ -2648,13 +2789,13 @@ com.util.getGridViewDataList = function (gridViewObj) {
 	if (dataListId !== "") {
 		var dataList = $p.getComponentById(dataListId);
 		if ((typeof dataList === "undefined") || (dataList === null)) {
-			console.log("DataList(" + dataListId + ")를 찾을 수 없습니다.");
+			console.warn("[com.util.getGridViewDataList] DataList(" + dataListId + ")를 찾을 수 없습니다.");
 			return null;
 		} else {
 			return dataList;
 		}
 	} else {
-		console.log(gridViewObj.getID() + "는 DataList가 세팅되어 있지 않습니다.");
+		console.warn("[com.util.getGridViewDataList] " + gridViewObj.getID() + "는 DataList가 세팅되어 있지 않습니다.");
 		return null;
 	}
 };
@@ -2676,7 +2817,7 @@ com.util.getComponent = function(compId) {
 	if (typeof object === "undefined") {
 		return null;
 	} else {
-		return object
+		return object;
 	}
 };
 
@@ -2841,12 +2982,12 @@ com.util.copyClipboard = function(comObj) {
 
 
 /**
- * 객체 아이디로 객체 찾아서 반환한다.
+ * 객체 아이디 및 이벤트 객체에서 컴포넌트 객체 찾아서 반환한다.
  * 
  * @memberOf com.util
- * @date 2021.07.27
+ * @date 2022.02.10
  * @author Inswave Systems
- * @param {String} _objectId 객체 ID
+ * @param {String|Object} _objectId 객체 ID 또는 이벤트 객체
  * @param {String} _scopeObj 객체 적용 Scope ID ["parent" 최상위 예외 scope ID 적용]
  * @returns {Object} 찾은 객체
  * @example
@@ -2854,9 +2995,14 @@ com.util.getObject("btn_toggle_menu");
 com.util.getObject("wfm_header", "top");
 com.util.getObject("wfm_header", "parent");
 com.util.getObject("btn_toggle_menu", "wfm_header");
+com.util.getObject(this);
  */
 com.util.getObject = function(_objectId, _scopeObj) {
-	return gcm.util.getObject($p, _objectId, _scopeObj);
+	if ((typeof _objectId === "object") && (!com.util.isEmpty(_objectId.event))) {
+		return com.util.getComponent($p.getEventTarget(_objectId.realId));
+	} else {
+		return gcm.util.getObject($p, _objectId, _scopeObj);
+	}
 };
 
 
@@ -2893,6 +3039,7 @@ var userAgent = com.util.getUserAgent();
 com.util.getUserAgent = function() {
 	return gcm.util.getUserAgent();
 };
+
 
 // =============================================================================
 /**
@@ -2934,6 +3081,8 @@ com.win.goHome = function() {
  * com.win.logout();
  */
 com.win.logout = function() {
+	gcm.win.removeEventOnBeforeUnload();
+	
 	var logoutGrpOption = {
 		id : "_sbm_Logout",
 		action : "/main/logout",
@@ -2952,7 +3101,7 @@ com.win.logout = function() {
  * @author Inswave Systems
  */
 com.win.isAdmin = function() {
-	scwin.isAdmin = $p.top().wfm_side.getWindow().dma_defInfo.get("IS_ADMIN");
+	scwin.isAdmin = $p.main().wfm_side.getWindow().dma_defInfo.get("IS_ADMIN");
 	if (scwin.isAdmin === "Y") {
 		return true;
 	} else {
@@ -3030,8 +3179,6 @@ com.win.setEnterKeyEvent = function(grpObj, objFunc) {
 				}
 			} catch (e) {
 				console.error("[com.win.setEnterKeyEvent] Exception :: " + e.message);
-			} finally {
-				dataCollection = null;
 			}
 		}
 	} catch (ex) {
@@ -3153,16 +3300,13 @@ com.win.getLanguage = function() {
 
 /**
  *
- * 팝업아이디구하기
- * 초기 설정 된 데이터 란 setJSON, setXML 등과 같은 API들을 통해 설정 된 데이터가 이에 속한다.
- * 추가(C)된 행은 제거한다
+ * 팝업 아이디를 반환한다.
  *
- * @param {String} dltId  데이터리스트의 아이디
  * @memberOf com.win
  * @date 2020.05.16
  * @author Inswave Systems
  * @example
-com.win.getPopupId();
+var popupId = com.win.getPopupId();
  */
 com.win.getPopupId = function() {
 	var parent = opener || parent;
@@ -3211,8 +3355,8 @@ com.win.openPopup = function(url, opts, data) {
 			opts = {};
 		}
 		
-		if (typeof data !== "object") {
-			opts = {};
+		if (com.util.isEmpty(data)) {
+			data = {};
 		}
 		
 		if (com.util.isEmpty(data.callbackFn)) {
@@ -3239,32 +3383,23 @@ com.win.openPopup = function(url, opts, data) {
  *
  * @memberOf com.win
  * @date 2020.05.16
- * @param {String} popId popup창 id로 값이 없을 경우 현재창의 아이디
- * @param {String|Object} 부모 창에 전달한 데이터
+ * @param {String|Object} callbackParam 부모 창에 전달한 데이터
+ * @param {String} callbackFnStr 콜백 함수 명
  * @author Inswave Systems
  * @example
 com.win.closePopup();
+com.win.closePopup('{message:"정상처리되었습니다"}');
+com.win.closePopup('정상처리되었습니다.', "scwin.zipPopupCallback");
  */
-com.win.closePopup = function() {
-	gcm.win.closePopup($p, com.win.getPopupId());
+com.win.closePopup = function(callbackParam, callbackFnStr) {
+	if (!com.util.isEmpty(callbackParam)) {
+		com.win.popup = {
+			callbackParam : callbackParam
+		};
+	}
+	gcm.win.closePopup($p, com.win.getPopupId(), com.str.serialize(callbackParam), callbackFnStr);
 };
 
-/**
- * 팝업창의 콜백함수 파라미터를 세팅한다.
- *
- * @memberOf com.win
- * @date 2020.08.06
- * @param {Object} callbackParam 콜백함수에 전달할 파라미터
- * @author Inswave Systems
- * @example
-var callbackParam = { id : "H00001" };
-com.win.setCallbackParam(callbackParam);
- */
-com.win.setCallbackParam = function(callbackParam) {
-	com.win.popup = {
-		callbackParam : callbackParam
-	};
-};
 
 /**
  * 현재 오픈된 전체 팝업창을 닫는다.
@@ -3312,12 +3447,13 @@ com.win.isPopup = function() {
  * @param {String} option.menuType 메뉴타입 ("SP" : 샘플화면)
  * @param {String} option.closable 닫기버튼 보여주기 여부
  * @param {Boolean} option.isHistory Browser History에 기록할 지 여부 (true, false)
+ * @return {Boolean} Main Layout 안에 화면이 오픈 되었는지 여부
  * @author Inswave Systems
  * @example
 com.win.openMenu("인사조회","/tmp/tmp01.xml","010001");
  */
 com.win.openMenu = function(menuNm, url, menuCode, paramObj, option) {
-	gcm.win.openMenu($p, menuNm, url, menuCode, paramObj, option);
+	return gcm.win.openMenu($p, menuNm, url, menuCode, paramObj, option);
 };
 
 /**
@@ -3343,8 +3479,39 @@ com.win.moveUrl = function(moveUrl, paramObj) {
 		}
 	};
 	
-	$p.getFrame().setSrc(gcm.CONTEXT_PATH + moveUrl, paramObj);
+	
+	Promise.resolve().then(function() {
+		 return $p.getFrame().setSrc(gcm.CONTEXT_PATH + moveUrl, paramObj);
+    	});
 };
+
+/**
+ * 특정 WFrame의 웹스퀘어 페이지(XML)을 변경한다.
+ * 
+ * @date 2022.02.17
+ * @param {Object} wframeObj WFrame 객체
+ * @param {String} pageUrl 웹스퀘어 페이지(XML) 파일 경로
+ * @param {Object} paramObj
+ * @author Inswave Systems
+ * @example
+var param = {
+	id : "00001",
+	name : "홍길동"
+};
+com.win.setWFrameSrc(wfm_content, "/tmp/tmp01.xml", param);
+ */
+com.win.setWFrameSrc = function(wframeObj, moveUrl, paramObj) {
+	var paramObj = {
+		"dataObject" : {
+			"type" : "json",
+			"name" : "paramData",
+			"data" : paramObj
+		}
+	};
+	
+	wframeObj.setSrc(gcm.CONTEXT_PATH + moveUrl, paramObj);
+};
+
 
 /**
  * wframe안의 스크립트 영역에서 이 함수를 호출할 경우 자신을 감싼 wframe object를 반환한다. 전역스크립트에서 호출 시에는 null을 반환한다.
@@ -3733,7 +3900,7 @@ com.str.lpad = function(str, length, char) {
 	}
 	
 	if (char.length > length) {
-		console.log("오류 : 채우고자 하는 문자열이 요청 길이보다 큽니다");
+		console.warn("[com.str.lpad] 오류 : 채우고자 하는 문자열이 요청 길이보다 큽니다");
 		return str + "";
 	}
 	
@@ -3762,7 +3929,7 @@ com.str.rpad("11321", 8, "A"); // "11321AAA"
  */
 com.str.rpad = function(str, length, char) {
 	if (char.length > length) {
-		console.log("오류 : 채우고자 하는 문자열이 요청 길이보다 큽니다");
+		console.warn("[com.str.rpad] 오류 : 채우고자 하는 문자열이 요청 길이보다 큽니다");
 		return str + "";
 	}
 	
@@ -3921,7 +4088,7 @@ com.str.existKorean("abc무궁화"); // true
 com.str.existKorean("무궁화꽃이"); // true
  */
 com.str.existKorean = function (value) {
-	check = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
+	var check = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
 	if (check.test(value)) {
 		return true;
 	} else {
@@ -3947,7 +4114,7 @@ com.str.isKorean = function (str) {
 	var result = false;
 
 	for (var i = 0; i < str.length; i++) {
-		c = str.charAt(i);
+		var c = str.charAt(i);
 		if (!com.str.existKorean(c)) {
 			result = false;
 			break;
@@ -4055,8 +4222,8 @@ com.str.isBizID = function (str) {
 	}
 	
 	sum = sum + parseInt((aBizID[8] * 5) / 10);
-	temp = sum % 10;
-	temp1 = 0;
+	var temp = sum % 10;
+	var temp1 = 0;
 
 	if (temp != 0) {
 		temp1 = 10 - temp;
@@ -4185,7 +4352,7 @@ com.str.isPhone = function(str) {
 		var isDash = (phoneNum.indexOf("-")>1);
 		return isDash;
 	} catch (ex) {
-		console.error(exx);
+		console.error(ex);
 		return false;
 	}
 };
@@ -4367,7 +4534,7 @@ com.date.addMonth = function(pYmd, offset) {
 			var chkMonth2 = [ 4, 6, 9, 11 ];
 
 			if (chkMonth1.indexOf(dM) > -1) {
-				if (comf.isLeafYear(dY + "01" + "01")) {
+				if (com.date.isLeafYear(dY + "01" + "01")) {
 					dD = "29";
 				} else {
 					dD = "28";
@@ -4464,6 +4631,10 @@ com.date.formatDate = function (str, type) {
 	} else if (type == "colon") {
 		if (date.length == 8) {
 			output = date.substr(0, 4) + ":" + date.substr(4, 2) + ":" + date.substr(6, 2);
+		}
+	} else if (!com.util.isEmpty(type)) {
+		if (date.length == 8) {
+			output = date.substr(0, 4) + type + date.substr(4, 2) + type + date.substr(6, 2);
 		}
 	} else {
 		var year = date.substr(0, 4);
@@ -4733,12 +4904,14 @@ com.hkey = {};
 /**
  * 단축키 데이터를 조회하기 위한 Submission을 생성한다.
  * 
+ * com.hkey.setShortKey 함수에서는 단축키 데이터 로딩을 위한 Submssion(_sbm_selectShortcutList)을 생성만 한다.
+ * Submssion(_sbm_selectShortcutList)의 실행은 config.xml의 wframe > postScript에 정의된 gcm.win.processCommonData 함수에서 실행한다.
+ * 
  * @memberOf com.hkey
  * @date 2021.03.19
  * @author Inswave Systems
  */
 com.hkey.setShortKey = function(frame) {
-
 	var frameP = null;
 	if (typeof frame === "object") {
 		frameP = frame.$p;
@@ -4746,8 +4919,9 @@ com.hkey.setShortKey = function(frame) {
 		frameP = $p;
 	}
 	
-	var programCd = frameP.getMetaValue("meta_programId"); 
-	var programShortKeyInfo = com.data.getMatchedJSON(gcm.hkey.dataList, { columnId : "PROGRAM_CD", operator : "==", value : programCd});
+	var programCd = gcm.win.getProgramId(frameP);
+	
+	var programShortKeyInfo = com.data.getMatchedJSON(gcm.hkey.dataList, { columnId : "PROGRAM_CD", operator : "==", value : programCd });
 	
 	if (!com.util.isEmpty(programCd) && !com.util.isEmpty(programShortKeyInfo) && (programShortKeyInfo.length === 0)) {
 		var searchCodeGrpOption = { 

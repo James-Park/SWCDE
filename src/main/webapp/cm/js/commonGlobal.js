@@ -65,7 +65,11 @@ var gcm = {
 	// 웹 브라우저 단축키가 동작하지 않도록 설정함 (true : 동작, false : 미동작)
 	IS_USE_BROWSER_SHORTCUT : true,
 	
-	// Console Log Debugg 설정 (DEBUG_MODE가 false이면 Console 객체를 통해서 남긴 로그가 개발자 도구 Console 창에 남지 않도록 함
+	// GET Method에 대해서 RESTFul 방식으로 URL 생성되도록 하는 옵션 (true : 동작, false : 미동작)
+	// RESTFul URL 생성 규칙에 관한 자세한 설명은 gcm.sbm.setActionParam 함수의 주석 참조
+	IS_RESTFUL_URL : false, 
+	
+	// Console Log Debugg 설정 (DEBUG_MODE가 false이면 Console 객체를 통해서 남긴 로그가 개발자 도구 Console 창에 남지 않도록 함 
 	DEBUG_MODE : true
 };
 
@@ -105,7 +109,7 @@ gcm.win.getI18NUrl = function(xmlUrl) {
 	if (xmlUrl.search(bXml) > -1 && xmlUrl.search(WebSquare.baseURI) == -1) {
 		xmlUrl = WebSquare.baseURI + "/blank.xml";
 	}
-	rsURL = baseURL + "?w2xPath=" + xmlUrl;
+	var rsURL = baseURL + "?w2xPath=" + WebSquare.jsLoader.getUri(WebSquare.core.getURL(xmlUrl));
 
 	if (locale != null && locale != '') {
 		rsURL = rsURL + "&locale=" + unescape(locale);
@@ -172,35 +176,35 @@ gcm.win.getActiveWindowInfo = function() {
 	if (popupWindow !== null) {
 		// WFrame Popup 방식으로 오픈된 팝업 화면
 		activeInfo["type"] = "P";
-		activeInfo["programCd"] = popupWindow.$p.getMetaValue("meta_programId");
+		activeInfo["programCd"] = gcm.win.getProgramId(popupWindow.$p);
 		activeInfo["window"] = popupWindow;
-	} else if (typeof $p.top().scwin.getLayoutId === "function") {
+	} else if (typeof $p.main().scwin.getLayoutId === "function") {
 		// TabControl 또는 WindowContainer를 통해서 오픈된 업무 화면
-		activeInfo["type"] = $p.top().scwin.getLayoutId();
+		activeInfo["type"] = $p.main().scwin.getLayoutId();
 		if (activeInfo["type"] == "T") {
-			var selectedTabId = $p.top().tac_layout.getSelectedTabID();
+			var selectedTabId = $p.main().tac_layout.getSelectedTabID();
 			var findProgramList = gcm.menuComp.getMatchedJSON("MENU_CD", selectedTabId, true);
 			if (findProgramList.length > 0) {
 				activeInfo["programCd"] = findProgramList[0].PROGRAM_CD;
 			}
-			activeInfo["window"] = $p.top().tac_layout.getWindow(selectedTabId);
+			activeInfo["window"] = $p.main().tac_layout.getWindow(selectedTabId);
 		} else if (activeInfo["type"] == "M") {
-			var selectedWindowId = $p.top().wdc_main.getSelectedWindowId();
+			var selectedWindowId = $p.main().wdc_main.getSelectedWindowId();
 			var findProgramList = gcm.menuComp.getMatchedJSON("MENU_CD", selectedWindowId, true);
 			if (findProgramList.length > 0) {
 				activeInfo["programCd"] = findProgramList[0].PROGRAM_CD;
 			}
-			activeInfo["window"] = $p.top().wdc_main.getWindow(selectedWindowId);
+			activeInfo["window"] = $p.main().wdc_main.getWindow(selectedWindowId);
 		} else if (activeInfo["type"] == "S") {
-			if (!com.util.isEmpty($p.top().wfm_layout.getWindow().com.data.getParameter("menuInfo").programCd)) {
-				activeInfo["programCd"] = $p.top().wfm_layout.getWindow().com.data.getParameter("menuInfo").programCd;
+			if (!com.util.isEmpty($p.main().wfm_layout.getWindow().com.data.getParameter("menuInfo").programCd)) {
+				activeInfo["programCd"] = $p.main().wfm_layout.getWindow().com.data.getParameter("menuInfo").programCd;
 			}
-			activeInfo["window"] = $p.top().wfm_layout.getWindow();
+			activeInfo["window"] = $p.main().wfm_layout.getWindow();
 		}
 	} else {
 		// Window Popup 방식으로 오픈된 팝업 화면
 		activeInfo["type"] = "P";
-		activeInfo["programCd"] = $p.getMetaValue("meta_programId");
+		activeInfo["programCd"] = gcm.win.getProgramId($p);
 		activeInfo["window"] = $p.getFrame();
 	}
 
@@ -220,11 +224,13 @@ gcm.win.getActiveWindowInfo = function() {
 gcm.win.showToastMessage(gcm.MESSAGE_CODE.STATUS_SUCCESS, e.responseJSON.rsMsg.statusMsg);
  */
 gcm.win.showToastMessage = function(messageType, message) {
-	if (com.util.isEmpty($p.top().wfm_footer)) {
+	if (com.util.isEmpty($p.main().wfm_footer)) {
 		return;
 	}
 	
-	var wfmFooter = $p.top().wfm_footer.getWindow();
+	var messageIdx = new Date().getTime();
+
+	var wfmFooter = $p.main().wfm_footer.getWindow();
 	var className = "";
 	
 	if (gcm.MESSAGE_CODE.STATUS_ERROR === messageType) {
@@ -237,44 +243,44 @@ gcm.win.showToastMessage = function(messageType, message) {
 		className = "info";
 	}
 	
-	wfmFooter.$p.dynamicCreate("grp_notice" + gcm.MESSAGE_IDX, "group", { style: "opacity: 0.0" }, wfmFooter.grp_noticeArea);
-	var grpNotice = wfmFooter.$p.getComponentById("grp_notice" + gcm.MESSAGE_IDX);
+	wfmFooter.$p.dynamicCreate("grp_notice_" + messageIdx, "group", { style: "opacity: 0.0;" }, wfmFooter.grp_noticeArea);
+	var grpNotice = wfmFooter.$p.getComponentById("grp_notice_" + messageIdx);
 	grpNotice.addClass("notice");
 	
-	wfmFooter.$p.dynamicCreate("grp_noticeInfo" + gcm.MESSAGE_IDX, "group", { style: "opacity: 0.0" }, grpNotice);
-	var grpNoticeInfo = wfmFooter.$p.getComponentById("grp_noticeInfo" + gcm.MESSAGE_IDX);
+	wfmFooter.$p.dynamicCreate("grp_noticeInfo_" + messageIdx, "group", { style: "opacity: 0.0" }, grpNotice);
+	var grpNoticeInfo = wfmFooter.$p.getComponentById("grp_noticeInfo_" + messageIdx);
 	grpNoticeInfo.addClass(className);
 	
-	wfmFooter.$p.dynamicCreate("tbx_message" + gcm.MESSAGE_IDX, "textbox", { style: "display:inline; margin-left:3px", label : message}, grpNoticeInfo);
+	wfmFooter.$p.dynamicCreate("tbx_message_" + messageIdx, "textbox", { style: "display:inline; margin-left:3px", label : message}, grpNoticeInfo);
 
-	$("#" + grpNotice.getID()).fadeTo(1000, 1);
-	$("#" + grpNoticeInfo.getID()).fadeTo(1000, 1);
+	wfmFooter.$p.$("#" + grpNotice.getID()).fadeTo(1000, 1);
+	wfmFooter.$p.$("#" + grpNoticeInfo.getID()).fadeTo(1000, 1);
 	
 	com.util.setTimeout(
 		function(idx) {
-			var grpNotice = wfmFooter.$p.getComponentById("grp_notice" + idx);
+			var grpNotice = wfmFooter.$p.getComponentById("grp_notice_" + idx);
 			if (!com.util.isEmpty(grpNotice)) {
-				$("#" + grpNotice.getID()).fadeTo(1000, 0);
+				wfmFooter.$p.$("#" + grpNotice.getID()).fadeTo(1000, 0);
 			}
 			
-			var grpNoticeInfo = wfmFooter.$p.getComponentById("grp_noticeInfo" + idx);
+			var grpNoticeInfo = wfmFooter.$p.getComponentById("grp_noticeInfo_" + idx);
 			if (!com.util.isEmpty(grpNoticeInfo)) {
-				$("#" + grpNoticeInfo.getID()).fadeTo(1000, 0);
+				wfmFooter.$p.$("#" + grpNoticeInfo.getID()).fadeTo(1000, 0);
 			}
 
 			com.util.setTimeout(
 				function(idx) {
-					var tbxMessage = wfmFooter.$p.getComponentById("tbx_message" + idx);
+					var tbxMessage = wfmFooter.$p.getComponentById("tbx_message_" + idx);
 					if (!com.util.isEmpty(tbxMessage)) {
 						tbxMessage.remove();
 					}
 					
-					var grpNoticeInfo = wfmFooter.$p.getComponentById("grp_noticeInfo" + idx);
+					var grpNoticeInfo = wfmFooter.$p.getComponentById("grp_noticeInfo_" + idx);
 					if (!com.util.isEmpty(grpNoticeInfo)) {
 						grpNoticeInfo.remove();
 					}
 					
-					var grpNotice = wfmFooter.$p.getComponentById("grp_notice" + idx);
+					var grpNotice = wfmFooter.$p.getComponentById("grp_notice_" + idx);
 					if (!com.util.isEmpty(grpNotice)) {
 						grpNotice.remove();
 					}
@@ -283,22 +289,13 @@ gcm.win.showToastMessage = function(messageType, message) {
 						includePlugin: "group textbox",
 						recursive: true
 					});
-					/*
-					for (var i = 0; i < objArr.length; i++) {
-						if (com.num.parseInt(objArr[i].getStyle("opacity")) === 0) {
-							objArr[i].remove();
-						}
-					}
-					*/
 				},
 				{ delay : 1500, args : [idx], key :"MessageRemove" + idx}	
 			);
 
 		},
-		{ delay : 3000, args : [gcm.MESSAGE_IDX], key : "MessageFadeOut" + gcm.MESSAGE_IDX}
+		{ delay : 3000, args : [messageIdx], key : "MessageFadeOut" + messageIdx}
 	);	
-	
-	gcm.MESSAGE_IDX++;
 };
 
 
@@ -313,19 +310,24 @@ gcm.win.showToastMessage = function(messageType, message) {
  * @param {String} option.menuType 메뉴타입 ("SP" : 샘플화면)
  * @param {String} option.closable 닫기버튼 보여주기 여부
  * @param {Boolean} option.isHistory Browser History에 기록할 지 여부 (true, false)
+ * @return {Boolean} Main Layout 안에 화면이 오픈 되었는지 여부
  * @author Inswave Systems
  * @example
  * 
  * gcm.win.openMenu("인사조회","/tmp/tmp01.xml","010001");
  */
-gcm.win.openMenu = function($p, menuNm, url, menuCode, paramObj, option) { 
+gcm.win.openMenu = function($p, menuNm, url, menuCode, paramObj, option) {
 	// client에서 url 숨기기 메뉴일 경우에는 새 창으로 띄우기 적용 
-	if (url == "/") {
+	if (com.util.isEmpty(url)) {
+		com.win.alert("메뉴에 프로그램이 등록되지 않았습니다.");
+		return false;
+	} if (url == "/") {
 		var url = document.location.href + "/";
 		window.open(url, "", "width=1200, height=700, left=450, top=100");
+		return false;
 	} else {
 		menuCode = menuCode || "";
-		var layout = $p.top().scwin.getLayoutId();
+		var layout = $p.main().scwin.getLayoutId();
 		var tmpUrl;
 		var menuCodeParm = menuCode;
 		var frameMode;
@@ -338,7 +340,7 @@ gcm.win.openMenu = function($p, menuNm, url, menuCode, paramObj, option) {
 		url = gcm.CONTEXT_PATH + url;
 
 		if ((typeof paramObj !== "undefined") && (paramObj !== null)) {
-			data.param = paramObj;
+			data = paramObj;
 		}
 		
 		data.menuInfo = {
@@ -350,7 +352,6 @@ gcm.win.openMenu = function($p, menuNm, url, menuCode, paramObj, option) {
 		if (!com.util.isEmpty(option) && !com.util.isEmpty(option.menuType)) {
 			data.menuInfo.menuType = option.menuType;
 		}
-		
 		
 		if (!com.util.isEmpty(option) && !com.util.isEmpty(option.closable)) {
 			closable = option.closable;
@@ -377,21 +378,20 @@ gcm.win.openMenu = function($p, menuNm, url, menuCode, paramObj, option) {
 					data : data
 				}
 			};
-			
-			$p.top().tac_layout.addTab(menuCode, tabObj, contObj);
 
 			// tabObj의 openAction의 last값의 동작 특이 사항으로 선택이 되지 않은 경우 선택하는 로직 추가
-			if ($p.top().tac_layout.getSelectedTabID() !== menuCode) {
-				var tabIndex = $p.top().tac_layout.getTabIndex(menuCode);
-				if (tabIndex) {
-					$p.top().tac_layout.setSelectedTabIndex(tabIndex);
-				}
-			}
-			
-			// history에 화면 전환했던 프로그램 코드 저장
-			if (!com.util.isEmpty(option) && option.isHistory && !com.util.isEmpty(menuCode)) {
-				gcm.win.pushState(data);
-			}
+			return Promise.resolve().then(function() {
+				return $p.main().tac_layout.addTab(menuCode, tabObj, contObj);
+			}).then(function(tabId) {
+				$p.main().tac_layout.setSelectedTabIndex(tabId);
+				return tabId;
+			}).then(function(tabId){
+				// history에 화면 전환했던 프로그램 코드 저장
+				if (!com.util.isEmpty(option) && option.isHistory && !com.util.isEmpty(menuCode)) {
+					gcm.win.pushState(data);
+	 			}
+				return tabId;
+			});
 			
 		} else if (layout == "M") {
 			var options = {
@@ -399,15 +399,28 @@ gcm.win.openMenu = function($p, menuNm, url, menuCode, paramObj, option) {
 				src : url,
 				windowTitle : menuNm,
 				windowId : menuCode,
-				openAction : "existWindow",
+				openAction : "selectWindow",
 				frameMode : "wframe",
-				fixed : (option.closable == false) ? true : false,
-				closeAction : function(title) { 
-					if (title === "메인") {
+				fixed : (option.fixed === true) ? true : false,
+				_closable : (option.closable === false) ? false : true,
+				closeAction : function(title) {
+					var winScope = $p.main().wdc_main.getWindowByUniqueId(this.id);
+					
+					if (winScope.com.win._closable === false) {
 						return false;
 					} else {
-						var winFrame = $p.top().wdc_main.getWindowByUniqueId(this.id).scwin.$w.getFrame();
-						return $p.top().scwin.closeBeforePage(winFrame);;
+						var isOnbeforecloseall = $p.main().wdc_main.getUserData("isOnbeforeCloseAll");
+						
+						if ((typeof isOnbeforecloseall === "undefined") || (isOnbeforecloseall === false)) {
+							var isClose = $p.main().scwin.closeBeforePage(winScope.$p.getFrame());
+							if (isClose === false) {
+								$p.main().wdc_main.setFocus($p.main().wdc_main.getSelectedIndex());
+							}
+							$p.main().wdc_main.setUserData("isOnbeforeCloseAll", false);
+							return isClose;
+						}
+						
+						return true;
 					}
 				},
 				dataObject : { 
@@ -416,34 +429,49 @@ gcm.win.openMenu = function($p, menuNm, url, menuCode, paramObj, option) {
 					data : data
 				}
 			}
-			$p.top().wdc_main.createWindow(options);
 			
-			// history에 화면 전환했던 프로그램 코드 저장
-			if (!com.util.isEmpty(option) && option.isHistory && !com.util.isEmpty(menuCode)) {
-				gcm.win.pushState(data);
-			}
-		} else if(layout == "S") {
-			var programCd = $p.top().wfm_side.getWindow().dlt_menu.getMatchedColumnData("SRC_PATH", url, "PROGRAM_CD");
-			data.menuInfo.programCd = programCd[0];
-			
-			// history에 화면 전환했던 프로그램 코드 저장
-			if (!com.util.isEmpty(option) && option.isHistory && !com.util.isEmpty(menuCode)) {
-				gcm.win.pushState(data);
-			}
-			
-			var param = {
-				dataObject : {
-					type : "json",
-					name : "paramData",
-					data : data
+			return Promise.resolve().then(function() {
+				$p.main().wdc_main.createWindow(options);
+				return options;
+			}).then(function(options) {
+				var winScope = $p.main().wdc_main.getWindow(options.windowId);
+				winScope.com.win._closable = options._closable;
+				
+				// history에 화면 전환했던 프로그램 코드 저장
+				if (!com.util.isEmpty(option) && option.isHistory && !com.util.isEmpty(menuCode)) {
+					gcm.win.pushState(data);
 				}
-			};
+			});
+		} else if(layout == "S") {
+			var isClose = $p.main().scwin.closeBeforePage($p.main().wfm_layout.getWindow().$p.getFrame()); 
 			
-			$p.top().wfm_layout.setSrc(url, param);
+			if (isClose) {
+				var programCd = $p.main().wfm_side.getWindow().dlt_menu.getMatchedColumnData("SRC_PATH", url, "PROGRAM_CD");
+				data.menuInfo.programCd = programCd[0];
+		
+				// history에 화면 전환했던 프로그램 코드 저장
+				if (!com.util.isEmpty(option) && option.isHistory && !com.util.isEmpty(menuCode)) {
+					gcm.win.pushState(data);
+				}
+		
+				var param = {
+					dataObject : {
+						type : "json",
+						name : "paramData",
+						data : data
+					}
+				};
+				
+				return Promise.resolve().then(function() {
+					return $p.main().wfm_layout.setSrc(url, param);
+				});
+			} else {
+				return false;
+			}
 		}
 	}
+	return false;
 };
-
 
 /**
 *
@@ -470,6 +498,10 @@ gcm.win.openMenu = function($p, menuNm, url, menuCode, paramObj, option) {
 */
 gcm.win.openPopup = function($p, url, opt, data) {
 	var com = gcm.util.getObject($p, "com");
+	
+	data.menuInfo = {
+		src : url
+	};
 	
 	var _dataObj = {
 		type : "json",
@@ -507,7 +539,7 @@ gcm.win.openPopup = function($p, url, opt, data) {
 	}
 	
 	opt.type = opt.type || "wframePopup";
-
+	
 	if (opt.type == "browserPopup") {
 		var top = Math.floor(((window.screen.availHeight- 50 - com.num.parseInt(height)))/ 2) + (window.screen.availTop|| 0) + "px";
 		var left = Math.floor((window.screen.availWidth - com.num.parseInt(width)) / 2) + (window.screen.availLeft || 0 ) + "px";
@@ -528,12 +560,6 @@ gcm.win.openPopup = function($p, url, opt, data) {
 			_dataObj.data.callbackFn = $p.id + _dataObj.data.callbackFn;
 		}
 	}
-	
-	var paramUrl = "";
-
-	if ((opt.type !== "wframePopup") && (com.util.isEmpty(_dataObj.data) === false)) {
-		paramUrl = "&" + _dataObj.name + "=" + WebSquare.text.BASE64Encode(com.str.serialize(_dataObj.data)) ;
-	}
 
 	var options = {
 		id : opt.id,
@@ -551,15 +577,35 @@ gcm.win.openPopup = function($p, url, opt, data) {
 		useMaximize : opt.useMaximize || false,
 		className :opt.className || "",
 		scrollbars : true,
+		windowDragMove : opt.windowDragMove || true,
 		closeAction : function() {
-			var com = $p.getPopupWindow(this.id).com;
+			var popupWindow = $p.getPopupWindow(this.id);
+			var isClose = true;
+			
+			if (popupWindow.$p.getFrameId() === null) {
+				if (typeof $p.main().scwin.closeBeforePage === "function") {
+					isClose = $p.main().scwin.closeBeforePage(window.$p.main().$p.getFrame());
+				}
+			} else {
+				if (typeof $p.main().scwin.closeBeforePage === "function") {
+					isClose = $p.main().scwin.closeBeforePage(popupWindow.$p.getFrame());
+				}
+			}
+
+			if (!isClose) {
+				return false;
+			}
+
+			var com = popupWindow.com;
 			var messageType = com.data.getParameter("messageType") || "alert";
 			var callbackFuncStr = com.data.getParameter("callbackFn");
 			var callbackFunc = gcm.util.getCallBackFunction(callbackFuncStr);
 			
-			if (typeof callbackFunc === "function") {
+			if (typeof callbackFunc === "function") { 
 				if (!com.util.isEmpty(com.win.popup) && !com.util.isEmpty(com.win.popup.callbackParam)) {
 					callbackFunc(com.util.getJSON(com.win.popup.callbackParam));
+				}else if (!com.util.isEmpty(popupWindow.$p.main().com.win.popup) && !com.util.isEmpty(popupWindow.$p.main().com.win.popup.callbackParam)) {
+					callbackFunc(com.util.getJSON(popupWindow.$p.main().com.win.popup.callbackParam));
 				} else {
 					if (messageType === "confirm") {
 						callbackFunc({ clickValue : false });
@@ -570,12 +616,8 @@ gcm.win.openPopup = function($p, url, opt, data) {
 		},
 		popupUrl : "../popup"
 	};
-	
-	if (options.type !== "wframePopup") {
-		$p.openPopup(url + paramUrl, options);
-	} else {
-		$p.openPopup(gcm.CONTEXT_PATH + url + paramUrl, options);
-	}
+
+	$p.openPopup(gcm.CONTEXT_PATH + url, options);
 };
 
 
@@ -584,29 +626,39 @@ gcm.win.openPopup = function($p, url, opt, data) {
  *
  * @memberOf gcm.win
  * @date 2020.05.16
+ * @param {Object} $p WFrame Scope $p 객체
  * @param {String} popId popup창 id로 값이 없을 경우 현재창의 아이디
- * @param {String|Object} 부모 창에 전달한 데이터
+ * @param {String} callbackParamStr 부모 창에 전달한 데이터
+ * @param {String} callbackFnStr 콜백 함수 명
  * @author Inswave Systems
  */
-gcm.win.closePopup = function($p, popId) {
-	var com = gcm.util.getObject($p, "com");
-	
+gcm.win.closePopup = function ($p, popId, callbackParamStr, callbackFnStr) { 
 	com.util.setTimeout(
-		function() { 
+		function() {
 			if ($p.isWFramePopup()) {
 				$p.closePopup(popId);
 			} else {
 				$w.closePopup();
+				var func = gcm.util.getCallBackFunction(callbackFnStr);
+				
+				if (func) {
+					func(com.util.getJSON(callbackParamStr));
+				} else if (opener !== null){
+					var func = opener.gcm.util.getCallBackFunction(callbackFnStr);
+					func(com.util.getJSON(callbackParamStr));
+				}
 			}
 		},
 		{ delay : 10, key : "closePopup" + (Math.random() * 16).toString().replace(".","") }
 	);
 };
 
+
 /**
  * 메세지 팝업을 호출한다.
  *
  * @private
+ * @param {Object} $p WFrame Scope $p 객체
  * @param {String} messageType 팝업창 타입 (alert || confirm)
  * @param {String} messageStr 메시지
  * @param {String} closeCallbackFncName 콜백 함수명
@@ -685,10 +737,10 @@ gcm.win.setProgramAuthority = function($p) {
 	var param = com.data.getParameter();
 	if ((typeof param !== "undefined") && (typeof param.menuCode !== "undefined") && (param.menuCode.trim() !== "")) {
 		var menuCd = param.menuCode;
-		var menuInfoList = $p.top().wfm_side.getWindow().dlt_menu.getMatchedJSON("MENU_CD", menuCd);
+		var menuInfoList = $p.main().wfm_side.getWindow().dlt_menu.getMatchedJSON("MENU_CD", menuCd);
 
 		if (menuInfoList.length > 0) {
-			var programAuthorityList = $p.top().wfm_side.getWindow().dlt_programAuthority.getMatchedJSON("PROGRAM_CD", menuInfoList[0].PROGRAM_CD);
+			var programAuthorityList = $p.main().wfm_side.getWindow().dlt_programAuthority.getMatchedJSON("PROGRAM_CD", menuInfoList[0].PROGRAM_CD);
 
 			if (programAuthorityList.length > 0) {
 				var programAuthority = programAuthorityList[0];
@@ -729,7 +781,7 @@ gcm.win.setProgramAuthority = function($p) {
 
 
 /**
- * 공통 코드, 권한, 개인화 처리를 위한 Workflow를 실행한다.
+ * 공통 코드, 권한, 개인화 처리를 위해서 생성된 Submission을 Promise Workflow 기능을 이용해서 실행한다.
  *
  * @private
  * @memberOf gcm.win
@@ -770,6 +822,10 @@ gcm.win.processCommonData = function($p) {
 
 	if (commonDataWorkflow.step.length > 0) {
 		com.sbm.executeWorkflow(commonDataWorkflow);
+	} else {
+		if (typeof scwin.ondataload === "function") {
+			scwin.ondataload();
+		}
 	}
 };
 
@@ -802,11 +858,10 @@ gcm.win.pushState(option.dataObject.data);
  */
 gcm.win.pushState = function(data) {
 	if (data.menuInfo.menuCode === "MAIN") {
-		history.pushState({ "data" : data }, data.menuInfo.menuNm, "");
+		history.pushState({ "data" : data }, data.menuInfo.menuNm, gcm.CONTEXT_PATH + "/");
 	} else {
 		history.pushState({ "data" : data }, data.menuInfo.menuNm, "?menuCd=" + data.menuInfo.menuCode);
 	}
-	
 };
 
 
@@ -824,8 +879,8 @@ gcm.win.changePageState = function() {
 		var options = {};
 		options.isHistory = false;
 		var data = history.state.data;
-		$p.top().wfm_side.getWindow().trv_menu.findNodeByValue(data.menuInfo.menuCode, true);
-		gcm.win.openMenu($p.top().$p, data.menuInfo.menuNm, data.menuInfo.src, data.menuInfo.menuCode, data.param, options);
+		$p.main().wfm_side.getWindow().trv_menu.findNodeByValue(data.menuInfo.menuCode, true);
+		gcm.win.openMenu($p.main().$p, data.menuInfo.menuNm, data.menuInfo.src, data.menuInfo.menuCode, data.param, options);
 	}
 };
 
@@ -880,122 +935,6 @@ gcm.win.setOnBeforeUnload = function(e) {
 	return event.returnValue;
 };
 
-
-/**
- * 데이터가 수정되어있는 경우 창이 닫힐때 창을 닫을 지 여부르를 묻는 컨펌창을 호출한다.
- *
- * @private
- * @memberOf com.win
- * @date 2021.07.08
- * @param {Object} dataObjArr 창이 닫힐때 수정된 여부를 체크할 데이터컬렉션 객체(데이터 맵또는 데이터 리스트)
- * @return {Object} topFrame 객체
- * @author Inswave Systems
- * @example 
-gcm.win.setBeforeCloseModified = function($p, dataObjArr);
- */
-gcm.win.setBeforeCloseModified = function($p, dataObjArr) {
-	var frameObj = com.win._getMenuTopFrame();
-	var frameId = frameObj.id;
-	var modifiedData = frameObj.getUserData(frameId + "_" + "ModifiedData");
-	var dataIds = "";
-
-	if (com.util.isEmpty(modifiedData)) {
-		modifiedData = [];
-	}
-
-	if (com.util.isEmpty(dataObjArr)) {
-		return;
-	}
-
-	modifiedData = modifiedData.concat(dataObjArr);
-	frameObj.setUserData(frameId + "_" + "ModifiedData", modifiedData);
-
-	// wframePopup팝업
-	if ($p.isWFramePopup()) {
-		$("#" + $p.getPopupId() + "_close").click(function() {
-			var popupId = $p.getPopupId();
-			var popupObj = $p.getPopup(popupId);
-			popupObj.setCloseButtonStatus(false)
-
-			if (gcm.win.beforeCloseModifiedCheck($p, frameId)) {
-				var paramObj = {
-					"popupId" : popupId
-				};
-				if (confirm(com.data.getMessage("com.cfm.0007") ||"창을 닫으시겠습니까? 변경사항이 저장되지 않을 수 있습니다")) {
-					popupObj.close();
-				}
-				/*
-				 * wframe confirm으로 바꿔야 하는 요구사항이 생기면 사용 var options ={ "callBackParam":paramObj, } com.win.confirm("창을 닫으시겠습니까? 변경사항이 저장되지 않을 수 있습니다",
-				 * "com.win._popupCloseCallBack",options);
-				 */
-			} else {
-				popupObj.close();
-			}
-		})
-	} else if ($p.isPopup()) {
-		// 윈도우팝업
-		$(window).bind('beforeunload', function() {
-			var popupObj = com.util.getComponent($p.getPopupId());
-			if (gcm.win.beforeCloseModifiedCheck($p, frameId)) {
-				return "창을 닫으시겠습니까? 변경사항이 저장되지 않을 수 있습니다";
-			}
-		});
-	}
-	return;
-}
-
-/**
- * 현재 화면의 데이터컬렉션중에 수정된 된 데이터가 있는지 확인한다. com.win.setBeforeCloseModified으로 등록한 데이터만 체크한다.
- *
- * @private
- * @memberOf com.win
- * @param {Object} frameId 프레임의 아이디
- * @return {Boolean} 수정된 데이터가 있으면 true 없으면 false 반환
- * @date 2021.07.08
- * @author Inswave Systems
- * @example
-gcm.win.beforeCloseModifiedCheck(wfm_wframe);
- */
-gcm.win.beforeCloseModifiedCheck = function($p, frameId) {
-	var frameObj = com.util.getComponent(frameId);
-	if (com.util.isEmpty(frameObj)) {
-		return false;
-	}
-
-	var modifiedDataArr = frameObj.getUserData(frameId + "_" + "ModifiedData");
-
-	if (!com.util.isEmpty(modifiedDataArr)) {
-		if (com.util.isArray(modifiedDataArr) && com.util.isArray(modifiedDataArr) && modifiedDataArr.length > 0) {
-			var uniqArr = modifiedDataArr.reduce(function(a, b) {
-				if (a.indexOf(b) < 0)
-					a.push(b);
-				return a;
-			}, []);
-		}
-
-		if (!com.util.isEmpty(uniqArr) && com.util.isArray(uniqArr)) {
-			var uniqLen = uniqArr.length;
-			if (uniqLen > 0) {
-				for (var i = 0; i < uniqLen; i++) {
-					var dlObj = uniqArr[i]
-					if (!com.util.isEmpty(dlObj) && (dlObj.initializeType == "dataList" || dlObj.initializeType == "dataMap")) {
-						var modifiedIndex = dlObj.getModifiedIndex();
-						if (modifiedIndex.length > 0) {
-							return true;
-							break;
-						}
-					}
-				}
-
-			}
-		}
-		return false;
-	} else {
-		return false;
-	}
-};
-
-
 /**
  * 웹스퀘이 페이지 호출 시 에러가 발생할 경우 발생하는 이벤트 함수
  * 
@@ -1020,6 +959,41 @@ gcm.win.errorHandler = function(e) {
 gcm.win.reload = function() {
 	gcm.win.removeEventOnBeforeUnload();
 	window.location.reload();
+};
+
+
+/**
+ *
+ * 프로그램 아이디를 반환한다.
+ *
+ * @memberOf gcm.win
+ * @date 2022.06.28
+ * @author Inswave Systems
+ * @example
+var programId = com.win.getProgramId();
+ */
+gcm.win.getProgramId = function($p) { 
+	
+	var programId = "";
+	
+	if (com.util.isEmpty($p.getMetaValue("meta_programId"))) {
+		// 웹스퀘어 파일명을 프로그램 아이디와 동일하게 작성한 경우에만 정상 동작한다.
+		var src = ""; 
+	
+		if (!com.util.isEmpty($p.getFrame())) {
+			src = $p.getFrame().getSrc();
+		} else {
+			src = $p.getParameter("w2xPath");
+		}
+		
+		if (src.indexOf("/ui/") >= 0) {
+			programId = src.substring(src.lastIndexOf("/") + 1, src.lastIndexOf("."));
+		}
+	} else {
+		programId = $p.getMetaValue("meta_programId");
+	}
+	
+	return programId;
 };
 
 // =============================================================================
@@ -1073,31 +1047,6 @@ gcm.data.getValResultMsg = function(valInfo, value, dataCollectionObj, rowIndex)
 
 	return msgInfo;
 };
-
-
-/**
- * InputCalendar Validator를 수행한다.
- *
- * @param {String} value 입력된 날짜 문자열
- * @memberOf gcm.data
- * @date 2020.05.16
- * @author Inswave Systems
- */
-gcm.data.validateInputCalendar = function(value, compId) {
-	return value;
-	try {
-		var compObj = com.util.getComponent(compId);
-		if (com.util.isEmpty(value) === false) {
-			if (com.date.isDate(value) === false) {
-				com.win.alert("날짜 형식이 올바르지 않습니다.");
-			}
-		}
-		return value;
-	} catch (ex) {
-		return value;
-	}
-};
-
 
 /**
  * 엑셀 다운로드 옵션을 설정한다.
@@ -1203,40 +1152,6 @@ gcm.data.setDownloadGridViewOption = function(grdObj, options) {
 
 
 /**
- * 공통 메시지에 코드에 해당하는 공통 메시지 코드를 반환합니다.
- *
- * @memberOf gcm.data
- * @date 2021.07.08
- * @param {String} sysMsgId 메시지 ID , Array 형식인 경우는 첫번째 인덱스가 sysMsgId가 되고 두번째 인덱스부터 치환문자가 됨
- * @param {String} arguments 메시지 치환 문자열 (메시지 ID에서 치환이 필요한 만큼 문자열 매개변수를 전달함)
- * @author Inswave Systems
- */
-gcm.data.getMessage = function(msgId) {
-	var message = ""
-	if (com.util.isEmpty(msgId) === false) {
-		message = WebSquare.WebSquareLang[msgId];
-	}
-
-	if (com.util.isEmpty(message) === false) {
-		var tmpMessage = message;
-
-		if (arguments.length > 1) {
-			for(var i = 1; i < arguments.length; i++) {
-				if (com.util.isEmpty(arguments[i]) === false) {
-					tmpMessage = (tmpMessage.indexOf("$[" + (i-1) + "]") != -1) ? com.str.replaceAll(tmpMessage, "$[" + (i-1) + "]", arguments[i]) : tmpMessage;
-				}
-			}
-			return tmpMessage;
-		} else {
-			return tmpMessage;
-		}
-	} else {
-		return "";
-	}
-};
-
-
-/**
  * 다국어 메시지 데이터 배열을 전체조회 하여 전역객체 gcm.msg에 넣는다.
  *
  * @memberOf gcm.data
@@ -1259,6 +1174,75 @@ gcm.data.loadMessage = function() {
 	};
 	
 	com.sbm.executeDynamic(getMessageOption);
+};
+
+/**
+ * 변경 검사 대상 Data Collection을 저장할 객체를 생성한다.
+ *
+ * @private
+ * @memberOf com.data
+ * @date 2021.07.08
+ * @param {Object} $p WFrame Scope $p 객체
+ * @author Inswave Systems
+ * @example 
+gcm.data.initChangeCheckedDc = function($p);
+ */
+gcm.data.initChangeCheckedDc = function($p) {
+	var com = gcm.util.getObject($p, "com");
+	var scwin = gcm.util.getObject($p, "scwin");
+	
+	if (!com.util.isEmpty(com.data.getParameter("menuInfo"))) {
+		scwin._changeCheckDcList = [];
+	}
+};
+
+/**
+ * 변경 검사 대상 Data Collection을 세팅한다.
+ *
+ * @private
+ * @memberOf com.data
+ * @date 2021.07.08
+ * @param {Object} $p WFrame Scope $p 객체
+ * @param {Object} dcObjArr 창이 닫힐때 수정된 여부를 체크할 데이터컬렉션 객체(데이터 맵또는 데이터 리스트)
+ * @return {Object} topFrame 객체
+ * @author Inswave Systems
+ * @example 
+gcm.data.setChangeCheckedDc = function($p, dcObjArr);
+ */
+gcm.data.setChangeCheckedDc = function($p, dcObjArr) {
+	var mainFrameScwin = gcm.data.getChangeCheckedMainFrame($p);
+	if (!com.util.isEmpty(mainFrameScwin) && !com.util.isEmpty(mainFrameScwin._changeCheckDcList)) {
+		if (com.util.isArray(dcObjArr)) {
+			for (var id in dcObjArr) {
+				mainFrameScwin._changeCheckDcList.push(dcObjArr[id].getID());
+			}
+		} else {
+			mainFrameScwin._changeCheckDcList.push(dcObjArr.getID());
+		}
+	}
+};
+
+/**
+ * 변경 검사 대상 Data Collection 정보를 저장하는 화면 메인 프레임을 반환한다.
+ *
+ * @private
+ * @memberOf com.data
+ * @date 2022.01.14
+ * @param {Object} $p WFrame Scope $p 객체
+ * @return {Object} topFrame 객체
+ * @author Inswave Systems
+ */
+gcm.data.getChangeCheckedMainFrame = function($p) {
+	var com = gcm.util.getObject($p, "com");
+	var scwin = gcm.util.getObject($p, "scwin");
+	
+	if (typeof scwin._changeCheckDcList !== "undefined") {
+		return scwin;
+	} else if ($p.main().$p.getFrameId() !== $p.getFrameId()) {
+		return gcm.data.getChangeCheckedMainFrame($p.parent().$p);
+	} else {
+		return null;
+	}
 };
 
 // =============================================================================
@@ -1289,6 +1273,128 @@ gcm.sbm = {};
 gcm.sbm.preSubmitFunction = function(sbmObj) {
 	if ((com.util.isEmpty(gcm.CONTEXT_PATH) === false) && (sbmObj.action.indexOf(gcm.CONTEXT_PATH) !== 0)) {
 		sbmObj.action = gcm.CONTEXT_PATH + sbmObj.action;
+	}
+	
+	// REST API 방식 처리를 위해서 GET Method에 대해서 Request 데이터를 Path Variable 치환 및 QueryString으로 생성함
+	if (gcm.IS_RESTFUL_URL === true) {
+		gcm.sbm.setActionParam(sbmObj);
+	}
+};
+
+
+/**
+ * REST API 방식 처리를 위해서 GET Method에 대해서 Request 데이터를 Path Variable 치환 및 QueryString으로 생성한다.
+ * 
+ * 1. Path Variable 처리 : Action에서 "/testJsonMap/{procId}/{seq}/"와 같이 Path Variable(${procId}, ${seq})을 선언할 경우, 
+ *	 해당 변수를 DataMap이나 RequestData(JSON)에 정의된 Key의 Value으로 치환한다.
+ *	 DataMap이나 RequestData(JSON) 안에 Path Variable({procId}, {seq})에 정의된 procId와 seq Key(Column)이 존재해야 한다.
+ *	 Key가 존재하지 않을 경우 Path Variable에 추가하지 않는다.
+ *	 Path Variable에 추가된 Key 값은 GET 방식일 경우 생성되는 QueryString에서 제외 시킨다.
+ *	 
+ * 2. QueryString 처리 : GET Method으로 Action을 호출할 경우, 해당 변수를 DataMap이나 RequestData(JSON)에 정의된 Key와 Value으로 치환한다.
+ *	 DataMap이나 RequestData(JSON) 안에 Path Variable({procId}, {seq})에 정의된 procId와 seq Key(Column)이 존재해야 한다.
+ *	 단 건 데이터(Map)만 QueryString으로 생성해서 서버에 전송하고, Array 형태의 데이터의 경우에는 QueryString으로 포함시키지 않는다.
+ *	 
+ * @param {Object} sbmObj Submission 객체
+ * @memberOf gcm.sbm
+ * @date 2021.12.09
+ * @author Inswave Systems
+ * @example
+// Submission ref 정의된 DataMap의 데이터를 QueryString 방식으로 URL에 추가해서 전달하는 예제 코드
+// sbm_submission1.ref = "data:json,dma_dataMap1"
+// sbm_submission1.action = "/restful/testJsonMap2"
+// 생성된 Request URL : http://127.0.0.1:8080/restful/testJsonMap2.do?procId=PR001&subId=SB002&name=Peter&tel=010-2223-4421
+scwin.btn_search1_onclick = function(e) {
+	com.sbm.execute(sbm_submission1);
+};
+
+// JSON 객체를 QueryString 방식으로 URL에 추가해서 전달하는 예제 코드
+// sbm_submission2.action = "/restful/testJsonMap2"
+// 생성된 Request URL : http://127.0.0.1:8080/restful/testJsonMap2.do?procId=PR001&subId=SB002&name=Peter&tel=010-2223-4421
+scwin.btn_search2_onclick = function(e) {
+	var param = {
+		procId : "PR001",
+		subId : "SB002",
+		name : "Peter",
+		tel : "010-2223-4421"
+	};
+	com.sbm.execute(sbm_submission2, param);
+};	
+
+// ref 정의된 DataMap의 데이터를 Path Variable과 QueryString 방식을 조합해서 URL에 추가해서 전달하는 예제 코드
+// DataMap 내에 정의된 Column Id 중에서 Path Variable로 정의되지 않은 컬럼(name, tel)을 QueryString 방식으로 추가된다.
+// sbm_submission3.ref = "data:json,dma_dataMap1"
+// sbm_submission3.action = "/restful/testJsonMap3/{procId}/{subId}"
+// 생성된 Request URL : http://127.0.0.1:8080/restful/testJsonMap3/PR001/SB002?name=Peter&tel=010-2223-4421
+scwin.btn_search3_onclick = function(e) {
+	com.sbm.execute(sbm_submission3);
+};
+ */
+gcm.sbm.setActionParam = function(sbmObj) {
+	var requestData = sbmObj.requestData || WebSquare.ModelUtil.getRefToReqData(sbmObj);
+	
+	if (com.util.isEmpty(requestData)) {
+		return;
+	}
+	
+	if (typeof requestData === "string") {
+		requestData = JSON.parse(requestData);
+	}
+	
+	if (com.util.isEmpty(sbmObj.__action)) {
+		sbmObj.__action = sbmObj.action;
+	}
+	
+	var actionUrl = sbmObj.__action;
+	
+	var queryParam = {};
+	if (sbmObj.__action.indexOf("/{") > -1) {
+		actionUrl = actionUrl.substr(0, actionUrl.indexOf("/{"));
+	}
+
+	// requestData를 QueryString으로 생성해서 submission.action에 추가한다.
+	if (com.util.isJSON(requestData)) {
+		
+		// DataMap에 저장된 데이터를 queryParam에 저장한다.
+		for ( var key in requestData) {
+			if ((com.util.isEmpty(requestData[key]) === false) && (com.util.isJSON(requestData[key]) === false)) {
+				queryParam[key] = encodeURIComponent(requestData[key]);
+			} else if ((com.util.isJSON(requestData[key])) && (com.util.isArray(requestData[key]) === false)) {
+				for ( var subKey in requestData[key]) {
+					if ((com.util.isEmpty(requestData[key][subKey]) === false) && (com.util.isJSON(requestData[key][subKey]) === false)) {
+						queryParam[subKey] = encodeURIComponent(requestData[key][subKey]);
+					}
+				}
+			}
+		}
+		
+		
+		
+		// URL에 Path Variable(ex. {paramId})로 정의된 변수를 queryParam의 정의된 값으로 치환하고, queryParam에서는 제거한다.
+		// queryParam에 Path Variable과 일치하는 값이 없을 경우 Skip한다.
+		var actionArr = sbmObj.__action.split(/(\{[^}]*})/g);
+		for (var i = 0; i < actionArr.length; i++) {
+			if (actionArr[i].match(/(\{[^}]*})/g) !== null) {
+				var paramKey = actionArr[i].substr(1, actionArr[i].indexOf("}")-1);
+				if (typeof queryParam[paramKey] !== "undefined") {
+					actionUrl += "/" + queryParam[paramKey];
+					delete queryParam[paramKey];
+				}
+			}
+		}
+		
+		// GET Method로 전송할 경우 queryParam에 저장된 Key, Value를 QueryString으로 생성해서 Action URL에 붙인다.
+		if (sbmObj.method === "get") {
+			for (key in queryParam) {
+				if (actionUrl.indexOf("?") === -1) {
+					actionUrl += "?" + key + "=" + queryParam[key];
+				} else {
+					actionUrl += "&" + key + "=" + queryParam[key];
+				}
+			}
+		}
+		
+		sbmObj.action = actionUrl;
 	}
 };
 
@@ -1470,15 +1576,18 @@ gcm.util.getParameter = function(param, url) {
  * @param {String} _objectId 객체 ID
  * @param {String} _scopeObj 객체 적용 Scope ID ["parent" 최상위 예외 scope ID 적용]
  * @returns {Object} 찾은 객체
+ * @example
+var com = gcm.util.getObject($p, "com");
+var scwin = gcm.util.getObject($p, "scwin");
  */
 gcm.util.getObject = function($p, _objectId, _scopeObj) {
 	var scopeObj = _scopeObj || "";
-	var topFrameId = $p.top().$p.getFrameId();
+	var topFrameId = $p.main().$p.getFrameId();
 	
 	if (scopeObj == "parent") {
 		scopeObj = $p.parent().$p;
 	} else if (scopeObj == "top") {
-		scopeObj = $p.top().$p;
+		scopeObj = $p.main().$p;
 	} else if (scopeObj == "") {
 		scopeObj = $p;
 	} else {
@@ -1505,7 +1614,7 @@ gcm.util.getObject = function($p, _objectId, _scopeObj) {
 		console.error(ex);
 	}
 	return objectComp;
-}
+};
 
 /**
  * 함수 명을 통해 함수 객체 찾아서 반환한다.
@@ -1527,9 +1636,9 @@ gcm.util.getFunction = function($p, _funcStr, _scopeId) {
 				var funcArr = _funcStr.split(".");
 				var funcCnt = funcArr.length;
 				var frameWin;
-				if (typeof _scopeId != "" && typeof _scopeId != "undefined") {
+				if (!com.util.isEmpty(_scopeId)) {
 					if (_scopeId == "top") {
-						frameWin = $p.top();
+						frameWin = $p.main();
 					} else if (_scopeId == "parent") {
 						frameWin = $p.parent();
 					} else {
@@ -1579,13 +1688,13 @@ gcm.util.getFunction = function($p, _funcStr, _scopeId) {
  * @returns {Function} 특정 함수명의 함수객체
  */
 gcm.util.getCallBackFunction = function(callbackFnStr) {
-	if ((typeof callbackFnStr !== "undefined") && (callbackFnStr !== "")) {
+	if (!com.util.isEmpty(callbackFnStr)) {
 		if (callbackFnStr.indexOf("__close_callback_Func__") > -1) {
-			func = gcm.CB_FUNCTION_MANAGER["cbFuncSave"][callbackFnStr];
+			var func = gcm.CB_FUNCTION_MANAGER["cbFuncSave"][callbackFnStr];
 			delete gcm.CB_FUNCTION_MANAGER["cbFuncSave"][callbackFnStr];
 			return func;
 		} else {
-			func = window.WebSquare.util.getGlobalFunction(callbackFnStr);
+			var func = window.WebSquare.util.getGlobalFunction(callbackFnStr);
 			return func;
 		}
 	}
@@ -1628,7 +1737,7 @@ gcm.hkey.event = {
 	/**
 	 * 단축키 이벤트를 체크한다.
 	 */
-	checkEvent : function(e) { 
+	checkEvent : function(e) {
 		try {
 			var lastKey = e.key || e.keyCode || e.which;
 			var complexKey = "";
@@ -1653,7 +1762,7 @@ gcm.hkey.event = {
 				} else {
 					complexKey = "singleKey";
 				}
-			}
+			}		
 
 			// Ctrl, Alt, Shift가 아닌 lastKey가 인식될 경우
 			if (lastKey != "Control" && lastKey != "Alt" && lastKey != "Shift") {
@@ -1689,7 +1798,7 @@ gcm.hkey.event = {
 							}
 						}
 						
-						if (e.preventDefault) {
+						if (e.peventDefault) {
 							e.preventDefault();
 						} else if (e.returnValue) {
 							e.returnValue = false;
@@ -1705,7 +1814,7 @@ gcm.hkey.event = {
 	/**
 	 * 단축키를 실행한다.
 	 */
-	runEvent : function(complexKey, eventKey) {
+	runEvent : function(complexKey, eventKey) { 
 		try {
 			gcm.hkey.event.runGlobalEvent(complexKey, eventKey);
 			
@@ -1721,14 +1830,14 @@ gcm.hkey.event = {
 			var activeWindowInfo = gcm.win.getActiveWindowInfo();
 			var findframe = activeWindowInfo["window"]; // 단축키가 감지된 프레임
 			
-			var searchEvent = com.data.getMatchedJSON(gcm.hkey.dataList.getID(), [
+			var searchEvent = com.data.getMatchedJSON(gcm.hkey.dataList, [
 				{ columnId : "PROGRAM_CD", operator : "==", value : activeWindowInfo["programCd"], logical : "&&" },
 				{ columnId : "COMPLEX_KEY", operator : "==", value : complexKey, logical : "&&" },
 				{ columnId : "LAST_KEY", operator : "==", value : eventKey, logical : "&&" }
 			]);
 			
 			if (typeof searchEvent == "undefined" || searchEvent.length == 0) {
-				searchEvent = com.data.getMatchedJSON(gcm.hkey.dataList.getID(), [
+				searchEvent = com.data.getMatchedJSON(gcm.hkey.dataList, [
 					{ columnId : "PROGRAM_CD", operator : "==", value :'TOP', logical : "&&" },
 					{ columnId : "COMPLEX_KEY", operator : "==", value : complexKey, logical : "&&" },
 					{ columnId : "LAST_KEY", operator : "==", value : eventKey, logical : "&&" }
@@ -1943,13 +2052,16 @@ gcm.hkey.event = {
 	 */
 	isPreventKey : function(complexKey, lastKey) {
 		var exTag = [ "INPUT", "TEXTAREA", "IFRAME" ];
-		var controlKeyList = ["F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12", "ctrlKey", "altKey", "ctrlAltKey", "ctrlShiftKey", "altShiftKey" , "Tab", "Escape"];
+		var controlKeyList = ["F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12", "ctrlKey", "altKey", "ctrlAltKey", "ctrlShiftKey", "altShiftKey", "Escape"];
 
 		var activeTag = document.activeElement.tagName;
-		var lastKey = lastKey.toUpperCase();
 
 		if ((exTag.indexOf(activeTag) === -1)) {
-			return true;
+			if (((complexKey === "singleKey") && (lastKey === "Tab")) || ((complexKey === "shiftKey") && (lastKey === "Tab")) || ((complexKey === "singleKey") && (lastKey === "Enter"))) {
+				return false;
+			} else {
+				return true;
+			}
 		} else if ((exTag.indexOf(activeTag) > -1) && (((complexKey === "ctrlKey") && (lastKey === "A"))
 			|| ((complexKey === "ctrlKey") && (lastKey === "C")) || ((complexKey === "ctrlKey") && (lastKey === "V"))
 			|| ((complexKey === "ctrlKey") && (lastKey === "X")) || ((complexKey === "ctrlKey") && (lastKey === "Y"))
@@ -1967,9 +2079,12 @@ gcm.hkey.event = {
 	 */
 	runGlobalEvent : function(complexKey, eventKey) {
 		try {
-			// Escape Key가 입력되면 맨 마지막에 오픈된 Alert 또는 Confirm 창을 닫는다.
+			
+			// F1 키를 눌렀을 때에 사용자가 정의한 스크립트만 실행되도록 하기 위해서
+			// 브라우저의 Function Key 동작을 중지키려면 gcm.IS_USE_BROWSER_SHORTCUT 속성을 false로 설정해야 한다. (기본값은 true임)
 			if (eventKey === "F1") {
-				//com.win.alert("F1가 실행 되었습니다.");
+				// com.win.alert("F1가 실행 되었습니다.");
+			// Escape Key가 입력되면 맨 마지막에 오픈된 Alert 또는 Confirm 창을 닫는다.
 			} else if (eventKey === "Escape") {
 				var lastPopupIdx = $p.getPopupWindowList().length - 1; 
 				if (lastPopupIdx >= 0) {
@@ -2085,14 +2200,14 @@ gcm.hkey.setEventPause = function(_targetComp, _flag, _eventList) {
 
 			comp.setEventPause(eventList, flag);
 			for (var i in comp.childCompHash) {
-				var childComp = ngmf.object(comp.childCompHash[i].id);
+				var childComp = com.util.getObject(comp.childCompHash[i].id);
 				if (typeof childComp != "undefined") {
 					childComp.setEventPause(eventList, flag);
 				}
 			}
 
 			for (var i in comp.refCompHash) {
-				var refComp = ngmf.object(comp.refCompHash[i].id);
+				var refComp = com.util.getObject(comp.refCompHash[i].id);
 				if (typeof refComp != "undefined") {
 					refComp.setEventPause(eventList, flag);
 				}
