@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:w2="http://www.inswave.com/websquare"
+	xmlns:xf="http://www.w3.org/2002/xforms">
+	<head>
+		<w2:type>DEFAULT</w2:type>
+		<w2:buildDate />
+		<xf:model>
+			<xf:instance>
+				<data xmlns="" />
+			</xf:instance>
+			<w2:dataCollection baseNode="map">
+				<w2:dataList baseNode="list" id="dlt_memberList" ev:oncelldatachange="" repeatNode="map" saveRemovedData="true" initRowPosition="0">
+					<w2:columnInfo>
+						<w2:column id="id" name="아이디" dataType="text"></w2:column>
+						<w2:column id="name" name="성명" dataType="text"></w2:column>
+						<w2:column id="tel" name="연락처" dataType="text"></w2:column>
+						<w2:column id="region" name="지역" dataType="text"></w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+			</w2:dataCollection>
+			<w2:workflowCollection></w2:workflowCollection>
+		</xf:model>
+		<script type="text/javascript" src="common.js" scopeExternal="true" scopeVariable="com"/>
+		<script type="text/javascript" lazy="false"><![CDATA[scwin.onpageload = function () {
+	// 1건의 데이터로 Array 형태로 정의해서 세팅해야 합니다.
+	var jsonData = [
+		{ "id": "P0001", "name": "홍길동", "tel": "010-2323-4323", "region": "서울" }
+	];
+	dlt_memberList.setJSON(jsonData);
+};
+
+scwin.onpageunload = function () {
+};
+
+scwin.btn_insertColumn_onclick = function (e) {
+	// DataList에 컬럼을 추가합니다.
+	com.insertColumn(dlt_memberList, "email", { name: "이메일", dataType: "text" });
+	dlt_memberList.setCellData(0, "email", "gdhong@test.com");
+	console.log("## DataList에 컬럼을 추가 ###################");
+	console.log(dlt_memberList.getAllJSON());
+};
+
+scwin.btn_removeColumn_onclick = function (e) {
+	// DataList에 컬럼을 삭제합니다.
+	com.removeColumn(dlt_memberList, "email");
+	console.log("## DataList에 컬럼을 삭제 ###################");
+	console.log(dlt_memberList.getAllJSON());
+};
+]]></script>
+	</head>
+	<body ev:onpageload="scwin.onpageload" ev:onpageunload="scwin.onpageunload">
+		<xf:group style="padding:10px;" id="">
+			<xf:group id="" style="width: 100%;height: 45px;">
+				<w2:textbox id="" label="Single Row Data"
+					style="width:50%;height:23px;padding:10px;font-size:18px;font-weight:bold;float:left;">
+				</w2:textbox>
+				<xf:trigger ev:onclick="scwin.btn_removeColumn_onclick" id="btn_removeColumn" style="width:80px;height:26px;float:right;margin-top:10px;margin-right:10px;"
+					type="button">
+					<xf:label><![CDATA[컬럼 삭제]]></xf:label>
+				</xf:trigger>
+				<xf:trigger ev:onclick="scwin.btn_insertColumn_onclick" id="btn_insertColumn" style="width:80px;height:26px;float:right;margin-top:10px;margin-right:10px;"
+					type="button">
+					<xf:label><![CDATA[컬럼 추가]]></xf:label>
+				</xf:trigger>
+			</xf:group>
+			<xf:group tagname="table" style="width:100%;" id="" class="w2tb">
+				<w2:attributes>
+					<w2:summary></w2:summary>
+				</w2:attributes>
+				<xf:group tagname="caption"></xf:group>
+				<xf:group tagname="colgroup">
+					<xf:group tagname="col" style="width:25.00%;"></xf:group>
+					<xf:group tagname="col" style="width:25.00%"></xf:group>
+					<xf:group tagname="col" style="width:25.00%;"></xf:group>
+					<xf:group tagname="col" style="width:25.00%"></xf:group>
+				</xf:group>
+				<xf:group tagname="tr" style="">
+					<xf:group tagname="th" style="" class="w2tb_th">아이디<w2:attributes>
+							<w2:scope>row</w2:scope>
+						</w2:attributes></xf:group>
+					<xf:group tagname="td" style="" class="w2tb_td">
+						<xf:input adjustMaxLength="false" id="" style="width: 95%;height: 21px;" ref="data:dlt_memberList.id"></xf:input>
+					</xf:group>
+					<xf:group tagname="th" style="" class="w2tb_th">연락처<w2:attributes>
+							<w2:scope>row</w2:scope>
+						</w2:attributes></xf:group>
+					<xf:group tagname="td" style="" class="w2tb_td">
+						<xf:input adjustMaxLength="false" id="" style="width: 95%;height: 21px;" ref="data:dlt_memberList.tel"></xf:input>
+					</xf:group>
+				</xf:group>
+				<xf:group tagname="tr" style="">
+					<xf:group tagname="th" style="" class="w2tb_th">성명<w2:attributes>
+							<w2:scope>row</w2:scope>
+						</w2:attributes></xf:group>
+					<xf:group tagname="td" style="" class="w2tb_td">
+						<xf:input adjustMaxLength="false" id="" style="width: 95%;height: 21px;" ref="data:dlt_memberList.name"></xf:input>
+					</xf:group>
+					<xf:group tagname="th" style="" class="w2tb_th">지역<w2:attributes>
+							<w2:scope>row</w2:scope>
+						</w2:attributes></xf:group>
+					<xf:group tagname="td" style="" class="w2tb_td">
+						<xf:input adjustMaxLength="false" id="" style="width: 95%;height: 21px;" ref="data:dlt_memberList.region"></xf:input>
+					</xf:group>
+				</xf:group>
+			</xf:group>
+		</xf:group>
+	</body>
+</html>

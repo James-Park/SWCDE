@@ -41,7 +41,7 @@
 	scwin.onpageunload = function() {
 	};
 	
-	scwin.customFormatter1 = function(data, formattedData, row, col) { debugger;
+	scwin.customFormatter1 = function(data, formattedData, row, col) {
 		var id = dlt_memberList.getCellData(row, "id");
 		var name = dlt_memberList.getCellData(row, "name");
 		return id + " : " + name;

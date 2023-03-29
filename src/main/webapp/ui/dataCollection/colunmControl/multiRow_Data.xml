@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:w2="http://www.inswave.com/websquare"
+	xmlns:xf="http://www.w3.org/2002/xforms">
+	<head>
+		<w2:type>DEFAULT</w2:type>
+		<w2:buildDate />
+		<xf:model>
+			<xf:instance>
+				<data xmlns="" />
+			</xf:instance>
+			<w2:dataCollection baseNode="map">
+				<w2:dataList baseNode="list" repeatNode="map" id="dlt_memberList" saveRemovedData="true" ev:oncelldatachange="">
+					<w2:columnInfo>
+						<w2:column id="id" name="아이디" dataType="text"></w2:column>
+						<w2:column id="name" name="성명" dataType="text"></w2:column>
+						<w2:column id="tel" name="연락처" dataType="text"></w2:column>
+						<w2:column id="region" name="지역" dataType="text"></w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+			</w2:dataCollection>
+			<w2:workflowCollection></w2:workflowCollection>
+		</xf:model>
+		<script type="text/javascript" src="common.js" scopeExternal="true" scopeVariable="com"/>
+		<script type="text/javascript" lazy="false"><![CDATA[
+scwin.onpageload = function () {
+	// 테스트를 위해서 JSON 데이터를 직접 DataList에서 세팅합니다.
+	// DataList(dlt_memberList)에 Array 형태로 데이터를 세팅해야 하기 때문에 배열로 데이터로 정의해야 합니다.
+	var jsonData = [
+		{ "id": "P0001", "name": "홍길동", "tel": "010-2323-4323", "region": "서울" },
+		{ "id": "P0002", "name": "김성현", "tel": "010-5343-4323", "region": "인천" },
+		{ "id": "P0003", "name": "박만수", "tel": "010-5322-4323", "region": "김포" },
+		{ "id": "P0004", "name": "김영호", "tel": "010-1231-7343", "region": "부천" },
+		{ "id": "P0005", "name": "박기영", "tel": "010-5343-6534", "region": "서울" }
+	];
+	dlt_memberList.setJSON(jsonData);
+};
+
+scwin.onpageunload = function () {
+};
+
+scwin.btn_insertColumn_onclick = function (e) {
+	// DataList에 컬럼을 추가합니다.
+	com.insertColumn(dlt_memberList, "email", { name: "이메일", dataType: "text" });
+	dlt_memberList.setCellData(0, "email", "gdhong@test.com");
+	console.log("## DataList에 컬럼을 추가 ###################");
+	console.log(dlt_memberList.getAllJSON());
+};
+
+scwin.btn_removeColumn_onclick = function (e) {
+	// DataList에 컬럼을 삭제합니다.
+	com.removeColumn(dlt_memberList, "email");
+	console.log("## DataList에 컬럼을 삭제 ###################");
+	console.log(dlt_memberList.getAllJSON());
+};
+]]></script>
+	</head>
+	<body ev:onpageload="scwin.onpageload" ev:onpageunload="scwin.onpageunload">
+		<xf:group style="padding:10px;" id="">
+
+			<xf:group id="" style="width: 100%;height: 45px;">
+				<w2:textbox id="" label="Multi Row Data"
+					style="width:50%;height:23px;padding:10px;font-size:18px;font-weight:bold;float:left;">
+				</w2:textbox>
+				<xf:trigger ev:onclick="scwin.btn_removeColumn_onclick" id="btn_removeColumn" style="width:80px;height:26px;float:right;margin-top:10px;margin-right:10px;"
+					type="button">
+					<xf:label><![CDATA[컬럼 삭제]]></xf:label>
+				</xf:trigger>
+				<xf:trigger ev:onclick="scwin.btn_insertColumn_onclick" id="btn_insertColumn" style="width:80px;height:26px;float:right;margin-top:10px;margin-right:10px;"
+					type="button">
+					<xf:label><![CDATA[컬럼 추가]]></xf:label>
+				</xf:trigger>
+			</xf:group>
+			<w2:gridView id="grd_gridView1" ignoreToggleOnDisabled="false" useShiftKey="true" style="width:100%;height:134px;"
+				scrollByColumn="false" defaultCellHeight="20" scrollByColumnAdaptive="false" summaryAuto="false" summaryOnlyAuto="false"
+				applyAllColumnStyle="false" dataList="data:dlt_memberList" ignoreCellClick="false" autoFit="allColumn">
+				<w2:caption style="" id="caption1" value="this is a grid caption."></w2:caption>
+				<w2:header style="" id="header1">
+					<w2:row style="" id="row1">
+						<w2:column width="135" inputType="text" style="" id="column7" value="아이디" blockSelect="false" displayMode="label"></w2:column>
+						<w2:column width="113" inputType="text" style="" id="column5" value="성명" blockSelect="false" displayMode="label"></w2:column>
+						<w2:column width="114" inputType="text" style="" id="column3" value="연락처" blockSelect="false" displayMode="label"></w2:column>
+						<w2:column width="129" inputType="text" style="" id="column1" value="지역" blockSelect="false" displayMode="label"></w2:column>
+					</w2:row>
+				</w2:header>
+				<w2:gBody style="" id="gBody1">
+					<w2:row style="" id="row2">
+						<w2:column width="135" inputType="text" style="" id="id" value="" blockSelect="false" displayMode="label"></w2:column>
+						<w2:column width="113" inputType="text" style="" id="name" value="" blockSelect="false" displayMode="label"></w2:column>
+						<w2:column width="114" inputType="text" style="" id="tel" value="" blockSelect="false" displayMode="label"></w2:column>
+						<w2:column width="129" inputType="text" style="" id="region" value="" blockSelect="false" displayMode="label"></w2:column>
+					</w2:row>
+				</w2:gBody>
+			</w2:gridView>
+			
+		</xf:group>
+	</body>
+</html>

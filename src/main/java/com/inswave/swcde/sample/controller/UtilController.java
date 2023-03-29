@@ -22,11 +22,12 @@ public class UtilController {
 	@Autowired
 	ServletContext context;
 	
-	@RequestMapping(method = RequestMethod.GET, value = "/downloadZipFile.do", params = { "filePath", "fileName" } )
-	public void downloadZipFile(HttpServletRequest request, HttpServletResponse response, @RequestParam("filePath") String filePath, 
-			@RequestParam("fileName") String fileName) throws Exception {
+	@RequestMapping(method = RequestMethod.GET, value = "/downloadZipFile.do", params = { "filePath" } )
+	public void downloadZipFile(HttpServletRequest request, HttpServletResponse response, @RequestParam("filePath") String filePath) throws Exception {
 		try {
 			String fileRealPath = context.getRealPath(filePath);
+			String[] splitFilePath = filePath.split("/");
+			String fileName = splitFilePath[splitFilePath.length - 1] + "_src.zip";			
 			
 			if (filePath.equals("") || filePath.equals("/") || filePath.contains("..") || !filePath.contains("/ui")) {
 				response.setContentType("text/html");

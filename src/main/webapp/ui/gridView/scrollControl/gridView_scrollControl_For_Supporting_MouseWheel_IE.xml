@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:w2="http://www.inswave.com/websquare"
+	xmlns:xf="http://www.w3.org/2002/xforms">
+	<head>
+		<w2:type>DEFAULT</w2:type>
+		<w2:buildDate />
+		<xf:model>
+			<xf:instance>
+				<data xmlns="" />
+			</xf:instance>
+			<w2:dataCollection baseNode="map">
+				<w2:dataList baseNode="list" repeatNode="map" id="dataList1" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="amount" name="금액" dataType="number"></w2:column>
+						<w2:column id="customer_code" name="고객코드" dataType="text"></w2:column>
+						<w2:column id="end_date" name="종료시간" dataType="date"></w2:column>
+						<w2:column id="from_date" name="시작시간" dataType="date"></w2:column>
+						<w2:column id="model_code" name="모델코드" dataType="text"></w2:column>
+						<w2:column id="national_code" name="국가코드" dataType="text"></w2:column>
+						<w2:column id="national_word" name="국가어" dataType="text"></w2:column>
+						<w2:column id="order_no" name="정렬번호" dataType="text"></w2:column>
+						<w2:column id="order_type" name="정렬구분" dataType="text"></w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+			</w2:dataCollection>
+			<w2:workflowCollection></w2:workflowCollection>
+			<xf:submission id="submission1" ref="" target='data:json,{"id":"dataList1","action":"append","key":"jsondata"}' action="sJsonData.json"
+				method="get" mediatype="application/json" encoding="UTF-8" instance="" replace="" errorHandler="" customHandler="" mode="asynchronous"
+				processMsg="" ev:submit="" ev:submitdone="scwin.submission1_submitdone" ev:submiterror="" abortTrigger="">
+			</xf:submission>
+		</xf:model>
+		<script type="text/javascript" lazy="false"><![CDATA[scwin.top = 0;
+scwin.maxTop = 0;
+scwin.ROW_PAGE_HEIGHT = 80;
+scwin.ROW_HEIGHT = 20;
+
+scwin.onpageload = function () {
+	$p.executeSubmission("submission1");
+};
+
+scwin.onpageunload = function () {
+
+};
+
+scwin.btn_moveTop_onclick = function (e) {
+	if (scwin.top >= scwin.ROW_PAGE_HEIGHT) {
+		scwin.top -= scwin.ROW_PAGE_HEIGHT;
+	}
+	grd_custAmt.setScrollTop(scwin.top);
+};
+
+scwin.btn_moveBottom_onclick = function (e) {
+	if (scwin.maxTop > scwin.top) {
+		scwin.top += scwin.ROW_PAGE_HEIGHT;
+	}
+	grd_custAmt.setScrollTop(scwin.top);
+};
+
+scwin.submission1_submitdone = function (e) {
+	var allRowHeight = dataList1.getRowCount() * scwin.ROW_HEIGHT;
+	scwin.maxTop = allRowHeight - (allRowHeight % scwin.ROW_PAGE_HEIGHT);
+};
+
+scwin.grd_custAmt_onscrolly = function () {
+	//console.log("scwin.grd_custAmt_onscrolly");
+};
+]]></script>
+		<style type="text/css"><![CDATA[ 
+    	#grd_custAmt_scrollY_div{opacity:.0;}
+    	]]></style>
+	</head>
+	<body ev:onpageload="scwin.onpageload" ev:onpageunload="scwin.onpageunload">
+		<xf:group style="position:relative;height:108px;display:inline-block;" id="">
+			<w2:gridView syncScroll="false" scrollByColumnAdaptive="" summaryAuto="false" useShiftKey="true" scrollByColumn=""
+				summaryOnlyAuto="false" defaultCellHeight="20" applyAllColumnStyle="false" overflowX="" overflowY="" dataList="data:dataList1"
+				style="width:360px;height:108px;" ignoreCellClick="false" id="grd_custAmt"
+				ignoreToggleOnDisabled="false" ev:onscrolly="scwin.grd_custAmt_onscrolly" wheelRows="" wheelStop="" fastScroll="" autoFit="allColumn">
+				<w2:caption style="" id="caption2" value="this is a grid caption."></w2:caption>
+				<w2:header style="" id="header2">
+					<w2:row style="" id="row3">
+						<w2:column footerDiv="false" removeBorderStyle="false" width="70" inputType="text" style="" id="column19" value="금액"
+							blockSelect="false" displayMode="label">
+						</w2:column>
+						<w2:column footerDiv="false" removeBorderStyle="false" width="76" inputType="text" style="" id="column17" value="고객코드"
+							blockSelect="false" displayMode="label">
+						</w2:column>
+						<w2:column footerDiv="false" removeBorderStyle="false" width="78" inputType="text" style="" id="column15" value="종료시간"
+							blockSelect="false" displayMode="label">
+						</w2:column>
+						<w2:column footerDiv="false" removeBorderStyle="false" width="80" inputType="text" style="" id="column13" value="시작시간"
+							blockSelect="false" displayMode="label">
+						</w2:column>
+					</w2:row>
+				</w2:header>
+				<w2:gBody style="" id="gBody2">
+					<w2:row style="" id="row4">
+						<w2:column footerDiv="false" removeBorderStyle="false" width="70" inputType="text" style="" id="amount" value=""
+							blockSelect="false" displayMode="label">
+						</w2:column>
+						<w2:column footerDiv="false" removeBorderStyle="false" width="76" inputType="text" style="" id="customer_code" value=""
+							blockSelect="false" displayMode="label">
+						</w2:column>
+						<w2:column footerDiv="false" removeBorderStyle="false" width="78" inputType="text" style="" id="end_date" value=""
+							blockSelect="false" displayMode="label">
+						</w2:column>
+						<w2:column footerDiv="false" removeBorderStyle="false" width="80" inputType="text" style="" id="from_date" value=""
+							blockSelect="false" displayMode="label">
+						</w2:column>
+					</w2:row>
+				</w2:gBody>
+			</w2:gridView>
+			<xf:group style="position:absolute;top:0px;right:-2px;height:108px;width:21px;" id="">
+				<xf:trigger style="width:21px;height: 54px;" id="btn_moveTop" type="button" ev:onclick="scwin.btn_moveTop_onclick">
+					<xf:label><![CDATA[▲]]></xf:label>
+				</xf:trigger>
+				<xf:trigger type="button" style="width:21px;height: 54px;" id="btn_moveBottom" ev:onclick="scwin.btn_moveBottom_onclick">
+					<xf:label><![CDATA[▼]]></xf:label>
+				</xf:trigger>
+			</xf:group>
+		</xf:group>
+	</body>
+</html>

@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ev="http://www.w3.org/2001/xml-events"
+	xmlns:w2="http://www.inswave.com/websquare" xmlns:xf="http://www.w3.org/2002/xforms">
+	<head>
+		<w2:buildDate/>
+		<xf:model>
+			<xf:instance>
+				<data xmlns=""/>
+			</xf:instance>
+			<w2:dataCollection>
+				<w2:dataList id="dlt_Survey" baseNode="list" style="" repeatNode="map">
+					<w2:columnInfo>
+						<w2:column id="chk_1" name="chk_1" dataType="text"></w2:column>
+						<w2:column id="chk_2" name="chk_2" dataType="text"></w2:column>
+						<w2:column id="itm_cd_1" name="itm_cd_1" dataType="text"></w2:column>
+						<w2:column id="itm_cd_2" name="itm_cd_2" dataType="text"></w2:column>
+						<w2:column id="itm_nm_1" name="itm_nm_1" dataType="text"></w2:column>
+						<w2:column id="itm_nm_2" name="itm_nm_2" dataType="text"></w2:column>
+						<w2:column id="itm_desc_1" name="itm_desc_1" dataType="text"></w2:column>
+						<w2:column id="itm_desc_2" name="itm_desc_2" dataType="text"></w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+			</w2:dataCollection>
+		</xf:model>
+		<script type="javascript" lazy="false"><![CDATA[ 
+		
+			scwin.onpageload = function() {
+				scwin.setData();
+			};
+			
+			scwin.setData = function() {
+				var resBody = 
+				  {
+				  "message": {
+					"description": "13건이 조회되었습니다.",
+					"code": "info",
+					"stacktrace": null,
+					"type": "info",
+					"msg": "13건이 조회되었습니다."
+				  },
+				  "svrtime": 1404733808051,
+				  "data": {
+					"itmList": [
+					  {
+						"itm_cd_2": "IC00000002",
+						"itm_nm_1": "이름",
+						"itm_nm_2": "성별",
+						"itm_cd_1": "IC00000001",
+						"chk_2": "Y",
+						"itm_desc_1": null,
+						"itm_desc_2": null,
+						"chk_1": "Y"
+					  },
+					  {
+						"itm_cd_2": "IC00000004",
+						"itm_nm_1": "생년월일",
+						"itm_nm_2": "E-mail",
+						"itm_cd_1": "IC00000003",
+						"chk_2": "Y",
+						"itm_desc_1": null,
+						"itm_desc_2": null,
+						"chk_1": "Y"
+					  },
+					  {
+						"itm_cd_2": "IC00000009",
+						"itm_nm_1": "주소",
+						"itm_nm_2": "전화번호(집)",
+						"itm_cd_1": "IC00000005",
+						"chk_2": "Y",
+						"itm_desc_1": null,
+						"itm_desc_2": null,
+						"chk_1": "Y"
+					  },
+					  {
+						"itm_cd_2": "IC00000011",
+						"itm_nm_1": "휴대폰번호",
+						"itm_nm_2": "직업",
+						"itm_cd_1": "IC00000010",
+						"chk_2": "Y",
+						"itm_desc_1": null,
+						"itm_desc_2": null,
+						"chk_1": "Y"
+					  },
+					  {
+						"itm_cd_2": "IC00000015",
+						"itm_nm_1": "키/몸무게",
+						"itm_nm_2": "흡연여부",
+						"itm_cd_1": "IC00000012",
+						"chk_2": "Y",
+						"itm_desc_1": null,
+						"itm_desc_2": null,
+						"chk_1": "Y"
+					  },
+					  {
+						"itm_cd_2": "IC00000030",
+						"itm_nm_1": "음주여부",
+						"itm_nm_2": "헌혈",
+						"itm_cd_1": "IC00000022",
+						"chk_2": "N",
+						"itm_desc_1": null,
+						"itm_desc_2": "* 최근 2개월 내",
+						"chk_1": "Y"
+					  },
+					  {
+						"itm_cd_2": "IC00000040",
+						"itm_nm_1": "임상시험 참여 경험",
+						"itm_nm_2": "현재 복용중인 약",
+						"itm_cd_1": "IC00000035",
+						"chk_2": "N",
+						"itm_desc_1": "* 최근 3개월 내",
+						"itm_desc_2": "* 예) 혈압약, 고지혈증약, 당뇨약, 위산억제제 건강보조식품, 한약, 비타민제, 홍삼제품, 소화제, 감기약, 인공눈물, 안약, 연고, 파스 등",
+						"chk_1": "N"
+					  },
+					  {
+						"itm_cd_2": "IC00000046",
+						"itm_nm_1": "30일 이내 약물복용",
+						"itm_nm_2": "알레르기 / 과민반응",
+						"itm_cd_1": "IC00000043",
+						"chk_2": "N",
+						"itm_desc_1": null,
+						"itm_desc_2": "* 예) 천식, 아토피피부염, 비염, 음식물 알레르기, 항생제/아스피린 과민반응 등",
+						"chk_1": "N"
+					  },
+					  {
+						"itm_cd_2": "IC00000050",
+						"itm_nm_1": "병력 / 수술력",
+						"itm_nm_2": "기호음식",
+						"itm_cd_1": "IC00000047",
+						"chk_2": "N",
+						"itm_desc_1": "* 예) 수술 또는 입원치료, , B형/C형 간염 보균자",
+						"itm_desc_2": null,
+						"chk_1": "N"
+					  },
+					  {
+						"itm_cd_2": "IC00000059",
+						"itm_nm_1": "비정상적인 식이",
+						"itm_nm_2": "혈액채취 가능 여부",
+						"itm_cd_1": "IC00000056",
+						"chk_2": "N",
+						"itm_desc_1": "* 예) 자몽, 자몽쥬스, 자몽 성분이 포함된 이온음료 등의 정기적인 섭취, 단백질 위주의 식사, 채식주의, 불규칙적인 식사 등",
+						"itm_desc_2": "* 추적관찰을 위한 방문과 연구기간 동안 혈액채취 가능 여부",
+						"chk_1": "N"
+					  },
+					  {
+						"itm_cd_2": "IC00000061",
+						"itm_nm_1": "주의사항 준수여부",
+						"itm_nm_2": "운동 여부",
+						"itm_cd_1": "IC00000060",
+						"chk_2": "N",
+						"itm_desc_1": "* 주의사항 : 스크리닝 방문일부터 최종 방문까지 카페인, 음주, 흡연, 과도한 신체활동 금지, 동의서 작성 이후 최종방문까지 의약품 복용, 헌혈 금지, 비정상적인 식사 금지",
+						"itm_desc_2": null,
+						"chk_1": "N"
+					  },
+					  {
+						"itm_cd_2": "IC00000067",
+						"itm_nm_1": "지원 경로",
+						"itm_nm_2": "피임 가능 여부",
+						"itm_cd_1": "IC00000064",
+						"chk_2": "N",
+						"itm_desc_1": null,
+						"itm_desc_2": "* 임상시험용의약품 첫 투여일로부터 마지막 임상시험용의약품 투여일 이후 60일  까지 의학적으로 인정되는 적절한 이중피임법을 사용하고 정자를 제공하지 않는 것에 동의합니까?",
+						"chk_1": "N"
+					  },
+					  {
+						"itm_cd_2": null,
+						"itm_nm_1": "기타",
+						"itm_nm_2": null,
+						"itm_cd_1": "IC00000070",
+						"chk_2": null,
+						"itm_desc_1": null,
+						"itm_desc_2": null,
+						"chk_1": "N"
+					  }
+					]
+				  }
+				};
+				
+				var dataLength = resBody.data.itmList.length;
+				for(var i = 0; i < dataLength; i++) {
+					 gen_ItmList.insert();
+					 gen_ItmList.getChild( i , "chk_1" ).setValue(resBody.data.itmList[i].chk_1);
+					 gen_ItmList.getChild( i , "itm_cd_1" ).setValue(resBody.data.itmList[i].itm_cd_1);
+					 gen_ItmList.getChild( i , "itm_nm_1" ).setValue(resBody.data.itmList[i].itm_nm_1);
+					 gen_ItmList.getChild( i , "itm_desc_1" ).setValue(resBody.data.itmList[i].itm_desc_1);
+					 gen_ItmList.getChild( i , "chk_2" ).setValue(resBody.data.itmList[i].chk_2);
+					 gen_ItmList.getChild( i , "itm_cd_2" ).setValue(resBody.data.itmList[i].itm_cd_2);
+					 gen_ItmList.getChild( i , "itm_nm_2" ).setValue(resBody.data.itmList[i].itm_nm_2);
+					 gen_ItmList.getChild( i , "itm_desc_2" ).setValue(resBody.data.itmList[i].itm_desc_2);
+				}
+			};
+			
+			scwin.getData = function() {
+				var dataLength = gen_ItmList.getLength();
+				for(var i = 0; i < dataLength; i++) {
+					 dlt_Survey.insertRow();
+					 dlt_Survey.setCellData(i, "chk_1", gen_ItmList.getChild( i , "chk_1" ).getValue());
+					 dlt_Survey.setCellData(i, "itm_cd_1", gen_ItmList.getChild( i , "itm_cd_1" ).getValue());
+					 dlt_Survey.setCellData(i, "itm_nm_1", gen_ItmList.getChild( i , "itm_nm_1" ).getValue());
+					 dlt_Survey.setCellData(i, "itm_desc_1", gen_ItmList.getChild( i , "itm_desc_1" ).getValue());
+					 dlt_Survey.setCellData(i, "chk_2", gen_ItmList.getChild( i , "chk_2" ).getValue());
+					 dlt_Survey.setCellData(i, "itm_cd_2", gen_ItmList.getChild( i , "itm_cd_2" ).getValue());
+					 dlt_Survey.setCellData(i, "itm_nm_2", gen_ItmList.getChild( i , "itm_nm_2" ).getValue());
+					 dlt_Survey.setCellData(i, "itm_desc_2", gen_ItmList.getChild( i , "itm_desc_2" ).getValue());
+				}
+				
+				alert(JSON.stringify(dlt_Survey.getAllJSON()));
+			};
+		]]></script>
+	</head>
+	<body ev:onpageload="scwin.onpageload">
+		<xf:group id="group1" style="position: relative;width: 100%;height: 40px;" class="">
+			<xf:trigger type="button" id="trigger1" style="position: relative;width:185px;height:31px;">
+				<xf:label><![CDATA[변경된 값을 DataList에 저장]]></xf:label>
+				<script ev:event="onclick" type="javascript"><![CDATA[ 
+					scwin.getData();
+				]]></script>
+			</xf:trigger>
+		</xf:group>
+		<table summary="" id="table1" style="position: relative;width:100.00%;height: 0;" class="w2tb">
+			<xf:group tagname="colgroup">
+				<xf:group style="width:3.95%;" tagname="col"></xf:group>
+				<xf:group style="width:6.83%;" tagname="col"></xf:group>
+				<xf:group style="width:11.67%;" tagname="col"></xf:group>
+				<xf:group style="width:27.55%;" tagname="col"></xf:group>
+				<xf:group style="width:3.45%;" tagname="col"></xf:group>
+				<xf:group style="width:8.14%;" tagname="col"></xf:group>
+				<xf:group style="width:11.99%;" tagname="col"></xf:group>
+				<xf:group style="width:26.40%;" tagname="col"></xf:group>
+			</xf:group>
+			<w2:generator id="gen_ItmList" style="" tagname="tbody">
+				<xf:group tagname="tr">
+					<xf:group style="" class="w2tb_th" tagname="th">
+						<xf:select appearance="full" id="chk_1" style="position: relative;width:22px;height:21px;" selectedindex="-1" cols="" rows="">
+							<xf:choices>
+								<xf:item>
+									<xf:label><![CDATA[]]></xf:label>
+									<xf:value><![CDATA[Y]]></xf:value>
+								</xf:item>
+							</xf:choices>
+						</xf:select>
+					</xf:group>
+					<xf:group style="" class="w2tb_td" tagname="td">
+						<w2:textbox id="itm_cd_1" style="position: relative;width:100%;height: 23px;" label=""></w2:textbox>
+					</xf:group>
+					<xf:group style="" class="w2tb_td" tagname="td">
+						<w2:textbox id="itm_nm_1" style="position: relative;width:100%;height: 23px;" label=""></w2:textbox>
+					</xf:group>
+					<xf:group style="" class="w2tb_td" tagname="td">
+						<xf:input id="itm_desc_1" style="position: relative;width:319px;height:21px;"></xf:input>
+					</xf:group>
+					<xf:group style="" class="w2tb_th" tagname="th">
+						<xf:select appearance="full" cols="" id="chk_2" rows="" selectedindex="-1" style="position: relative;width:22px;height:21px;">
+							<xf:choices>
+								<xf:item>
+									<xf:label><![CDATA[]]></xf:label>
+									<xf:value><![CDATA[Y]]></xf:value>
+								</xf:item>
+							</xf:choices>
+						</xf:select>
+					</xf:group>
+					<xf:group style="" class="w2tb_td" tagname="td">
+						<w2:textbox id="itm_cd_2" style="position: relative;width:100%;height: 23px;" label=""></w2:textbox>
+					</xf:group>
+					<xf:group style="" class="w2tb_td" tagname="td">
+						<w2:textbox id="itm_nm_2" style="position: relative;width:100%;height: 23px;" label=""></w2:textbox>
+					</xf:group>
+					<xf:group style="" class="w2tb_td" tagname="td">
+						<xf:input id="itm_desc_2" style="position: relative;width:309px;height:21px;"></xf:input>
+					</xf:group>
+				</xf:group>
+			</w2:generator>
+		</table>		
+	</body>
+</html>

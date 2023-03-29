@@ -1,18 +1,21 @@
 package com.inswave.swcde.sample.controller;
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.inswave.swcde.sample.beans.DataBean;
 import com.inswave.swcde.sample.beans.HeaderBean;
 import com.inswave.swcde.sample.beans.ParamBean;
@@ -21,6 +24,22 @@ import com.inswave.swcde.sample.beans.UserBean;
 @Controller
 @RequestMapping(value = "/test")
 public class TestController {
+
+	@RequestMapping(value = "/getJSON.do", method = RequestMethod.POST)
+	public @ResponseBody Map<String, Object> getJSON(HttpServletRequest request) throws IOException {
+
+		StringBuilder sb = new StringBuilder();
+		BufferedReader reader = request.getReader();
+		String line;
+		
+		while ((line = reader.readLine()) != null) {
+			sb.append(line);
+		}
+		
+		String jsonData = sb.toString();
+		ObjectMapper objectMapper = new ObjectMapper();
+		return objectMapper.readValue(jsonData, Map.class);
+	}
 
 	@RequestMapping(value = "/testJsonMap.do", method = RequestMethod.POST)
 	public @ResponseBody Map<String, Object> testJsonMap(@RequestBody Map<String, Object> param) {
@@ -83,9 +102,9 @@ public class TestController {
 
 	@RequestMapping(value = "/testJsonVO.do", method = RequestMethod.POST)
 	public @ResponseBody DataBean<UserBean> testJsonVO(@RequestBody ParamBean<UserBean> param) {
-		
+
 		System.out.println("param.getParam()).getName() : " + ((UserBean) param.getParam()).getName());
-		
+
 		DataBean<UserBean> data = new DataBean<UserBean>();
 
 		List<UserBean> userList = new ArrayList<UserBean>();

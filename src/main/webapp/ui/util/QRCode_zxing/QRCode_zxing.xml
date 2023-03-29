@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:w2="http://www.inswave.com/websquare"
+	xmlns:xf="http://www.w3.org/2002/xforms">
+	<head>
+		<w2:type>DEFAULT</w2:type>
+		<w2:buildDate />
+		<xf:model>
+			<xf:instance>
+				<data xmlns="" />
+			</xf:instance>
+			<w2:dataCollection baseNode="map">
+			</w2:dataCollection>
+			<w2:workflowCollection></w2:workflowCollection>
+		</xf:model>
+		<script type="text/javascript" src="https://unpkg.com/@zxing/library@latest"></script>
+		<script type="text/javascript" lazy="false"><![CDATA[
+		
+
+	scwin.selectedDeviceId = null;
+	scwin.codeReader = null;
+	
+	/**
+	 * https://zxing-js.github.io/library/examples/multi-camera/ 의 예제 화면을 참조해서 웹스퀘어에서 ZXing 라이브러리를 로딩한 예제 입니다.
+	 */  
+	scwin.onpageload = function() {
+		scwin.setQRCode();
+	};
+	
+	scwin.onpageunload = function() {
+		
+	};
+
+
+	scwin.btn_start_onclick = function(e) {
+		scwin.startQRCode();
+	};
+	
+	scwin.setQRCode = function() {
+		var grpVideo = document.getElementById($p.id + "grp_video");
+		var video = document.createElement("video");
+		video.id = $p.id + "video";
+		video.style.width = "100%"; 
+		video.style.height = "500px";
+		grpVideo.appendChild(video);
+		
+		scwin.codeReader = new ZXing.BrowserMultiFormatReader();
+		console.log('ZXing code reader initialized');
+
+		scwin.codeReader.listVideoInputDevices().then(function(videoInputDevices) {
+			if (videoInputDevices.length >= 1) {
+				videoInputDevices.forEach(function(element) {
+					sbx_selectedDevice.addItem(element.deviceId, element.label);
+				})
+				sbx_selectedDevice.setSelectedIndex(0);
+			}
+		}).catch(function(err) {
+			console.error(err);
+		});	
+	};
+	
+	scwin.startQRCode = function() {
+		scwin.codeReader.decodeFromVideoDevice(sbx_selectedDevice.getValue(), $p.id + "video" , function(result, err) {
+			if (result) {
+				txa_textarea1.setValue(result);
+				console.log(result);
+			}
+			if (err && !(err instanceof ZXing.NotFoundException)) {
+				txa_textarea1.setValue(err);
+				console.error(err);
+			}
+		})
+		console.log(`Started continous decode from camera with id ${scwin.selectedDeviceId}`);
+	};
+	
+	
+	scwin.btn_reset_onclick = function(e) {
+		scwin.codeReader.reset();
+	};
+	]]></script>
+	</head>
+	<body ev:onpageload="scwin.onpageload" ev:onpageunload="scwin.onpageunload">
+		<xf:group id="" style="padding:10px">
+			<xf:group style="width: 100%;height: 45px;" id="">
+				<w2:textbox style="width:50%;height:23px;padding:10px;font-size:18px;font-weight:bold;float:left;" id=""
+					label="QR Code Sample (Zxing)">
+				</w2:textbox>
+				<xf:trigger ev:onclick="scwin.btn_reset_onclick"
+					style="width: 80px;height: 23px;float:right;margin-top: 10px;margin-right: 10px;" id="btn_reset" type="button" nextTabID="">
+					<xf:label><![CDATA[Reset]]></xf:label>
+				</xf:trigger>
+				<xf:trigger ev:onclick="scwin.btn_start_onclick" id="btn_start"
+					style="width: 80px;height: 23px;float:right;margin-top: 10px;margin-right: 10px;" type="button">
+					<xf:label><![CDATA[Start]]></xf:label>
+				</xf:trigger>
+			</xf:group>
+			<xf:group style="width:100%;height:500px;" id="grp_video">
+			</xf:group>
+			<xf:group style="width:100%;height:45px;" id="sourceSelectPanel" tabIndex="">
+				<xf:select1 id="sbx_selectedDevice" chooseOption="false" style="width:218px;height:31px;" submenuSize="auto"
+					allOption="false" disabled="false" direction="auto" appearance="minimal" disabledClass="w2selectbox_disabled">
+				</xf:select1>
+			</xf:group>
+			<xf:group style="width: 100%;height: 100px;" id="">
+				<xf:textarea id="txa_textarea1" style="width: 100%;height: 90px;"></xf:textarea>
+			</xf:group>
+		</xf:group>
+	</body>
+</html>

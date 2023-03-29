@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:w2="http://www.inswave.com/websquare" xmlns:xf="http://www.w3.org/2002/xforms">
+    <head meta_screenId="popup_search" meta_screenName="코드 검색 팝업 창" meta_author="" meta_type="팝업" meta_desc="1. 프로그램 설명 : 공통 코그 그룹 검색 화면이다.\n2. 테스트 엔진 버전 : 5.0_2.2994B.20180319.163854_1.8\n3. 개발 방식 : WebSquare5 SP2 WFrame Scope 적용">
+        <w2:buildDate/>
+        <xf:model>
+            <xf:instance>
+                <data xmlns=""/>
+            </xf:instance>
+            <w2:dataCollection baseNode="map">
+            	<w2:dataList id="dlt_code" baseNode="list" style="" repeatNode="map">
+            		<w2:columnInfo>
+            			<w2:column id="grp_cd" name="그룹코드" dataType="text"></w2:column>
+            			<w2:column id="grp_nm" name="그룹명" dataType="text"></w2:column>
+            			<w2:column id="sort_order" name="코드순서" dataType="number"></w2:column>
+            			<w2:column id="is_use" name="사용여부" dataType="number"></w2:column>
+            			<w2:column id="note" name="비고" dataType="text"></w2:column>
+            		</w2:columnInfo>
+            		<w2:data use="true">
+            			<w2:row>
+            				<grp_cd><![CDATA[01]]></grp_cd>
+            				<grp_nm><![CDATA[직책]]></grp_nm>
+            				<sort_order><![CDATA[1]]></sort_order>
+            				<is_use><![CDATA[1]]></is_use>
+            				<note><![CDATA[직책]]></note>
+            			</w2:row>
+            			<w2:row>
+            				<grp_cd><![CDATA[02]]></grp_cd>
+            				<grp_nm><![CDATA[직위]]></grp_nm>
+            				<sort_order><![CDATA[2]]></sort_order>
+            				<is_use><![CDATA[1]]></is_use>
+            				<note><![CDATA[직위]]></note>
+            			</w2:row>
+            			<w2:row>
+            				<grp_cd><![CDATA[03]]></grp_cd>
+            				<grp_nm><![CDATA[직원구분]]></grp_nm>
+            				<sort_order><![CDATA[3]]></sort_order>
+            				<is_use><![CDATA[1]]></is_use>
+            				<note><![CDATA[직원구분]]></note>
+            			</w2:row>
+            			<w2:row>
+            				<grp_cd><![CDATA[04]]></grp_cd>
+            				<grp_nm><![CDATA[종교]]></grp_nm>
+            				<sort_order><![CDATA[4]]></sort_order>
+            				<is_use><![CDATA[1]]></is_use>
+            				<note><![CDATA[종교]]></note>
+            			</w2:row>
+            			<w2:row>
+            				<grp_cd><![CDATA[05]]></grp_cd>
+            				<grp_nm><![CDATA[최종학력]]></grp_nm>
+            				<sort_order><![CDATA[5]]></sort_order>
+            				<is_use><![CDATA[1]]></is_use>
+            				<note><![CDATA[최종학력]]></note>
+            			</w2:row>
+            			<w2:row>
+            				<grp_cd><![CDATA[06]]></grp_cd>
+            				<grp_nm><![CDATA[시간외근무]]></grp_nm>
+            				<sort_order><![CDATA[6]]></sort_order>
+            				<is_use><![CDATA[1]]></is_use>
+            				<note><![CDATA[시간외근무]]></note>
+            			</w2:row>
+            			<w2:row>
+            				<grp_cd><![CDATA[07]]></grp_cd>
+            				<grp_nm><![CDATA[시간외결재상태]]></grp_nm>
+            				<sort_order><![CDATA[7]]></sort_order>
+            				<is_use><![CDATA[1]]></is_use>
+            				<note><![CDATA[시간외결재상태]]></note>
+            			</w2:row>
+            			<w2:row>
+            				<grp_cd><![CDATA[10]]></grp_cd>
+            				<grp_nm><![CDATA[우편번호화면도코드]]></grp_nm>
+            				<sort_order><![CDATA[8]]></sort_order>
+            				<is_use><![CDATA[1]]></is_use>
+            				<note><![CDATA[우편번호화면도코드]]></note>
+            			</w2:row>
+            			<w2:row>
+            				<grp_cd><![CDATA[11]]></grp_cd>
+            				<grp_nm><![CDATA[인력형태]]></grp_nm>
+            				<sort_order><![CDATA[9]]></sort_order>
+            				<is_use><![CDATA[1]]></is_use>
+            				<note><![CDATA[인력형태]]></note>
+            			</w2:row>
+            			<w2:row>
+            				<grp_cd><![CDATA[12]]></grp_cd>
+            				<grp_nm><![CDATA[기술등급]]></grp_nm>
+            				<sort_order><![CDATA[10]]></sort_order>
+            				<is_use><![CDATA[1]]></is_use>
+            				<note><![CDATA[기술등급]]></note>
+            			</w2:row>
+            			<w2:row>
+            				<grp_cd><![CDATA[13]]></grp_cd>
+            				<grp_nm><![CDATA[학위구분]]></grp_nm>
+            				<sort_order><![CDATA[11]]></sort_order>
+            				<is_use><![CDATA[1]]></is_use>
+            				<note><![CDATA[학위구분]]></note>
+            			</w2:row>
+            			<w2:row>
+            				<grp_cd><![CDATA[14]]></grp_cd>
+            				<grp_nm><![CDATA[자격증]]></grp_nm>
+            				<sort_order><![CDATA[12]]></sort_order>
+            				<is_use><![CDATA[1]]></is_use>
+            				<note><![CDATA[자격증]]></note>
+            			</w2:row>
+            			<w2:row>
+            				<grp_cd><![CDATA[15]]></grp_cd>
+            				<grp_nm><![CDATA[개발기술]]></grp_nm>
+            				<sort_order><![CDATA[13]]></sort_order>
+            				<is_use><![CDATA[1]]></is_use>
+            				<note><![CDATA[개발기술]]></note>
+            			</w2:row>
+            			<w2:row>
+            				<grp_cd><![CDATA[16]]></grp_cd>
+            				<grp_nm><![CDATA[산업분야]]></grp_nm>
+            				<sort_order><![CDATA[14]]></sort_order>
+            				<is_use><![CDATA[1]]></is_use>
+            				<note><![CDATA[산업분야]]></note>
+            			</w2:row>
+            			<w2:row>
+            				<grp_cd><![CDATA[17]]></grp_cd>
+            				<grp_nm><![CDATA[외주계약구분]]></grp_nm>
+            				<sort_order><![CDATA[15]]></sort_order>
+            				<is_use><![CDATA[1]]></is_use>
+            				<note><![CDATA[외주계약구분]]></note>
+            			</w2:row>
+            			<w2:row>
+            				<grp_cd><![CDATA[18]]></grp_cd>
+            				<grp_nm><![CDATA[계약종료평가]]></grp_nm>
+            				<sort_order><![CDATA[16]]></sort_order>
+            				<is_use><![CDATA[1]]></is_use>
+            				<note><![CDATA[계약종료평가]]></note>
+            			</w2:row>
+            			<w2:row>
+            				<grp_cd><![CDATA[19]]></grp_cd>
+            				<grp_nm><![CDATA[역할]]></grp_nm>
+            				<sort_order><![CDATA[17]]></sort_order>
+            				<is_use><![CDATA[1]]></is_use>
+            				<note><![CDATA[프로젝트역할]]></note>
+            			</w2:row>
+            			<w2:row>
+            				<grp_cd><![CDATA[20]]></grp_cd>
+            				<grp_nm><![CDATA[조직구분]]></grp_nm>
+            				<sort_order><![CDATA[18]]></sort_order>
+            				<is_use><![CDATA[1]]></is_use>
+            				<note><![CDATA[조직구분]]></note>
+            			</w2:row>
+            			<w2:row>
+            				<grp_cd><![CDATA[21]]></grp_cd>
+            				<grp_nm><![CDATA[입사구분]]></grp_nm>
+            				<sort_order><![CDATA[19]]></sort_order>
+            				<is_use><![CDATA[1]]></is_use>
+            				<note><![CDATA[입사구분]]></note>
+            			</w2:row>
+            			<w2:row>
+            				<grp_cd><![CDATA[22]]></grp_cd>
+            				<grp_nm><![CDATA[주거구분]]></grp_nm>
+            				<sort_order><![CDATA[20]]></sort_order>
+            				<is_use><![CDATA[1]]></is_use>
+            				<note><![CDATA[주거구분]]></note>
+            			</w2:row>
+            			<w2:row>
+            				<grp_cd><![CDATA[23]]></grp_cd>
+            				<grp_nm><![CDATA[직군]]></grp_nm>
+            				<sort_order><![CDATA[21]]></sort_order>
+            				<is_use><![CDATA[1]]></is_use>
+            				<note><![CDATA[직군]]></note>
+            			</w2:row>
+            			<w2:row>
+            				<grp_cd><![CDATA[24]]></grp_cd>
+            				<grp_nm><![CDATA[직무]]></grp_nm>
+            				<sort_order><![CDATA[22]]></sort_order>
+            				<is_use><![CDATA[1]]></is_use>
+            				<note><![CDATA[직무]]></note>
+            			</w2:row>
+            		</w2:data>
+            	</w2:dataList>
+            </w2:dataCollection>
+        </xf:model>
+        <script type="text/javascript" lazy="false"><![CDATA[
+	scwin.onpageload = function() {
+		scwin.param = $p.getParameter("param"); // param.comId, param.callbackFunc
+	};
+
+	scwin.onpageunload = function() {
+	};
+	
+	scwin.closePopup = function() {
+		var grpCd = dlt_code.getCellData(dlt_code.getRowPosition(), "grp_cd");
+		var callbackFunc = WebSquare.util.getGlobalFunction(scwin.param.callbackFunc);
+		callbackFunc(scwin.param.comId, grpCd);
+		$p.closePopup($p.getPopupId());
+	}
+
+	scwin.gridView1_oncelldblclick = function(row, col) {
+		scwin.closePopup();
+	};
+	]]></script>
+    </head>
+    <body ev:onpageload="scwin.onpageload" ev:onpageunload="scwin.onpageunload">
+    <xf:group style="height:214px;padding:10px" id=""><w2:gridView ev:onrowindexchange="" focusMode="row" fixedColumnWithHidden="true" dataList="data:dlt_code" useShiftKey="false" scrollByColumn="false" style="position: relative;height:214px;" id="gridView1" autoFit="allColumn" ev:oncelldblclick="scwin.gridView1_oncelldblclick">
+    		<w2:header style="" id="header1">
+    			<w2:row style="" id="row1">
+    				<w2:column width="70" style="height:20px" inputType="text" id="column9" value="그룹코드" blockSelect="false"></w2:column>
+    				<w2:column width="150" style="height:20px" inputType="text" id="column7" value="그룹명" blockSelect="false"></w2:column>
+    				<w2:column width="70" style="height:20px" inputType="text" id="column5" value="코드순서" blockSelect="false"></w2:column>
+    				<w2:column width="70" style="height:20px" inputType="text" id="column3" value="사용여부" blockSelect="false"></w2:column>
+    				<w2:column width="163" style="height:20px" inputType="text" id="column1" value="비고" blockSelect="false"></w2:column>
+    			</w2:row>
+    		</w2:header>
+    		<w2:gBody style="" id="gBody1">
+    			<w2:row style="" id="row2">
+    				<w2:column width="70" style="height:20px" inputType="text" id="grp_cd" blockSelect="false"></w2:column>
+    				<w2:column width="150" style="height:20px" inputType="text" id="grp_nm" blockSelect="false"></w2:column>
+    				<w2:column width="70" style="height:20px" inputType="text" id="sort_order" blockSelect="false"></w2:column>
+    				<w2:column width="70" style="height:20px" inputType="text" id="is_use" blockSelect="false"></w2:column>
+    				<w2:column width="163" style="height:20px" inputType="text" id="note" blockSelect="false"></w2:column>
+    			</w2:row>
+    		</w2:gBody>
+    	</w2:gridView></xf:group></body>
+</html>

@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:w2="http://www.inswave.com/websquare" xmlns:xf="http://www.w3.org/2002/xforms">
+    <head>
+    	<w2:type>DEFAULT</w2:type>
+        <w2:buildDate/>
+        <xf:model>
+            <xf:instance>
+                <data xmlns=""/>
+            </xf:instance>
+            <w2:dataCollection baseNode="map">
+            </w2:dataCollection>
+            <w2:workflowCollection>
+            </w2:workflowCollection>
+        </xf:model>
+         <script type="text/javascript" lazy="false"><![CDATA[
+	scwin.onpageload = function() {
+		ibx_input1.setValue("010-4445-5555");
+		ibx_input2.setValue("02-444-2312");
+		com.bindCopyEvent(["ibx_input1", "ibx_input2"]);
+	};
+
+	scwin.onpageunload = function() {
+
+	};
+
+	var com = {};
+	
+	/**
+	 * 컴포넌트에 oncopy 이벤트를 동적으로 바인딩 한다.
+	 *
+	 * ※ 주의사항
+	 * InputBox의 oncopy 이벤트는 비공개이기 때문에 반드시 공통함수로 Wrapping해서 사용해야 합니다.
+	 * 비공개 이벤트와 API, 속성 등은 엔진 업데이트 스펙이 변경될 가능성이 있습니다.
+	 *
+	 * @date 2018.05.17
+	 * @param {Array} objArr oncopy 이벤트를 바인딩할 컴포넌트 아이디 배열
+	 * @memberOf com
+	 * @author 박상규
+	 * @example
+	 * com.bindCopyEvent(["ibx_input1"]);
+	 * com.bindCopyEvent(["ibx_input1", "ibx_input2"]);
+	 */
+	com.bindCopyEvent = function(objArr) {
+		for (var i = 0; i < objArr.length; i++) {
+			var comObj = $w.getComponentById(objArr[i]);
+			if (typeof comObj !== "undefined") {
+
+				comObj.bind("oncopy", function(e) {
+					com.copyClipboard(e);
+				});
+			}
+		}
+	}
+	
+	/**
+	 * 개행 문자와 "-"가 포함된 경우에는 공백으로 치환한 후에 클립보드에 복사한다.
+	 *
+	 * @date 2018.05.17
+	 * @param {Object} e Copy Event 이벤트 객체
+	 * @memberOf com
+	 * @author 박상규
+	 * @example
+	 * com.copyClipboard(e);
+	 */
+	com.copyClipboard = function(e) {
+		var target = e.target || e.srcElement;
+		var value = target.value;
+		var selectionStart = target.selectionStart;
+		var selectionEnd = target.selectionEnd;
+		// 개행 문자와 "-"가 포함된 경우에는 공백으로 치환 하도록 처리
+		var selectedValue = value.substring(selectionStart, selectionEnd).replace(/[-\n\r]+/g, "");
+		
+		if (e.clipboardData) {
+			e.clipboardData.setData("text/plain", selectedValue);
+		} else if (window.clipboardData) {
+			window.clipboardData.setData("text", selectedValue);		
+		}
+
+		WebSquare.event.preventDefault(e);
+	};
+
+	scwin.btn_trigger1_onclick = function(e) {
+		ibx_input3.setValue("");
+	};
+	]]></script>
+    </head>
+    <body ev:onpageload="scwin.onpageload" ev:onpageunload="scwin.onpageunload">
+    <xf:group style="height:61px;padding: 10px" id="grp_group1"><xf:group tagname="table" style="width:100%;" id="tbl_table1" class="w2tb">
+    		<w2:attributes>
+    			<w2:summary></w2:summary>
+    		</w2:attributes>
+    		<xf:group tagname="caption"></xf:group>
+    		<xf:group tagname="colgroup">
+    			<xf:group tagname="col" style="width:25.00%;"></xf:group>
+    			<xf:group tagname="col" style="width:25.00%"></xf:group>
+    			<xf:group tagname="col" style="width:25.00%;"></xf:group>
+    			<xf:group tagname="col" style="width:25.00%"></xf:group>
+    		</xf:group>
+    		<xf:group tagname="tr" style="">
+    			<xf:group tagname="th" style="" class="w2tb_th">핸드폰번호<w2:attributes>
+    					<w2:scope>row</w2:scope>
+    				</w2:attributes></xf:group>
+    			<xf:group tagname="td" style="" class="w2tb_td">
+    				<xf:input preventCopyPaste="false" displayFormat="" adjustMaxLength="false" style="width: 144px;height: 21px;" applyFormat="all" id="ibx_input1"></xf:input>
+    			</xf:group>
+    			<xf:group tagname="th" style="" class="w2tb_th">전화번호<w2:attributes>
+    					<w2:scope>row</w2:scope>
+    				</w2:attributes></xf:group>
+    			<xf:group tagname="td" style="" class="w2tb_td">
+    				<xf:input preventCopyPaste="false" displayFormat="" adjustMaxLength="false" applyFormat="all" style="width: 144px;height: 21px;" id="ibx_input2">
+    				</xf:input>
+    			</xf:group>
+    		</xf:group>
+    		<xf:group tagname="tr">
+    			<xf:group tagname="th" style="" class="w2tb_th">
+    				<w2:attributes>
+    					<w2:scope>row</w2:scope>
+    				</w2:attributes>
+    			</xf:group>
+    			<xf:group tagname="td" style="" class="w2tb_td">
+    				<w2:attributes>
+    					<w2:colspan>3</w2:colspan>
+    					<w2:rowspan>1</w2:rowspan>
+    				</w2:attributes>
+    				<xf:input adjustMaxLength="false" style="width: 144px;height: 21px;" id="ibx_input3"></xf:input>
+    				<xf:trigger ev:onclick="scwin.btn_trigger1_onclick" style="width: 80px;height: 23px;margin-left:5px;" id="btn_trigger1" type="button">
+    					<xf:label><![CDATA[데이터 삭제]]></xf:label>
+    				</xf:trigger>
+    			</xf:group>
+    		</xf:group>
+    	</xf:group></xf:group></body>
+</html>

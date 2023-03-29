@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:w2="http://www.inswave.com/websquare"
+	xmlns:xf="http://www.w3.org/2002/xforms">
+	<head>
+		<w2:type>DEFAULT</w2:type>
+		<w2:buildDate />
+		<xf:model>
+			<xf:instance>
+				<data xmlns="" />
+			</xf:instance>
+			<w2:dataCollection baseNode="map">
+				<w2:dataList baseNode="list" repeatNode="map" id="dlt_log" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="datetime" name="시간" dataType="text"></w2:column>
+						<w2:column id="log" name="로그" dataType="text"></w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+				<w2:dataList baseNode="list" repeatNode="map" id="dlt_data1" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="col1" name="name1" dataType="text"></w2:column>
+						<w2:column id="col2" name="name2" dataType="text"></w2:column>
+						<w2:column id="col3" name="name3" dataType="text"></w2:column>
+						<w2:column id="col4" name="name4" dataType="text"></w2:column>
+						<w2:column id="col5" name="name5" dataType="text"></w2:column>
+					</w2:columnInfo>
+					<w2:data use="true">
+						<w2:row>
+							<col1><![CDATA[]]></col1>
+							<col2><![CDATA[a]]></col2>
+							<col3><![CDATA[a]]></col3>
+						</w2:row>
+						<w2:row>
+							<col1><![CDATA[]]></col1>
+							<col2><![CDATA[b]]></col2>
+							<col3><![CDATA[b]]></col3>
+						</w2:row>
+						<w2:row>
+							<col2><![CDATA[c]]></col2>
+							<col3><![CDATA[c]]></col3>
+						</w2:row>
+					</w2:data>
+				</w2:dataList>
+				<w2:dataMap baseNode="map" id="dma_dataMap1">
+					<w2:keyInfo>
+						<w2:key id="key1" name="name1" dataType="text"></w2:key>
+						<w2:key id="key2" name="name2" dataType="text"></w2:key>
+						<w2:key id="key3" name="name3" dataType="text"></w2:key>
+						<w2:key id="key4" name="name4" dataType="text"></w2:key>
+						<w2:key id="key5" name="name5" dataType="text"></w2:key>
+						<w2:key id="key6" name="name6" dataType="text"></w2:key>
+						<w2:key id="key7" name="name7" dataType="text"></w2:key>
+						<w2:key id="key8" name="name8" dataType="text"></w2:key>
+						<w2:key id="key9" name="name9" dataType="text"></w2:key>
+					</w2:keyInfo>
+				</w2:dataMap>
+				<w2:dataList baseNode="list" repeatNode="map" id="dlt_code" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="code" name="code" dataType="text"></w2:column>
+						<w2:column id="codeName" name="codeName" dataType="text"></w2:column>
+					</w2:columnInfo>
+					<w2:data use="true">
+						<w2:row>
+							<code><![CDATA[1]]></code>
+							<codeName><![CDATA[사과]]></codeName>
+						</w2:row>
+						<w2:row>
+							<code><![CDATA[2]]></code>
+							<codeName><![CDATA[포도]]></codeName>
+						</w2:row>
+						<w2:row>
+							<code><![CDATA[3]]></code>
+							<codeName><![CDATA[옥수수]]></codeName>
+						</w2:row>
+						<w2:row>
+							<code><![CDATA[4]]></code>
+							<codeName><![CDATA[참외]]></codeName>
+						</w2:row>
+					</w2:data>
+				</w2:dataList>
+			</w2:dataCollection>
+			<w2:workflowCollection>
+			</w2:workflowCollection>
+		</xf:model>
+		<script type="text/javascript" lazy="false"><![CDATA[
+        
+	scwin.onpageload = function() {
+	};
+	
+	/**
+	 * 단축키 동작 정보를 출력한다.
+	 *
+	 * @param {String} complexKey 복합키 입력 정보 (Ctrl, Alt, Shift)
+	 * @param {String} lastKey 키 입력 정보
+	 */
+	scwin.writeKeyLog = function(complexKey, lastKey) {
+		var logData = {
+			datetime : (new Date()).toLocaleString('kr-KO'), 
+			log : "complexKey : " + complexKey + ", lastKey : " + lastKey
+		};
+
+		dlt_log.insertJSON(0, [logData]);
+	};
+	
+	/**
+	 * 로그 내역을 모두 삭제한다.
+	 */
+	scwin.btn_refresh_onclick = function(e) {
+		dlt_log.removeAll();
+	};
+	]]></script>
+	</head>
+	<body ev:onpageload="scwin.onpageload">
+		<xf:group id="" style="padding:10px">
+			<xf:group id="" style="width: 100%;height: 45px;">
+				<w2:textbox id="" label="웹 브라우저 단축키 테스트"
+					style="width:50%;height:23px;padding:10px;font-size:18px;font-weight:bold;float:left;">
+				</w2:textbox>
+				<xf:group id="" style="width:40%;height:23px;padding:10px;font-size:18px;font-weight:bold;float:right;">
+					<xf:trigger style="width: 80px;height: 23px;float: right;" id="btn_refresh" type="button"
+						ev:onclick="scwin.btn_refresh_onclick">
+						<xf:label><![CDATA[초기화]]></xf:label>
+					</xf:trigger>
+				</xf:group>
+			</xf:group>
+			<xf:group id="" style="width:50%;height:443px;float:left;">
+				<xf:group tagname="table" style="width:100%;" id="" class="w2tb">
+					<w2:attributes>
+						<w2:summary></w2:summary>
+					</w2:attributes>
+					<xf:group tagname="caption"></xf:group>
+					<xf:group tagname="colgroup">
+						<xf:group tagname="col" style="width:18.45%;"></xf:group>
+						<xf:group tagname="col" style="width:25.00%"></xf:group>
+						<xf:group tagname="col" style="width:15.13%;"></xf:group>
+						<xf:group tagname="col" style="width:25.00%"></xf:group>
+					</xf:group>
+					<xf:group tagname="tr" style="">
+						<xf:group tagname="th" style="" class="w2tb_th">inputBox<w2:attributes>
+								<w2:scope>row</w2:scope>
+							</w2:attributes></xf:group>
+						<xf:group tagname="td" style="" class="w2tb_td">
+							<xf:input adjustMaxLength="false" id="" style="width: 144px;height: 21px;" ref="data:dma_dataMap1.key1"></xf:input>
+						</xf:group>
+						<xf:group tagname="th" style="" class="w2tb_th">inputCalendar<w2:attributes>
+								<w2:scope>row</w2:scope>
+							</w2:attributes></xf:group>
+						<xf:group tagname="td" style="" class="w2tb_td">
+							<w2:inputCalendar footerDiv="false" id="" style="width: 150px;height: 23px;" renderDiv="true"
+								focusOnDateSelect="false" calendarValueType="yearMonthDate" rightAlign="false" renderType="component" ref="data:dma_dataMap1.key2">
+							</w2:inputCalendar>
+						</xf:group>
+					</xf:group>
+					<xf:group tagname="tr" style="">
+						<xf:group tagname="th" style="" class="w2tb_th">selectBox<w2:attributes>
+								<w2:scope>row</w2:scope>
+							</w2:attributes></xf:group>
+						<xf:group tagname="td" style="" class="w2tb_td">
+							<xf:select1 id="" chooseOption="" style="width: 148px;height: 21px;" submenuSize="auto" allOption=""
+								disabled="false" direction="auto" appearance="minimal" disabledClass="w2selectbox_disabled" ref="data:dma_dataMap1.key3">
+								<xf:choices>
+									<xf:itemset nodeset="data:dlt_code">
+										<xf:label ref="codeName"></xf:label>
+										<xf:value ref="code"></xf:value>
+									</xf:itemset>
+								</xf:choices>
+							</xf:select1>
+						</xf:group>
+						<xf:group tagname="th" style="" class="w2tb_th">autoComplete<w2:attributes>
+								<w2:scope>row</w2:scope>
+							</w2:attributes></xf:group>
+						<xf:group tagname="td" style="" class="w2tb_td">
+							<w2:autoComplete editType="select" id="" useKeywordHighlight="false" style="width: 148px;height: 21px;"
+								submenuSize="auto" search="start" useLocale="false" ref="data:dma_dataMap1.key4" allOption="" chooseOption="">
+								<w2:choices>
+									<w2:itemset nodeset="data:dlt_code">
+										<w2:label ref="codeName"></w2:label>
+										<w2:value ref="code"></w2:value>
+									</w2:itemset>
+								</w2:choices>
+							</w2:autoComplete>
+						</xf:group>
+					</xf:group>
+					<xf:group tagname="tr" style=""><xf:group tagname="th" class="w2tb_th">Radio<w2:attributes><w2:scope>row</w2:scope></w2:attributes></xf:group>
+						<xf:group tagname="td" class="w2tb_td">
+							<w2:attributes>
+								<w2:colspan>3</w2:colspan>
+								<w2:rowspan>1</w2:rowspan>
+							</w2:attributes>
+							<xf:select1 id="" selectedIndex="-1" appearance="full" style="width: 100%;height: 21px;"
+								ref="data:dma_dataMap1.key7" cols="4" rows="">
+								<xf:choices>
+									<xf:itemset nodeset="data:dlt_code">
+										<xf:label ref="codeName"></xf:label>
+										<xf:value ref="code"></xf:value>
+									</xf:itemset>
+								</xf:choices>
+							</xf:select1>
+						</xf:group></xf:group><xf:group tagname="tr" style=""><xf:group tagname="th" class="w2tb_th">CheckBox<w2:attributes><w2:scope>row</w2:scope></w2:attributes></xf:group>
+	<xf:group tagname="td" class="w2tb_td">
+		<w2:attributes>
+			<w2:colspan>3</w2:colspan>
+			<w2:rowspan>1</w2:rowspan>
+		</w2:attributes>
+		<xf:select selectedindex="-1" id="" appearance="full" style="width: 100%;height: 21px;" ref="data:dma_dataMap1.key8" cols="4"
+			rows="">
+			<xf:choices>
+				<xf:itemset nodeset="data:dlt_code">
+					<xf:label ref="codeName"></xf:label>
+					<xf:value ref="code"></xf:value>
+				</xf:itemset>
+			</xf:choices>
+		</xf:select>
+	</xf:group></xf:group><xf:group tagname="tr" style="">
+						<xf:group tagname="th" style="" class="w2tb_th">TextAea<w2:attributes>
+								<w2:scope>row</w2:scope>
+							</w2:attributes></xf:group>
+						<xf:group tagname="td" style="" class="w2tb_td">
+							<w2:attributes>
+								<w2:colspan>3</w2:colspan>
+								<w2:rowspan>1</w2:rowspan>
+							</w2:attributes>
+							<xf:textarea id="" style="width:300px;height:102px;" ref="data:dma_dataMap1.key9"></xf:textarea>
+						</xf:group>
+</xf:group>
+					<xf:group tagname="tr" style=""><xf:group tagname="th" class="w2tb_th">GridView<w2:attributes><w2:scope>row</w2:scope></w2:attributes></xf:group>
+						<xf:group tagname="td" class="w2tb_td">
+							<w2:attributes>
+								<w2:colspan>3</w2:colspan>
+								<w2:rowspan>1</w2:rowspan>
+							</w2:attributes>
+							<w2:gridView id="" style="width:100%;height:171px;" scrollByColumn="false" defaultCellHeight="20"
+								scrollByColumnAdaptive="false" dataList="data:dlt_data1">
+								<w2:caption style="" id="caption2" value="this is a grid caption."></w2:caption>
+								<w2:header style="" id="header2">
+									<w2:row style="" id="row3">
+										<w2:column width="70" inputType="text" style="height:20px" id="column7" value="name1"
+											displayMode="label">
+										</w2:column>
+										<w2:column width="70" inputType="text" style="height:20px" id="column6" value="name2"
+											displayMode="label">
+										</w2:column>
+										<w2:column width="70" inputType="text" style="height:20px" id="column5" value="name3"
+											displayMode="label">
+										</w2:column>
+										<w2:column width="70" inputType="text" style="height:20px" id="column4" value="name4"
+											displayMode="label">
+										</w2:column>
+										<w2:column width="70" inputType="text" style="height:20px" id="column3" value="name5"
+											displayMode="label">
+										</w2:column>
+									</w2:row>
+								</w2:header>
+								<w2:gBody style="" id="gBody2">
+									<w2:row style="" id="row4">
+										<w2:column width="70" inputType="text" style="height:20px" id="col1" value="" displayMode="label"></w2:column>
+										<w2:column width="70" inputType="text" style="height:20px" id="col2" value="" displayMode="label"></w2:column>
+										<w2:column width="70" inputType="text" style="height:20px" id="col3" value="" displayMode="label"></w2:column>
+										<w2:column width="70" inputType="text" style="height:20px" id="col4" value="" displayMode="label"></w2:column>
+										<w2:column width="70" inputType="text" style="height:20px" id="col5" value="" displayMode="label"></w2:column>
+									</w2:row>
+								</w2:gBody>
+							</w2:gridView>
+						</xf:group></xf:group>
+				</xf:group>
+			</xf:group>
+			<xf:group id="grp_group1" style="width:100%">
+				<w2:gridView dataList="data:dlt_log" defaultCellHeight="20" id="" scrollByColumn="false" scrollByColumnAdaptive="false"
+					style="width: 50%;height: 100px;" autoFit="allColumn" readOnly="true" focusMode="row" visibleRowNum="40">
+					<w2:caption style="" id="caption1" value="this is a grid caption."></w2:caption>
+					<w2:header style="" id="header1">
+						<w2:row style="" id="row1">
+							<w2:column width="160" inputType="text" style="height:20px" id="column2" value="시간" displayMode="label"></w2:column>
+							<w2:column width="379" inputType="text" style="height:20px" id="column1" value="로그" displayMode="label"></w2:column>
+						</w2:row>
+					</w2:header>
+					<w2:gBody style="" id="gBody1">
+						<w2:row style="" id="row2">
+							<w2:column width="160" inputType="text" style="height:20px" id="datetime" value="" displayMode="label"
+								textAlign="center">
+							</w2:column>
+							<w2:column width="379" inputType="text" style="height:20px" id="log" value="" displayMode="label"
+								textAlign="left">
+							</w2:column>
+						</w2:row>
+					</w2:gBody>
+				</w2:gridView>
+			</xf:group>
+			
+		</xf:group>
+	</body>
+</html>

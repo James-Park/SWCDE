@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:w2="http://www.inswave.com/websquare" xmlns:xf="http://www.w3.org/2002/xforms">
+    <head>
+    	<w2:type>UDC</w2:type>
+        <w2:buildDate/>
+        <w2:model></w2:model>
+    </head>
+    <body>
+    	<!--/** WEBSQUARE UDC */
+    		{
+    		"disableIcon": "",
+    		"notSupportBrowser": "",
+    		"htmlRender": "",
+    		"icon": "",
+    		"description": "FullCalendar.js를 이용한 캘린더 UDC",
+    		"version": "",
+    		"apis": [],
+    		"pluginName": "udc_fullCalendar",
+    		"width": "200px",
+    		"company": "",
+    		"developer": "",
+    		"componentName": "udc_fullCalendar",
+    		"category": "Basic",
+    		"properties": [
+    		{
+    		"default": "",
+    		"necessary": "Y",
+    		"hidden": "N",
+    		"name": "id",
+    		"description": "Component id",
+    		"type": "string",
+    		"bindparent": "",
+    		"option": ""
+    		},
+    		{
+    		"default": "",
+    		"necessary": "N",
+    		"hidden": "N",
+    		"name": "style",
+    		"description": "Component style",
+    		"type": "string",
+    		"bindparent": "",
+    		"option": ""
+    		},
+    		{
+    		"default": "",
+    		"necessary": "N",
+    		"hidden": "N",
+    		"name": "class",
+    		"description": "Component class",
+    		"type": "string",
+    		"bindparent": "",
+    		"option": ""
+    		},
+    		{
+    		"default": "",
+    		"necessary": "N",
+    		"hidden": "N",
+    		"name": "ref",
+    		"description": "Component ref",
+    		"type": "bindColumn",
+    		"bindparent": "",
+    		"option": ""
+    		}
+    		],
+    		"events": [],
+    		"height": "200px"
+    		}
+    	-->
+    	<xf:group style="" id="" pluginName="udc_fullCalendar">
+    		<link rel="stylesheet" type="text/css" href="/ui/SP/externalJS/fullCalendar/js/fullcalendar-5.7.0/lib/main.min.css"></link>
+    		<style type="text/css"><![CDATA[ ]]></style>
+    		<script type="text/javascript" src="/ui/SP/externalJS/fullCalendar/js/fullcalendar-5.7.0/lib/main.min.js"></script>
+    		<script type="text/javascript" src="/ui/SP/externalJS/fullCalendar/js/fullcalendar-5.7.0/lib/moment.min.js"></script>
+    		<script ev:event="oncreated(options)" type="text/javascript"><![CDATA[
+				/**
+				 * //property handling
+				 * $w.log("id:" + options.id);
+				 * $w.log("style:" + options.style);
+				 * $w.log("class:" + options.class);
+				 * $w.log("ref:" + options.ref);
+				 *
+				 * //event trigger
+				*/
+				
+				udc_obj.init = function() {
+					var empCd = $p.top().wfm_side.getWindow().dma_defInfo.get("EMP_CD");
+					var calendarEl = document.getElementById("_calDiv");
+					var calendar = new FullCalendar.Calendar(calendarEl, {
+						initialView: "dayGridMonth",
+						locale: "ko",
+						googleCalendarApiKey: "AIzaSyDcnW6WejpTOCffshGDDb4neIrXVUA1EAE",
+						nowIndicator: true,
+						selectable: true,
+						headerToolbar: {
+							left: "prev,next today",
+							center: "title",
+							right: "dayGridMonth,timeGridWeek,timeGridDay,listWeek"
+						},
+						select: function(selectionInfo) {
+							
+							var inputString = prompt("이벤트 명을 입력해주세요.");
+							if (!com.util.isEmpty(inputString)) {
+								//calendar.addEvent({ title: inputString, start: selectionInfo.startStr, end: selectionInfo.endStr });
+								var setScheduleOption = {
+									id : "_sbm_setSchedule",
+									action : "/calendar/setScheduleById",
+									target : "",
+									submitDoneHandler : "",
+									isProcessMsg : false
+								};
+								
+								com.sbm.executeDynamic(setScheduleOption, {
+									"dma_save" : {
+										"EMP_CD" : empCd,
+										"TITLE" : inputString,
+										"START" : moment(selectionInfo.startStr).format("YYYY-MM-DD hh:mm:ss"),
+										"END" : moment(selectionInfo.endStr).format("YYYY-MM-DD hh:mm:ss"),
+										"ALL_DAY" : selectionInfo.allDay
+									}
+								});
+							}
+						},
+						businessHours: {
+							daysOfWeek: [1, 2, 3, 4, 5],
+							startTime: "09:00",
+							endTime: "18:00"
+						},
+						eventClick: function(eventClickInfo) {
+							eventClickInfo.jsEvent.preventDefault();
+						},
+						eventSources: [
+							{
+								events: function(info, successCallback, failureCallback) {
+									var getScheduleOption = {
+										id : "_sbm_getSchedule",
+										action : "/calendar/getScheduleById",
+										target : "",
+										submitDoneHandler : function(e) {
+											var result = e.responseJSON.dataList;
+//											for(var idx1 = 0; idx1 < result.length; idx1++) {
+//												calendar.addEvent({
+//													title: 'test',
+//													start: '2021-06-01',
+//													end: '2021-06-02'
+//												});
+//											}
+											successCallback(result);
+										},
+										isProcessMsg : false
+									};
+									
+									com.sbm.executeDynamic(getScheduleOption, {
+										"dma_search" : {
+											"EMP_CD" : empCd
+										}
+									});
+								},
+								color: "skyblue",
+								textColor: "white"
+							},
+							{
+								googleCalendarId: "ko.south_korea#holiday@group.v.calendar.google.com",
+								className: "koHolidays",
+								color: "red",
+								textColor: "white"
+							}
+						]
+					});
+					
+					calendar.render();
+				};
+				
+				]]></script>
+    		<script ev:event="onattributeChanged(type,value)" type="text/javascript"><![CDATA[ ]]></script>
+    		<script ev:event="ondestroyed()" type="text/javascript"><![CDATA[ ]]></script>
+    		<div id="_calDiv" style="position: relative;width: 100%;"></div>
+    	</xf:group>
+    </body>
+</html>

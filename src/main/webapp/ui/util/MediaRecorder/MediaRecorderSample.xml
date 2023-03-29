@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:w2="http://www.inswave.com/websquare"
+	xmlns:xf="http://www.w3.org/2002/xforms">
+	<head>
+		<w2:type>DEFAULT</w2:type>
+		<w2:buildDate />
+		<xf:model>
+			<xf:instance>
+				<data xmlns="" />
+			</xf:instance>
+			<w2:dataCollection baseNode="map">
+			</w2:dataCollection>
+			<w2:workflowCollection></w2:workflowCollection>
+		</xf:model>
+		<script type="text/javascript" lazy="false"><![CDATA[
+scwin.onpageload = function() {
+    if (typeof navigator.mediaDevices !== "undefined") {
+        navigator.mediaDevices.getUserMedia({
+            audio : true  // Audio 기능만 사용하도록 audio 속성만 true로 설정함
+        }).then(function(stream) {
+            // Audio Device가 정상적으로 로딩될 경우 
+            btn_record.setDisabled(false); // Record 버튼을 활성화
+            btn_stop.setDisabled(true);    // Stop 버튼을 비활성화
+            
+            var option = {
+                audioBitsPerSecond : 128000,   // Audio 인코딩 비트 전송률
+                mimeType : "audio/webm"        // Audio 파일 MIME TYPE
+            };
+            
+            // Audio 데이터 녹음을 위한 MediaRecorder 객체 생성
+            scwin.recorder = new MediaRecorder(stream, option);  
+            // dataavailable 이벤트 설정
+            scwin.recorder.addEventListener("dataavailable", scwin.onRecordingReady); 
+        }).catch(function(ex) {
+            // Audio Device가 로딩 과정에서 에러 발생
+            console.error(ex); 
+        });
+    } else {
+        console.error("navigator.mediaDevices에 접근할 수 없습니다.");
+    }
+};
+
+/**
+ * Record 버튼 클릭 시
+ */
+scwin.btn_record_onclick = function(e) {
+    btn_record.setDisabled(true);
+    btn_stop.setDisabled(false);
+    scwin.recorder.start(); // MediaRecorder 객체를 이용한 녹음 시작
+};
+
+/**
+ * Stop 버튼 클릭 시
+ */
+scwin.btn_stop_onclick = function(e) {
+    btn_record.setDisabled(false);
+    btn_stop.setDisabled(true);
+    scwin.recorder.stop();  // MediaRecorder 객체를 이용한 녹음 종료
+};
+
+/**
+ * dataavailable 이벤트 발생 시 (녹음 종료 시 발생함)
+ */
+scwin.onRecordingReady = function(e) { 
+	// 녹음된 데이터 객체를 가리키는 URL을 생성해서 Audio 객체의 src에 세팅함	
+    aud_audio1.src = URL.createObjectURL(e.data);  
+    aud_audio1.play();
+};
+
+scwin.onpageunload = function() {
+	// 페이지가 unload될 때 녹음된 데이터 객체를 가리키는 URL 해제함
+	URL.revokeObjectURL(aud_audio1.src);
+};]]></script>
+	</head>
+	<body ev:onpageload="scwin.onpageload" ev:onpageunload="scwin.onpageunload">
+		<xf:group id="" style="padding : 10px">
+			<xf:group style="width:100%;height:61px;" id="">
+				<w2:textbox style="width:50%;height:23px;padding:10px;font-size:24px;font-weight:bold;float:left;font-size-adjust:0;border-bottom:;border-style:solid;border:;;border-top-width:0px;border-right-width:0px;border-bottom-width:1px;border-left-width:0px;" id=""
+					label="Media Recorder Sample">
+				</w2:textbox>
+			</xf:group>
+			<xf:group style="width:100%;height:200px;" id="grp_group1">
+				<xf:group tagname="" style="width: 100%;height: 50px;" id="">
+					<xf:trigger style="width:151px;height:42px;font-size:18px;font-size-adjust:0;" id="btn_record" type="button"
+						ev:onclick="scwin.btn_record_onclick">
+						<xf:label><![CDATA[Record]]></xf:label>
+					</xf:trigger>
+					<xf:trigger style="width:151px;height:42px;font-size:18px;font-size-adjust:0;margin-left:10px;" id="btn_stop" type="button"
+						ev:onclick="scwin.btn_stop_onclick">
+						<xf:label><![CDATA[Stop]]></xf:label>
+					</xf:trigger>
+				</xf:group>
+				<xf:group tagname="" style="width: 100%;height: 100px;" userData2="" id="">
+					<audio controls="" style="width:452px;height:98px;" id="aud_audio1"></audio>
+				</xf:group>
+			</xf:group>
+		</xf:group>
+	</body>
+</html>

@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:w2="http://www.inswave.com/websquare"
+	xmlns:xf="http://www.w3.org/2002/xforms">
+	<head>
+		<w2:type>DEFAULT</w2:type>
+		<w2:buildDate />
+		<xf:model>
+			<xf:instance>
+				<data xmlns="" />
+			</xf:instance>
+			<w2:dataCollection baseNode="map"></w2:dataCollection>
+			<w2:workflowCollection></w2:workflowCollection>
+		</xf:model>
+
+		<script type="text/javascript" lazy="false"><![CDATA[
+
+// Canvas Element 저장 변수
+scwin.canvas = null;
+
+// 2D 방식으로 그림을 그리기 위한 Canvas Context 저장 변수
+scwin.ctx = null;
+
+// 현재 좌표 위치 저장 변수
+scwin.coord = null;
+	
+scwin.onpageload = function() {
+	scwin.create();
+}
+
+
+/**
+ * Image Drawing을 위한 Canvas 및 Event 생성한다.
+ */
+scwin.create = function() {
+	// $p.$() API를 통해서 자신의 Scope 내 Cavans(ID : can_drawingPaper) element 접근
+	scwin.canvas = $p.$("#can_drawingPaper")[0];
+	// 2D 방식으로 그림을 그리기 위한 Canvas Context를 받음
+	scwin.ctx = scwin.canvas.getContext("2d");
+	// Canvas이 초기 좌표
+	scwin.coord = { x: 0, y: 0 };	
+	
+	// mousedown, mouseup, resize 이벤트 바인딩
+	document.addEventListener("mousedown", scwin.start);
+	document.addEventListener("mouseup", scwin.stop);
+	window.addEventListener("resize", scwin.resize);
+	
+	scwin.resize();
+}
+
+/**
+ * Mouse Down 이벤트 발생할 때 Move Move 이벤트를 추가해서 Canvas 내에 Drawing 동작을 실행한다.
+ */
+scwin.start = function(event) {
+	document.addEventListener("mousemove", scwin.draw);
+	scwin.reposition(event);
+}
+
+/**
+ * 웹 브라우저의 사이즈 변경(Resize 이벤트)이 발생하면 Cavas 사이즈도 변경 시킨다.
+ */
+scwin.resize = function() {
+	scwin.ctx.canvas.width = grp_drawingPaper.getSize("innerWidth");
+	scwin.ctx.canvas.height = grp_drawingPaper.getSize("innerHeight");
+}
+
+/**
+ * Cavans Drawing할 Mouse 커서의 위치를 설정한다.
+ */
+scwin.reposition = function(event) {
+	scwin.coord.x = event.clientX - scwin.canvas.offsetLeft + document.body.scrollLeft + document.documentElement.scrollLeft;
+	scwin.coord.y = event.clientY - scwin.canvas.offsetTop + document.body.scrollTop + document.documentElement.scrollTop;
+}
+
+/**
+ * Mouse Up 이벤트 발생할 때 Move Move 이벤트를 추가해서 Canvas 내에 Drawing 동작을 해제한다.
+ */
+scwin.stop = function() {
+	document.removeEventListener("mousemove", scwin.draw);
+}
+
+/**
+ * 마우스 Down 상태에서 마우스의 위치를 이동하면 Canvas에 Drawing을 한다.
+ */
+scwin.draw = function(event) {
+  scwin.ctx.beginPath();
+  scwin.ctx.lineWidth = 2;
+  scwin.ctx.lineCap = "round";
+  scwin.ctx.strokeStyle = "gray";
+  // Canvas에서 펜을  x와 y로 지정된 좌표로 옮김
+  scwin.ctx.moveTo(scwin.coord.x, scwin.coord.y);
+  scwin.reposition(event);
+  // 현재의 드로잉 위치에서 x와 y로 지정된 위치까지 선을 연결함
+  scwin.ctx.lineTo(scwin.coord.x, scwin.coord.y);
+  // 윤곽선을 이용하여 도형을 그림
+  scwin.ctx.stroke();
+}
+
+scwin.btn_imageFileDownload_onclick = function(e) {
+	scwin.save();
+}
+
+/**
+ * Canvas에 Drawing한 이미지를 파일로 다운로드 받는다.
+ */
+scwin.save = function() {
+	// Anchor 태그를 이용해서 Canvas에 그려진 이미지를 파일로 다운로드 받음
+	var link = document.createElement('a');
+	link.download = 'imageDownload.png';
+	link.href = scwin.canvas.toDataURL();
+	link.click();
+	link.delete;
+}
+
+
+
+scwin.onpageunload = function() {
+	
+};
+
+	]]></script>
+	</head>
+	<body ev:onpageload="scwin.onpageload" ev:onpageunload="scwin.onpageunload">
+		<xf:group id="" style="padding:10px">
+			<xf:group style="width: 100%;height:60px;" id="">
+				<w2:textbox style="width:50%;height:23px;padding:10px;font-size:18px;font-weight:bold;float:left;" id=""
+					label="Drawing Sample using Canvas">
+				</w2:textbox>
+				<xf:trigger ev:onclick="scwin.btn_imageFileDownload_onclick" style="width:158px;height:23px;float:right;margin-top:10px;margin-right:10px;" id="btn_imageFileDownload"
+					type="button">
+					<xf:label><![CDATA[Image File Download]]></xf:label>
+				</xf:trigger>
+			</xf:group>
+			<xf:group style="width: 100%; height:100%; border: 1px solid gray;" id="grp_drawingPaper">
+ 				<canvas style="width: 100%; height:500px;" id="can_drawingPaper"></canvas> 
+			</xf:group>
+		</xf:group>
+	</body>
+</html>

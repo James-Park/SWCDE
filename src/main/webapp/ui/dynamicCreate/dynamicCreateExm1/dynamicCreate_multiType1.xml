@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:w2="http://www.inswave.com/websquare"
+	xmlns:xf="http://www.w3.org/2002/xforms">
+	<head meta_screenId="dynamicCreate_multiType1" meta_screenName="동적 레이아웃 및 컴포넌트 생성 예제" 
+		meta_desc="1. 프로그램 설명 : Generator 컴포넌트 및 dynamicCreate API를 사용해서 레이아웃 데이터를 이용해서 화면을 동적으로 생성하는 예제 소스이다. \n2. 테스트 엔진 버전 : 5.0_2.2994B.20180319.163854_1.8\n3. 개발 방식 : WebSquare5 SP2 WFrame Scope 적용" meta_type="메인">
+		<w2:type>DEFAULT</w2:type>
+		<w2:buildDate />
+		<xf:model>
+			<xf:instance>
+				<data xmlns="" />
+			</xf:instance>
+			<w2:dataCollection baseNode="map">
+				<w2:dataList baseNode="list" repeatNode="map" id="dlt_layoutMeta" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="inputType" name="inputType" dataType="text"></w2:column>
+						<w2:column id="labelName" name="labelName" dataType="text"></w2:column>
+						<w2:column id="value" name="value" dataType="text"></w2:column>
+					</w2:columnInfo>
+					<w2:data use="true">
+						<w2:row>
+							<inputType><![CDATA[input]]></inputType>
+							<labelName><![CDATA[이름]]></labelName>
+							<value><![CDATA[홍길동]]></value>
+						</w2:row>
+						<w2:row>
+							<inputType><![CDATA[select]]></inputType>
+							<labelName><![CDATA[부서1]]></labelName>
+							<value><![CDATA[A03]]></value>
+						</w2:row>
+						<w2:row>
+							<inputType><![CDATA[inputCalendar]]></inputType>
+							<labelName><![CDATA[시작일자]]></labelName>
+							<value><![CDATA[20180101]]></value>
+						</w2:row>
+						<w2:row>
+							<inputType><![CDATA[inputCalendar]]></inputType>
+							<labelName><![CDATA[종료일자]]></labelName>
+							<value><![CDATA[20181231]]></value>
+						</w2:row>
+						<w2:row>
+							<inputType><![CDATA[inputButton]]></inputType>
+							<labelName><![CDATA[코드타입1]]></labelName>
+							<value><![CDATA[02]]></value>
+						</w2:row>
+						<w2:row>
+							<inputType><![CDATA[select]]></inputType>
+							<labelName><![CDATA[부서2]]></labelName>
+							<value><![CDATA[A02]]></value>
+						</w2:row>
+						<w2:row>
+							<inputType><![CDATA[radio]]></inputType>
+							<labelName><![CDATA[코드타입2]]></labelName>
+							<value><![CDATA[01]]></value>
+						</w2:row>
+					</w2:data>
+				</w2:dataList>
+				<w2:dataList baseNode="list" repeatNode="map" id="dlt_codeType1" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="code" name="code" dataType="text"></w2:column>
+						<w2:column id="label" name="label" dataType="text"></w2:column>
+					</w2:columnInfo>
+					<w2:data use="true">
+						<w2:row>
+							<code><![CDATA[A01]]></code>
+							<label><![CDATA[인사과]]></label>
+						</w2:row>
+						<w2:row>
+							<code><![CDATA[A02]]></code>
+							<label><![CDATA[총무과]]></label>
+						</w2:row>
+						<w2:row>
+							<code><![CDATA[A03]]></code>
+							<label><![CDATA[홍보과]]></label>
+						</w2:row>
+					</w2:data>
+				</w2:dataList>
+			</w2:dataCollection>
+			<w2:workflowCollection>
+			</w2:workflowCollection>
+		</xf:model>
+		<script type="text/javascript" lazy="false"><![CDATA[
+	
+	scwin.onpageload = function() {
+		scwin.createLayout();
+	};
+
+	scwin.onpageunload = function() {
+	};
+
+	/** 
+	 * 컴포넌트 동적 생성을 위한 DataList(dlt_layoutMeta)에 저장된 Layout 메타 데이터를 이용해서 화면을 동적으로 생성한다.
+	 */ 
+	scwin.createLayout = function() {
+		var layoutCount = dlt_layoutMeta.getRowCount();
+
+		for (var idx = 0; idx < layoutCount; idx++) {
+			gen_Layout.insertChild(idx);
+
+			var grpObj = gen_Layout.getChild(idx, "grp_layout");
+			var layoutType = dlt_layoutMeta.getCellData(idx, "inputType");
+			var labelName = dlt_layoutMeta.getCellData(idx, "labelName");
+			var value = dlt_layoutMeta.getCellData(idx, "value");
+
+			// Label 이름을 세팅한다.
+			var labelObj = gen_Layout.getChild(idx, "tbx_label");
+			labelObj.setValue(labelName);
+
+			// 각 Label의 InputType 별로 컴포넌트를 동적으로 세팅한다.
+			if (layoutType == "input") {
+				scwin.createInput(idx, grpObj, value);
+			} else if (layoutType == "select") {
+				scwin.createSelect(idx, grpObj, value);
+			} else if (layoutType == "radio") {
+				scwin.createRadio(idx, grpObj, value);
+			} else if (layoutType == "inputCalendar") {
+				scwin.createInputCalendar(idx, grpObj, value);
+			} else if (layoutType == "inputButton") {
+				scwin.createInputButton(idx, grpObj, value);
+			}
+		}
+	};
+
+	/**
+	 * Input 컴포넌트 동적으로 생성하고 값을 세팅한다.
+	 *
+	 * @param {Number} idx 컴포넌트 순번
+	 * @param {Object} grpObj Input 컴포넌트의 부모 Group 객체
+	 * @param {String} value Input에 세팅할 문자열 값
+	 */
+	scwin.createInput = function(idx, grpObj, value) {
+		$p.dynamicCreate("ibx_data" + idx, "input", {
+			style : "width:120px; height:21px; float:left; margin : 5px;",
+		}, grpObj);
+
+		var comObj = $p.getComponentById("ibx_data" + idx);
+		comObj.setValue(value);
+	};
+
+	/**
+	 * SelectBox 컴포넌트 동적으로 생성하고 값을 세팅한다.
+	 *
+	 * @param {Number} idx 컴포넌트 순번
+	 * @param {Object} grpObj SelectBox 컴포넌트의 부모 Group 객체
+	 * @param {String} value Input에 세팅할 문자열 값
+	 */
+	scwin.createSelect = function(idx, grpObj, value) {
+		$p.dynamicCreate("sbx_data" + idx, "selectbox", {
+			style : "width:170px; height:21px; float:left; margin : 5px;"
+		}, grpObj);
+
+		var comObj = $p.getComponentById("sbx_data" + idx);
+		comObj.setNodeSet("data:dlt_codeType1", "label", "code");
+		comObj.setValue(value);
+	};
+
+	/**
+	 * Radio 컴포넌트 동적으로 생성하고 값을 세팅한다.
+	 *
+	 * @param {Number} idx 컴포넌트 순번
+	 * @param {Object} grpObj SelectBox 컴포넌트의 부모 Group 객체
+	 * @param {String} value Input에 세팅할 문자열 값
+	 */
+	scwin.createRadio = function(idx, grpObj, value) {
+		$p.dynamicCreate("rad_data" + idx, "radio", {
+			style : "width:200px; height:21px; float:left; margin : 5px;",
+			cols : "3"
+		}, grpObj);
+
+		var comObj = $p.getComponentById("rad_data" + idx);
+		comObj.setNodeSet("data:dlt_codeType1", "label", "code");
+		comObj.setValue(value);
+	};
+
+	/**
+	 * InputCalendar 컴포넌트 동적으로 생성하고 값을 세팅한다.
+	 *
+	 * @param {Number} idx 컴포넌트 순번
+	 * @param {Object} grpObj InputCalendar 컴포넌트의 부모 Group 객체
+	 * @param {String} value Input에 세팅할 문자열 값
+	 */
+	scwin.createInputCalendar = function(idx, grpObj, value) {
+		$p.dynamicCreate("cal_data" + idx, "inputCalendar", {
+			style : "width:100px; height:21px; float:left; margin : 5px;"
+		}, grpObj);
+
+		var comObj = $p.getComponentById("cal_data" + idx);
+		comObj.setValue(value);
+	};
+
+	/**
+	 * Input + Trigger(Button) 컴포넌트를 동적으로 생성하고 값을 세팅한다.
+	 *
+	 * @param {Number} idx 컴포넌트 순번
+	 * @param {Object} grpObj Input + Trigger(Button) 컴포넌트의 부모 Group 객체
+	 * @param {String} value Input에 세팅할 문자열 값
+	 */
+	scwin.createInputButton = function(idx, grpObj, value) {
+		$p.dynamicCreate("ibx_data" + idx, "input", {
+			style : "width:120px; height:21px; float:left; margin : 5px;",
+			disabled : true
+		}, grpObj);
+
+		var inputObj = $p.getComponentById("ibx_data" + idx);
+		inputObj.setValue(value);
+
+		$p.dynamicCreate("btn_search" + idx, "trigger", {
+			style : "width:40px; height:21px; float:left; margin : 5px;", 
+			value : "검색"
+		}, grpObj);
+
+		var btnObj = $p.getComponentById("btn_search" + idx);
+		btnObj.bind("onclick", scwin.openCodeSearchPopup);
+		btnObj.setUserData("valueComId", "ibx_data" + idx);
+	};
+
+	/**
+	 * 코드 검색 팝업 창을 오픈한다.
+	 */
+	scwin.openCodeSearchPopup = function() {
+		requires("uiplugin.popup");
+
+		var rowJSON = {
+			comId : this.getUserData("valueComId"),
+			callbackFunc : $p.id + "scwin.setCode"
+		};
+
+		var dataObj = {
+			type : "json", // 데이터 타입. "xml","string","json","array" 
+			data : rowJSON, // 전달 데이터 객체. 
+			name : "param" // 변수명. popup에서 $w.getParameter( "param" )로 깨내올 수 있다. 
+		};
+
+		var options = {
+			id : "popup1",
+			type : "wframePopup",
+			width : "500px",
+			height : "264px",
+			top : "130px",
+			left : "200px",
+			popupName : "openPopup1",
+			modal : true,
+			dataObject : dataObj
+		};
+
+		$p.openPopup("popup_search.xml", options);
+	};
+	
+	/**
+	 * 컴포넌트 동적 생성을 위한 메타 데이터(dlt_layoutMeta)를 이용해서 화면을 동적으로 생성한다.
+	 * 
+	 * @param {String} comId 컴포넌트 
+	 * @return {String} value 
+	 */
+	scwin.setCode = function(comId, value) {
+		var comObj = $p.getComponentById(comId);
+		if ((comObj !== null) && (typeof value !== "undefined")) {
+			comObj.setValue(value);
+		}
+		return true;
+	};
+]]></script>
+	</head>
+	<body ev:onpageload="scwin.onpageload" ev:onpageunload="scwin.onpageunload">
+		<xf:group style="padding:10px;" id="">
+			<w2:generator tagname="div" style="" id="gen_Layout">
+				<xf:group style="width:400px;height:33px;border-style: solid;padding: 1px;border-width:1px;float:left" id="grp_layout" class="">
+					<w2:textbox style="width:120px;padding:10px;font-weight:bold;background-color:#F0F0F0;float:left;" label="Label" id="tbx_label">
+					</w2:textbox>
+				</xf:group>
+			</w2:generator>
+		</xf:group>
+	</body>
+</html>

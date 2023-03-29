@@ -1,0 +1,2161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:w2="http://www.inswave.com/websquare"
+	xmlns:xf="http://www.w3.org/2002/xforms">
+	<head>
+		<w2:type>DEFAULT</w2:type>
+		<w2:buildDate />
+		<xf:model>
+			<xf:instance>
+				<data xmlns="" />
+			</xf:instance>
+			<w2:dataCollection baseNode="map">
+				<w2:dataMap baseNode="map" id="dl_defaultOptions">
+					<w2:keyInfo>
+						<w2:key id="wordShortening" name="name1" dataType="text"></w2:key>
+						<w2:key id="dateFormat" name="name2" dataType="text"></w2:key>
+						<w2:key id="timeFormat" name="name3" dataType="text"></w2:key>
+						<w2:key id="timezoneOffset" name="name4" dataType="text"></w2:key>
+						<w2:key id="numberFormat" name="name5" dataType="text"></w2:key>
+						<w2:key id="integerSeparator" name="name6" dataType="text"></w2:key>
+						<w2:key id="decimalSeparator" name="name7" dataType="text"></w2:key>
+						<w2:key id="useDST" name="name8" dataType="text" defaultValue="false"></w2:key>
+					</w2:keyInfo>
+				</w2:dataMap>
+				<w2:dataList id="dl_cm_nation" baseNode="list" saveRemovedData="true" repeatNode="map">
+					<w2:columnInfo>
+						<w2:column id="CODENM_S" name="코드명_S" dataType="text"></w2:column>
+						<w2:column id="CODENM_F" name="코드명_F" dataType="text"></w2:column>
+						<w2:column id="CODE" name="코드" dataType="text"></w2:column>
+						<w2:column id="IMG_SRC" name="이미지경로" dataType="text"></w2:column>
+					</w2:columnInfo>
+					<w2:data use="true">
+						<w2:row>
+							<CODENM_S><![CDATA[Ko]]></CODENM_S>
+							<CODENM_F><![CDATA[Korean]]></CODENM_F>
+							<CODE><![CDATA[ko]]></CODE>
+							<IMG_SRC><![CDATA[<img src="/sp4_unofficial/mutiLang/client/common/image/nations/KO.png"/>]]></IMG_SRC>
+						</w2:row>
+						<w2:row>
+							<CODENM_S><![CDATA[En]]></CODENM_S>
+							<CODENM_F><![CDATA[English]]></CODENM_F>
+							<CODE><![CDATA[en]]></CODE>
+							<IMG_SRC><![CDATA[<img src="/sp4_unofficial/mutiLang/client/common/image/nations/EN.png"/>]]></IMG_SRC>
+						</w2:row>
+						<w2:row>
+							<CODENM_S><![CDATA[Fr]]></CODENM_S>
+							<CODENM_F><![CDATA[Français]]></CODENM_F>
+							<CODE><![CDATA[fr]]></CODE>
+							<IMG_SRC><![CDATA[<img src="/sp4_unofficial/mutiLang/client/common/image/nations/FR.png"/>]]></IMG_SRC>
+						</w2:row>
+						<w2:row>
+							<CODENM_S><![CDATA[De]]></CODENM_S>
+							<CODENM_F><![CDATA[Deutsch]]></CODENM_F>
+							<CODE><![CDATA[de]]></CODE>
+							<IMG_SRC><![CDATA[<img src="/sp4_unofficial/mutiLang/client/common/image/nations/DE.png"/>]]></IMG_SRC>
+						</w2:row>
+					</w2:data>
+				</w2:dataList>
+				<w2:dataList id="dl_cal" baseNode="list" saveRemovedData="true" repeatNode="map">
+					<w2:columnInfo>
+						<w2:column id="Time" name="시간" dataType="text"></w2:column>
+						<w2:column id="Cur" name="외화" dataType="text"></w2:column>
+						<w2:column id="Event" name="이벤트" dataType="text"></w2:column>
+						<w2:column id="Actual" name="발표" dataType="text"></w2:column>
+						<w2:column id="Forecast" name="예측" dataType="text"></w2:column>
+						<w2:column id="Previous" name="이전" dataType="text"></w2:column>
+					</w2:columnInfo>
+					<w2:data use="false"></w2:data>
+				</w2:dataList>
+				<w2:dataList id="dl_cal_en" baseNode="list" saveRemovedData="true" repeatNode="map">
+					<w2:columnInfo>
+						<w2:column id="Time" name="시간" dataType="text"></w2:column>
+						<w2:column id="Cur" name="외화" dataType="text"></w2:column>
+						<w2:column id="Event" name="이벤트" dataType="text"></w2:column>
+						<w2:column id="Actual" name="발표" dataType="text"></w2:column>
+						<w2:column id="Forecast" name="예측" dataType="text"></w2:column>
+						<w2:column id="Previous" name="이전" dataType="text"></w2:column>
+					</w2:columnInfo>
+					<w2:data use="true">
+						<w2:row>
+							<Time><![CDATA[11:00]]></Time>
+							<Cur><![CDATA[EUR]]></Cur>
+							<Event><![CDATA[ECB's Nowotny Speaks]]></Event>
+							<Actual><![CDATA[]]>
+							</Actual>
+							<Forecast><![CDATA[]]>
+							</Forecast>
+							<Previous><![CDATA[]]>
+							</Previous>
+
+						</w2:row>
+						<w2:row>
+							<Time><![CDATA[10:00]]></Time>
+							<Cur><![CDATA[EUR]]></Cur>
+							<Event><![CDATA[German ZEW Current Conditions]]></Event>
+							<Actual><![CDATA[77.3]]></Actual>
+							<Forecast><![CDATA[65.0]]></Forecast>
+							<Previous><![CDATA[63.5]]></Previous>
+
+						</w2:row>
+						<w2:row>
+							<Time><![CDATA[10:00]]></Time>
+							<Cur><![CDATA[EUR]]></Cur>
+							<Event><![CDATA[ZEW Economic Sentiment]]></Event>
+							<Actual><![CDATA[23.2]]></Actual>
+							<Forecast><![CDATA[24.2]]></Forecast>
+							<Previous><![CDATA[18.1]]></Previous>
+
+						</w2:row>
+						<w2:row>
+							<Time><![CDATA[10:00]]></Time>
+							<Cur><![CDATA[EUR]]></Cur>
+							<Event><![CDATA[German ZEW Economic Sentiment]]></Event>
+							<Actual><![CDATA[16.6]]></Actual>
+							<Forecast><![CDATA[18.3]]></Forecast>
+							<Previous><![CDATA[13.8]]></Previous>
+
+						</w2:row>
+						<w2:row>
+							<Time><![CDATA[09:30]]></Time>
+							<Cur><![CDATA[GBP]]></Cur>
+							<Event><![CDATA[CPI (YoY)]]></Event>
+							<Actual><![CDATA[1.6]]></Actual>
+							<Forecast><![CDATA[1.4]]></Forecast>
+							<Previous><![CDATA[1.2]]></Previous>
+
+						</w2:row>
+						<w2:row>
+							<Time><![CDATA[09:30]]></Time>
+							<Cur><![CDATA[GBP]]></Cur>
+							<Event><![CDATA[PPI Input (MoM)]]></Event>
+							<Actual><![CDATA[1.8]]></Actual>
+							<Forecast><![CDATA[2.5]]></Forecast>
+							<Previous><![CDATA[-0.6]]></Previous>
+						</w2:row>
+					</w2:data>
+				</w2:dataList>
+				<w2:dataList id="dl_cal_ko" baseNode="list" saveRemovedData="true" repeatNode="map">
+					<w2:columnInfo>
+						<w2:column id="Time" name="시간" dataType="text"></w2:column>
+						<w2:column id="Cur" name="외화" dataType="text"></w2:column>
+						<w2:column id="Event" name="이벤트" dataType="text"></w2:column>
+						<w2:column id="Actual" name="발표" dataType="text"></w2:column>
+						<w2:column id="Forecast" name="예측" dataType="text"></w2:column>
+						<w2:column id="Previous" name="이전" dataType="text"></w2:column>
+					</w2:columnInfo>
+					<w2:data use="true">
+						<w2:row>
+							<Time><![CDATA[11:00]]></Time>
+							<Cur><![CDATA[EUR]]></Cur>
+							<Event><![CDATA[ECB의 Nowotny가 연설]]></Event>
+							<Actual><![CDATA[]]>
+							</Actual>
+							<Forecast><![CDATA[]]>
+							</Forecast>
+							<Previous><![CDATA[]]>
+							</Previous>
+
+						</w2:row>
+						<w2:row>
+							<Time><![CDATA[10:00]]></Time>
+							<Cur><![CDATA[EUR]]></Cur>
+							<Event><![CDATA[독일 ZEW 경기동향지수]]></Event>
+							<Actual><![CDATA[77.3]]></Actual>
+							<Forecast><![CDATA[65.0]]></Forecast>
+							<Previous><![CDATA[63.5]]></Previous>
+
+						</w2:row>
+						<w2:row>
+							<Time><![CDATA[10:00]]></Time>
+							<Cur><![CDATA[EUR]]></Cur>
+							<Event><![CDATA[ZEW 경기전망지수]]></Event>
+							<Actual><![CDATA[23.2]]></Actual>
+							<Forecast><![CDATA[24.2]]></Forecast>
+							<Previous><![CDATA[18.1]]></Previous>
+
+						</w2:row>
+						<w2:row>
+							<Time><![CDATA[10:00]]></Time>
+							<Cur><![CDATA[EUR]]></Cur>
+							<Event><![CDATA[독일 ZEW 경제전망지수]]></Event>
+							<Actual><![CDATA[16.6]]></Actual>
+							<Forecast><![CDATA[18.3]]></Forecast>
+							<Previous><![CDATA[13.8]]></Previous>
+
+						</w2:row>
+						<w2:row>
+							<Time><![CDATA[09:30]]></Time>
+							<Cur><![CDATA[GBP]]></Cur>
+							<Event><![CDATA[소비자물가지수 (YoY)]]></Event>
+							<Actual><![CDATA[1.6]]></Actual>
+							<Forecast><![CDATA[1.4]]></Forecast>
+							<Previous><![CDATA[1.2]]></Previous>
+
+						</w2:row>
+						<w2:row>
+							<Time><![CDATA[09:30]]></Time>
+							<Cur><![CDATA[GBP]]></Cur>
+							<Event><![CDATA[투입 생산자물가지수 (MoM)]]></Event>
+							<Actual><![CDATA[1.8]]></Actual>
+							<Forecast><![CDATA[2.5]]></Forecast>
+							<Previous><![CDATA[-0.6]]></Previous>
+						</w2:row>
+					</w2:data>
+				</w2:dataList>
+				<w2:dataList id="dl_cal_fr" baseNode="list" saveRemovedData="true" repeatNode="map">
+					<w2:columnInfo>
+						<w2:column id="Time" name="시간" dataType="text"></w2:column>
+						<w2:column id="Cur" name="외화" dataType="text"></w2:column>
+						<w2:column id="Event" name="이벤트" dataType="text"></w2:column>
+						<w2:column id="Actual" name="발표" dataType="text"></w2:column>
+						<w2:column id="Forecast" name="예측" dataType="text"></w2:column>
+						<w2:column id="Previous" name="이전" dataType="text"></w2:column>
+					</w2:columnInfo>
+					<w2:data use="true">
+						<w2:row>
+							<Time><![CDATA[11:00]]></Time>
+							<Cur><![CDATA[EUR]]></Cur>
+							<Event><![CDATA[Discours de Nowotny membre de la BCE]]></Event>
+							<Actual><![CDATA[]]>
+							</Actual>
+							<Forecast><![CDATA[]]>
+							</Forecast>
+							<Previous><![CDATA[]]>
+							</Previous>
+
+						</w2:row>
+						<w2:row>
+							<Time><![CDATA[10:00]]></Time>
+							<Cur><![CDATA[EUR]]></Cur>
+							<Event><![CDATA[Indice ZEW - Situation actuelle Allemagne]]></Event>
+							<Actual><![CDATA[77.3]]></Actual>
+							<Forecast><![CDATA[65.0]]></Forecast>
+							<Previous><![CDATA[63.5]]></Previous>
+
+						</w2:row>
+						<w2:row>
+							<Time><![CDATA[10:00]]></Time>
+							<Cur><![CDATA[EUR]]></Cur>
+							<Event><![CDATA[Indice ZEW du sentiment économique]]></Event>
+							<Actual><![CDATA[23.2]]></Actual>
+							<Forecast><![CDATA[24.2]]></Forecast>
+							<Previous><![CDATA[18.1]]></Previous>
+
+						</w2:row>
+						<w2:row>
+							<Time><![CDATA[10:00]]></Time>
+							<Cur><![CDATA[EUR]]></Cur>
+							<Event><![CDATA[Indice ZEW - Sentiment économique Allemagne]]></Event>
+							<Actual><![CDATA[16.6]]></Actual>
+							<Forecast><![CDATA[18.3]]></Forecast>
+							<Previous><![CDATA[13.8]]></Previous>
+
+						</w2:row>
+						<w2:row>
+							<Time><![CDATA[09:30]]></Time>
+							<Cur><![CDATA[GBP]]></Cur>
+							<Event><![CDATA[IPC (Annuel)]]></Event>
+							<Actual><![CDATA[1.6]]></Actual>
+							<Forecast><![CDATA[1.4]]></Forecast>
+							<Previous><![CDATA[1.2]]></Previous>
+
+						</w2:row>
+						<w2:row>
+							<Time><![CDATA[09:30]]></Time>
+							<Cur><![CDATA[GBP]]></Cur>
+							<Event><![CDATA[Prix à la production (IPP) core - produits bruts et intermédiaires (Mensuel)]]></Event>
+							<Actual><![CDATA[1.8]]></Actual>
+							<Forecast><![CDATA[2.5]]></Forecast>
+							<Previous><![CDATA[-0.6]]></Previous>
+						</w2:row>
+					</w2:data>
+				</w2:dataList>
+				<w2:dataList id="dl_cal_de" baseNode="list" saveRemovedData="true" repeatNode="map">
+					<w2:columnInfo>
+						<w2:column id="Time" name="시간" dataType="text"></w2:column>
+						<w2:column id="Cur" name="외화" dataType="text"></w2:column>
+						<w2:column id="Event" name="이벤트" dataType="text"></w2:column>
+						<w2:column id="Actual" name="발표" dataType="text"></w2:column>
+						<w2:column id="Forecast" name="예측" dataType="text"></w2:column>
+						<w2:column id="Previous" name="이전" dataType="text"></w2:column>
+					</w2:columnInfo>
+					<w2:data use="true">
+						<w2:row>
+							<Time><![CDATA[11:00]]></Time>
+							<Cur><![CDATA[EUR]]></Cur>
+							<Event><![CDATA[EZB: Nowotny spricht]]></Event>
+							<Actual><![CDATA[]]>
+							</Actual>
+							<Forecast><![CDATA[]]>
+							</Forecast>
+							<Previous><![CDATA[]]>
+							</Previous>
+
+						</w2:row>
+						<w2:row>
+							<Time><![CDATA[10:00]]></Time>
+							<Cur><![CDATA[EUR]]></Cur>
+							<Event><![CDATA[ZEW Indikator für aktuelle Konjunkturlage Deutschland]]></Event>
+							<Actual><![CDATA[77.3]]></Actual>
+							<Forecast><![CDATA[65.0]]></Forecast>
+							<Previous><![CDATA[63.5]]></Previous>
+
+						</w2:row>
+						<w2:row>
+							<Time><![CDATA[10:00]]></Time>
+							<Cur><![CDATA[EUR]]></Cur>
+							<Event><![CDATA[ZEW Konjunkturerwartungen]]></Event>
+							<Actual><![CDATA[23.2]]></Actual>
+							<Forecast><![CDATA[24.2]]></Forecast>
+							<Previous><![CDATA[18.1]]></Previous>
+
+						</w2:row>
+						<w2:row>
+							<Time><![CDATA[10:00]]></Time>
+							<Cur><![CDATA[EUR]]></Cur>
+							<Event><![CDATA[ZEW-Konjunkturerwartungen Deutschland]]></Event>
+							<Actual><![CDATA[16.6]]></Actual>
+							<Forecast><![CDATA[18.3]]></Forecast>
+							<Previous><![CDATA[13.8]]></Previous>
+
+						</w2:row>
+						<w2:row>
+							<Time><![CDATA[09:30]]></Time>
+							<Cur><![CDATA[GBP]]></Cur>
+							<Event><![CDATA[Verbraucherpreisindex (VPI) (Jahr)]]></Event>
+							<Actual><![CDATA[1.6]]></Actual>
+							<Forecast><![CDATA[1.4]]></Forecast>
+							<Previous><![CDATA[1.2]]></Previous>
+
+						</w2:row>
+						<w2:row>
+							<Time><![CDATA[09:30]]></Time>
+							<Cur><![CDATA[GBP]]></Cur>
+							<Event><![CDATA[Erzeugerpreisindex Input (Monat)]]></Event>
+							<Actual><![CDATA[1.8]]></Actual>
+							<Forecast><![CDATA[2.5]]></Forecast>
+							<Previous><![CDATA[-0.6]]></Previous>
+						</w2:row>
+					</w2:data>
+				</w2:dataList>
+				<w2:dataList id="dl_index" baseNode="list" saveRemovedData="true" repeatNode="map">
+					<w2:columnInfo>
+						<w2:column id="Index" name="지수" dataType="text"></w2:column>
+						<w2:column id="Last" name="현재가" dataType="text"></w2:column>
+						<w2:column id="High" name="고가" dataType="text"></w2:column>
+						<w2:column id="Low" name="저가" dataType="text"></w2:column>
+						<w2:column id="Chg" name="변동" dataType="text"></w2:column>
+						<w2:column id="ChgPer" name="변동%" dataType="text"></w2:column>
+						<w2:column id="Time" name="시간" dataType="text"></w2:column>
+					</w2:columnInfo>
+					<w2:data use="false"></w2:data>
+				</w2:dataList>
+				<w2:dataList id="dl_index_en" baseNode="list" saveRemovedData="true" repeatNode="map">
+					<w2:columnInfo>
+						<w2:column id="Index" name="지수" dataType="text"></w2:column>
+						<w2:column id="Last" name="현재가" dataType="text"></w2:column>
+						<w2:column id="High" name="고가" dataType="text"></w2:column>
+						<w2:column id="Low" name="저가" dataType="text"></w2:column>
+						<w2:column id="Chg" name="변동" dataType="text"></w2:column>
+						<w2:column id="ChgPer" name="변동%" dataType="text"></w2:column>
+						<w2:column id="Time" name="시간" dataType="text"></w2:column>
+					</w2:columnInfo>
+					<w2:data use="true">
+						<w2:row>
+							<Index><![CDATA[Dow 30]]></Index>
+							<Last><![CDATA[19885.73]]></Last>
+							<High><![CDATA[19952.03]]></High>
+							<Low><![CDATA[19849.38]]></Low>
+							<Chg><![CDATA[-5.27]]></Chg>
+							<ChgPer><![CDATA[-0.03]]></ChgPer>
+							
+							<Time><![CDATA[20170113163000]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[S&P 500]]></Index>
+							<Last><![CDATA[2274.64]]></Last>
+							<High><![CDATA[2278.68]]></High>
+							<Low><![CDATA[2271.51]]></Low>
+							<Chg><![CDATA[4.2]]></Chg>
+							<ChgPer><![CDATA[0.18]]></ChgPer>
+							
+							<Time><![CDATA[20170113161000]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[Nasdaq]]></Index>
+							<Last><![CDATA[5574.12]]></Last>
+							<High><![CDATA[5584.26]]></High>
+							<Low><![CDATA[5557.21]]></Low>
+							<Chg><![CDATA[26.63]]></Chg>
+							<ChgPer><![CDATA[0.48]]></ChgPer>
+							
+							<Time><![CDATA[20170113170530]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[SmallCap 2000]]></Index>
+							<Last><![CDATA[1372.94]]></Last>
+							<High><![CDATA[1379.10]]></High>
+							<Low><![CDATA[1367.92]]></Low>
+							<Chg><![CDATA[12.62]]></Chg>
+							<ChgPer><![CDATA[0.93]]></ChgPer>
+							
+							<Time><![CDATA[20170113164020]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[S&P 500 VIX]]></Index>
+							<Last><![CDATA[12.46]]></Last>
+							<High><![CDATA[12.75]]></High>
+							<Low><![CDATA[12.20]]></Low>
+							<Chg><![CDATA[1.23]]></Chg>
+							<ChgPer><![CDATA[10.95]]></ChgPer>
+							
+							<Time><![CDATA[20170117121300]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[S&P/TSX]]></Index>
+							<Last><![CDATA[15479.29]]></Last>
+							<High><![CDATA[15505.11]]></High>
+							<Low><![CDATA[15442.69]]></Low>
+							<Chg><![CDATA[-17.99]]></Chg>
+							<ChgPer><![CDATA[-0.12]]></ChgPer>
+							
+							<Time><![CDATA[20170116213500]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[Bovespa]]></Index>
+							<Last><![CDATA[63761.10]]></Last>
+							<High><![CDATA[63827.32]]></High>
+							<Low><![CDATA[63630.65]]></Low>
+							<Chg><![CDATA[-70.17]]></Chg>
+							<ChgPer><![CDATA[-0.11]]></ChgPer>
+							
+							<Time><![CDATA[20170117121400]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[IPC]]></Index>
+							<Last><![CDATA[45740.38]]></Last>
+							<High><![CDATA[46229.63]]></High>
+							<Low><![CDATA[45714.59]]></Low>
+							<Chg><![CDATA[-442.05]]></Chg>
+							<ChgPer><![CDATA[-0.96]]></ChgPer>
+							
+							<Time><![CDATA[20170116211000]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[DAX]]></Index>
+							<Last><![CDATA[11512.00]]></Last>
+							<High><![CDATA[11527.00]]></High>
+							<Low><![CDATA[11426.50]]></Low>
+							<Chg><![CDATA[-42.71]]></Chg>
+							<ChgPer><![CDATA[-0.37]]></ChgPer>
+							
+							<Time><![CDATA[20170117122902]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[FTSE 100]]></Index>
+							<Last><![CDATA[7284.50]]></Last>
+							<High><![CDATA[7319.50]]></High>
+							<Low><![CDATA[7281.50]]></Low>
+							<Chg><![CDATA[-42.63]]></Chg>
+							<ChgPer><![CDATA[-0.58]]></ChgPer>
+							
+							<Time><![CDATA[20170117122859]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[CAC 40]]></Index>
+							<Last><![CDATA[4872.00]]></Last>
+							<High><![CDATA[4875.80]]></High>
+							<Low><![CDATA[4842.50]]></Low>
+							<Chg><![CDATA[-10.18]]></Chg>
+							<ChgPer><![CDATA[-0.21]]></ChgPer>
+							
+							<Time><![CDATA[20170117122902]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[Euro Stoxx 50]]></Index>
+							<Last><![CDATA[3285.50]]></Last>
+							<High><![CDATA[3289.00]]></High>
+							<Low><![CDATA[3266.50]]></Low>
+							<Chg><![CDATA[-12.19]]></Chg>
+							<ChgPer><![CDATA[-0.37]]></ChgPer>
+							
+							<Time><![CDATA[20170117122848]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[AEX]]></Index>
+							<Last><![CDATA[482.40]]></Last>
+							<High><![CDATA[482.79]]></High>
+							<Low><![CDATA[480.53]]></Low>
+							<Chg><![CDATA[-1.73]]></Chg>
+							<ChgPer><![CDATA[-0.36]]></ChgPer>
+							
+							<Time><![CDATA[20170117122902]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[IBEX 35]]></Index>
+							<Last><![CDATA[9398.00]]></Last>
+							<High><![CDATA[9413.00]]></High>
+							<Low><![CDATA[9360.00]]></Low>
+							<Chg><![CDATA[-12]]></Chg>
+							<ChgPer><![CDATA[-0.13]]></ChgPer>
+							
+							<Time><![CDATA[20170117122902]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[FTSE MIB]]></Index>
+							<Last><![CDATA[19258.50]]></Last>
+							<High><![CDATA[19331.50]]></High>
+							<Low><![CDATA[19186.50]]></Low>
+							<Chg><![CDATA[11.25]]></Chg>
+							<ChgPer><![CDATA[0.06]]></ChgPer>
+							
+							<Time><![CDATA[20170117122835]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[SMI]]></Index>
+							<Last><![CDATA[8319.50]]></Last>
+							<High><![CDATA[8348.50]]></High>
+							<Low><![CDATA[8306.50]]></Low>
+							<Chg><![CDATA[-43.1]]></Chg>
+							<ChgPer><![CDATA[-0.52]]></ChgPer>
+							
+							<Time><![CDATA[20170117122906]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[PSI 20]]></Index>
+							<Last><![CDATA[4630.70]]></Last>
+							<High><![CDATA[4636.60]]></High>
+							<Low><![CDATA[4551.95]]></Low>
+							<Chg><![CDATA[54.17]]></Chg>
+							<ChgPer><![CDATA[1.18]]></ChgPer>
+							
+							<Time><![CDATA[20170117122906]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[BEL 20]]></Index>
+							<Last><![CDATA[3591.30]]></Last>
+							<High><![CDATA[3595.40]]></High>
+							<Low><![CDATA[3575.30]]></Low>
+							<Chg><![CDATA[-3.28]]></Chg>
+							<ChgPer><![CDATA[-0.09]]></ChgPer>
+							
+							<Time><![CDATA[20170117122900]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[OMXS30]]></Index>
+							<Last><![CDATA[1507.18]]></Last>
+							<High><![CDATA[1512.86]]></High>
+							<Low><![CDATA[1498.74]]></Low>
+							<Chg><![CDATA[-5.79]]></Chg>
+							<ChgPer><![CDATA[-0.38]]></ChgPer>
+							
+							<Time><![CDATA[20170117122900]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[MICEX]]></Index>
+							<Last><![CDATA[2173.66]]></Last>
+							<High><![CDATA[2195.36]]></High>
+							<Low><![CDATA[2167.88]]></Low>
+							<Chg><![CDATA[-15.41]]></Chg>
+							<ChgPer><![CDATA[-0.70]]></ChgPer>
+							
+							<Time><![CDATA[20170117122900]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[RTSI]]></Index>
+							<Last><![CDATA[1156.11]]></Last>
+							<High><![CDATA[1162.25]]></High>
+							<Low><![CDATA[1151.47]]></Low>
+							<Chg><![CDATA[5.06]]></Chg>
+							<ChgPer><![CDATA[0.44]]></ChgPer>
+							
+							<Time><![CDATA[20170117122900]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[BIST 100]]></Index>
+							<Last><![CDATA[82131.39]]></Last>
+							<High><![CDATA[82182.22]]></High>
+							<Low><![CDATA[81657.11]]></Low>
+							<Chg><![CDATA[419.7]]></Chg>
+							<ChgPer><![CDATA[0.51]]></ChgPer>
+							
+							<Time><![CDATA[20170117121300]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[TA 25]]></Index>
+							<Last><![CDATA[1445.29]]></Last>
+							<High><![CDATA[1447.47]]></High>
+							<Low><![CDATA[1441.16]]></Low>
+							<Chg><![CDATA[-3.02]]></Chg>
+							<ChgPer><![CDATA[-0.21]]></ChgPer>
+							
+							<Time><![CDATA[20170117122859]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[Tadawul All Share]]></Index>
+							<Last><![CDATA[6873.53]]></Last>
+							<High><![CDATA[6877.73]]></High>
+							<Low><![CDATA[6745.13]]></Low>
+							<Chg><![CDATA[49.9]]></Chg>
+							<ChgPer><![CDATA[0.73]]></ChgPer>
+							
+							<Time><![CDATA[20170117115900]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[Nikkei 225]]></Index>
+							<Last><![CDATA[18813.53]]></Last>
+							<High><![CDATA[19043.91]]></High>
+							<Low><![CDATA[18812.86]]></Low>
+							<Chg><![CDATA[-281.71]]></Chg>
+							<ChgPer><![CDATA[-1.48]]></ChgPer>
+							
+							<Time><![CDATA[20170117060059]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[S&P/ASX 200]]></Index>
+							<Last><![CDATA[5699.42]]></Last>
+							<High><![CDATA[5748.40]]></High>
+							<Low><![CDATA[5695.20]]></Low>
+							<Chg><![CDATA[-49.02]]></Chg>
+							<ChgPer><![CDATA[-0.85]]></ChgPer>
+							
+							<Time><![CDATA[20170117063528]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[Shanghai]]></Index>
+							<Last><![CDATA[3108.77]]></Last>
+							<High><![CDATA[3108.91]]></High>
+							<Low><![CDATA[3072.34]]></Low>
+							<Chg><![CDATA[5.34]]></Chg>
+							<ChgPer><![CDATA[0.17]]></ChgPer>
+							
+							<Time><![CDATA[20170117065859]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[China A50]]></Index>
+							<Last><![CDATA[10185.20]]></Last>
+							<High><![CDATA[10205.65]]></High>
+							<Low><![CDATA[10148.85]]></Low>
+							<Chg><![CDATA[-20.13]]></Chg>
+							<ChgPer><![CDATA[-0.20]]></ChgPer>
+							
+							<Time><![CDATA[20170117071500]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[DJ Shanghai]]></Index>
+							<Last><![CDATA[422.95]]></Last>
+							<High><![CDATA[423.00]]></High>
+							<Low><![CDATA[418.33]]></Low>
+							<Chg><![CDATA[0.45]]></Chg>
+							<ChgPer><![CDATA[0.11]]></ChgPer>
+							
+							<Time><![CDATA[20170117074200]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[Hang Seng]]></Index>
+							<Last><![CDATA[22840.97]]></Last>
+							<High><![CDATA[22867.84]]></High>
+							<Low><![CDATA[22710.93]]></Low>
+							<Chg><![CDATA[122.82]]></Chg>
+							<ChgPer><![CDATA[0.54]]></ChgPer>
+							
+							<Time><![CDATA[20170117080040]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[Taiwan Weighted]]></Index>
+							<Last><![CDATA[9354.53]]></Last>
+							<High><![CDATA[9354.53]]></High>
+							<Low><![CDATA[9294.68]]></Low>
+							<Chg><![CDATA[62.2]]></Chg>
+							<ChgPer><![CDATA[0.67]]></ChgPer>
+							
+							<Time><![CDATA[20170117053000]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[KOSPI]]></Index>
+							<Last><![CDATA[2071.87]]></Last>
+							<High><![CDATA[2078.80]]></High>
+							<Low><![CDATA[2065.53]]></Low>
+							<Chg><![CDATA[7.7]]></Chg>
+							<ChgPer><![CDATA[0.37]]></ChgPer>
+							
+							<Time><![CDATA[20170117090320]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[IDX Composite]]></Index>
+							<Last><![CDATA[5266.94]]></Last>
+							<High><![CDATA[5287.12]]></High>
+							<Low><![CDATA[5265.60]]></Low>
+							<Chg><![CDATA[-3.073]]></Chg>
+							<ChgPer><![CDATA[-0.06]]></ChgPer>
+							
+							<Time><![CDATA[20170117090000]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[Nifty 50]]></Index>
+							<Last><![CDATA[8398.00]]></Last>
+							<High><![CDATA[8440.90]]></High>
+							<Low><![CDATA[8378.30]]></Low>
+							<Chg><![CDATA[-14.8]]></Chg>
+							<ChgPer><![CDATA[-0.18]]></ChgPer>
+							
+							<Time><![CDATA[20170117100100]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[BSE Sensex]]></Index>
+							<Last><![CDATA[27235.66]]></Last>
+							<High><![CDATA[27381.43]]></High>
+							<Low><![CDATA[27179.19]]></Low>
+							<Chg><![CDATA[-52.51]]></Chg>
+							<ChgPer><![CDATA[-0.19]]></ChgPer>
+							
+							<Time><![CDATA[20170117120400]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[CSE All-Share]]></Index>
+							<Last><![CDATA[6186.52]]></Last>
+							<High><![CDATA[6207.59]]></High>
+							<Low><![CDATA[6186.52]]></Low>
+							<Chg><![CDATA[-15.13]]></Chg>
+							<ChgPer><![CDATA[-0.24]]></ChgPer>
+							
+							<Time><![CDATA[20170117092800]]></Time>
+						</w2:row>
+					</w2:data>
+				</w2:dataList>
+				<w2:dataList id="dl_index_ko" baseNode="list" saveRemovedData="true" repeatNode="map">
+					<w2:columnInfo>
+						<w2:column id="Index" name="지수" dataType="text"></w2:column>
+						<w2:column id="Last" name="현재가" dataType="text"></w2:column>
+						<w2:column id="High" name="고가" dataType="text"></w2:column>
+						<w2:column id="Low" name="저가" dataType="text"></w2:column>
+						<w2:column id="Chg" name="변동" dataType="text"></w2:column>
+						<w2:column id="ChgPer" name="변동%" dataType="text"></w2:column>
+						<w2:column id="Time" name="시간" dataType="text"></w2:column>
+					</w2:columnInfo>
+					<w2:data use="true">
+						<w2:row>
+							<Index><![CDATA[다우존스]]></Index>
+							<Last><![CDATA[19885.73]]></Last>
+							<High><![CDATA[19952.03]]></High>
+							<Low><![CDATA[19849.38]]></Low>
+							<Chg><![CDATA[-5.27]]></Chg>
+							<ChgPer><![CDATA[-0.03]]></ChgPer>
+							
+							<Time><![CDATA[20170113163000]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[S&P 500]]></Index>
+							<Last><![CDATA[2274.64]]></Last>
+							<High><![CDATA[2278.68]]></High>
+							<Low><![CDATA[2271.51]]></Low>
+							<Chg><![CDATA[4.2]]></Chg>
+							<ChgPer><![CDATA[0.18]]></ChgPer>
+							
+							<Time><![CDATA[20170113161000]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[나스닥]]></Index>
+							<Last><![CDATA[5574.12]]></Last>
+							<High><![CDATA[5584.26]]></High>
+							<Low><![CDATA[5557.21]]></Low>
+							<Chg><![CDATA[26.63]]></Chg>
+							<ChgPer><![CDATA[0.48]]></ChgPer>
+							
+							<Time><![CDATA[20170113170530]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[Russell 2000]]></Index>
+							<Last><![CDATA[1372.94]]></Last>
+							<High><![CDATA[1379.10]]></High>
+							<Low><![CDATA[1367.92]]></Low>
+							<Chg><![CDATA[12.62]]></Chg>
+							<ChgPer><![CDATA[0.93]]></ChgPer>
+							
+							<Time><![CDATA[20170113164020]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[S&P 500 VIX]]></Index>
+							<Last><![CDATA[12.46]]></Last>
+							<High><![CDATA[12.75]]></High>
+							<Low><![CDATA[12.20]]></Low>
+							<Chg><![CDATA[1.23]]></Chg>
+							<ChgPer><![CDATA[10.95]]></ChgPer>
+							
+							<Time><![CDATA[20170117121300]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[캐나다 S&P/TSX]]></Index>
+							<Last><![CDATA[15479.29]]></Last>
+							<High><![CDATA[15505.11]]></High>
+							<Low><![CDATA[15442.69]]></Low>
+							<Chg><![CDATA[-17.99]]></Chg>
+							<ChgPer><![CDATA[-0.12]]></ChgPer>
+							
+							<Time><![CDATA[20170116213500]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[브라질 보베스파]]></Index>
+							<Last><![CDATA[63761.10]]></Last>
+							<High><![CDATA[63827.32]]></High>
+							<Low><![CDATA[63630.65]]></Low>
+							<Chg><![CDATA[-70.17]]></Chg>
+							<ChgPer><![CDATA[-0.11]]></ChgPer>
+							
+							<Time><![CDATA[20170117121400]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[IPC]]></Index>
+							<Last><![CDATA[45740.38]]></Last>
+							<High><![CDATA[46229.63]]></High>
+							<Low><![CDATA[45714.59]]></Low>
+							<Chg><![CDATA[-442.05]]></Chg>
+							<ChgPer><![CDATA[-0.96]]></ChgPer>
+							
+							<Time><![CDATA[20170116211000]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[DAX]]></Index>
+							<Last><![CDATA[11512.00]]></Last>
+							<High><![CDATA[11527.00]]></High>
+							<Low><![CDATA[11426.50]]></Low>
+							<Chg><![CDATA[-42.71]]></Chg>
+							<ChgPer><![CDATA[-0.37]]></ChgPer>
+							
+							<Time><![CDATA[20170117122902]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[영국 FTSE]]></Index>
+							<Last><![CDATA[7284.50]]></Last>
+							<High><![CDATA[7319.50]]></High>
+							<Low><![CDATA[7281.50]]></Low>
+							<Chg><![CDATA[-42.63]]></Chg>
+							<ChgPer><![CDATA[-0.58]]></ChgPer>
+							
+							<Time><![CDATA[20170117122859]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[프랑스 CAC]]></Index>
+							<Last><![CDATA[4872.00]]></Last>
+							<High><![CDATA[4875.80]]></High>
+							<Low><![CDATA[4842.50]]></Low>
+							<Chg><![CDATA[-10.18]]></Chg>
+							<ChgPer><![CDATA[-0.21]]></ChgPer>
+							
+							<Time><![CDATA[20170117122902]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[EU Stoxx 50]]></Index>
+							<Last><![CDATA[3285.50]]></Last>
+							<High><![CDATA[3289.00]]></High>
+							<Low><![CDATA[3266.50]]></Low>
+							<Chg><![CDATA[-12.19]]></Chg>
+							<ChgPer><![CDATA[-0.37]]></ChgPer>
+							
+							<Time><![CDATA[20170117122848]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[네덜란드 AEX]]></Index>
+							<Last><![CDATA[482.40]]></Last>
+							<High><![CDATA[482.79]]></High>
+							<Low><![CDATA[480.53]]></Low>
+							<Chg><![CDATA[-1.73]]></Chg>
+							<ChgPer><![CDATA[-0.36]]></ChgPer>
+							
+							<Time><![CDATA[20170117122902]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[스페인 IBEX]]></Index>
+							<Last><![CDATA[9398.00]]></Last>
+							<High><![CDATA[9413.00]]></High>
+							<Low><![CDATA[9360.00]]></Low>
+							<Chg><![CDATA[-12]]></Chg>
+							<ChgPer><![CDATA[-0.13]]></ChgPer>
+							
+							<Time><![CDATA[20170117122902]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[이탈리아 FTSE MIB]]></Index>
+							<Last><![CDATA[19258.50]]></Last>
+							<High><![CDATA[19331.50]]></High>
+							<Low><![CDATA[19186.50]]></Low>
+							<Chg><![CDATA[11.25]]></Chg>
+							<ChgPer><![CDATA[0.06]]></ChgPer>
+							
+							<Time><![CDATA[20170117122835]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[스위스 SMI]]></Index>
+							<Last><![CDATA[8319.50]]></Last>
+							<High><![CDATA[8348.50]]></High>
+							<Low><![CDATA[8306.50]]></Low>
+							<Chg><![CDATA[-43.1]]></Chg>
+							<ChgPer><![CDATA[-0.52]]></ChgPer>
+							
+							<Time><![CDATA[20170117122906]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[포르투갈 PSI]]></Index>
+							<Last><![CDATA[4630.70]]></Last>
+							<High><![CDATA[4636.60]]></High>
+							<Low><![CDATA[4551.95]]></Low>
+							<Chg><![CDATA[54.17]]></Chg>
+							<ChgPer><![CDATA[1.18]]></ChgPer>
+							
+							<Time><![CDATA[20170117122906]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[벨기에 BEL]]></Index>
+							<Last><![CDATA[3591.30]]></Last>
+							<High><![CDATA[3595.40]]></High>
+							<Low><![CDATA[3575.30]]></Low>
+							<Chg><![CDATA[-3.28]]></Chg>
+							<ChgPer><![CDATA[-0.09]]></ChgPer>
+							
+							<Time><![CDATA[20170117122900]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[스웨덴 OMXS]]></Index>
+							<Last><![CDATA[1507.18]]></Last>
+							<High><![CDATA[1512.86]]></High>
+							<Low><![CDATA[1498.74]]></Low>
+							<Chg><![CDATA[-5.79]]></Chg>
+							<ChgPer><![CDATA[-0.38]]></ChgPer>
+							
+							<Time><![CDATA[20170117122900]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[러시아 MICEX]]></Index>
+							<Last><![CDATA[2173.66]]></Last>
+							<High><![CDATA[2195.36]]></High>
+							<Low><![CDATA[2167.88]]></Low>
+							<Chg><![CDATA[-15.41]]></Chg>
+							<ChgPer><![CDATA[-0.70]]></ChgPer>
+							
+							<Time><![CDATA[20170117122900]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[RTSI 지수]]></Index>
+							<Last><![CDATA[1156.11]]></Last>
+							<High><![CDATA[1162.25]]></High>
+							<Low><![CDATA[1151.47]]></Low>
+							<Chg><![CDATA[5.06]]></Chg>
+							<ChgPer><![CDATA[0.44]]></ChgPer>
+							
+							<Time><![CDATA[20170117122900]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[터키 BIST]]></Index>
+							<Last><![CDATA[82131.39]]></Last>
+							<High><![CDATA[82182.22]]></High>
+							<Low><![CDATA[81657.11]]></Low>
+							<Chg><![CDATA[419.7]]></Chg>
+							<ChgPer><![CDATA[0.51]]></ChgPer>
+							
+							<Time><![CDATA[20170117121300]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[이스라엘 TA]]></Index>
+							<Last><![CDATA[1445.29]]></Last>
+							<High><![CDATA[1447.47]]></High>
+							<Low><![CDATA[1441.16]]></Low>
+							<Chg><![CDATA[-3.02]]></Chg>
+							<ChgPer><![CDATA[-0.21]]></ChgPer>
+							
+							<Time><![CDATA[20170117122859]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[사우디아라비아 Tadawul]]></Index>
+							<Last><![CDATA[6873.53]]></Last>
+							<High><![CDATA[6877.73]]></High>
+							<Low><![CDATA[6745.13]]></Low>
+							<Chg><![CDATA[49.9]]></Chg>
+							<ChgPer><![CDATA[0.73]]></ChgPer>
+							
+							<Time><![CDATA[20170117115900]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[닛케이]]></Index>
+							<Last><![CDATA[18813.53]]></Last>
+							<High><![CDATA[19043.91]]></High>
+							<Low><![CDATA[18812.86]]></Low>
+							<Chg><![CDATA[-281.71]]></Chg>
+							<ChgPer><![CDATA[-1.48]]></ChgPer>
+							
+							<Time><![CDATA[20170117060059]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[호주 S&P/ASX]]></Index>
+							<Last><![CDATA[5699.42]]></Last>
+							<High><![CDATA[5748.40]]></High>
+							<Low><![CDATA[5695.20]]></Low>
+							<Chg><![CDATA[-49.02]]></Chg>
+							<ChgPer><![CDATA[-0.85]]></ChgPer>
+							
+							<Time><![CDATA[20170117063528]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[상하이종합]]></Index>
+							<Last><![CDATA[3108.77]]></Last>
+							<High><![CDATA[3108.91]]></High>
+							<Low><![CDATA[3072.34]]></Low>
+							<Chg><![CDATA[5.34]]></Chg>
+							<ChgPer><![CDATA[0.17]]></ChgPer>
+							
+							<Time><![CDATA[20170117065859]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[China A50]]></Index>
+							<Last><![CDATA[10185.20]]></Last>
+							<High><![CDATA[10205.65]]></High>
+							<Low><![CDATA[10148.85]]></Low>
+							<Chg><![CDATA[-20.13]]></Chg>
+							<ChgPer><![CDATA[-0.20]]></ChgPer>
+							
+							<Time><![CDATA[20170117071500]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[DJ Shanghai]]></Index>
+							<Last><![CDATA[422.95]]></Last>
+							<High><![CDATA[423.00]]></High>
+							<Low><![CDATA[418.33]]></Low>
+							<Chg><![CDATA[0.45]]></Chg>
+							<ChgPer><![CDATA[0.11]]></ChgPer>
+							
+							<Time><![CDATA[20170117074200]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[항셍]]></Index>
+							<Last><![CDATA[22840.97]]></Last>
+							<High><![CDATA[22867.84]]></High>
+							<Low><![CDATA[22710.93]]></Low>
+							<Chg><![CDATA[122.82]]></Chg>
+							<ChgPer><![CDATA[0.54]]></ChgPer>
+							
+							<Time><![CDATA[20170117080040]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[대만 가권]]></Index>
+							<Last><![CDATA[9354.53]]></Last>
+							<High><![CDATA[9354.53]]></High>
+							<Low><![CDATA[9294.68]]></Low>
+							<Chg><![CDATA[62.2]]></Chg>
+							<ChgPer><![CDATA[0.67]]></ChgPer>
+							
+							<Time><![CDATA[20170117053000]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[코스피지수]]></Index>
+							<Last><![CDATA[2071.87]]></Last>
+							<High><![CDATA[2078.80]]></High>
+							<Low><![CDATA[2065.53]]></Low>
+							<Chg><![CDATA[7.7]]></Chg>
+							<ChgPer><![CDATA[0.37]]></ChgPer>
+							
+							<Time><![CDATA[20170117090320]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[인도네시아 IDX]]></Index>
+							<Last><![CDATA[5266.94]]></Last>
+							<High><![CDATA[5287.12]]></High>
+							<Low><![CDATA[5265.60]]></Low>
+							<Chg><![CDATA[-3.073]]></Chg>
+							<ChgPer><![CDATA[-0.06]]></ChgPer>
+							
+							<Time><![CDATA[20170117090000]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[Nifty 50]]></Index>
+							<Last><![CDATA[8398.00]]></Last>
+							<High><![CDATA[8440.90]]></High>
+							<Low><![CDATA[8378.30]]></Low>
+							<Chg><![CDATA[-14.8]]></Chg>
+							<ChgPer><![CDATA[-0.18]]></ChgPer>
+							
+							<Time><![CDATA[20170117100100]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[인도 센섹스]]></Index>
+							<Last><![CDATA[27235.66]]></Last>
+							<High><![CDATA[27381.43]]></High>
+							<Low><![CDATA[27179.19]]></Low>
+							<Chg><![CDATA[-52.51]]></Chg>
+							<ChgPer><![CDATA[-0.19]]></ChgPer>
+							
+							<Time><![CDATA[20170117120400]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[CSE All-Share]]></Index>
+							<Last><![CDATA[6186.52]]></Last>
+							<High><![CDATA[6207.59]]></High>
+							<Low><![CDATA[6186.52]]></Low>
+							<Chg><![CDATA[-15.13]]></Chg>
+							<ChgPer><![CDATA[-0.24]]></ChgPer>
+							
+							<Time><![CDATA[20170117092800]]></Time>
+						</w2:row>
+					</w2:data>
+				</w2:dataList>
+				<w2:dataList id="dl_index_fr" baseNode="list" saveRemovedData="true" repeatNode="map">
+					<w2:columnInfo>
+						<w2:column id="Index" name="지수" dataType="text"></w2:column>
+						<w2:column id="Last" name="현재가" dataType="text"></w2:column>
+						<w2:column id="High" name="고가" dataType="text"></w2:column>
+						<w2:column id="Low" name="저가" dataType="text"></w2:column>
+						<w2:column id="Chg" name="변동" dataType="text"></w2:column>
+						<w2:column id="ChgPer" name="변동%" dataType="text"></w2:column>
+						<w2:column id="Time" name="시간" dataType="text"></w2:column>
+					</w2:columnInfo>
+					<w2:data use="true">
+						<w2:row>
+							<Index><![CDATA[Dow 30]]></Index>
+							<Last><![CDATA[19885.73]]></Last>
+							<High><![CDATA[19952.03]]></High>
+							<Low><![CDATA[19849.38]]></Low>
+							<Chg><![CDATA[-5.27]]></Chg>
+							<ChgPer><![CDATA[-0.03]]></ChgPer>
+							
+							<Time><![CDATA[20170113163000]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[S&P 500]]></Index>
+							<Last><![CDATA[2274.64]]></Last>
+							<High><![CDATA[2278.68]]></High>
+							<Low><![CDATA[2271.51]]></Low>
+							<Chg><![CDATA[4.2]]></Chg>
+							<ChgPer><![CDATA[0.18]]></ChgPer>
+							
+							<Time><![CDATA[20170113161000]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[Nasdaq]]></Index>
+							<Last><![CDATA[5574.12]]></Last>
+							<High><![CDATA[5584.26]]></High>
+							<Low><![CDATA[5557.21]]></Low>
+							<Chg><![CDATA[26.63]]></Chg>
+							<ChgPer><![CDATA[0.48]]></ChgPer>
+							
+							<Time><![CDATA[20170113170530]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[Russell 2000]]></Index>
+							<Last><![CDATA[1372.94]]></Last>
+							<High><![CDATA[1379.10]]></High>
+							<Low><![CDATA[1367.92]]></Low>
+							<Chg><![CDATA[12.62]]></Chg>
+							<ChgPer><![CDATA[0.93]]></ChgPer>
+							
+							<Time><![CDATA[20170113164020]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[S&P 500 VIX]]></Index>
+							<Last><![CDATA[12.46]]></Last>
+							<High><![CDATA[12.75]]></High>
+							<Low><![CDATA[12.20]]></Low>
+							<Chg><![CDATA[1.23]]></Chg>
+							<ChgPer><![CDATA[10.95]]></ChgPer>
+							
+							<Time><![CDATA[20170117121300]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[S&P/TSX]]></Index>
+							<Last><![CDATA[15479.29]]></Last>
+							<High><![CDATA[15505.11]]></High>
+							<Low><![CDATA[15442.69]]></Low>
+							<Chg><![CDATA[-17.99]]></Chg>
+							<ChgPer><![CDATA[-0.12]]></ChgPer>
+							
+							<Time><![CDATA[20170116213500]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[Bovespa]]></Index>
+							<Last><![CDATA[63761.10]]></Last>
+							<High><![CDATA[63827.32]]></High>
+							<Low><![CDATA[63630.65]]></Low>
+							<Chg><![CDATA[-70.17]]></Chg>
+							<ChgPer><![CDATA[-0.11]]></ChgPer>
+							
+							<Time><![CDATA[20170117121400]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[IPC]]></Index>
+							<Last><![CDATA[45740.38]]></Last>
+							<High><![CDATA[46229.63]]></High>
+							<Low><![CDATA[45714.59]]></Low>
+							<Chg><![CDATA[-442.05]]></Chg>
+							<ChgPer><![CDATA[-0.96]]></ChgPer>
+							
+							<Time><![CDATA[20170116211000]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[DAX]]></Index>
+							<Last><![CDATA[11512.00]]></Last>
+							<High><![CDATA[11527.00]]></High>
+							<Low><![CDATA[11426.50]]></Low>
+							<Chg><![CDATA[-42.71]]></Chg>
+							<ChgPer><![CDATA[-0.37]]></ChgPer>
+							
+							<Time><![CDATA[20170117122902]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[FTSE 100]]></Index>
+							<Last><![CDATA[7284.50]]></Last>
+							<High><![CDATA[7319.50]]></High>
+							<Low><![CDATA[7281.50]]></Low>
+							<Chg><![CDATA[-42.63]]></Chg>
+							<ChgPer><![CDATA[-0.58]]></ChgPer>
+							
+							<Time><![CDATA[20170117122859]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[CAC 40]]></Index>
+							<Last><![CDATA[4872.00]]></Last>
+							<High><![CDATA[4875.80]]></High>
+							<Low><![CDATA[4842.50]]></Low>
+							<Chg><![CDATA[-10.18]]></Chg>
+							<ChgPer><![CDATA[-0.21]]></ChgPer>
+							
+							<Time><![CDATA[20170117122902]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[Euro Stoxx 50]]></Index>
+							<Last><![CDATA[3285.50]]></Last>
+							<High><![CDATA[3289.00]]></High>
+							<Low><![CDATA[3266.50]]></Low>
+							<Chg><![CDATA[-12.19]]></Chg>
+							<ChgPer><![CDATA[-0.37]]></ChgPer>
+							
+							<Time><![CDATA[20170117122848]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[AEX]]></Index>
+							<Last><![CDATA[482.40]]></Last>
+							<High><![CDATA[482.79]]></High>
+							<Low><![CDATA[480.53]]></Low>
+							<Chg><![CDATA[-1.73]]></Chg>
+							<ChgPer><![CDATA[-0.36]]></ChgPer>
+							
+							<Time><![CDATA[20170117122902]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[IBEX 35]]></Index>
+							<Last><![CDATA[9398.00]]></Last>
+							<High><![CDATA[9413.00]]></High>
+							<Low><![CDATA[9360.00]]></Low>
+							<Chg><![CDATA[-12]]></Chg>
+							<ChgPer><![CDATA[-0.13]]></ChgPer>
+							
+							<Time><![CDATA[20170117122902]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[FTSE MIB]]></Index>
+							<Last><![CDATA[19258.50]]></Last>
+							<High><![CDATA[19331.50]]></High>
+							<Low><![CDATA[19186.50]]></Low>
+							<Chg><![CDATA[11.25]]></Chg>
+							<ChgPer><![CDATA[0.06]]></ChgPer>
+							
+							<Time><![CDATA[20170117122835]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[SMI]]></Index>
+							<Last><![CDATA[8319.50]]></Last>
+							<High><![CDATA[8348.50]]></High>
+							<Low><![CDATA[8306.50]]></Low>
+							<Chg><![CDATA[-43.1]]></Chg>
+							<ChgPer><![CDATA[-0.52]]></ChgPer>
+							
+							<Time><![CDATA[20170117122906]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[PSI 20]]></Index>
+							<Last><![CDATA[4630.70]]></Last>
+							<High><![CDATA[4636.60]]></High>
+							<Low><![CDATA[4551.95]]></Low>
+							<Chg><![CDATA[54.17]]></Chg>
+							<ChgPer><![CDATA[1.18]]></ChgPer>
+							
+							<Time><![CDATA[20170117122906]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[BEL 20]]></Index>
+							<Last><![CDATA[3591.30]]></Last>
+							<High><![CDATA[3595.40]]></High>
+							<Low><![CDATA[3575.30]]></Low>
+							<Chg><![CDATA[-3.28]]></Chg>
+							<ChgPer><![CDATA[-0.09]]></ChgPer>
+							
+							<Time><![CDATA[20170117122900]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[OMXS30]]></Index>
+							<Last><![CDATA[1507.18]]></Last>
+							<High><![CDATA[1512.86]]></High>
+							<Low><![CDATA[1498.74]]></Low>
+							<Chg><![CDATA[-5.79]]></Chg>
+							<ChgPer><![CDATA[-0.38]]></ChgPer>
+							
+							<Time><![CDATA[20170117122900]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[MICEX]]></Index>
+							<Last><![CDATA[2173.66]]></Last>
+							<High><![CDATA[2195.36]]></High>
+							<Low><![CDATA[2167.88]]></Low>
+							<Chg><![CDATA[-15.41]]></Chg>
+							<ChgPer><![CDATA[-0.70]]></ChgPer>
+							
+							<Time><![CDATA[20170117122900]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[RTSI]]></Index>
+							<Last><![CDATA[1156.11]]></Last>
+							<High><![CDATA[1162.25]]></High>
+							<Low><![CDATA[1151.47]]></Low>
+							<Chg><![CDATA[5.06]]></Chg>
+							<ChgPer><![CDATA[0.44]]></ChgPer>
+							
+							<Time><![CDATA[20170117122900]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[BIST 100]]></Index>
+							<Last><![CDATA[82131.39]]></Last>
+							<High><![CDATA[82182.22]]></High>
+							<Low><![CDATA[81657.11]]></Low>
+							<Chg><![CDATA[419.7]]></Chg>
+							<ChgPer><![CDATA[0.51]]></ChgPer>
+							
+							<Time><![CDATA[20170117121300]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[Tel Aviv 25]]></Index>
+							<Last><![CDATA[1445.29]]></Last>
+							<High><![CDATA[1447.47]]></High>
+							<Low><![CDATA[1441.16]]></Low>
+							<Chg><![CDATA[-3.02]]></Chg>
+							<ChgPer><![CDATA[-0.21]]></ChgPer>
+							
+							<Time><![CDATA[20170117122859]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[Tadawul All Share]]></Index>
+							<Last><![CDATA[6873.53]]></Last>
+							<High><![CDATA[6877.73]]></High>
+							<Low><![CDATA[6745.13]]></Low>
+							<Chg><![CDATA[49.9]]></Chg>
+							<ChgPer><![CDATA[0.73]]></ChgPer>
+							
+							<Time><![CDATA[20170117115900]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[Nikkei 225]]></Index>
+							<Last><![CDATA[18813.53]]></Last>
+							<High><![CDATA[19043.91]]></High>
+							<Low><![CDATA[18812.86]]></Low>
+							<Chg><![CDATA[-281.71]]></Chg>
+							<ChgPer><![CDATA[-1.48]]></ChgPer>
+							
+							<Time><![CDATA[20170117060059]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[S&P/ASX 200]]></Index>
+							<Last><![CDATA[5699.42]]></Last>
+							<High><![CDATA[5748.40]]></High>
+							<Low><![CDATA[5695.20]]></Low>
+							<Chg><![CDATA[-49.02]]></Chg>
+							<ChgPer><![CDATA[-0.85]]></ChgPer>
+							
+							<Time><![CDATA[20170117063528]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[Shanghai]]></Index>
+							<Last><![CDATA[3108.77]]></Last>
+							<High><![CDATA[3108.91]]></High>
+							<Low><![CDATA[3072.34]]></Low>
+							<Chg><![CDATA[5.34]]></Chg>
+							<ChgPer><![CDATA[0.17]]></ChgPer>
+							
+							<Time><![CDATA[20170117065859]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[China A50]]></Index>
+							<Last><![CDATA[10185.20]]></Last>
+							<High><![CDATA[10205.65]]></High>
+							<Low><![CDATA[10148.85]]></Low>
+							<Chg><![CDATA[-20.13]]></Chg>
+							<ChgPer><![CDATA[-0.20]]></ChgPer>
+							
+							<Time><![CDATA[20170117071500]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[DJ Shanghai]]></Index>
+							<Last><![CDATA[422.95]]></Last>
+							<High><![CDATA[423.00]]></High>
+							<Low><![CDATA[418.33]]></Low>
+							<Chg><![CDATA[0.45]]></Chg>
+							<ChgPer><![CDATA[0.11]]></ChgPer>
+							
+							<Time><![CDATA[20170117074200]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[Hang Seng]]></Index>
+							<Last><![CDATA[22840.97]]></Last>
+							<High><![CDATA[22867.84]]></High>
+							<Low><![CDATA[22710.93]]></Low>
+							<Chg><![CDATA[122.82]]></Chg>
+							<ChgPer><![CDATA[0.54]]></ChgPer>
+							
+							<Time><![CDATA[20170117080040]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[Taiwan Weighted]]></Index>
+							<Last><![CDATA[9354.53]]></Last>
+							<High><![CDATA[9354.53]]></High>
+							<Low><![CDATA[9294.68]]></Low>
+							<Chg><![CDATA[62.2]]></Chg>
+							<ChgPer><![CDATA[0.67]]></ChgPer>
+							
+							<Time><![CDATA[20170117053000]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[KOSPI]]></Index>
+							<Last><![CDATA[2071.87]]></Last>
+							<High><![CDATA[2078.80]]></High>
+							<Low><![CDATA[2065.53]]></Low>
+							<Chg><![CDATA[7.7]]></Chg>
+							<ChgPer><![CDATA[0.37]]></ChgPer>
+							
+							<Time><![CDATA[20170117090320]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[IDX Composite]]></Index>
+							<Last><![CDATA[5266.94]]></Last>
+							<High><![CDATA[5287.12]]></High>
+							<Low><![CDATA[5265.60]]></Low>
+							<Chg><![CDATA[-3.073]]></Chg>
+							<ChgPer><![CDATA[-0.06]]></ChgPer>
+							
+							<Time><![CDATA[20170117090000]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[Nifty 50]]></Index>
+							<Last><![CDATA[8398.00]]></Last>
+							<High><![CDATA[8440.90]]></High>
+							<Low><![CDATA[8378.30]]></Low>
+							<Chg><![CDATA[-14.8]]></Chg>
+							<ChgPer><![CDATA[-0.18]]></ChgPer>
+							
+							<Time><![CDATA[20170117100100]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[BSE Sensex]]></Index>
+							<Last><![CDATA[27235.66]]></Last>
+							<High><![CDATA[27381.43]]></High>
+							<Low><![CDATA[27179.19]]></Low>
+							<Chg><![CDATA[-52.51]]></Chg>
+							<ChgPer><![CDATA[-0.19]]></ChgPer>
+							
+							<Time><![CDATA[20170117120400]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[CSE All-Share]]></Index>
+							<Last><![CDATA[6186.52]]></Last>
+							<High><![CDATA[6207.59]]></High>
+							<Low><![CDATA[6186.52]]></Low>
+							<Chg><![CDATA[-15.13]]></Chg>
+							<ChgPer><![CDATA[-0.24]]></ChgPer>
+							
+							<Time><![CDATA[20170117092800]]></Time>
+						</w2:row>
+					</w2:data>
+				</w2:dataList>
+				<w2:dataList id="dl_index_de" baseNode="list" saveRemovedData="true" repeatNode="map">
+					<w2:columnInfo>
+						<w2:column id="Index" name="지수" dataType="text"></w2:column>
+						<w2:column id="Last" name="현재가" dataType="text"></w2:column>
+						<w2:column id="High" name="고가" dataType="text"></w2:column>
+						<w2:column id="Low" name="저가" dataType="text"></w2:column>
+						<w2:column id="Chg" name="변동" dataType="text"></w2:column>
+						<w2:column id="ChgPer" name="변동%" dataType="text"></w2:column>
+						<w2:column id="Time" name="시간" dataType="text"></w2:column>
+					</w2:columnInfo>
+					<w2:data use="true">
+						<w2:row>
+							<Index><![CDATA[Dow 30]]></Index>
+							<Last><![CDATA[19885.73]]></Last>
+							<High><![CDATA[19952.03]]></High>
+							<Low><![CDATA[19849.38]]></Low>
+							<Chg><![CDATA[-5.27]]></Chg>
+							<ChgPer><![CDATA[-0.03]]></ChgPer>
+							
+							<Time><![CDATA[20170113163000]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[S&P 500]]></Index>
+							<Last><![CDATA[2274.64]]></Last>
+							<High><![CDATA[2278.68]]></High>
+							<Low><![CDATA[2271.51]]></Low>
+							<Chg><![CDATA[4.2]]></Chg>
+							<ChgPer><![CDATA[0.18]]></ChgPer>
+							
+							<Time><![CDATA[20170113161000]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[Nasdaq]]></Index>
+							<Last><![CDATA[5574.12]]></Last>
+							<High><![CDATA[5584.26]]></High>
+							<Low><![CDATA[5557.21]]></Low>
+							<Chg><![CDATA[26.63]]></Chg>
+							<ChgPer><![CDATA[0.48]]></ChgPer>
+							
+							<Time><![CDATA[20170113170530]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[Russell 2000]]></Index>
+							<Last><![CDATA[1372.94]]></Last>
+							<High><![CDATA[1379.10]]></High>
+							<Low><![CDATA[1367.92]]></Low>
+							<Chg><![CDATA[12.62]]></Chg>
+							<ChgPer><![CDATA[0.93]]></ChgPer>
+							
+							<Time><![CDATA[20170113164020]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[S&P 500 VIX]]></Index>
+							<Last><![CDATA[12.46]]></Last>
+							<High><![CDATA[12.75]]></High>
+							<Low><![CDATA[12.20]]></Low>
+							<Chg><![CDATA[1.23]]></Chg>
+							<ChgPer><![CDATA[10.95]]></ChgPer>
+							
+							<Time><![CDATA[20170117121300]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[S&P/TSX]]></Index>
+							<Last><![CDATA[15479.29]]></Last>
+							<High><![CDATA[15505.11]]></High>
+							<Low><![CDATA[15442.69]]></Low>
+							<Chg><![CDATA[-17.99]]></Chg>
+							<ChgPer><![CDATA[-0.12]]></ChgPer>
+							
+							<Time><![CDATA[20170116213500]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[Bovespa]]></Index>
+							<Last><![CDATA[63761.10]]></Last>
+							<High><![CDATA[63827.32]]></High>
+							<Low><![CDATA[63630.65]]></Low>
+							<Chg><![CDATA[-70.17]]></Chg>
+							<ChgPer><![CDATA[-0.11]]></ChgPer>
+							
+							<Time><![CDATA[20170117121400]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[IPC]]></Index>
+							<Last><![CDATA[45740.38]]></Last>
+							<High><![CDATA[46229.63]]></High>
+							<Low><![CDATA[45714.59]]></Low>
+							<Chg><![CDATA[-442.05]]></Chg>
+							<ChgPer><![CDATA[-0.96]]></ChgPer>
+							
+							<Time><![CDATA[20170116211000]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[DAX]]></Index>
+							<Last><![CDATA[11512.00]]></Last>
+							<High><![CDATA[11527.00]]></High>
+							<Low><![CDATA[11426.50]]></Low>
+							<Chg><![CDATA[-42.71]]></Chg>
+							<ChgPer><![CDATA[-0.37]]></ChgPer>
+							
+							<Time><![CDATA[20170117122902]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[FTSE 100]]></Index>
+							<Last><![CDATA[7284.50]]></Last>
+							<High><![CDATA[7319.50]]></High>
+							<Low><![CDATA[7281.50]]></Low>
+							<Chg><![CDATA[-42.63]]></Chg>
+							<ChgPer><![CDATA[-0.58]]></ChgPer>
+							
+							<Time><![CDATA[20170117122859]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[CAC 40]]></Index>
+							<Last><![CDATA[4872.00]]></Last>
+							<High><![CDATA[4875.80]]></High>
+							<Low><![CDATA[4842.50]]></Low>
+							<Chg><![CDATA[-10.18]]></Chg>
+							<ChgPer><![CDATA[-0.21]]></ChgPer>
+							
+							<Time><![CDATA[20170117122902]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[Euro Stoxx 50]]></Index>
+							<Last><![CDATA[3285.50]]></Last>
+							<High><![CDATA[3289.00]]></High>
+							<Low><![CDATA[3266.50]]></Low>
+							<Chg><![CDATA[-12.19]]></Chg>
+							<ChgPer><![CDATA[-0.37]]></ChgPer>
+							
+							<Time><![CDATA[20170117122848]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[AEX]]></Index>
+							<Last><![CDATA[482.40]]></Last>
+							<High><![CDATA[482.79]]></High>
+							<Low><![CDATA[480.53]]></Low>
+							<Chg><![CDATA[-1.73]]></Chg>
+							<ChgPer><![CDATA[-0.36]]></ChgPer>
+							
+							<Time><![CDATA[20170117122902]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[IBEX 35]]></Index>
+							<Last><![CDATA[9398.00]]></Last>
+							<High><![CDATA[9413.00]]></High>
+							<Low><![CDATA[9360.00]]></Low>
+							<Chg><![CDATA[-12]]></Chg>
+							<ChgPer><![CDATA[-0.13]]></ChgPer>
+							
+							<Time><![CDATA[20170117122902]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[FTSE MIB]]></Index>
+							<Last><![CDATA[19258.50]]></Last>
+							<High><![CDATA[19331.50]]></High>
+							<Low><![CDATA[19186.50]]></Low>
+							<Chg><![CDATA[11.25]]></Chg>
+							<ChgPer><![CDATA[0.06]]></ChgPer>
+							
+							<Time><![CDATA[20170117122835]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[SMI]]></Index>
+							<Last><![CDATA[8319.50]]></Last>
+							<High><![CDATA[8348.50]]></High>
+							<Low><![CDATA[8306.50]]></Low>
+							<Chg><![CDATA[-43.1]]></Chg>
+							<ChgPer><![CDATA[-0.52]]></ChgPer>
+							
+							<Time><![CDATA[20170117122906]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[PSI 20]]></Index>
+							<Last><![CDATA[4630.70]]></Last>
+							<High><![CDATA[4636.60]]></High>
+							<Low><![CDATA[4551.95]]></Low>
+							<Chg><![CDATA[54.17]]></Chg>
+							<ChgPer><![CDATA[1.18]]></ChgPer>
+							
+							<Time><![CDATA[20170117122906]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[BEL 20]]></Index>
+							<Last><![CDATA[3591.30]]></Last>
+							<High><![CDATA[3595.40]]></High>
+							<Low><![CDATA[3575.30]]></Low>
+							<Chg><![CDATA[-3.28]]></Chg>
+							<ChgPer><![CDATA[-0.09]]></ChgPer>
+							
+							<Time><![CDATA[20170117122900]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[OMXS30]]></Index>
+							<Last><![CDATA[1507.18]]></Last>
+							<High><![CDATA[1512.86]]></High>
+							<Low><![CDATA[1498.74]]></Low>
+							<Chg><![CDATA[-5.79]]></Chg>
+							<ChgPer><![CDATA[-0.38]]></ChgPer>
+							
+							<Time><![CDATA[20170117122900]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[MICEX]]></Index>
+							<Last><![CDATA[2173.66]]></Last>
+							<High><![CDATA[2195.36]]></High>
+							<Low><![CDATA[2167.88]]></Low>
+							<Chg><![CDATA[-15.41]]></Chg>
+							<ChgPer><![CDATA[-0.70]]></ChgPer>
+							
+							<Time><![CDATA[20170117122900]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[RTSI]]></Index>
+							<Last><![CDATA[1156.11]]></Last>
+							<High><![CDATA[1162.25]]></High>
+							<Low><![CDATA[1151.47]]></Low>
+							<Chg><![CDATA[5.06]]></Chg>
+							<ChgPer><![CDATA[0.44]]></ChgPer>
+							
+							<Time><![CDATA[20170117122900]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[BIST 100]]></Index>
+							<Last><![CDATA[82131.39]]></Last>
+							<High><![CDATA[82182.22]]></High>
+							<Low><![CDATA[81657.11]]></Low>
+							<Chg><![CDATA[419.7]]></Chg>
+							<ChgPer><![CDATA[0.51]]></ChgPer>
+							
+							<Time><![CDATA[20170117121300]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[Tel Aviv 25]]></Index>
+							<Last><![CDATA[1445.29]]></Last>
+							<High><![CDATA[1447.47]]></High>
+							<Low><![CDATA[1441.16]]></Low>
+							<Chg><![CDATA[-3.02]]></Chg>
+							<ChgPer><![CDATA[-0.21]]></ChgPer>
+							
+							<Time><![CDATA[20170117122859]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[Tadawul Aktien]]></Index>
+							<Last><![CDATA[6873.53]]></Last>
+							<High><![CDATA[6877.73]]></High>
+							<Low><![CDATA[6745.13]]></Low>
+							<Chg><![CDATA[49.9]]></Chg>
+							<ChgPer><![CDATA[0.73]]></ChgPer>
+							
+							<Time><![CDATA[20170117115900]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[Nikkei 225]]></Index>
+							<Last><![CDATA[18813.53]]></Last>
+							<High><![CDATA[19043.91]]></High>
+							<Low><![CDATA[18812.86]]></Low>
+							<Chg><![CDATA[-281.71]]></Chg>
+							<ChgPer><![CDATA[-1.48]]></ChgPer>
+							
+							<Time><![CDATA[20170117060059]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[S&P/ASX 200]]></Index>
+							<Last><![CDATA[5699.42]]></Last>
+							<High><![CDATA[5748.40]]></High>
+							<Low><![CDATA[5695.20]]></Low>
+							<Chg><![CDATA[-49.02]]></Chg>
+							<ChgPer><![CDATA[-0.85]]></ChgPer>
+							
+							<Time><![CDATA[20170117063528]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[Shanghai]]></Index>
+							<Last><![CDATA[3108.77]]></Last>
+							<High><![CDATA[3108.91]]></High>
+							<Low><![CDATA[3072.34]]></Low>
+							<Chg><![CDATA[5.34]]></Chg>
+							<ChgPer><![CDATA[0.17]]></ChgPer>
+							
+							<Time><![CDATA[20170117065859]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[China A50]]></Index>
+							<Last><![CDATA[10185.20]]></Last>
+							<High><![CDATA[10205.65]]></High>
+							<Low><![CDATA[10148.85]]></Low>
+							<Chg><![CDATA[-20.13]]></Chg>
+							<ChgPer><![CDATA[-0.20]]></ChgPer>
+							
+							<Time><![CDATA[20170117071500]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[DJ Shanghai]]></Index>
+							<Last><![CDATA[422.95]]></Last>
+							<High><![CDATA[423.00]]></High>
+							<Low><![CDATA[418.33]]></Low>
+							<Chg><![CDATA[0.45]]></Chg>
+							<ChgPer><![CDATA[0.11]]></ChgPer>
+							
+							<Time><![CDATA[20170117074200]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[Hang Seng]]></Index>
+							<Last><![CDATA[22840.97]]></Last>
+							<High><![CDATA[22867.84]]></High>
+							<Low><![CDATA[22710.93]]></Low>
+							<Chg><![CDATA[122.82]]></Chg>
+							<ChgPer><![CDATA[0.54]]></ChgPer>
+							
+							<Time><![CDATA[20170117080040]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[Taiwan Weighted]]></Index>
+							<Last><![CDATA[9354.53]]></Last>
+							<High><![CDATA[9354.53]]></High>
+							<Low><![CDATA[9294.68]]></Low>
+							<Chg><![CDATA[62.2]]></Chg>
+							<ChgPer><![CDATA[0.67]]></ChgPer>
+							
+							<Time><![CDATA[20170117053000]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[KOSPI]]></Index>
+							<Last><![CDATA[2071.87]]></Last>
+							<High><![CDATA[2078.80]]></High>
+							<Low><![CDATA[2065.53]]></Low>
+							<Chg><![CDATA[7.7]]></Chg>
+							<ChgPer><![CDATA[0.37]]></ChgPer>
+							
+							<Time><![CDATA[20170117090320]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[IDX Composite]]></Index>
+							<Last><![CDATA[5266.94]]></Last>
+							<High><![CDATA[5287.12]]></High>
+							<Low><![CDATA[5265.60]]></Low>
+							<Chg><![CDATA[-3.073]]></Chg>
+							<ChgPer><![CDATA[-0.06]]></ChgPer>
+							
+							<Time><![CDATA[20170117090000]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[Nifty 50]]></Index>
+							<Last><![CDATA[8398.00]]></Last>
+							<High><![CDATA[8440.90]]></High>
+							<Low><![CDATA[8378.30]]></Low>
+							<Chg><![CDATA[-14.8]]></Chg>
+							<ChgPer><![CDATA[-0.18]]></ChgPer>
+							
+							<Time><![CDATA[20170117100100]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[BSE Sensex]]></Index>
+							<Last><![CDATA[27235.66]]></Last>
+							<High><![CDATA[27381.43]]></High>
+							<Low><![CDATA[27179.19]]></Low>
+							<Chg><![CDATA[-52.51]]></Chg>
+							<ChgPer><![CDATA[-0.19]]></ChgPer>
+							
+							<Time><![CDATA[20170117120400]]></Time>
+						</w2:row>
+						<w2:row>
+							<Index><![CDATA[CSE All-Share]]></Index>
+							<Last><![CDATA[6186.52]]></Last>
+							<High><![CDATA[6207.59]]></High>
+							<Low><![CDATA[6186.52]]></Low>
+							<Chg><![CDATA[-15.13]]></Chg>
+							<ChgPer><![CDATA[-0.24]]></ChgPer>
+							
+							<Time><![CDATA[20170117092800]]></Time>
+						</w2:row>
+					</w2:data>
+				</w2:dataList>
+			</w2:dataCollection>
+			<w2:workflowCollection>
+			</w2:workflowCollection>
+		</xf:model>
+		<script type="text/javascript" src="common/js/multiLang.js"></script>
+		<script type="text/javascript" lazy="false"><![CDATA[
+	scwin.onpageload = function() {
+		var locale = WebSquare.cookie.getCookie("system_language") || multiLang.getLocale();
+		multiLang.setLocale(locale);
+		sel_multiLang.setValue(locale);
+		
+//		 current time (use tzOffset)
+		//var timeObj = multiLang.getFormattedWorldTime();
+		txt_time.setValue(timeObj.time + " (GMT " + timeObj.gmt + ")");
+
+//		 cuurent date (UTC)
+		txt_date.setValue(multiLang.getFormattedUTCDate() + " GMT");
+		dl_defaultOptions.setJSON(multiLang.defaultOptions);
+	};
+
+	scwin.onpageunload = function() {
+	};
+
+	scwin.sel_wordShortening_onchange = function() {
+		var bindLabel = '', value = sel_multiLang.getValue();
+		if (this.getValue() == "short") {
+			bindLabel = "CODENM_S";
+		} else {
+			bindLabel = "CODENM_F";
+		}
+		sel_multiLang.setNodeSet("data:dl_cm_nation", bindLabel, "CODE");
+		sel_multiLang.setValue(value);
+	};
+
+	scwin.sel_multiLang_onviewchange = function(info) {
+		multiLang.setLocale(this.getValue(), dl_defaultOptions.getJSON());
+		
+		if (info.oldValue != info.newValue) {
+			WebSquare.cookie.setCookie("system_language", this.getValue());
+			// SPA 방식으로 화면만 Refresh 되도록 처리할 때 
+			// delete WebSquare.BootLoader.importCache["message/" + this.getValue() + ".js"];
+			// delete WebSquare.BootLoader.importCache["/sp4_unofficial/mutiLang/client/common/lang/client_" + this.getValue() + ".js"];
+			// WebSquare.BootLoader.requires("message/" + this.getValue() + ".js");
+			// WebSquare.BootLoader.requires("/sp4_unofficial/mutiLang/client/common/lang/client_" + this.getValue() + ".js");
+			scwin.reOpen();
+		}
+	};
+
+	scwin.reOpen = function() {
+		// SPA 방식으로 화면만 Refresh 되도록 처리할 때
+		// $p.reinitialize();
+		$p.reinitialize(true);
+	};
+
+	scwin.getEconomicCalendar = function(locale) {
+		var dlCal = "dl_cal_" + locale;
+		dl_cal.setArray(eval(dlCal).getAllArray());
+
+	};
+
+	scwin.getWorldIndex = function(locale) {
+		var dlIndex = "dl_index_" + locale;
+		dl_index.setArray(eval(dlIndex).getAllArray());
+	};
+
+	scwin.btn_sch_onclick = function() {
+		var locale = multiLang.getLocale();
+		
+		dl_cal.removeAll();
+		dl_index.removeAll();
+		
+		multiLang.setLocale(locale, dl_defaultOptions.getJSON());
+		scwin.getEconomicCalendar(locale);
+		scwin.getWorldIndex(locale);
+	};
+
+	// National Number Format
+	scwin.setNumberFormat = function(data) {
+		var formattedData = multiLang.getDisplayNumberFormat(data);
+		return formattedData;
+	};
+
+	// National Number Format & Custom Format
+	scwin.setCustomNumberFormat = function(data, formatted, row, col) {
+		var colId = grd_index.getColumnID(col);
+		var locale = multiLang.getLocale().toLowerCase();
+		var formattedData = multiLang.getDisplayNumberFormat(data);
+		var pColor = "#0ea600";
+		var nColor = "#ff0000";
+		
+		if (locale == 'ko') {
+			pColor = "#ff0000";
+			nColor = "#048DE3";
+		} else {
+
+		}
+		
+		if (data > 0) {
+			grd_index.setCellColor(row, col, pColor);
+			formattedData = "+" + formattedData;
+		} else if (data < 0) {
+			grd_index.setCellColor(row, col, nColor);
+		}
+
+		if (colId == "ChgPer") {
+			return formattedData + "%";
+		}
+		
+		return formattedData;
+	};
+
+	// National Date Format 
+	scwin.setDateFormat = function(data) {
+		var formattedData = multiLang.getFormattedWorldDate(data);
+		return formattedData;
+	};
+]]></script>
+	</head>
+	<body ev:onpageload="scwin.onpageload" ev:onpageunload="scwin.onpageunload">
+	<xf:group id="" style="padding : 10px"><xf:group tagname="" style="width:100.0%;height:50px;" id="" class="">
+			<w2:textbox tooltipDisplay="" localeRef="TITLE001" style="width:492px;height:35px;font-size:30px;font-weight:bold;margin-left:5px;float:left;" id="" label="클라이언트 다국어"></w2:textbox>
+			<xf:trigger nextTabID="" ev:onclick="scwin.btn_sch_onclick" localeRef="BTN001" toolTip="" style="width: 80px;height: 27px;float:right;margin-top:5px;margin-right:5px;" id="btn_sch" type="button">
+				<xf:label><![CDATA[조회]]></xf:label>
+			</xf:trigger>
+			<xf:select1 chooseOptionLabel="- 선택 -" submenuSize="auto" chooseOption="" tabIndex="0" allOption="" title="" displayMode="label" ref="" appearance="minimal" disabledClass="w2selectbox_disabled" ev:onviewchange="scwin.sel_multiLang_onviewchange" disabled="false" style="width: 80px;height: 25px;float:right;margin-top:5px;margin-right:5px;" id="sel_multiLang" class="" direction="auto">
+				<xf:choices>
+					<xf:itemset nodeset="data:dl_cm_nation">
+						<xf:label ref="CODENM_S"></xf:label>
+						<xf:value ref="CODE"></xf:value>
+					</xf:itemset>
+				</xf:choices>
+			</xf:select1>
+		</xf:group><xf:group style="" id="" class="">
+			<xf:group adaptive="layout" adaptiveThreshold="600" tagname="table" style="width:100%;" id="" class="w2tb tb">
+				<w2:attributes>
+					<w2:summary></w2:summary>
+				</w2:attributes>
+				<xf:group tagname="colgroup">
+					<xf:group tagname="col" style="width:172px;"></xf:group>
+					<xf:group tagname="col" style=""></xf:group>
+					<xf:group tagname="col" style="width:164px;"></xf:group>
+					<xf:group tagname="col" style=""></xf:group>
+				</xf:group>
+				<xf:group tagname="tr" style="">
+					<xf:group tagname="th" style="" class="w2tb_th">
+						<w2:span localeRef="TEXT001" style="" id="" label="메세지"></w2:span>
+					</xf:group>
+					<xf:group tagname="td" style="" class="w2tb_td">
+						<xf:group style="margin-bottom:0px;height:20px;" id="" class="defaultbox"></xf:group>
+					</xf:group>
+					<xf:group tagname="th" style="" class="w2tb_th">
+						<w2:span localeRef="TEXT002" style="" id="" label="단어"></w2:span>
+					</xf:group>
+					<xf:group tagname="td" style="" class="w2tb_td">
+						<xf:select1 ref="data:dl_defaultOptions.wordShortening" appearance="full" ev:onchange="scwin.sel_wordShortening_onchange" style="" id="sel_wordShortening" rows="" class="ml3" cols="2" selectedIndex="0">
+							<xf:choices>
+								<xf:item>
+									<xf:label><![CDATA[Short]]></xf:label>
+									<xf:value><![CDATA[short]]></xf:value>
+								</xf:item>
+								<xf:item>
+									<xf:label><![CDATA[Full]]></xf:label>
+									<xf:value><![CDATA[full]]></xf:value>
+								</xf:item>
+							</xf:choices>
+						</xf:select1>
+					</xf:group>
+				</xf:group>
+				<xf:group tagname="tr" style="">
+					<xf:group tagname="th" style="" class="w2tb_th">
+						<w2:span localeRef="TEXT003" style="" id="" label="날짜"></w2:span>
+					</xf:group>
+					<xf:group tagname="td" style="" class="w2tb_td">
+						<xf:group style="" id="" class="wq_w2input_100"></xf:group>
+						<xf:input ref="data:dl_defaultOptions.dateFormat" style="height:20px;width:100px;left:0px;top:5px;" id="" type="" class="" maskFormat="default" displayFormat="#,###.#0">
+						</xf:input>
+					</xf:group>
+					<xf:group tagname="th" style="" class="w2tb_th">
+						<w2:span localeRef="TEXT004" style="" id="" label="숫자"></w2:span>
+					</xf:group>
+					<xf:group tagname="td" style="" class="w2tb_td">
+						<xf:group style="" id="" class="wq_w2selectbox_100"></xf:group>
+						<xf:input ref="data:dl_defaultOptions.integerSeparator" style="height:20px;width:45px;left:0px;top:5px;" id="" placeholder="Integer" type="" class="">
+						</xf:input>
+						<xf:input ref="data:dl_defaultOptions.decimalSeparator" style="height:20px;margin-left:5px;width:45px;left:0px;top:5px;" id="" placeholder="Decimal" type="" class="">
+						</xf:input>
+					</xf:group>
+				</xf:group>
+				<xf:group tagname="tr" style="">
+					<xf:group tagname="th" style="" class="w2tb_th">
+						<w2:span localeRef="TEXT005" style="" id="" label="시간"></w2:span>
+					</xf:group>
+					<xf:group tagname="td" style="" class="w2tb_td">
+						<xf:input ref="data:dl_defaultOptions.timezoneOffset" style="height:20px;width:100px;left:0px;top:5px;" id="" type="" class="">
+						</xf:input>
+						<xf:select falseValue="false" ref="data:dl_defaultOptions.useDST" appearance="full" style="" id="" rows="" selectedindex="-1" class="ml3" cols="">
+							<xf:choices>
+								<xf:item>
+									<xf:label><![CDATA[Summer Time]]></xf:label>
+									<xf:value><![CDATA[true]]></xf:value>
+								</xf:item>
+							</xf:choices>
+						</xf:select>
+					</xf:group>
+					<xf:group tagname="th" style="" class="w2tb_th">
+						<w2:span localeRef="TEXT005" style="" id="" label="시간"></w2:span>
+					</xf:group>
+					<xf:group tagname="td" style="" class="w2tb_td">
+						<xf:input ref="data:dl_defaultOptions.timeFormat" style="height:20px;width:100px;left:0px;top:5px;" id="" type="" class="">
+						</xf:input>
+					</xf:group>
+				</xf:group>
+				<xf:group tagname="tr" style="">
+					<xf:group tagname="th" style="" class="w2tb_th">
+						<w2:span localeRef="TEXT006" style="" id="" label="자릿수"></w2:span>
+					</xf:group>
+					<xf:group tagname="td" style="" class="w2tb_td">
+						<xf:input ref="data:dl_defaultOptions.numberFormat" style="height:20px;width:100px;left:0px;top:5px;" id="" type="" class="" dataType="number" displayFormat="" ioFormat="" imeMode="" maskFormat="" applyFormat="" numberMask="" maskFormatModelExcludeChar="" placeholder="" euroMask="" escape="">
+						</xf:input>
+					</xf:group>
+					<xf:group tagname="th" style="" class="w2tb_th"></xf:group>
+					<xf:group tagname="td" style="" class="w2tb_td">
+						<w2:anchor ev:onclick="scwin.btn_sch_onclick" outerDiv="true" localeRef="BTN001" style="left:0px;top:0px;display:none;" id="btn_sch1" class="fr btnBlue">
+							<xf:label><![CDATA[조회]]></xf:label>
+						</w2:anchor>
+					</xf:group>
+				</xf:group>
+			</xf:group>
+		</xf:group><xf:group style="height:45px;" id="" class="">
+			<w2:textbox localeRef="TITLE002" style="width:492px;height:25px;font-size:18px;font-weight:bold;margin-top: 5px;margin-left:5px;" tabIndex="" id="" label="경제 캘린더" class=""></w2:textbox>
+			<xf:group style="" id="" class="fr">
+				<w2:textbox style="padding: 0 0 0 4px;float : left;margin-top: 4px;height:16px;" id="txt_time" label="">
+				</w2:textbox>
+				<w2:textbox localeRef="TITLE004" style="padding: 0 0 0 25px;float : right;" label="현재 시간" id="">
+				</w2:textbox>
+			</xf:group>
+		</xf:group><xf:group style="" id="" class="gvwbox">
+			<w2:gridView editModeEvent="onsecondclick" rowNumVisible="" useShiftKey="true" readOnly="" scrollByColumn="false" adaptive="" fixedColumnWithHidden="" fixedColumn="0" dataList="dl_cal" columnMove="" ignoreCellClick="false" style="height:60px;" autoFit="allColumn" id="grd_cal" visibleRowNum="15" class="wq_gvw" ignoreToggleOnDisabled="false" autoFitMinWidth="">
+				<w2:header style="" id="header1">
+					<w2:row style="" id="row2">
+						<w2:column width="100" localeRef="GRCL001" inputType="text" style="height:25px;" id="column19" value="시간" blockSelect="false" displayMode="label">
+						</w2:column>
+						<w2:column width="100" localeRef="GRCL002" inputType="text" style="height:25px;" id="column16" value="외화" blockSelect="false" displayMode="label">
+						</w2:column>
+						<w2:column width="300" localeRef="GRCL003" inputType="text" style="height:25px;" id="column13" value="이벤트" blockSelect="false" displayMode="label">
+						</w2:column>
+						<w2:column width="100" localeRef="GRCL004" inputType="text" style="height:25px;" id="column1" value="발표" blockSelect="false">
+						</w2:column>
+						<w2:column width="100" localeRef="GRCL005" inputType="text" style="height:25px;" id="column4" value="예측" blockSelect="false">
+						</w2:column>
+						<w2:column width="100" localeRef="GRCL006" inputType="text" style="height:25px;" id="column6" value="이전" blockSelect="false">
+						</w2:column>
+					</w2:row>
+				</w2:header>
+				<w2:gBody style="" id="gBody4">
+					<w2:row style="" id="row5">
+						<w2:column textAlign="center" width="100" inputType="text" style="height:25px;" id="Time" class="" blockSelect="false" displayMode="label">
+						</w2:column>
+						<w2:column textAlign="center" width="100" inputType="text" style="height:25px;" id="Cur" blockSelect="false" displayMode="label">
+						</w2:column>
+						<w2:column textAlign="left" width="300" inputType="text" style="height:25px;" id="Event" blockSelect="false" displayMode="label">
+						</w2:column>
+						<w2:column textAlign="center" width="100" inputType="text" style="height:25px;" id="Actual" blockSelect="false">
+						</w2:column>
+						<w2:column textAlign="center" width="100" inputType="text" style="height:25px;" id="Forecast" blockSelect="false">
+						</w2:column>
+						<w2:column textAlign="center" width="100" inputType="text" style="height:25px;" id="Previous" blockSelect="false">
+						</w2:column>
+					</w2:row>
+				</w2:gBody>
+			</w2:gridView>
+		</xf:group><xf:group style="height:45px;" id="" class="">
+			<w2:textbox localeRef="TITLE003" style="width:492px;height:25px;font-size:18px;font-weight:bold;margin-top: 5px;margin-left:5px;" id="" label="세계 지수" class=""></w2:textbox>
+			<xf:group style="" id="" class="fr">
+				<w2:textbox style="padding: 0 0 0 4px;float : right;margin-top: 4px;height:16px;" id="txt_date" label=""></w2:textbox>
+			</xf:group>
+		</xf:group><xf:group style="" id="" class="gvwbox">
+			<w2:gridView editModeEvent="onsecondclick" rowNumVisible="true" useShiftKey="true" readOnly="" scrollByColumn="false" adaptive="" fixedColumnWithHidden="" fixedColumn="0" dataList="dl_index" ev:onviewchange="" columnMove="" ignoreCellClick="false" style="height:60px;" autoFit="allColumn" id="grd_index" visibleRowNum="15" class="" ignoreToggleOnDisabled="false" autoFitMinWidth="">
+				<w2:header style="" id="header1">
+					<w2:row style="" id="row2">
+						<w2:column width="150" localeRef="GREV001" inputType="text" style="height:25px;" id="column19" value="지수" blockSelect="false" displayMode="label">
+						</w2:column>
+						<w2:column width="100" localeRef="GREV002" inputType="text" style="height:25px;" id="column16" value="현재가" blockSelect="false" displayMode="label">
+						</w2:column>
+						<w2:column width="100" localeRef="GREV003" inputType="text" style="height:25px;" id="column13" value="고가" blockSelect="false" displayMode="label" disabled="" escapeFormatter="">
+						</w2:column>
+						<w2:column width="100" localeRef="GREV004" inputType="text" style="height:25px;" id="column1" value="저가" blockSelect="false">
+						</w2:column>
+						<w2:column width="100" localeRef="GREV005" inputType="text" style="height:25px;" id="column4" value="변동" blockSelect="false">
+						</w2:column>
+						<w2:column width="100" localeRef="GREV006" inputType="text" style="height:25px;" id="column6" value="변동%" blockSelect="false">
+						</w2:column>
+						<w2:column width="200" localeRef="GREV008" inputType="text" style="height:25px;" id="column21" value="시간" blockSelect="false" displayMode="label">
+						</w2:column>
+					</w2:row>
+				</w2:header>
+				<w2:gBody style="" id="gBody4">
+					<w2:row style="" id="row5">
+						<w2:column textAlign="left" width="150" inputType="link" style="" id="Index" class="" blockSelect="false" displayMode="label">
+						</w2:column>
+						<w2:column displayFormatter="scwin.setNumberFormat" customFormatter="" textAlign="right" width="100" inputType="text" style="height:25px;" id="Last" blockSelect="false" displayMode="label">
+						</w2:column>
+						<w2:column displayFormatter="scwin.setNumberFormat" textAlign="right" width="100" inputType="text" style="height:25px;" id="High" blockSelect="false" displayMode="label" ioFormat="#,##0.##" localeRef="" useLocale="" applyFormat="display" customModelFormatter="">
+						</w2:column>
+						<w2:column displayFormatter="scwin.setNumberFormat" textAlign="right" width="100" inputType="text" style="height:25px;" id="Low" blockSelect="false">
+						</w2:column>
+						<w2:column customFormatter="scwin.setCustomNumberFormat" textAlign="right" width="100" inputType="text" style="height:25px;" id="Chg" blockSelect="false">
+						</w2:column>
+						<w2:column displayFormatter="" customFormatter="scwin.setCustomNumberFormat" textAlign="right" width="100" displayFormat="" inputType="text" style="height:25px;" id="ChgPer" blockSelect="false">
+						</w2:column>
+						<w2:column displayFormatter="scwin.setDateFormat" textAlign="center" width="200" inputType="text" style="height:25px;" id="Time" blockSelect="false" displayMode="label">
+						</w2:column>
+					</w2:row>
+				</w2:gBody>
+			</w2:gridView>
+		</xf:group></xf:group></body>
+</html>

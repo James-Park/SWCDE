@@ -20,14 +20,16 @@ import websquare.WebSquareConfig;
 
 public class FileUtil {
 
-	public static void downloadFile(HttpServletResponse response, HttpServletRequest request, String filePath, String fileName) throws Exception {
+	public static void downloadFile(HttpServletResponse response, HttpServletRequest request, String filePath,
+			String fileName) throws Exception {
 		BufferedInputStream bis = null;
 		BufferedOutputStream bos = null;
-		
+
 		try {
+			deleteFile(filePath, fileName);
 			compressZipFile(filePath, fileName);
-			
-			File file = new File(filePath + fileName);
+
+			File file = new File(filePath + File.separator + fileName);
 			if (file.isFile()) {
 				int fileLength = (int) file.length();
 				String header = request.getHeader("User-Agent");
@@ -78,10 +80,10 @@ public class FileUtil {
 			}
 		}
 	}
-	
+
 	public static void compressZipFile(String filePath, String fileName) throws Exception {
-		String zipFile = filePath + fileName;
-		
+		String zipFile = filePath + File.separator + fileName;
+
 		List<String> sourceFiles = new ArrayList<String>();
 		getFilesInDir(sourceFiles, filePath);
 
@@ -125,6 +127,13 @@ public class FileUtil {
 			} else {
 				sourceFiles.add(file.getPath());
 			}
+		}
+	}
+
+	private static void deleteFile(String filePath, String fileName) {
+		File file = new File(filePath + File.separator + fileName);
+		if (file.exists()) {
+			file.delete();
 		}
 	}
 }

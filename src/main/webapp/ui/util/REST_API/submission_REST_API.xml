@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:w2="http://www.inswave.com/websquare" xmlns:xf="http://www.w3.org/2002/xforms">
+    <head>
+    	<w2:type>DEFAULT</w2:type>
+        <w2:buildDate/>
+        <xf:model>
+        	<xf:instance>
+        		<data xmlns="" />
+        	</xf:instance>
+        	<w2:dataCollection baseNode="map">
+        		<w2:dataMap baseNode="map" id="dma_dataMap1">
+        			<w2:keyInfo>
+        				<w2:key id="key11" name="name11" dataType="text"></w2:key>
+        				<w2:key id="procId" name="procId" dataType="text"></w2:key>
+        				<w2:key id="key8" name="name8" dataType="text"></w2:key>
+        				<w2:key id="subId" name="subId" dataType="text"></w2:key>
+        				<w2:key id="seq" name="seq" dataType="number"></w2:key>
+        				<w2:key id="name" name="name" dataType="text"></w2:key>
+        				<w2:key id="key5" name="name5" dataType="text"></w2:key>
+        				<w2:key id="key6" name="name6" dataType="text"></w2:key>
+        				<w2:key id="key7" name="name7" dataType="text"></w2:key>
+
+        				<w2:key id="key9" name="name9" dataType="text"></w2:key>
+        				<w2:key id="key10" name="name10" dataType="text"></w2:key>
+
+        			</w2:keyInfo>
+        			<w2:data use="true">
+        				<procId><![CDATA[PR001]]></procId>
+        				<key8><![CDATA[8]]></key8>
+        				<subId><![CDATA[SB002]]></subId>
+        				<seq><![CDATA[12]]></seq>
+        				<name><![CDATA[홍길동]]></name>
+        				<key11><![CDATA[11]]></key11>
+        				<key5><![CDATA[5]]></key5>
+        				<key6><![CDATA[6]]></key6>
+        				<key7><![CDATA[7]]></key7>
+        				<key9><![CDATA[9]]></key9>
+        				<key10><![CDATA[10]]></key10>
+        			</w2:data>
+        		</w2:dataMap>
+        		<w2:dataList baseNode="list" repeatNode="map" id="dlt_dataList1" saveRemovedData="true">
+        			<w2:columnInfo>
+        				<w2:column id="id" name="name1" dataType="text"></w2:column>
+        				<w2:column id="name" name="name2" dataType="text"></w2:column>
+        				<w2:column id="tel" name="name3" dataType="text"></w2:column>
+        			</w2:columnInfo>
+        		</w2:dataList>
+        		<w2:dataMap baseNode="map" id="dma_dataMap11">
+        			<w2:keyInfo>
+        				<w2:key id="id" name="name1" dataType="text"></w2:key>
+        				<w2:key id="name" name="name2" dataType="text"></w2:key>
+        				<w2:key id="tel" name="name3" dataType="text"></w2:key>
+        			</w2:keyInfo>
+        		</w2:dataMap>
+        	</w2:dataCollection>
+        	<w2:workflowCollection></w2:workflowCollection>
+        	<xf:submission id="sbm_submission1" ref="" target="" action="/testJsonMap" method="get" mediatype="application/json"
+        		encoding="UTF-8" instance="" replace="" errorHandler="" customHandler="" mode="asynchronous" processMsg="" ev:submit=""
+        		ev:submitdone="" ev:submiterror="" abortTrigger="">
+        	</xf:submission>
+        	<xf:submission abortTrigger="" action="/testJsonMap2" customHandler="" encoding="UTF-8" errorHandler="" ev:submit=""
+        		ev:submitdone="" ev:submiterror="" id="sbm_submission2" instance="" mediatype="application/json" method="post" mode="asynchronous"
+        		processMsg="" ref="data:json,dlt_dataList1" replace="" target='data:json,dlt_dataList1' style="" singleMode="true">
+        	</xf:submission>
+        	<xf:submission abortTrigger="" action="/testJsonMap/${procId}/${seq}/" customHandler="" encoding="UTF-8" errorHandler="" ev:submit=""
+        		ev:submitdone="" ev:submiterror="" id="sbm_submission3" instance="" mediatype="application/json" method="put" mode="asynchronous"
+        		processMsg="" ref="data:json,dma_dataMap1" replace="" target="" style="">
+        	</xf:submission>
+        </xf:model>
+        <script type="text/javascript" lazy="false"><![CDATA[
+	/**
+	 * http://127.0.0.1/websquare/websquare.html?w2Config=/project/ktc/urlQueryString/config.xml&w2xPath=/project/ktc/urlQueryString/submission_methtod_get.xml
+	 */        
+	scwin.onpageload = function() {
+		
+	};
+	
+	scwin.onpageunload = function() {
+		
+	};
+
+	scwin.btn_search_onclick = function(e) {
+		com.sbm.execute(sbm_submission1, dma_dataMap1.getJSON());
+	};
+	
+	scwin.btn_search2_onclick = function(e) {
+		com.sbm.execute(sbm_submission2);
+	};
+	
+	scwin.btn_search3_onclick = function(e) {
+		com.sbm.execute(sbm_submission3);
+	};
+	]]></script>
+    </head>
+    <body ev:onpageload="scwin.onpageload" ev:onpageunload="scwin.onpageunload">
+    <xf:group id="" style="padding:10px">
+    	<xf:group style="width: 100%;height: 45px;" id="">
+    		<w2:textbox style="width:50%;height:23px;padding:10px;font-size:18px;font-weight:bold;float:left;" id=""
+    			label="GET 방식으로 파라미터 전달하기">
+    		</w2:textbox>
+    		<xf:trigger ev:onclick="scwin.btn_search3_onclick" id="btn_search3" nextTabID=""
+    			style="width:100px;height:23px;float:right;margin-top:10px;margin-right:10px;" type="button">
+    			<xf:label><![CDATA[조회 - sbm3]]></xf:label>
+    		</xf:trigger>
+    		<xf:trigger ev:onclick="scwin.btn_search2_onclick"
+    			style="width:100px;height:23px;float:right;margin-top:10px;margin-right:10px;" id="btn_search2" type="button" nextTabID="">
+    			<xf:label><![CDATA[조회 - sbm2]]></xf:label>
+    		</xf:trigger>
+    		<xf:trigger ev:onclick="scwin.btn_search_onclick" id="btn_search" nextTabID=""
+    			style="width:108px;height:23px;float:right;margin-top:10px;margin-right:10px;" type="button">
+    			<xf:label><![CDATA[조회 - sbm1]]></xf:label>
+    		</xf:trigger>
+
+    	</xf:group>
+    	<xf:group style="width:100%;" id="grp_group1">
+    		<xf:group tagname="table" style="width:100%;" id="" class="w2tb">
+    			<w2:attributes>
+    				<w2:summary></w2:summary>
+    			</w2:attributes>
+    			<xf:group tagname="caption"></xf:group>
+    			<xf:group tagname="colgroup">
+    				<xf:group tagname="col" style="width:25.00%;"></xf:group>
+    				<xf:group tagname="col" style="width:25.00%"></xf:group>
+    				<xf:group tagname="col" style="width:25.00%;"></xf:group>
+    				<xf:group tagname="col" style="width:25.00%"></xf:group>
+    			</xf:group>
+    			<xf:group tagname="tr" style="">
+    				<xf:group tagname="th" style="" class="w2tb_th">
+    					procId
+    					<w2:attributes>
+    						<w2:scope>row</w2:scope>
+    					</w2:attributes>
+    				</xf:group>
+    				<xf:group tagname="td" style="" class="w2tb_td">
+    					<xf:input adjustMaxLength="false" id="" style="width: 144px;height: 21px;" ref="data:dma_dataMap1.procId"></xf:input>
+    				</xf:group>
+    				<xf:group tagname="th" style="" class="w2tb_th">
+    					subId
+    					<w2:attributes>
+    						<w2:scope>row</w2:scope>
+    					</w2:attributes>
+    				</xf:group>
+    				<xf:group tagname="td" style="" class="w2tb_td">
+    					<xf:input adjustMaxLength="false" id="" style="width: 144px;height: 21px;" ref="data:dma_dataMap1.subId"
+    						refSync="">
+    					</xf:input>
+    				</xf:group>
+    			</xf:group>
+    			<xf:group tagname="tr" style="">
+    				<xf:group tagname="th" style="" class="w2tb_th">
+    					seq
+    					<w2:attributes>
+    						<w2:scope>row</w2:scope>
+    					</w2:attributes>
+    				</xf:group>
+    				<xf:group tagname="td" style="" class="w2tb_td">
+    					<xf:input adjustMaxLength="false" id="" style="width: 144px;height: 21px;" ref="data:dma_dataMap1.seq" refSync=""></xf:input>
+    				</xf:group>
+    				<xf:group tagname="th" style="" class="w2tb_th">
+    					name
+    					<w2:attributes>
+    						<w2:scope>row</w2:scope>
+    					</w2:attributes>
+    				</xf:group>
+    				<xf:group tagname="td" style="" class="w2tb_td">
+    					<xf:input adjustMaxLength="false" id="" style="width: 144px;height: 21px;" ref="data:dma_dataMap1.name"></xf:input>
+    				</xf:group>
+    			</xf:group>
+    		</xf:group>
+    	</xf:group>
+    	<w2:gridView dataList="data:dlt_dataList1" defaultCellHeight="20" id="" scrollByColumn="false" scrollByColumnAdaptive="false"
+    		style="width:100%;height:150px;">
+    		<w2:caption style="" id="caption1" value="this is a grid caption."></w2:caption>
+    		<w2:header style="" id="header1">
+    			<w2:row style="" id="row1">
+    				<w2:column removeBorderStyle="false" width="70" inputType="text" style="height:20px" id="column3" value="name1"
+    					blockSelect="false" displayMode="label">
+    				</w2:column>
+    				<w2:column removeBorderStyle="false" width="70" inputType="text" style="height:20px" id="column2" value="name2"
+    					blockSelect="false" displayMode="label">
+    				</w2:column>
+    				<w2:column removeBorderStyle="false" width="70" inputType="text" style="height:20px" id="column1" value="name3"
+    					blockSelect="false" displayMode="label">
+    				</w2:column>
+    			</w2:row>
+    		</w2:header>
+    		<w2:gBody style="" id="gBody1">
+    			<w2:row style="" id="row2">
+    				<w2:column removeBorderStyle="false" width="70" inputType="text" style="height:20px" id="id" value=""
+    					blockSelect="false" displayMode="label">
+    				</w2:column>
+    				<w2:column removeBorderStyle="false" width="70" inputType="text" style="height:20px" id="name" value=""
+    					blockSelect="false" displayMode="label">
+    				</w2:column>
+    				<w2:column removeBorderStyle="false" width="70" inputType="text" style="height:20px" id="tel" value=""
+    					blockSelect="false" displayMode="label">
+    				</w2:column>
+    			</w2:row>
+    		</w2:gBody>
+    	</w2:gridView>
+    </xf:group></body>
+</html>
