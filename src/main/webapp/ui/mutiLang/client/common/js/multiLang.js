@@ -1,7 +1,7 @@
 /**
  * @type multiLang
  */
-var multiLang = {};
+window.multiLang = {};
 
 /**
  * Global 변수

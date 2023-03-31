@@ -18,19 +18,12 @@
 	scwin.onpageload = function() {
 		ibx_input1.setValue("010-4445-5555");
 		ibx_input2.setValue("02-444-2312");
-		com.bindCopyEvent(["ibx_input1", "ibx_input2"]);
+		scwin.bindCopyEvent(["ibx_input1", "ibx_input2"]);
 	};
 
-	scwin.onpageunload = function() {
-
-	};
-
-	var com = {};
-	
 	/**
 	 * 컴포넌트에 oncopy 이벤트를 동적으로 바인딩 한다.
 	 *
-	 * ※ 주의사항
 	 * InputBox의 oncopy 이벤트는 비공개이기 때문에 반드시 공통함수로 Wrapping해서 사용해야 합니다.
 	 * 비공개 이벤트와 API, 속성 등은 엔진 업데이트 스펙이 변경될 가능성이 있습니다.
 	 *
@@ -39,16 +32,15 @@
 	 * @memberOf com
 	 * @author 박상규
 	 * @example
-	 * com.bindCopyEvent(["ibx_input1"]);
-	 * com.bindCopyEvent(["ibx_input1", "ibx_input2"]);
+	 * scwin.bindCopyEvent(["ibx_input1"]);
+	 * scwin.bindCopyEvent(["ibx_input1", "ibx_input2"]);
 	 */
-	com.bindCopyEvent = function(objArr) {
+	scwin.bindCopyEvent = function(objArr) {
 		for (var i = 0; i < objArr.length; i++) {
-			var comObj = $w.getComponentById(objArr[i]);
+			var comObj = $p.getComponentById(objArr[i]);
 			if (typeof comObj !== "undefined") {
-
 				comObj.bind("oncopy", function(e) {
-					com.copyClipboard(e);
+					scwin.copyClipboard(e);
 				});
 			}
 		}
@@ -62,9 +54,9 @@
 	 * @memberOf com
 	 * @author 박상규
 	 * @example
-	 * com.copyClipboard(e);
+	 * scwin.copyClipboard(e);
 	 */
-	com.copyClipboard = function(e) {
+	scwin.copyClipboard = function(e) {
 		var target = e.target || e.srcElement;
 		var value = target.value;
 		var selectionStart = target.selectionStart;
@@ -86,49 +78,70 @@
 	};
 	]]></script>
     </head>
-    <body ev:onpageload="scwin.onpageload" ev:onpageunload="scwin.onpageunload">
-    <xf:group style="height:61px;padding: 10px" id="grp_group1"><xf:group tagname="table" style="width:100%;" id="tbl_table1" class="w2tb">
-    		<w2:attributes>
-    			<w2:summary></w2:summary>
-    		</w2:attributes>
-    		<xf:group tagname="caption"></xf:group>
-    		<xf:group tagname="colgroup">
-    			<xf:group tagname="col" style="width:25.00%;"></xf:group>
-    			<xf:group tagname="col" style="width:25.00%"></xf:group>
-    			<xf:group tagname="col" style="width:25.00%;"></xf:group>
-    			<xf:group tagname="col" style="width:25.00%"></xf:group>
+    <body ev:onpageload="scwin.onpageload">
+    	
+    	<xf:group id="" style="padding:10px">
+    		<xf:group id="" style="width: 100%;height: 45px;">
+    			<w2:textbox id="" label="Clipboard 복사 시 특정 문자열 치환 예제" style="width:50%;height:23px;padding:10px;font-size:18px;font-weight:bold;float:left;"></w2:textbox>
     		</xf:group>
-    		<xf:group tagname="tr" style="">
-    			<xf:group tagname="th" style="" class="w2tb_th">핸드폰번호<w2:attributes>
-    					<w2:scope>row</w2:scope>
-    				</w2:attributes></xf:group>
-    			<xf:group tagname="td" style="" class="w2tb_td">
-    				<xf:input preventCopyPaste="false" displayFormat="" adjustMaxLength="false" style="width: 144px;height: 21px;" applyFormat="all" id="ibx_input1"></xf:input>
-    			</xf:group>
-    			<xf:group tagname="th" style="" class="w2tb_th">전화번호<w2:attributes>
-    					<w2:scope>row</w2:scope>
-    				</w2:attributes></xf:group>
-    			<xf:group tagname="td" style="" class="w2tb_td">
-    				<xf:input preventCopyPaste="false" displayFormat="" adjustMaxLength="false" applyFormat="all" style="width: 144px;height: 21px;" id="ibx_input2">
-    				</xf:input>
+    		<xf:group id="group1" style="width:100%;">
+    			<xf:group style="padding: 10px;" id="grp_group1">
+    				<xf:group tagname="table" style="width:100%;" id="tbl_table1" class="w2tb">
+    					<w2:attributes>
+    						<w2:summary></w2:summary>
+    					</w2:attributes>
+    					<xf:group tagname="caption"></xf:group>
+    					<xf:group tagname="colgroup">
+    						<xf:group tagname="col" style="width:25.00%;"></xf:group>
+    						<xf:group tagname="col" style="width:25.00%"></xf:group>
+    						<xf:group tagname="col" style="width:25.00%;"></xf:group>
+    						<xf:group tagname="col" style="width:25.00%"></xf:group>
+    					</xf:group>
+    					<xf:group tagname="tr" style="">
+    						<xf:group tagname="th" style="" class="w2tb_th">
+    							핸드폰번호
+    							<w2:attributes>
+    								<w2:scope>row</w2:scope>
+    							</w2:attributes>
+    						</xf:group>
+    						<xf:group tagname="td" style="" class="w2tb_td">
+    							<xf:input preventCopyPaste="false" displayFormat="" adjustMaxLength="false" style="width: 144px;height: 21px;" applyFormat="all"
+    								id="ibx_input1">
+    							</xf:input>
+    						</xf:group>
+    						<xf:group tagname="th" style="" class="w2tb_th">
+    							전화번호
+    							<w2:attributes>
+    								<w2:scope>row</w2:scope>
+    							</w2:attributes>
+    						</xf:group>
+    						<xf:group tagname="td" style="" class="w2tb_td">
+    							<xf:input preventCopyPaste="false" displayFormat="" adjustMaxLength="false" applyFormat="all" style="width: 144px;height: 21px;"
+    								id="ibx_input2">
+    							</xf:input>
+    						</xf:group>
+    					</xf:group>
+    					<xf:group tagname="tr">
+    						<xf:group tagname="th" style="" class="w2tb_th">
+    							<w2:attributes>
+    								<w2:scope>row</w2:scope>
+    							</w2:attributes>
+    						</xf:group>
+    						<xf:group tagname="td" style="" class="w2tb_td">
+    							<w2:attributes>
+    								<w2:colspan>3</w2:colspan>
+    								<w2:rowspan>1</w2:rowspan>
+    							</w2:attributes>
+    							<xf:input adjustMaxLength="false" style="width: 144px;height: 21px;" id="ibx_input3"></xf:input>
+    							<xf:trigger ev:onclick="scwin.btn_trigger1_onclick" style="width: 80px;height: 23px;margin-left:5px;" id="btn_trigger1"
+    								type="button">
+    								<xf:label><![CDATA[데이터 삭제]]></xf:label>
+    							</xf:trigger>
+    						</xf:group>
+    					</xf:group>
+    				<xf:group tagname="tr" style=""><xf:group tagname="td" class="w2tb_td">※&amp;nbsp;전화번호&amp;nbsp;InputBox에서&amp;nbsp;텍스트를&amp;nbsp;Drag하고,&amp;nbsp;Ctrl+C를&amp;nbsp;누르세요.<w2:attributes><w2:scope>row</w2:scope><w2:colspan>4</w2:colspan><w2:rowspan>1</w2:rowspan></w2:attributes></xf:group></xf:group></xf:group>
     			</xf:group>
     		</xf:group>
-    		<xf:group tagname="tr">
-    			<xf:group tagname="th" style="" class="w2tb_th">
-    				<w2:attributes>
-    					<w2:scope>row</w2:scope>
-    				</w2:attributes>
-    			</xf:group>
-    			<xf:group tagname="td" style="" class="w2tb_td">
-    				<w2:attributes>
-    					<w2:colspan>3</w2:colspan>
-    					<w2:rowspan>1</w2:rowspan>
-    				</w2:attributes>
-    				<xf:input adjustMaxLength="false" style="width: 144px;height: 21px;" id="ibx_input3"></xf:input>
-    				<xf:trigger ev:onclick="scwin.btn_trigger1_onclick" style="width: 80px;height: 23px;margin-left:5px;" id="btn_trigger1" type="button">
-    					<xf:label><![CDATA[데이터 삭제]]></xf:label>
-    				</xf:trigger>
-    			</xf:group>
-    		</xf:group>
-    	</xf:group></xf:group></body>
+    	</xf:group>
+    </body>
 </html>

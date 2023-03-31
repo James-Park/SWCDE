@@ -1846,7 +1846,7 @@
 			<w2:workflowCollection>
 			</w2:workflowCollection>
 		</xf:model>
-		<script type="text/javascript" src="common/js/multiLang.js"></script>
+		<script type="text/javascript" src="/ui/mutiLang/client/common/js/multiLang.js"></script>
 		<script type="text/javascript" lazy="false"><![CDATA[
 	scwin.onpageload = function() {
 		var locale = WebSquare.cookie.getCookie("system_language") || multiLang.getLocale();

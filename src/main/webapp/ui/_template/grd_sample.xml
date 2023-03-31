@@ -74,13 +74,13 @@
 			</xf:submission>
 		</xf:model>
 		<script type="text/javascript" lazy="false"><![CDATA[
-	scwin.onpageload = function() {
-	};
+scwin.onpageload = function () {
+};
 
-	scwin.onpageunload = function() {
-	};
-	
-scwin.btn_test_onclick = function(e) {
+scwin.onpageunload = function () {
+};
+
+scwin.btn_test_onclick = function (e) {
 	$p.executeSubmission(submission1);
 };
 ]]></script>

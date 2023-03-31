@@ -17,7 +17,7 @@ requires("uiplugin.popup");
  */
 // =============================================================================
 
-var gcm = {
+window.gcm = {
 	// 서버 통신 서비스 호출을 위한 Context Path
 	CONTEXT_PATH : "",
 
