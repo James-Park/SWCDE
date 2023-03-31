@@ -4,4 +4,4 @@
 비공개 APi를 사용할 경우 향후 WebSquare 엔진 업그레이드 시 API 스펙이 변경될 수 있어 엔진 패치 과정에서 주의하셔야 합니다.
 
 * Site URL : https://swcde.inswave.kr/
-* Inswave Confluence Page URL : : https://inswave.com/confluence/pages/editpage.action?pageId=13665516
+* Inswave Confluence Page URL : : https://inswave.com/confluence/display/consult/30.+WebSquare5+UI+Function+Examples
