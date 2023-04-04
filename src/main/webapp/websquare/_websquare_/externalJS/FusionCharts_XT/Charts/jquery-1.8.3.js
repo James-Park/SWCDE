@@ -873,7 +873,9 @@ jQuery.ready.promise = function( obj ) {
 
 			try {
 				top = window.frameElement == null && document.documentElement;
-			} catch(e) {}
+			} catch(e) {
+				console.log(e);
+			}
 
 			if ( top && top.doScroll ) {
 				(function doScrollCheck() {
@@ -1816,7 +1818,9 @@ function dataAttr( elem, key, data ) {
 				+data + "" === data ? +data :
 				rbrace.test( data ) ? jQuery.parseJSON( data ) :
 					data;
-			} catch( e ) {}
+			} catch( e ) {
+				console.log(e);
+			}
 
 			// Make sure we set the data so it isn't changed later
 			jQuery.data( elem, key, data );
@@ -2022,7 +2026,9 @@ jQuery.fn.extend({
 			try {
 				this[ name ] = undefined;
 				delete this[ name ];
-			} catch( e ) {}
+			} catch( e ) {
+				console.log(e);
+			}
 		});
 	},
 
@@ -5278,6 +5284,7 @@ if ( document.querySelectorAll ) {
 						), 0 ) );
 						return results;
 					} catch(qsaError) {
+						console.log(qsaError);
 					} finally {
 						if ( !old ) {
 							context.removeAttribute("id");
@@ -5300,7 +5307,9 @@ if ( document.querySelectorAll ) {
 				try {
 					matches.call( div, "[test!='']:sizzle" );
 					rbuggyMatches.push( "!=", pseudos );
-				} catch ( e ) {}
+				} catch ( e ) {
+					console.log(e);
+				}
 			});
 
 			// rbuggyMatches always contains :active and :focus, so no need for a length check
@@ -5322,7 +5331,9 @@ if ( document.querySelectorAll ) {
 								elem.document && elem.document.nodeType !== 11 ) {
 							return ret;
 						}
-					} catch(e) {}
+					} catch(e) {
+						console.log(e);
+					}
 				}
 
 				return Sizzle( expr, null, null, [ elem ] ).length > 0;
@@ -5897,7 +5908,9 @@ jQuery.fn.extend({
 					elem = 0;
 
 				// If using innerHTML throws an exception, use the fallback method
-				} catch(e) {}
+				} catch(e) {
+					console.log(e);
+				}
 			}
 
 			if ( elem ) {
@@ -6747,7 +6760,9 @@ jQuery.extend({
 				// Fixes bug #5509
 				try {
 					style[ name ] = value;
-				} catch(e) {}
+				} catch(e) {
+					console.log(e);
+				}
 			}
 
 		} else {
@@ -8344,13 +8359,17 @@ var xhrCallbacks,
 function createStandardXHR() {
 	try {
 		return new window.XMLHttpRequest();
-	} catch( e ) {}
+	} catch( e ) {
+		console.log(e);
+	}
 }
 
 function createActiveXHR() {
 	try {
 		return new window.ActiveXObject( "Microsoft.XMLHTTP" );
-	} catch( e ) {}
+	} catch( e ) {
+		console.log(e);
+	}
 }
 
 // Create the request object
@@ -8426,7 +8445,9 @@ if ( jQuery.support.ajax ) {
 						for ( i in headers ) {
 							xhr.setRequestHeader( i, headers[ i ] );
 						}
-					} catch( _ ) {}
+					} catch( _ ) {
+						console.log(_);
+					}
 
 					// Do send the request
 					// This may raise an exception which is actually
@@ -8483,6 +8504,7 @@ if ( jQuery.support.ajax ) {
 									try {
 										responses.text = xhr.responseText;
 									} catch( e ) {
+										console.log(e);
 									}
 
 									// Firefox throws an exception when accessing

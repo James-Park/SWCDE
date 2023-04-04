@@ -949,9 +949,9 @@ a.w2trigger_anchor:hover span{background:url(../uiplugin/trigger/images/b_blueon
 	cursor:default
 }
 
-.w2inputCalendar_img_over {
-/*	background-image : url(../uiplugin/inputCalendar/images/icon_calendar_over.gif);
-*/	border:0;
+.w2inputCalendar_button.w2inputCalendar_img_over {
+	background-image : url(../uiplugin/inputCalendar/images/icon_calendar_over.gif);
+	border:0;
 }
 
 .w2inputCalendar_calendar {
@@ -960,6 +960,10 @@ a.w2trigger_anchor:hover span{background:url(../uiplugin/trigger/images/b_blueon
 	left : 0;
 	top : 0;
 
+}
+
+.w2inputCalendar_button_native {
+	display : block;
 }
 
 .w2inputCalendar_div_input {
@@ -1269,7 +1273,7 @@ a.w2trigger_anchor:hover span{background:url(../uiplugin/trigger/images/b_blueon
     overflow-x : hidden;
     overflow-y : auto;
     display : inline-block;
-	vertical-align : middle;
+    vertical-align : middle;
     /*border : 1px solid #b5c5d2;*/
 }
 
@@ -2337,6 +2341,10 @@ a.w2trigger_anchor:hover span{background:url(../uiplugin/trigger/images/b_blueon
     overflow : hidden;
     text-overflow : ellipsis;
     white-space : nowrap;
+}
+
+.w2checkcombobox_acc_custom_arrow_native {
+    top: 0px;
 }
 
 .w2checkcombobox_acc_custom_arrow {
@@ -5266,6 +5274,21 @@ button.w2calendar_header_next_month {
 	white-space : nowrap;
 }
 
+.w2window_header_title_h2 {
+	position : absolute;
+	top : 0;
+	left : 25px;
+	width : 300px;
+	height : 21px;
+	padding : 5px 0 0 0;
+	font-size : 12px;
+	font-weight : bold;
+	color : #383d41;
+	cursor : default;
+	white-space : nowrap;
+	margin:0;
+}
+
 .w2window_header_control {
 	position : absolute;
 	top : 0;
@@ -5612,7 +5635,7 @@ button.w2calendar_header_next_month {
 	background-color : #cccccc !important;
 	filter : alpha(opacity=30);
 	opacity : 0.3;
-	z-index: 3800;
+	z-index: 10000;
 }
 
 .w2_wframe_modal {
@@ -6476,6 +6499,98 @@ button.w2calendar_header_next_month {
     background:url(../uiplugin/grid/images/icon_V.gif) no-repeat center center;
 }
 
+.gridBodyDefault {
+	position:relative;
+}
+
+.gridBodyDefault.w2grid_cellStatus_C_left:before {
+	content:"";
+	position:absolute;
+	left:0;
+	top:0;
+	width:0px;
+	height:0px;
+	border-right:7px solid transparent;
+	border-top:7px solid #0000ff;
+}
+
+.gridBodyDefault.w2grid_cellStatus_U_left:before {
+    content:"";
+	position:absolute;
+	left:0;
+	top:0;
+	width:0px;
+	height:0px;
+	border-right:7px solid transparent;
+	border-top:7px solid #00BA84;
+}
+
+.gridBodyDefault.w2grid_cellStatus_D_left:before {
+    content:"";
+	position:absolute;
+	left:0;
+	top:0;
+	width:0px;
+	height:0px;
+	border-right:7px solid transparent;
+	border-top:7px solid #ff0000;
+}
+
+.gridBodyDefault.w2grid_cellStatus_V_left:before {
+    content:"";
+	position:absolute;
+	left:0;
+	top:0;
+	width:0px;
+	height:0px;
+	border-right:7px solid transparent;
+	border-top:7px solid #ff0000;
+}
+
+.gridBodyDefault.w2grid_cellStatus_C_right:after {
+	content:"";
+	position:absolute;
+	right:0;
+	top:0;
+	width:0px;
+	height:0px;
+	border-left:7px solid transparent;
+	border-top:7px solid #0000ff;
+}
+
+.gridBodyDefault.w2grid_cellStatus_U_right:after {
+    content:"";
+	position:absolute;
+	right:0;
+	top:0;
+	width:0px;
+	height:0px;
+	border-left:7px solid transparent;
+	border-top:7px solid #00BA84;
+}
+
+.gridBodyDefault.w2grid_cellStatus_D_right:after {
+    content:"";
+	position:absolute;
+	right:0;
+	top:0;
+	width:0px;
+	height:0px;
+	border-left:7px solid transparent;
+	border-top:7px solid #ff0000;
+}
+
+.gridBodyDefault.w2grid_cellStatus_V_right:after {
+    content:"";
+	position:absolute;
+	right:0;
+	top:0;
+	width:0px;
+	height:0px;
+	border-left:7px solid transparent;
+	border-top:7px solid #ff0000;
+}
+
 .w2grid_customFilter {
 	width:330px;
 	height:250px;
@@ -6992,6 +7107,14 @@ button.w2calendar_header_next_month {
     white-space: nowrap;
 }
 
+.w2grid_filter_search_input {
+	border: 0px;
+	border-bottom: 1px solid #b3b3b3;
+	border-right: 1px solid #b3b3b3;
+	width: calc(100% - 5px);
+	margin-bottom: 1px;
+}
+
 /* input */
 
 .w2input {
@@ -7372,6 +7495,10 @@ button.w2calendar_header_next_month {
 	font-size : 15px;
 	left : 0;
 	top : 0;
+}
+
+.w2drag_resize_window_move {
+	border-width: 0px;
 }
 
 .w2drag_range_select {
@@ -7772,6 +7899,9 @@ button.w2calendar_header_next_month {
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#4d33aaff',GradientType=0 ); /* IE6-9 */
 }
 
+.w2scrollView_resize {
+    resize: both;
+}
 /* w2spinPicker */
 
 .w2spinPicker {
@@ -8209,6 +8339,18 @@ button.w2calendar_header_next_month {
 }
 .w2tabcontrol_bottom {
 	position: relative;
+}
+
+.w2tabcontrol_tooltip {
+    display : none;
+    position : absolute;
+    border:none;
+    background:#5c85d4;
+    padding:3px;
+    cursor : default;
+    color:#fff;
+    font-size:12px;
+    z-index : 5200;
 }
 
 /* tabControl submenu div 스타일 */
@@ -9356,6 +9498,18 @@ background-image: linear-gradient(to bottom, #E4E4E4 0%, #EDEDED 1%);
 	line-height:30px;
 	margin:0;
 	padding:0;
+}
+.w2tab_adaptive_layout .w2tabcontrol_contents > h3{
+	position:relative !important;
+	text-indent:0 !important;
+	background: transparent; 
+	height:30px !important;
+	line-height:30px;
+	margin:0;
+	padding-left:10px;
+	border: 1px solid #ccc;
+	background-image:-webkit-linear-gradient(top, #fff, #eee);
+	background-image:     -ms-linear-gradient(top, #fff, #eee);
 }
 .w2tab_adaptive_layout .w2tabcontrol_bridge h3:after {
 	font-size : 12px;

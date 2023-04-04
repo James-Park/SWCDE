@@ -77,10 +77,23 @@
             gridID = getParameter("gridID");
             uploadInfo = opener.JSON.parse(opener[gridID]._excelUploadInfo);
         	var sizeInfo = crossBrowserSize();
-		 	if (uploadInfo.userFeatures && uploadInfo.userFeatures.height && uploadInfo.userFeatures.width) {
-			} else {
-				window.resizeTo( sizeInfo.width, sizeInfo.height );
-			}
+            var height = sizeInfo.height;
+            var width = sizeInfo.width;
+            if (uploadInfo.userFeatures) {
+                if (uploadInfo.userFeatures.height) {
+                    var featuresHeight = parseInt(uploadInfo.userFeatures.height);
+                    if (!isNaN(featuresHeight) && featuresHeight > 0) {
+                        height = featuresHeight;
+                    }
+                }
+                if (uploadInfo.userFeatures.width) {
+                    var featuresWidth = parseInt(uploadInfo.userFeatures.width);
+                    if (!isNaN(featuresWidth) && featuresWidth > 0) {
+                        width = featuresWidth;
+                    }
+                }
+            }
+            window.resizeTo(width, height );
             if (uploadInfo.postMsg) {
                 if (uploadInfo.postMsg == "true") {
                     if (window.addEventListener) {
@@ -632,11 +645,11 @@
                     }
                 } else { //chrome
                     if (osName == "window") {
-                        sizeInfo.height = 202;
+                        sizeInfo.height = 206;
                         sizeInfo.width = 462;
                     } else if (osName == "mac") {
-                        sizeInfo.height = 191;
-                        sizeInfo.width = 446;
+                        sizeInfo.height = 210;
+                        sizeInfo.width = 492;
                     }
                 }
             } else if (pObj.WebSquare.util.isFF()) {

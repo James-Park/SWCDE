@@ -1963,7 +1963,7 @@
 	<body ev:onpageload="scwin.onpageload" ev:onpageunload="scwin.onpageunload">
 	<xf:group id="" style="padding : 10px"><xf:group tagname="" style="width:100.0%;height:50px;" id="" class="">
 			<w2:textbox tooltipDisplay="" localeRef="TITLE001" style="width:492px;height:35px;font-size:30px;font-weight:bold;margin-left:5px;float:left;" id="" label="클라이언트 다국어"></w2:textbox>
-			<xf:trigger nextTabID="" ev:onclick="scwin.btn_sch_onclick" localeRef="BTN001" toolTip="" style="width: 80px;height: 27px;float:right;margin-top:5px;margin-right:5px;" id="btn_sch" type="button">
+			<xf:trigger nextTabID="" ev:onclick="scwin.btn_sch_onclick" localeRef="BTN001" toolTip="" style="width: 80px;height: 27px;float:right;margin-top:5px;margin-right:5px;" id="btn_sch" type="button" tooltipLocaleRef="BTN001">
 				<xf:label><![CDATA[조회]]></xf:label>
 			</xf:trigger>
 			<xf:select1 chooseOptionLabel="- 선택 -" submenuSize="auto" chooseOption="" tabIndex="0" allOption="" title="" displayMode="label" ref="" appearance="minimal" disabledClass="w2selectbox_disabled" ev:onviewchange="scwin.sel_multiLang_onviewchange" disabled="false" style="width: 80px;height: 25px;float:right;margin-top:5px;margin-right:5px;" id="sel_multiLang" class="" direction="auto">
@@ -1986,7 +1986,7 @@
 					<xf:group tagname="col" style=""></xf:group>
 				</xf:group>
 				<xf:group tagname="tr" style="">
-					<xf:group tagname="th" style="" class="w2tb_th">
+					<xf:group tagname="th" style="" class="w2tb_th" useLocale="true" localeRef="BTN001" tooltipLocaleRef="BTN001" tooltipDisplay="true">
 						<w2:span localeRef="TEXT001" style="" id="" label="메세지"></w2:span>
 					</xf:group>
 					<xf:group tagname="td" style="" class="w2tb_td">
@@ -2071,7 +2071,7 @@
 				</xf:group>
 			</xf:group>
 		</xf:group><xf:group style="height:45px;" id="" class="">
-			<w2:textbox localeRef="TITLE002" style="width:492px;height:25px;font-size:18px;font-weight:bold;margin-top: 5px;margin-left:5px;" tabIndex="" id="" label="경제 캘린더" class=""></w2:textbox>
+			<w2:textbox localeRef="TITLE002" style="width:492px;height:25px;font-size:18px;font-weight:bold;margin-top: 5px;margin-left:5px;" tabIndex="" id="" label="경제 캘린더" class="" tooltipLocaleRef="TITLE004" tooltipDisplay="true" useLocale="true"></w2:textbox>
 			<xf:group style="" id="" class="fr">
 				<w2:textbox style="padding: 0 0 0 4px;float : left;margin-top: 4px;height:16px;" id="txt_time" label="">
 				</w2:textbox>

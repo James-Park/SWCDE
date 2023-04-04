@@ -979,7 +979,9 @@ function getRawTag(value) {
   try {
     value[symToStringTag] = undefined;
     var unmasked = true;
-  } catch (e) {}
+  } catch (e) {
+  	console.log(e);
+  }
 
   var result = nativeObjectToString.call(value);
   if (unmasked) {

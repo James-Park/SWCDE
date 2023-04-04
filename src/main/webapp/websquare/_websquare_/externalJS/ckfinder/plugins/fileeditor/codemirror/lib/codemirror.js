@@ -1371,8 +1371,10 @@
 
     focus: function() {
       if (this.cm.options.readOnly != "nocursor" && (!mobile || activeElt() != this.textarea)) {
-        try { this.textarea.focus(); }
-        catch (e) {} // IE8 will throw if the textarea is display: none or not in DOM
+        try { this.textarea.focus(); 
+        } catch (e) {
+          console.log(e);
+        } // IE8 will throw if the textarea is display: none or not in DOM
       }
     },
 
@@ -1690,7 +1692,9 @@
       }
 
       try { var rng = range(start.node, start.offset, end.offset, end.node); }
-      catch(e) {} // Our model of the DOM might be outdated, in which case the range we try to set can be impossible
+      catch(e) {
+        console.log(e);
+      } // Our model of the DOM might be outdated, in which case the range we try to set can be impossible
       if (rng) {
         sel.removeAllRanges();
         sel.addRange(rng);
@@ -3023,8 +3027,10 @@
     var op = cm.curOp, group = op.ownsGroup;
     if (!group) return;
 
-    try { fireCallbacksForOps(group); }
-    finally {
+    try { fireCallbacksForOps(group); 
+    } catch(e) {
+      console.log(e);
+    } finally {
       operationGroup = null;
       for (var i = 0; i < group.ops.length; i++)
         group.ops[i].cm.curOp = null;
@@ -3161,16 +3167,22 @@
   function runInOp(cm, f) {
     if (cm.curOp) return f();
     startOperation(cm);
-    try { return f(); }
-    finally { endOperation(cm); }
+    try { 
+      return f(); 
+    } catch(e) {
+      console.log(e);
+    } finally { endOperation(cm); }
   }
   // Wraps a function in an operation. Returns the wrapped function.
   function operation(cm, f) {
     return function() {
       if (cm.curOp) return f.apply(cm, arguments);
       startOperation(cm);
-      try { return f.apply(cm, arguments); }
-      finally { endOperation(cm); }
+      try { 
+        return f.apply(cm, arguments); 
+      } catch(e) {
+        console.log(e);
+      } finally { endOperation(cm); }
     };
   }
   // Used to add methods to editor and doc instances, wrapping them in
@@ -3179,8 +3191,11 @@
     return function() {
       if (this.curOp) return f.apply(this, arguments);
       startOperation(this);
-      try { return f.apply(this, arguments); }
-      finally { endOperation(this); }
+      try { 
+        return f.apply(this, arguments); 
+      } catch(e) {
+        console.log(e);
+      } finally { endOperation(this); }
     };
   }
   function docMethodOp(f) {
@@ -3188,8 +3203,11 @@
       var cm = this.cm;
       if (!cm || cm.curOp) return f.apply(this, arguments);
       startOperation(cm);
-      try { return f.apply(this, arguments); }
-      finally { endOperation(cm); }
+      try { 
+        return f.apply(this, arguments);
+      } catch(e) {
+        console.log(e);
+      } finally { endOperation(cm); }
     };
   }
 
@@ -3878,8 +3896,9 @@
           cm.replaceSelection(text, "around", "paste");
           cm.display.input.focus();
         }
+      } catch(e) {
+        console.log(e);
       }
-      catch(e){}
     }
   }
 
@@ -4074,6 +4093,8 @@
       if (isReadOnly(cm)) cm.state.suppressEdits = true;
       if (dropShift) cm.display.shift = false;
       done = bound(cm) != Pass;
+    } catch(e) {
+      console.log(e);
     } finally {
       cm.display.shift = prevShift;
       cm.state.suppressEdits = false;
@@ -5913,7 +5934,9 @@
             form.submit();
             form.submit = wrappedSubmit;
           };
-        } catch(e) {}
+        } catch(e) {
+          console.log(e);
+        }
       }
     }
 
@@ -6012,8 +6035,11 @@
     current: function(){return this.string.slice(this.start, this.pos);},
     hideFirstChars: function(n, inner) {
       this.lineStart += n;
-      try { return inner(); }
-      finally { this.lineStart -= n; }
+      try { 
+        return inner(); 
+      } catch(e) {
+        console.log(e);
+      } finally { this.lineStart -= n; }
     }
   };
 
@@ -8286,7 +8312,7 @@
   if (ios) // Mobile Safari apparently has a bug where select() is broken.
     selectInput = function(node) { node.selectionStart = 0; node.selectionEnd = node.value.length; };
   else if (ie) // Suppress mysterious IE10 errors
-    selectInput = function(node) { try { node.select(); } catch(_e) {} };
+    selectInput = function(node) { try { node.select(); } catch(_e) {console.log(_e);} };
 
   function indexOf(array, elt) {
     for (var i = 0; i < array.length; ++i)
@@ -8529,7 +8555,7 @@
     catch(e) { return false; }
   } : function(te) {
     try {var range = te.ownerDocument.selection.createRange();}
-    catch(e) {}
+    catch(e) {console.log(e);}
     if (!range || range.parentElement() != te) return false;
     return range.compareEndPoints("StartToEnd", range) != 0;
   };

@@ -3,12 +3,12 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.inswave</groupId>
-	<artifactId>WRM</artifactId>
-	<name>WebSquare Reference Model</name>
+	<artifactId>SWCDE</artifactId>
+	<name>SWCDE</name>
 	<version>5.0.4.RELEASE</version>
 	<properties>
-		<java-version>1.8</java-version>
-		<org.springframework-version>4.3.25.RELEASE</org.springframework-version>
+		<java-version>11</java-version>
+		<org.springframework-version>4.3.30.RELEASE</org.springframework-version>
 		<org.aspectj-version>1.6.10</org.aspectj-version>
 		<org.slf4j-version>1.6.6</org.slf4j-version>
 		<org.apache.poi-version>3.10-FINAL</org.apache.poi-version>
@@ -372,7 +372,7 @@
 		<dependency>
 			<groupId>websquare</groupId>
 			<artifactId>websquare</artifactId>
-			<version>5.0_5.4777B.20221212.115139_1.5</version>
+			<version>5.0_5.4858B.20230327.083706_1.5</version>
 		</dependency>
 	</dependencies>
 	<build>

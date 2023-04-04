@@ -651,14 +651,8 @@ define({declaration:{A:{version:'1.0',encoding:'UTF-8'}},E:[{T:1,N:'html',A:{xml
                 alert(scwin.Upload_msg4);
                 return false;
             }
-            //
             scwin.frm = window.frames;
             scwin.find = false;
-            for (var i = 0; i < scwin.frm.length; i++) {
-                if (scwin.frm[i].name == scwin.thisForm.target) {
-                    scwin.find = true;
-                }
-            }
             if (!scwin.find) {
                 scwin.layerUP = document.createElement("div");
                 scwin.src = "";

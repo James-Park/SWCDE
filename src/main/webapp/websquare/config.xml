@@ -11,7 +11,8 @@
     <debug remoteConsole="false" value="true"/>
     <debugKey value=""/>
     <language value="ko"/>
-    <useItemLocale value="false"/>
+    <useItemLocale value="true"/>
+    <useLocale useDefaultLabel="true" value="true"/>
     <date>
     </date>
     <exceptionHandler value="websquare"/>
@@ -215,10 +216,11 @@
         <version value="4.11.3"/>
     </editor>
     <fusionchart/>
-    <languagePack useLanguagePack="false">
-        <url lang="ko" value="/langpack/ko.js"/>
-        <url lang="en" value="/langpack/en.js"/>
-        <url lang="ch" value="/langpack/ch.js"/>
+    <languagePack useLanguagePack="true">
+        <url lang="ko" value="/ui/mutiLang/client/common/lang/client_ko.js"/>
+        <url lang="en" value="/ui/mutiLang/client/common/lang/client_en.js"/>
+        <url lang="fr" value="/ui/mutiLang/client/common/lang/client_fr.js"/>
+        <url lang="de" value="/ui/mutiLang/client/common/lang/client_de.js"/>
     </languagePack>
     <license value="true"/>
 </WebSquare>
