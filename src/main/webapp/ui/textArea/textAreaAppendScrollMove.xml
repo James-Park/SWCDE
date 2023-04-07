@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:w2="http://www.inswave.com/websquare" xmlns:xf="http://www.w3.org/2002/xforms">
+    <head>
+    	<w2:type>DEFAULT</w2:type>
+        <w2:buildDate/>
+        <xf:model>
+        	<xf:instance>
+        		<data xmlns="" />
+        	</xf:instance>
+        	<w2:dataCollection baseNode="map">
+				<w2:dataList baseNode="list" repeatNode="map" id="dlt_memberList" saveRemovedData="true" ev:oncelldatachange="">
+					<w2:columnInfo>
+						<w2:column id="id" name="아이디" dataType="text"></w2:column>
+						<w2:column id="name" name="성명" dataType="text"></w2:column>
+						<w2:column id="tel" name="연락처" dataType="text"></w2:column>
+						<w2:column id="region" name="지역" dataType="text"></w2:column>
+					</w2:columnInfo>
+					<w2:data use="true">
+						<w2:row>
+							<id><![CDATA[P0001]]></id>
+							<name><![CDATA[홍길동]]></name>
+							<tel><![CDATA[010-2323-4323]]></tel>
+							<region><![CDATA[서울]]></region>
+						</w2:row>
+						<w2:row>
+							<id><![CDATA[P0002]]></id>
+							<name><![CDATA[허균]]></name>
+							<tel><![CDATA[010-2444-2312]]></tel>
+							<region><![CDATA[인천]]></region>
+						</w2:row>
+					</w2:data>
+				</w2:dataList>
+        	</w2:dataCollection>
+        	<w2:workflowCollection></w2:workflowCollection>
+        </xf:model>
+        <script type="text/javascript" lazy="false"><![CDATA[scwin.onpageload = function () {
+};
+
+scwin.onpageunload = function () {
+
+};
+
+scwin.btn_execute_onclick = function (e) {
+	var strLog = JSON.stringify(mf_dlt_memberList.getAllJSON(), null, '\t');
+
+	scwin.printExampleLog(strLog, txa_log, true);
+};
+
+/**
+ * @method
+ * @name printExampleLog
+ * @description 예제에 사용되는 로그 출력용 textarea 컴포넌트에 문자열을 출력한다.
+ * @param {string} argStrLog 출력할 문자열
+ * @param {object} argCmp 웹스퀘어 textarea 컴포넌트
+ * @param {boolean} argNoDelimiter [default:true, false]문자열 사이 구분자 추가 여부.
+ * @returns 
+ * @hidden N
+ * @exception 
+ * @example 
+ */
+scwin.printExampleLog = function (argStrLog, argCmpTarget) {
+
+	//textarea에 출력된 기존 데이터 추출.
+	var strPreData = argCmpTarget.getValue();
+	
+	if (strPreData !== "") { 
+		strPreData += "\n";
+	}
+
+	// 기존 데이터에 추가하여 출력
+	argCmpTarget.setValue(strPreData + "[" + new Date().toLocaleTimeString("sv-SE") + "] *******************************************\n" + argStrLog);
+
+	// textarea 스크롤 바닥으로 옮기기.
+	scwin.scrollToBottom(argCmpTarget);
+};
+
+scwin.scrollToBottom = function (argCmp) {
+	var eleObj;
+	eleObj = argCmp.render;
+	if (!eleObj) {
+		console.error("웹스퀘어 객체가 아닙니다.");
+		return;
+	}
+	eleObj.scrollTop = eleObj.scrollHeight;
+};
+
+]]></script>
+    </head>
+    <body ev:onpageload="scwin.onpageload" ev:onpageunload="scwin.onpageunload">
+    <xf:group id="" style="padding:10px">
+    	<xf:group style="width: 100%;height: 45px;" id="">
+    		<w2:textbox style="width:50%;height:23px;padding:10px;font-size:18px;font-weight:bold;float:left;" id="" label="TextArea Append &amp; Scroll Move">
+    		</w2:textbox>
+    		<xf:trigger ev:onclick="scwin.btn_execute_onclick" style="width: 80px;height: 23px;float:right;margin-top: 10px;margin-right: 10px;" id="btn_execute"
+    			type="button">
+    			<xf:label><![CDATA[실행]]></xf:label>
+    		</xf:trigger>
+    	</xf:group>
+    	<xf:group style="width:100%;height:500px;" id="grp_group1">
+    		<xf:textarea id="txa_log" style="width: 100%;height: 100%;"></xf:textarea>
+    	</xf:group></xf:group></body>
+</html>
