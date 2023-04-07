@@ -48,18 +48,6 @@ scwin.btn_execute_onclick = function (e) {
 	scwin.printExampleLog(strLog, txa_log, true);
 };
 
-/**
- * @method
- * @name printExampleLog
- * @description 예제에 사용되는 로그 출력용 textarea 컴포넌트에 문자열을 출력한다.
- * @param {string} argStrLog 출력할 문자열
- * @param {object} argCmp 웹스퀘어 textarea 컴포넌트
- * @param {boolean} argNoDelimiter [default:true, false]문자열 사이 구분자 추가 여부.
- * @returns 
- * @hidden N
- * @exception 
- * @example 
- */
 scwin.printExampleLog = function (argStrLog, argCmpTarget) {
 
 	//textarea에 출력된 기존 데이터 추출.
