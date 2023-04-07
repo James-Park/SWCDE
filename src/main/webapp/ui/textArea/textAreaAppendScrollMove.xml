@@ -43,7 +43,7 @@ scwin.onpageunload = function () {
 };
 
 scwin.btn_execute_onclick = function (e) {
-	var strLog = JSON.stringify(mf_dlt_memberList.getAllJSON(), null, '\t');
+	var strLog = JSON.stringify(dlt_memberList.getAllJSON(), null, '\t');
 
 	scwin.printExampleLog(strLog, txa_log, true);
 };
