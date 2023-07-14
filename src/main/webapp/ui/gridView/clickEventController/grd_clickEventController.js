@@ -3,7 +3,14 @@ window.com = {};
 com.clickEventTimerId = "clickEventTimer";
 
 com.setClickEvent = function($p) {
-	let compList = WebSquare.util.getChildren($p.getFrame(), {
+	let frame = null;
+	if ((typeof $p.getPluginName === "function") && ($p.getPluginName() === "group")) {
+		frame = $p;
+	} else {
+		frame = $p.getFrame();
+	}
+	
+	let compList = WebSquare.util.getChildren(frame, {
 		includePlugin: "trigger gridView",
 		recursive: true
 	});
