@@ -74,8 +74,7 @@
 		<script type="text/javascript" lazy="false"><![CDATA[
 scwin.onpageload = function () {
 	// config.xml의 <initScript>와 <wframe><initScript>에 아래의 코드를 추가하면 모든 화면에 Click 이벤트 제어가 적용됨
-	// 
-	// 특정 화면에만 적용하기 원할 경우 config.xml에 추가하지 말고,  "com.setClickEvent($p);"를 onpageload 이벤트에서 실행하면 됨
+	// 특정 화면에만 적용하기 원할 경우 config.xml에 추가하지 말고 "com.setClickEvent($p);"를 onpageload 이벤트에서 실행하면 됨됨
 	// com.setClickEvent($p);
 };
 
@@ -108,17 +107,15 @@ scwin.btn_trigger_ondblclick = function(e) {
 		<xf:group style="padding:10px;" id="grp_content">
 			<xf:group style="width: 100%;height:40px;float:left;" id="" class="">
 				<w2:textbox style="height: 23px;font-size:20px;float:left;margin-top:5px;margin-left:5px;font-weight: bold"
-					label="GridView click &amp; dbClick Event 제어 예제" id="">
+					label="GridView click &amp; dbClick Event 제어 예제2" id="">
 				</w2:textbox>
-				<xf:trigger id="btn_trigger" style="width:216px;height:23px;float:right;margin-top:10px;margin-right:10px;" type="button"
-					ev:onclick="scwin.btn_trigger_onclick" ev:ondblclick="scwin.btn_trigger_ondblclick">
+				<xf:trigger id="btn_trigger" style="width:216px;height:23px;float:right;margin-top:10px;margin-right:10px;" type="button" ev:onclick="scwin.btn_trigger_onclick" ev:ondblclick="scwin.btn_trigger_ondblclick">
 					<xf:label><![CDATA[Trigger 이벤트 Click 테스트1]]></xf:label>
 				</xf:trigger>
 			</xf:group>
 			<w2:gridView id="grd_gridView1" ignoreToggleOnDisabled="false" useShiftKey="true" style="width:100%;height:134px;"
 				scrollByColumn="false" defaultCellHeight="20" scrollByColumnAdaptive="false" summaryAuto="false" summaryOnlyAuto="false"
-				applyAllColumnStyle="false" dataList="data:dlt_memberList" ignoreCellClick="false" autoFit="allColumn"
-				ev:oncellclick="scwin.grd_gridView1_oncellclick" ev:oncelldblclick="scwin.grd_gridView1_oncelldblclick">
+				applyAllColumnStyle="false" dataList="data:dlt_memberList" ignoreCellClick="false" autoFit="allColumn" ev:oncellclick="scwin.grd_gridView1_oncellclick" ev:oncelldblclick="scwin.grd_gridView1_oncelldblclick">
 				<w2:caption style="" id="caption1" value="this is a grid caption."></w2:caption>
 				<w2:header style="" id="header1">
 					<w2:row style="" id="row1">
@@ -136,8 +133,6 @@ scwin.btn_trigger_ondblclick = function(e) {
 						<w2:column width="129" inputType="text" style="" id="region" value="" blockSelect="false" displayMode="label"></w2:column>
 					</w2:row>
 				</w2:gBody>
-			</w2:gridView>
-		</xf:group>
-		<w2:wframe style="" id="" src="grd_clickEventController2.xml"></w2:wframe>
+			</w2:gridView></xf:group>
 	</body>
 </html>

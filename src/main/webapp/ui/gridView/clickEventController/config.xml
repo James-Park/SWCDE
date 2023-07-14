@@ -25,9 +25,7 @@
     <processMsgBackground backgroundColor="#112233" value="true"/>
     <byteCheckEncoding value="euc-kr"/>
 	<initScript value="true"><![CDATA[
-		if (typeof $p.top().grp_content !== "undefined") { 
-        	com.setClickEvent($p.top().grp_content);
-        }
+		com.setClickEvent($p);
 	]]></initScript>
     <wframe>
         <mode value="sync"/>

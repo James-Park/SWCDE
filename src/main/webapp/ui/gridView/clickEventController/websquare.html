@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+	<title> WebSquare </title>
+	<script type="text/javascript">
+		var WebSquareExternal = {
+			"baseURI": "/websquare/",
+			"configOverride": {
+				"initScript": {
+					"#cdata": function () {
+						com.setClickEvent($p);
+					},
+					"@value": "true"
+				},
+				"wframe": {
+					"mode": {
+						"@value": "sync"
+					},
+					"scope": {
+						"@value": "true"
+					},
+					"initScript": {
+						"#cdata": function () {
+							com.setClickEvent($p);
+						},
+						"@value": "true"
+					}
+				},
+				"engine": {
+					"module": {
+						"@src": "/ui/gridView/clickEventController/grd_clickEventController.js"
+					}
+				},
+			}
+		};
+	</script>
+	<script type="text/javascript" src="/websquare/_websquare_/javascriptLoader.wq"></script>
+	<script type="text/javascript" src="/websquare/app.js"></script>
+</head>
+
+<body></body>
+
+</html>

@@ -19,6 +19,7 @@ scwin.onpageload = function() {
 ]]></script>
     </head>
     <body ev:onpageload="scwin.onpageload">
-    	<w2:wframe style="width: 100%;" id="" src="grd_clickEventController.xml"></w2:wframe>
+    	<w2:wframe id="" src="grd_clickEventController.xml" style="width: 100%;"></w2:wframe>
+    	<w2:wframe id="" src="grd_clickEventController.xml" style="width: 100%;"></w2:wframe>
     </body>
 </html>

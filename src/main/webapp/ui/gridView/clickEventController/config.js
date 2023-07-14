@@ -70,10 +70,7 @@ export default {
     },
     "initScript": {
       "#cdata": function() { 
-		if (typeof $p.top().grp_content !== "undefined") { 
-        	com.setClickEvent($p.top().grp_content);
-        }
-	 
+		com.setClickEvent($p);
         },
       "@value": "true"
     },
