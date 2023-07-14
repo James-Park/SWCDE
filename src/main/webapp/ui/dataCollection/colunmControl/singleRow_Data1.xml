@@ -29,9 +29,6 @@
 	dlt_memberList.setJSON(jsonData);
 };
 
-scwin.onpageunload = function () {
-};
-
 scwin.btn_insertColumn_onclick = function (e) {
 	// DataList에 컬럼을 추가합니다.
 	com.insertColumn(dlt_memberList, "email", { name: "이메일", dataType: "text" });
@@ -48,7 +45,7 @@ scwin.btn_removeColumn_onclick = function (e) {
 };
 ]]></script>
 	</head>
-	<body ev:onpageload="scwin.onpageload" ev:onpageunload="scwin.onpageunload">
+	<body ev:onpageload="scwin.onpageload">
 		<xf:group style="padding:10px;" id="">
 			<xf:group id="" style="width: 100%;height: 45px;">
 				<w2:textbox id="" label="Single Row Data"

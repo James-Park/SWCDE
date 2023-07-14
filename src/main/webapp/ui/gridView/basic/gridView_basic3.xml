@@ -35,7 +35,7 @@
         </xf:model>
         <script type="text/javascript"><![CDATA[
 	scwin.trigger1_onclick = function(e) {
-		$w.executeSubmission("submission1");
+		$p.executeSubmission("submission1");
 	};
 	]]></script>
     </head>

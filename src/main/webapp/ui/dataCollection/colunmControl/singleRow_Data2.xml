@@ -27,9 +27,6 @@
 	dma_member.setJSON(jsonData);
 };
 
-scwin.onpageunload = function () {
-};
-
 scwin.btn_insertColumn_onclick = function (e) {
 	// DataMap에 컬럼을 추가합니다.
 	com.insertColumn(dma_member, "email", { name: "이메일", dataType: "text" });
@@ -40,14 +37,14 @@ scwin.btn_insertColumn_onclick = function (e) {
 
 ]]></script>
 	</head>
-	<body ev:onpageload="scwin.onpageload" ev:onpageunload="scwin.onpageunload">
+	<body ev:onpageload="scwin.onpageload">
 		<xf:group style="padding:10px;" id="">
 			<xf:group id="" style="width: 100%;height: 45px;">
 				<w2:textbox id="" label="Single Row Data"
 					style="width:50%;height:23px;padding:10px;font-size:18px;font-weight:bold;float:left;">
 				</w2:textbox>
-				<xf:trigger ev:onclick="scwin.btn_insertColumn_onclick" id="btn_insertColumn" style="width:80px;height:26px;float:right;margin-top:10px;margin-right:10px;"
-					type="button">
+				<xf:trigger ev:onclick="scwin.btn_insertColumn_onclick" id="btn_insertColumn"
+					style="width:80px;height:26px;float:right;margin-top:10px;margin-right:10px;" type="button">
 					<xf:label><![CDATA[컬럼 추가]]></xf:label>
 				</xf:trigger>
 			</xf:group>
@@ -63,29 +60,41 @@ scwin.btn_insertColumn_onclick = function (e) {
 					<xf:group tagname="col" style="width:25.00%"></xf:group>
 				</xf:group>
 				<xf:group tagname="tr" style="">
-					<xf:group tagname="th" style="" class="w2tb_th">아이디<w2:attributes>
+					<xf:group tagname="th" style="" class="w2tb_th">
+						아이디
+						<w2:attributes>
 							<w2:scope>row</w2:scope>
-						</w2:attributes></xf:group>
+						</w2:attributes>
+					</xf:group>
 					<xf:group tagname="td" style="" class="w2tb_td">
 						<xf:input adjustMaxLength="false" id="" style="width: 95%;height: 21px;" ref="data:dma_member.id"></xf:input>
 					</xf:group>
-					<xf:group tagname="th" style="" class="w2tb_th">연락처<w2:attributes>
+					<xf:group tagname="th" style="" class="w2tb_th">
+						연락처
+						<w2:attributes>
 							<w2:scope>row</w2:scope>
-						</w2:attributes></xf:group>
+						</w2:attributes>
+					</xf:group>
 					<xf:group tagname="td" style="" class="w2tb_td">
 						<xf:input adjustMaxLength="false" id="" style="width: 95%;height: 21px;" ref="data:dma_member.tel"></xf:input>
 					</xf:group>
 				</xf:group>
 				<xf:group tagname="tr" style="">
-					<xf:group tagname="th" style="" class="w2tb_th">성명<w2:attributes>
+					<xf:group tagname="th" style="" class="w2tb_th">
+						성명
+						<w2:attributes>
 							<w2:scope>row</w2:scope>
-						</w2:attributes></xf:group>
+						</w2:attributes>
+					</xf:group>
 					<xf:group tagname="td" style="" class="w2tb_td">
 						<xf:input adjustMaxLength="false" id="" style="width: 95%;height: 21px;" ref="data:dma_member.name"></xf:input>
 					</xf:group>
-					<xf:group tagname="th" style="" class="w2tb_th">지역<w2:attributes>
+					<xf:group tagname="th" style="" class="w2tb_th">
+						지역
+						<w2:attributes>
 							<w2:scope>row</w2:scope>
-						</w2:attributes></xf:group>
+						</w2:attributes>
+					</xf:group>
 					<xf:group tagname="td" style="" class="w2tb_td">
 						<xf:input adjustMaxLength="false" id="" style="width: 95%;height: 21px;" ref="data:dma_member.region"></xf:input>
 					</xf:group>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<body>
+	<button>Click me</button>
+	<p id="demo"></p>
+	<script>
+		const button = document.querySelector('button');
+		let timeoutID = -1;
+		button.addEventListener('click', event => {
+			if (event.detail === 1) { // singleClick
+				timeoutID = window.setTimeout(function () {
+					document.getElementById("demo").innerHTML = document.getElementById("demo").innerHTML + "<br> onclick" + event.detail;
+				}, 300)
+			} else if (event.detail === 2) {
+				window.clearTimeout(timeoutID);
+				document.getElementById("demo").innerHTML = document.getElementById("demo").innerHTML + "<br> ondblclick" + event.detail;
+			} else {
+				// do nothing
+			}
+		});
+	</script>
+</body>
+</html>
