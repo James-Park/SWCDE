@@ -7,7 +7,7 @@ com.clickEventTimerId = "clickEventTimer";
 com.dblClickCheckInterval = 500;
 
 /**
- * GridView, Trigger의 Click, Double Click 이벤트를 제어하기 위한 이벤트 제어를 설정한다.
+ * GridView, Trigger의 Click, Double Click 이벤트 동작을 WebSquare 기본 동작과 다르게 설정하기 위한 함수
  * 
  * 1. 웹스퀘어 기본 Click, Double Click 이벤트 동작 
  * - GridView와 Trigger 컴포넌트에서 Click 이벤트가 2번 발생하면, Click 이벤트가 2번, Double Click 이벤트가 1번 발생한다. 
