@@ -25,7 +25,7 @@
     <processMsgBackground backgroundColor="#112233" value="true"/>
     <byteCheckEncoding value="euc-kr"/>
 	<initScript value="true"><![CDATA[
-		com.setClickEvent($p);
+		 com.setClickEvent($p);
 	]]></initScript>
     <wframe>
         <mode value="sync"/>

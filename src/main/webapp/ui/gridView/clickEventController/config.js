@@ -70,7 +70,8 @@ export default {
     },
     "initScript": {
       "#cdata": function() { 
-		com.setClickEvent($p);
+		 com.setClickEvent($p);
+	 
         },
       "@value": "true"
     },

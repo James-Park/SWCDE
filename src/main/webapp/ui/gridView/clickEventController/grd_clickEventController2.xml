@@ -85,22 +85,26 @@ scwin.clickGridView = function(e) {
 scwin.onpageunload = function () {
 };
 
-
 scwin.grd_gridView1_oncellclick = function(row,col,colId) {
-	alert("grd_gridView1_oncellclick");
+	console.log("[grd_gridView1_oncellclick] row : " + row + ", col : " + col + ", colId : " + colId);
+	//alert("grd_gridView1_oncellclick");
 };
 
 scwin.grd_gridView1_oncelldblclick = function(row,col,colId) {
-	alert("grd_gridView1_oncelldblclick");
+	console.log("[grd_gridView1_oncelldblclick] row : " + row + ", col : " + col + ", colId : " + colId);
+	//alert("grd_gridView1_oncelldblclick");
 };
 
 scwin.btn_trigger_onclick = function(e) {
-	alert("btn_trigger_onclick");
+	console.log("[btn_trigger_onclick] e : ", e);
+	//alert("btn_trigger_onclick");
 };
 
 scwin.btn_trigger_ondblclick = function(e) {
-	alert("btn_trigger_ondblclick");
+	console.log("[btn_trigger_ondblclick] e : ", e);
+	//alert("btn_trigger_ondblclick");
 };
+
 ]]></script>
 	</head>
 	<body ev:onpageload="scwin.onpageload" ev:onpageunload="scwin.onpageunload">
