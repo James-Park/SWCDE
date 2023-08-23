@@ -88,22 +88,22 @@ scwin.onpageunload = function () {
 
 scwin.grd_gridView1_oncellclick = function(row,col,colId) {
 	console.log("[grd_gridView1_oncellclick] row : " + row + ", col : " + col + ", colId : " + colId);
-	//alert("grd_gridView1_oncellclick");
+	//alert("[grd_gridView1_oncellclick] row : " + row + ", col : " + col + ", colId : " + colId);
 };
 
 scwin.grd_gridView1_oncelldblclick = function(row,col,colId) {
 	console.log("[grd_gridView1_oncelldblclick] row : " + row + ", col : " + col + ", colId : " + colId);
-	//alert("grd_gridView1_oncelldblclick");
+	//alert("[grd_gridView1_oncelldblclick] row : " + row + ", col : " + col + ", colId : " + colId);
 };
 
 scwin.btn_trigger_onclick = function(e) {
 	console.log("[btn_trigger_onclick] e : ", e);
-	//alert("btn_trigger_onclick");
+	//alert("[btn_trigger_onclick] Event");
 };
 
 scwin.btn_trigger_ondblclick = function(e) {
 	console.log("[btn_trigger_ondblclick] e : ", e);
-	//alert("btn_trigger_ondblclick");
+	//alert("btn_trigger_ondbl Event");
 };]]></script>
 	</head>
 	<body ev:onpageload="scwin.onpageload" ev:onpageunload="scwin.onpageunload">
