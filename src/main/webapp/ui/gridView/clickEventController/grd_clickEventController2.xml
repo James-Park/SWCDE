@@ -78,48 +78,47 @@ scwin.onpageload = function () {
 	// com.setClickEvent($p);
 };
 
-scwin.clickGridView = function(e) {
-
-};
-
-scwin.onpageunload = function () {
-};
-
 scwin.grd_gridView1_oncellclick = function(row,col,colId) {
-	console.log("[grd_gridView1_oncellclick] row : " + row + ", col : " + col + ", colId : " + colId);
+	scwin.writeLog("[grd_gridView1_oncellclick] row : " + row + ", col : " + col + ", colId : " + colId);
 	//alert("grd_gridView1_oncellclick");
 };
 
 scwin.grd_gridView1_oncelldblclick = function(row,col,colId) {
-	console.log("[grd_gridView1_oncelldblclick] row : " + row + ", col : " + col + ", colId : " + colId);
+	scwin.writeLog("[grd_gridView1_oncelldblclick] row : " + row + ", col : " + col + ", colId : " + colId);
 	//alert("grd_gridView1_oncelldblclick");
 };
 
 scwin.btn_trigger_onclick = function(e) {
-	console.log("[btn_trigger_onclick] e : ", e);
+	scwin.writeLog("[btn_trigger_onclick] Click Event");
 	//alert("btn_trigger_onclick");
 };
 
 scwin.btn_trigger_ondblclick = function(e) {
-	console.log("[btn_trigger_ondblclick] e : ", e);
+	scwin.writeLog("[btn_trigger_ondblclick] DblClick Event");
 	//alert("btn_trigger_ondblclick");
+};
+
+scwin.writeLog = function(log) {
+	txa_log.setValue("[" + $p.getCurrentServerDate("yyyy-MM-dd HH:mm:ss") + "]" + log + "\n" + txa_log.getValue());
 };
 
 ]]></script>
 	</head>
-	<body ev:onpageload="scwin.onpageload" ev:onpageunload="scwin.onpageunload">
+	<body ev:onpageload="scwin.onpageload">
 		<xf:group style="padding:10px;" id="grp_content">
 			<xf:group style="width: 100%;height:40px;float:left;" id="" class="">
 				<w2:textbox style="height: 23px;font-size:20px;float:left;margin-top:5px;margin-left:5px;font-weight: bold"
-					label="GridView click &amp; dbClick Event 제어 예제2" id="">
+					label="GridView click &amp; dbClick Event 제어 예제" id="">
 				</w2:textbox>
-				<xf:trigger id="btn_trigger" style="width:216px;height:23px;float:right;margin-top:10px;margin-right:10px;" type="button" ev:onclick="scwin.btn_trigger_onclick" ev:ondblclick="scwin.btn_trigger_ondblclick">
+				<xf:trigger id="btn_trigger" style="width:216px;height:23px;float:right;margin-top:10px;margin-right:10px;" type="button"
+					ev:onclick="scwin.btn_trigger_onclick" ev:ondblclick="scwin.btn_trigger_ondblclick">
 					<xf:label><![CDATA[Trigger 이벤트 Click 테스트1]]></xf:label>
 				</xf:trigger>
 			</xf:group>
 			<w2:gridView id="grd_gridView1" ignoreToggleOnDisabled="false" useShiftKey="true" style="width:100%;height:134px;"
 				scrollByColumn="false" defaultCellHeight="20" scrollByColumnAdaptive="false" summaryAuto="false" summaryOnlyAuto="false"
-				applyAllColumnStyle="false" dataList="data:dlt_memberList" ignoreCellClick="false" autoFit="allColumn" ev:oncellclick="scwin.grd_gridView1_oncellclick" ev:oncelldblclick="scwin.grd_gridView1_oncelldblclick">
+				applyAllColumnStyle="false" dataList="data:dlt_memberList" ignoreCellClick="false" autoFit="allColumn"
+				ev:oncellclick="scwin.grd_gridView1_oncellclick" ev:oncelldblclick="scwin.grd_gridView1_oncelldblclick">
 				<w2:caption style="" id="caption1" value="this is a grid caption."></w2:caption>
 				<w2:header style="" id="header1">
 					<w2:row style="" id="row1">
@@ -137,6 +136,8 @@ scwin.btn_trigger_ondblclick = function(e) {
 						<w2:column width="129" inputType="text" style="" id="region" value="" blockSelect="false" displayMode="label"></w2:column>
 					</w2:row>
 				</w2:gBody>
-			</w2:gridView></xf:group>
+			</w2:gridView>
+			<xf:textarea id="txa_log" style="width: 100%;height: 100px;"></xf:textarea>
+		</xf:group>
 	</body>
 </html>
