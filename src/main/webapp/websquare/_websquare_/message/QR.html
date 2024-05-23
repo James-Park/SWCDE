@@ -8,11 +8,11 @@
     <title>Source</title>
     <style type="text/css">
 		body		{ background-color:#F6F4F1; margin-top:0pt; margin-left:0pt; margin-right:0pt }
-		#title 		{ margin-left:5pt;  padding-top:5pt; height:22pt; color:#B3550A; font-size:9pt; font-family:굴림; line-height:14pt; visibility:visible }
+		#title 		{ margin-left:5pt;  padding-top:5pt; height:22pt; color:#B3550A; font-size:9pt; font-family:Gulim; line-height:14pt; visibility:visible }
 		#main 		{ margin-left:0pt; text-align:center; visibility:visible; font-family:monospace; tab-size:4}
 		#sub 		{ text-align:center; padding-top:7px; visibility:visible }
 	</style>
-	<script type="text/javascript" src="../externalJS/jquery/jquery-1.10.2.min.js"></script>
+	<script type="text/javascript" src="../externalJS/jquery/jquery-3.7.1.min.js"></script>
 	<script type="text/javascript" src="../externalJS/qrcode/qrcode.min.js"></script>
 	<script type="text/javascript">
 		try {
@@ -43,7 +43,7 @@
 				height = 200;
 			}
 			document.getElementById("main").style.height = height + "px";     
-			document.getElementById("title").innerHTML = "<img src='images/bullet_info.gif' style='vertical-align:middle; margin-right:5px' /><b>" + opener.WebSquare.language.getMessage( "E_viewQR_title" ) + "<br/>&nbsp;&nbsp;주소</b> : <input id='address' size='60'>&nbsp;<button id='btnMk' onclick='makeQR();'>make QRCode</button>";
+			document.getElementById("title").innerHTML = "<img src='images/bullet_info.gif' style='vertical-align:middle; margin-right:5px' /><b>" + opener.WebSquare.language.getMessage( "E_viewQR_title" ) + "<br/>&nbsp;&nbsp;URL</b> : <input id='address' size='60'>&nbsp;<button id='btnMk' onclick='makeQR();'>make QRCode</button>";
 
 	        var qrAddr = getParameter("qrAddr");
 	        qrAddr = decodeURIComponent(qrAddr);

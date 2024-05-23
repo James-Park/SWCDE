@@ -5,7 +5,7 @@
     <meta http-equiv=Content-Type content="text/html;charset=UTF-8" />
     <meta http-equiv=Cache-Control content=No-Cache />
     <meta http-equiv=Pragma content=No-Cache />
-    <title>FILE UPLOAD</title>
+    <title id="file_title">FILE UPLOAD</title>
     <script type="text/javascript" src="../../../message/htmlCommon.js"></script>
     <script language="JavaScript">
     var osName = "";
@@ -29,7 +29,10 @@
     var uploadType = 0;
     var filePath = "";
     var useDialog = "";
-    // 다국어
+    var countSkipRow = "";
+    var msaName = "";
+    var readUntilEmptyRow = "";
+
     var Upload_ignore_spaces = "";
     var Upload_include_spaces = "";
     var Upload_advanced = "";
@@ -42,6 +45,10 @@
     var Upload_header = "";
     var Upload_footer = "";
     var Upload_file = "";
+    var Upload_file_title = "";
+	var Upload_file_header = "";
+	var Upload_file_choose = "";
+	var Upload_file_span = "";
     var Upload_pwd = "";
     var Upload_msg2 = "";
     var Upload_msg3 = "";
@@ -57,6 +64,7 @@
     var Upload_msg15 = "";
     var Upload_msg16 = "";
     var Upload_msg17 = "";
+    var Upload_msg18 = "";
     var Grid_warning9 = "";
     window.onload = doInit;
     window.onbeforeunload = doFinish;
@@ -68,7 +76,7 @@
             if (domain) {
                 document.domain = domain;
             }
-            // 팝업 사이즈 보정
+
             if (navigator.userAgent.indexOf("Windows") != -1) {
                 osName = "window";
             } else if (navigator.userAgent.indexOf("Macintosh") != -1) {
@@ -94,14 +102,12 @@
                 }
             }
             window.resizeTo(width, height );
-            if (uploadInfo.postMsg) {
-                if (uploadInfo.postMsg == "true") {
-                    if (window.addEventListener) {
-                        window.addEventListener("message", receiveMessage, false);
-                    } else {
-                        if (window.attachEvent) {
-                            window.attachEvent("onmessage", receiveMessage);
-                        }
+            if (uploadInfo.postMsg && uploadInfo.postMsg == "true") {
+                if (window.addEventListener) {
+                    window.addEventListener("message", receiveMessage, false);
+                } else {
+                    if (window.attachEvent) {
+                        window.attachEvent("onmessage", receiveMessage);
                     }
                 }
             }
@@ -109,43 +115,53 @@
                 opener.WebSquare.layer.showModal();
                 useModalDisable = "true";
             }
-            Upload_ignore_spaces = opener.WebSquare.language.getMessage("Upload_ignore_spaces") || "공백무시";
-            Upload_include_spaces = opener.WebSquare.language.getMessage("Upload_include_spaces") || "공백포함";
-            Upload_advanced = opener.WebSquare.language.getMessage("Upload_advanced") || "고급설정";
-            Upload_hidden_values = opener.WebSquare.language.getMessage("Upload_hidden_values") || "히든값유무";
-            Upload_include = opener.WebSquare.language.getMessage("Upload_include") || "포함";
-            Upload_not_include = opener.WebSquare.language.getMessage("Upload_not_include") || "미포함";
-            Upload_fill_hidden = opener.WebSquare.language.getMessage("Upload_fill_hidden") || "히든 채움";
-            Upload_sheet_no = opener.WebSquare.language.getMessage("Upload_sheet_no") || "시트 No";
-            Upload_starting_row = opener.WebSquare.language.getMessage("Upload_starting_row") || "시작 row";
-            Upload_starting_col = opener.WebSquare.language.getMessage("Upload_starting_col") || "시작 col";
-            Upload_header = opener.WebSquare.language.getMessage("Upload_header") || "헤더 유무";
-            Upload_footer = opener.WebSquare.language.getMessage("Upload_footer") || "푸터 유무";
-            Upload_file = opener.WebSquare.language.getMessage("Upload_file") || "파일 업로드";
-            Upload_fill = opener.WebSquare.language.getMessage("Upload_fill") || "채움";
-            Upload_ignore = opener.WebSquare.language.getMessage("Upload_ignore") || "무시";
-            Upload_pwd = opener.WebSquare.language.getMessage("Upload_pwd") || "비밀번호";
-            Upload_msg2 = opener.WebSquare.language.getMessage("Upload_msg2") || "파일 사이즈가 제한 용량을 초과 하였습니다.";
-            Upload_msg3 = opener.WebSquare.language.getMessage("Upload_msg3") || "정상적으로 처리 되지 않았습니다.";
-            Upload_msg4 = opener.WebSquare.language.getMessage("Upload_msg4") || "FileType에 맞지 않는 File의 확장자입니다.";
-            Upload_msg5 = opener.WebSquare.language.getMessage("Upload_msg5") || "그리드 반영에 실패하였습니다";
-            Upload_msg8 = opener.WebSquare.language.getMessage("Upload_msg8") || "비밀번호가 일치하지 않습니다.";
-            Upload_msg9 = opener.WebSquare.language.getMessage("Upload_msg9") || "허용하지 않는 확장자 입니다.";
-            Upload_msg10 = opener.WebSquare.language.getMessage("Upload_msg10") || "DRM 연계시 오류가 발생하였습니다.";
-            Upload_msg11 = opener.WebSquare.language.getMessage("Upload_msg11") || "업로드 제한 건수를 초과하였습니다.";
-            Upload_msg12 = opener.WebSquare.language.getMessage("Upload_msg12") || "유효하지 않은 엑셀 형식입니다.";
-            Upload_msg13 = opener.WebSquare.language.getMessage("Upload_msg13") || "유효하지 않은 셀 서식입니다.";
-            Upload_msg14 = opener.WebSquare.language.getMessage("Upload_msg14") || "업로드 셀건수제한을 초과하였습니다.";
-            Upload_msg15 = opener.WebSquare.language.getMessage("Upload_msg15") || "파일이 암호화되어 있습니다.";
-            Upload_msg16 = opener.WebSquare.language.getMessage("Upload_msg16") || "Excel 5.0/7.0은 지원하지 않습니다.";
-            Upload_msg17 = opener.WebSquare.language.getMessage("Upload_msg17") || "지정 sheet가 존재하지 않습니다.";
+            Upload_ignore_spaces = opener.WebSquare.language.getMessage("Upload_ignore_spaces") || "Ignore blank spaces";
+            Upload_include_spaces = opener.WebSquare.language.getMessage("Upload_include_spaces") || "Include blank spaces";
+            Upload_advanced = opener.WebSquare.language.getMessage("Upload_advanced") || "Advanced";
+            Upload_hidden_values = opener.WebSquare.language.getMessage("Upload_hidden_values") || "Hidden values";
+            Upload_include = opener.WebSquare.language.getMessage("Upload_include") || "Include";
+            Upload_not_include = opener.WebSquare.language.getMessage("Upload_not_include") || "Not include";
+            Upload_fill_hidden = opener.WebSquare.language.getMessage("Upload_fill_hidden") || "Fill Hidden";
+            Upload_sheet_no = opener.WebSquare.language.getMessage("Upload_sheet_no") || "Sheet No";
+            Upload_starting_row = opener.WebSquare.language.getMessage("Upload_starting_row") || "Start row";
+            Upload_starting_col = opener.WebSquare.language.getMessage("Upload_starting_col") || "Start col";
+            Upload_header = opener.WebSquare.language.getMessage("Upload_header") || "Header";
+            Upload_footer = opener.WebSquare.language.getMessage("Upload_footer") || "Footer";
+            Upload_file = opener.WebSquare.language.getMessage("Upload_file") || "Upload File";
+            Upload_file_title = opener.WebSquare.language.getMessage( "Upload_file_title" ) || "FILE UPLOAD";
+            Upload_file_header = opener.WebSquare.language.getMessage( "Upload_file_header" ) || "File Upload";
+            Upload_file_choose = opener.WebSquare.language.getMessage( "Upload_file_choose" ) || "Choose File";
+            Upload_file_span = opener.WebSquare.language.getMessage( "Upload_file_span" ) || "No file chosen";
+            Upload_fill = opener.WebSquare.language.getMessage("Upload_fill") || "fill";
+            Upload_ignore = opener.WebSquare.language.getMessage("Upload_ignore") || "ignore";
+            Upload_pwd = opener.WebSquare.language.getMessage("Upload_pwd") || "Password";
+
+            Upload_msg2 = opener.WebSquare.language.getMessage("Upload_msg2") || "File size exceeding the limit.";
+            Upload_msg3 = opener.WebSquare.language.getMessage("Upload_msg3") || "Normal processing failed.";
+            Upload_msg4 = opener.WebSquare.language.getMessage("Upload_msg4") || "Check the file extension.";
+            Upload_msg5 = opener.WebSquare.language.getMessage("Upload_msg5") || "Failed to reflect on the grid.";
+            Upload_msg8 = opener.WebSquare.language.getMessage("Upload_msg8") || "The password is incorrect.";
+            Upload_msg9 = opener.WebSquare.language.getMessage("Upload_msg9") || "Check the file extension.";
+            Upload_msg10 = opener.WebSquare.language.getMessage("Upload_msg10") || "An error occurred during DRM.";
+            Upload_msg11 = opener.WebSquare.language.getMessage("Upload_msg11") || "Row count exceeding the limit.";
+            Upload_msg12 = opener.WebSquare.language.getMessage("Upload_msg12") || "Invalid file format.";
+            Upload_msg13 = opener.WebSquare.language.getMessage("Upload_msg13") || "Invalid cell format";
+            Upload_msg14 = opener.WebSquare.language.getMessage("Upload_msg14") || "Cell count exceeding the limit.";
+            Upload_msg15 = opener.WebSquare.language.getMessage("Upload_msg15") || "This file is encryped.";
+            Upload_msg16 = opener.WebSquare.language.getMessage("Upload_msg16") || "Not support Excel 5.0/7.0";
+            Upload_msg17 = opener.WebSquare.language.getMessage("Upload_msg17") || "Does not sheet number.";
+            Upload_msg18 = opener.WebSquare.language.getMessage( "Upload_msg18" ) || "It is a write-only file or an unreadable file.";
             maxFileSize = uploadInfo.maxFileSize;
             maxFileSize = parseInt(maxFileSize, 10);
-            Grid_warning9 = opener.WebSquare.language.getMessage("Grid_warning9", maxFileSize) || "전송 data가 제한 크기를 초과 하였습니다.\n 제한 크기 : %1 byte";
+            Grid_warning9 = opener.WebSquare.language.getMessage("Grid_warning9", maxFileSize) || "Data size exceeding the limit.\n limit : %1 byte";
             document.getElementById("setting").innerHTML = Upload_advanced;
             document.getElementById("sub").setAttribute("summary", Upload_ignore_spaces + "," + Upload_hidden_values + "," + Upload_fill_hidden + "," + Upload_footer);
             document.getElementById("advaned").innerHTML = Upload_advanced;
             document.getElementById("space_option").innerHTML = Upload_ignore_spaces;
+            document.getElementById( "file_title" ).innerHTML = Upload_file_title;
+            document.getElementById( "file_header" ).innerHTML = Upload_file_header;
+            document.getElementById( "choose_file" ).innerHTML = Upload_file_choose;
+			document.getElementById( "choose_span" ).innerHTML = Upload_file_span;
             var sel1 = document.getElementById("spaceSelect");
             sel1.options[0].text = Upload_ignore_spaces;
             sel1.options[1].text = Upload_include_spaces;
@@ -173,7 +189,7 @@
         } catch (e) {
             opener.WebSquare.exception.printStackTrace(e);
         }
-        //  header, append, hidden, columnNum, hiddenColumns, action
+
         var advancedHidden = getParameter("advancedHidden");
         vheader = uploadInfo.header;
         vfooter = uploadInfo.footer;
@@ -199,6 +215,7 @@
         type = uploadInfo.type;
         uploadType = uploadInfo.uploadType;
         skipSpace = uploadInfo.skipSpace;
+        readUntilEmptyRow = uploadInfo.readUntilEmptyRow;
         var insertColumns = uploadInfo.insertColumns;
         processMsg = uploadInfo.processMsg;
         processMsg = opener.WebSquare.text.BASE64URLDecoder(processMsg);
@@ -221,78 +238,88 @@
         useXHR = uploadInfo.useXHR || false;
 		filePath = uploadInfo.filePath || "";
 		useDialog = uploadInfo.useDialog || false;
+        countSkipRow = uploadInfo.countSkipRow || "";
+        msaName = uploadInfo.msaName || "";
+
         var header_Exist = document.getElementsByName("header");
-        //skipSpace 처리
         if (typeof vheader == "string") {
             vheader = opener.WebSquare.util.getBoolean(vheader);
         }
+
         if (vheader) {
             header_Exist[0].options[0].selected = true;
         } else {
             header_Exist[0].options[1].selected = true;
         }
+
         document.getElementById("columnNum").value = vcolumnNum;
         document.getElementById("hiddenColumns").value = vhiddenColumns;
         document.getElementById("removeColumns").value = vremoveColumns;
         document.getElementById("headerRows").value = vheaderRows;
         document.getElementById("domain").value = domain;
+
         var advancedHidden = getParameter("advancedHidden");
-        // advancedHidden
+
         var advancedSetting = document.getElementById("advancedSetting");
         if (typeof advancedHidden == "string") {
             advancedHidden = opener.WebSquare.util.getBoolean(advancedHidden);
         }
+
         if (advancedHidden) {
             advancedSetting.style.display = 'none';
             advancedSetting.style.visibility = 'hidden';
         }
-        //row를 가져오는 것을 좀더 좋은 방법으로 수정해야 한다. 
-        var el = opener.WebSquare.xml.getElementsByTagName(opener[gridID].element, "w2:gBody");
-        var rows = opener.WebSquare.xml.getElementsByTagName(el[0], "w2:row");
+
+        var el = opener.WebSquare.Elem.api.getElementsByTagName(opener[gridID].element, "w2:gBody");
+        var rows = opener.WebSquare.Elem.api.getElementsByTagName(el[0], "w2:row");
         var myrows = rows.length;
         document.getElementById("bodyRows").value = myrows;
         var myhidden = document.getElementsByName("hidden");
-        //vhidden 처리
+
         if (typeof vhidden == "string") {
             vhidden = opener.WebSquare.util.getBoolean(vhidden);
         }
+
         if (vhidden) {
             myhidden[0].options[0].selected = true;
         } else {
             myhidden[0].options[1].selected = true;
         }
+
         document.getElementById("delim").value = delim;
-        //document.getElementById("fillHidden").value = fillHidden;
         var myfillHidden = document.getElementsByName("fillHidden");
-        //fillhiden 처리      
         if (typeof fillHidden == "string") {
             fillHidden = opener.WebSquare.util.getBoolean(fillHidden);
         }
+
         if (fillHidden) {
             myfillHidden[0].options[0].selected = true;
         } else {
             myfillHidden[0].options[1].selected = true;
         }
+
         var skip_space = document.getElementsByName("skip_space");
-        //skipSpace 처리
         if (typeof skipSpace == "string") {
             skipSpace = opener.WebSquare.util.getBoolean(skipSpace);
         }
+
         if (skipSpace) {
             skip_space[0].options[0].selected = true;
         } else {
             skip_space[0].options[1].selected = true;
         }
+
         var footer_Exist = document.getElementsByName("footer");
-        //skipSpace 처리
         if (typeof vfooter == "string") {
             vfooter = opener.WebSquare.util.getBoolean(vfooter);
         }
+
         if (vfooter) {
             footer_Exist[0].options[0].selected = true;
         } else {
             footer_Exist[0].options[1].selected = true;
         }
+
         document.getElementById("gridStartRow").value = gridStartRow;
         document.getElementById("gridStartCol").value = gridStartCol;
         document.getElementById("gridEndCol").value = gridEndCol;
@@ -301,8 +328,9 @@
         document.getElementById("gridSheetNo").value = gridSheetNo;
         document.getElementById("gridSheetName").value = gridSheetName;
         document.getElementById("activeSheet").value = String(activeSheet);
+
         document.getElementById("expressionColumns").value = expressionColumns;
-        //grid style을 전송한다. 
+
         var elemType = opener[gridID].element._elementType;
         var gridStyle = "";
         if (elemType === "json") {
@@ -333,6 +361,10 @@
 		document.getElementById("uploadType").value = uploadType;
 		document.getElementById("filePath").value = filePath;
 		document.getElementById("useDialog").value = useDialog;
+        document.getElementById("countSkipRow").value = countSkipRow;
+        document.getElementById("msaName").value = msaName;
+        document.getElementById("readUntilEmptyRow").value = readUntilEmptyRow;
+
         with(document.__uploadForm__) {
             action = actionUrl;
         }
@@ -350,6 +382,7 @@
             if (!filename || filename == "") {
                 return false;
             }
+
             if (maxFileSize != -1) {
                 var uploadFile = document.getElementById("filename");
                 if (uploadFile && uploadFile.files) {
@@ -359,12 +392,14 @@
                     }
                 }
             }
+
             var encPwd = "";
             var pwdStr = document.getElementById("pwd").value;
             if (pwdStr != "") {
                 encPwd = opener.WebSquare.text.BASE64Encoder(pwdStr);
             }
             document.getElementById("pwd").value = encPwd;
+
             var isXlsFile = filename.toLowerCase().indexOf(".xls") >= 0 || filename.toLowerCase().indexOf(".cell") >= 0 || filename.toLowerCase().indexOf(".ods") >= 0 || filename.toLowerCase().indexOf(".odt") >= 0 || filename.toLowerCase().indexOf(".docx") >= 0 || filename.toLowerCase().indexOf(".doc") >= 0 || filename.toLowerCase().indexOf(".hwp") >= 0;
             var isCSVFile = endsWith(filename.toLowerCase(), ".csv") ||
                 endsWith(filename.toLowerCase(), ".txt");
@@ -373,6 +408,7 @@
                 alert(Upload_msg4);
                 return false;
             }
+
             var frm = window.frames;
             var find = false;
             for (var i = 0; i < frm.length; i++) {
@@ -380,6 +416,7 @@
                     find = true;
                 }
             }
+
             if (!find) {
                 var layerUP = document.createElement("div");
                 var src = "";
@@ -392,30 +429,37 @@
                 src = opener.WebSquare.net.getSSLBlankPage();
                 layerUP.innerHTML = "<iframe frameborder='0px' name='" + thisForm.target + "' id='" + thisForm.target + "' scrolling='no' style='width:100px; height:100px' " + src + "></iframe>";
             }
+
             showProcessMessage(processMsg);
+
             if (useXHR) {
                 var form = document.getElementsByName("__uploadForm__");
                 fileSelected = form[0].filename.files[0];
+
                 var formData = new FormData();
                 formData.append("filename", fileSelected);
+
                 var paramList = form[0].getElementsByTagName("input");
-                for (var i = 0; i <
-                    paramList.length; i++) {
+                for (var i = 0; i < paramList.length; i++) {
                     formData.append(paramList[i].name, paramList[i].value);
                 }
+
                 var xhr = new XMLHttpRequest();
                 xhr.onreadystatechange = function() {
                     if (xhr.readyState == 4 && xhr.status == 200) {
                         var result = xhr.responseText;
+
                         var idx1 = result.indexOf("'");
                         var idx2 = result.lastIndexOf("'");
                         result = result.substring(idx1 + 1, idx2);
+
                         returnData(result);
                     }
                 };
                 xhr.open("POST", actionUrl, true);
                 var fileName = encodeURIComponent(fileSelected.name);
                 xhr.setRequestHeader("X-File-Name", fileName);
+
                 var reqHeaderFuncName = opener.WebSquare.core.getConfiguration("/WebSquare/handler/requestHeaderFunction/@value");
                 if (reqHeaderFuncName != "") {
                     var reqHeaderFunc = opener.WebSquare.util.getGlobalFunction(reqHeaderFuncName);
@@ -423,10 +467,14 @@
                         reqHeaderFunc(xhr, "excelupload");
                     }
                 }
+
                 xhr.send(formData);
             } else {
                 thisForm.submit();
             }
+
+			var sendBtn = document.getElementById("sendFILE");
+			sendBtn.disabled = true;
         } catch (e) {
             alert(e.description);
         }
@@ -436,22 +484,30 @@
         if (processMsg != "") {
             hideProcessMessage();
         }
+
+		var sendBtn = document.getElementById("sendFILE");
+		sendBtn.disabled = false;
+
         if (chunkNum > 0) {
             vappend = true;
         }
+
         var decPwd = "";
         var pwdStr = document.getElementById("pwd").value;
         if (pwdStr != "") {
             decPwd = opener.WebSquare.text.BASE64Decoder(pwdStr);
         }
         document.getElementById("pwd").value = decPwd;
+
         var doc = opener.WebSquare.xml.parse(vData);
         var exception = doc.getElementsByTagName("Exception");
+
         if (exception.length > 0) {
             var code = getTextNodeValue(doc.getElementsByTagName("deniedCodeList")[0]);
             if (typeof code == "undefined" || code == null || code == "") {
                 code = "";
             }
+
             if (code == "102") {
                 msg = Upload_msg2;
             } else if (code == "101") {
@@ -474,27 +530,35 @@
                 msg = Upload_msg16;
             } else if (code == "208") {
                 msg = Upload_msg17;
+			} else if( code == "209" ) {
+				msg = Upload_msg18;
             } else {
                 var msg = getTextNodeValue(doc.getElementsByTagName("message")[0]);
                 if (typeof msg == "undefined" || msg == null || msg == "") {
                     msg = Upload_msg3;
                 }
             }
+
             alert(msg);
         } else {
             var child = (doc.getElementsByTagName("array"))[0].firstChild.nodeValue;
+            child = child.replaceAll("\\n", "\n");
+            
             if (typeof vappend == "string") {
                 vappend = opener.WebSquare.util.getBoolean(vappend);
             }
+
             try {
+
                 var jsonArray = {
                     columnInfo: columnIds.split(","),
                     data: child
                 }
+
                 if (dataList != "") {
                     var dcComp = opener.WebSquare.util.getComponentById(dataList);
                     var preCnt = dcComp.getRowCount();
-                    if (uploadType == 1 || uploadType == 2) { // 0:실제데이터, 1:출력그대로, 2: 0+1
+                    if (uploadType == 1 || uploadType == 2) {
                         if (delim != ",") {
                             dcComp.setArrayFile(jsonArray, vappend, gridID, uploadType, delim);
                         } else {
@@ -507,6 +571,7 @@
                             dcComp.setArray(jsonArray, vappend);
                         }
                     }
+
                     if (status == "C") {
                         var postCnt = dcComp.getRowCount();
                         if (vappend) {
@@ -519,21 +584,23 @@
                     var compId = gridID;
                     var gridObj = opener.window[compId];
                     var preCnt = gridObj.getRowCount();
+
                     if (gridObj.options.ref && (instanceBind == true || instanceBind == 'true')) {
                         gridObj.options.instanceBindBySetData = true;
-                        if (uploadType == 1 || uploadType == 2) { // 0:실제데이터, 1:출력그대로, 2: 0+1
+                        if (uploadType == 1 || uploadType == 2) {
                             gridObj.setDataFile(child, vappend);
                         } else if (uploadType == 0) {
                             gridObj.setData(child, vappend);
                         }
                         gridObj.options.instanceBindBySetData = false;
                     } else {
-                        if (uploadType == 1 || uploadType == 2) { // 0:실제데이터, 1:출력그대로, 2: 0+1
+                        if (uploadType == 1 || uploadType == 2) {
                             gridObj.setDataFile(child, vappend);
                         } else if (uploadType == 0) {
                             gridObj.setData(child, vappend);
                         }
                     }
+
                     if (status == "C") {
                         var postCnt = gridObj.getRowCount()
                         if (vappend) {
@@ -543,17 +610,23 @@
                         }
                     }
                 }
+
                 opener[gridID]._excelUploadInfo = "";
+
                 var fileNameDom = document.getElementById("filename");
                 var fileName = fileNameDom.value;
-                var fileNameArr = fileName.split("\\"); //fileName에 대해서 IE에서는 파일 경로가 나오는데 FF chrome은 나오지 않는다. 따라서 '\\'기준으로 나눠준다.
+                var fileNameArr = fileName.split("\\");
                 opener.window[gridID].fireFileReadEnd(fileNameArr[fileNameArr.length - 1]);
 
-				// xls 인경우 close 처리
 				var extension = fileName.substring( fileName.lastIndexOf(".") + 1);
 				if(loadingMode == "POI" || chunkNum == 0 || extension == "xls") {
+                    var form = document.getElementsByName("__uploadForm__")[0];
+                    if (form) {
+                        form.reset();
+                    }
                     window.self.close();
                 }
+
             } catch (e) {
                 opener.WebSquare.exception.printStackTrace(e);
                 alert(Upload_msg5);
@@ -562,12 +635,18 @@
     }
 
     function windowClose() {
+        var form = document.getElementsByName("__uploadForm__")[0];
+        if (form) {
+            form.reset();
+        }
         window.self.close();
     }
 
     function receiveMessage(retObj) {
         try {
-            returnData(retObj.data);
+            if (retObj.currentTarget.name == "fileupWindow") {
+                returnData(retObj.data);
+            }
         } catch (e) {
             opener.WebSquare.exception.printStackTrace(e);
             alert(Upload_msg5);
@@ -582,9 +661,11 @@
                 retValue += child.nodeValue;
             }
         }
+
         if (retValue != "") {
             returnValue = retValue;
         }
+
         return returnValue;
     }
 
@@ -594,7 +675,7 @@
                 "height": 204,
                 "width": 462
             };
-            var pObj = opener || parent.opener; // wgear 사용 시 parent.opener로 접근해야 함. 
+            var pObj = opener || parent.opener;
             if (pObj.WebSquare.util.isIE(6)) {
                 sizeInfo.height = 212;
                 sizeInfo.width = 456;
@@ -616,7 +697,7 @@
             } else if (pObj.WebSquare.util.isSpartan()) {
                 sizeInfo.height = 178;
                 sizeInfo.width = 446;
-            } else if (typeof pObj.WebSquare.util.isChromeEdge === "function" && pObj.WebSquare.util.isChromeEdge()) { // 최근에 추가됨
+            } else if (typeof pObj.WebSquare.util.isChromeEdge === "function" && pObj.WebSquare.util.isChromeEdge()) {
                 if (navigator.userAgent.indexOf("OPR") != -1) { //opera
                     if (osName == "window") {
                         sizeInfo.height = 226;
@@ -648,8 +729,8 @@
                         sizeInfo.height = 206;
                         sizeInfo.width = 462;
                     } else if (osName == "mac") {
-                        sizeInfo.height = 210;
-                        sizeInfo.width = 492;
+                        sizeInfo.height = 198;
+                        sizeInfo.width = 446;
                     }
                 }
             } else if (pObj.WebSquare.util.isFF()) {
@@ -677,14 +758,16 @@
                     sizeInfo.width = 446;
                 }
             }
-        } catch (e) {}
+        } catch (e) {
+            opener.WebSquare.exception.printStackTrace(e);
+        }
         return sizeInfo;
     }
 
     function crossBrowserHeight() {
         try {
             var widthSize = 145;
-            var pObj = opener || parent.opener; // wgear 사용 시 parent.opener로 접근해야 함. 
+            var pObj = opener || parent.opener;
             if (pObj.WebSquare.util.isIE(6)) {
                 widthSize = 145;
             } else if (pObj.WebSquare.util.isIE(7)) {
@@ -707,7 +790,7 @@
                 if (osName == "window") {
                     widthSize = 145;
                 } else if (osName == "mac") {
-                    widthSize = 145;
+                    widthSize = 146;
                 }
             } else if (pObj.WebSquare.util.isSafari()) {
                 if (osName == "mac") {
@@ -720,33 +803,38 @@
                     widthSize = 145;
                 }
             }
-        } catch (e) {}
+        } catch (e) {
+            opener.WebSquare.exception.printStackTrace(e);
+        }
         return widthSize;
     }
+	
     var preChecked = false;
-
     function check_fun() {
         var checkfun = document.getElementById('subcheck').checked;
         if (checkfun == preChecked) {
             return;
         }
+
         if (checkfun == true) {
             document.getElementById('sub').style.display = 'block';
             var height = crossBrowserHeight();
-            window.resizeBy(0, height); //resizeBy가 ff7.0에서 안됨 
+            window.resizeBy(0, height); //resizeBy ff7.0
         } else {
             document.getElementById('sub').style.display = 'none';
             var height = crossBrowserHeight();
-            window.resizeBy(0, -1 * parseInt(height)); //resizeBy가 ff7.0에서 안됨 
+            window.resizeBy(0, -1 * parseInt(height)); //resizeBy ff7.0
         }
         preChecked = checkfun;
     }
-
+	
     function showProcessMessage(processMsg) {
+
         try {
             if (!processMsg || processMsg == "") {
                 return;
             }
+
             var processbar2_main = document.getElementById("___processbar2");
             var processbar2 = document.getElementById("___processbar2_i");
             var processMsgURL = opener.WebSquare.core.getConfiguration("processMsgURL");
@@ -760,13 +848,17 @@
             if (processMsgURL == "") {
                 processMsgURL = opener.WebSquare.baseURI + opener.WebSquare.BootLoader.inquiresPath("message/processMsg.html");
             }
+
             processMsgURL = processMsgURL + "?param=" + opener.WebSquare.text.URLEncoder(processMsg);
+
             if (processMsgHeight == "" || processMsgWidth == "") {
                 processMsgHeight = "74";
                 processMsgWidth = "272";
             }
+
             WebSquare = opener.WebSquare;
             WebSquare.layer.processMsg = processMsg;
+
             if (!processbar2_main) {
                 var node2Main = document.createElement("div");
                 node2Main.id = "___processbar2";
@@ -778,8 +870,10 @@
                 } else {
                     node2Main.style.visibility = "hidden";
                 }
+
                 node2Main.style.height = document.documentElement.clientHeight + "px";
                 document.body.appendChild(node2Main);
+
                 var e = e || event;
                 if (e.preventDefault) {
                     if (e.type == "keydown") {
@@ -790,6 +884,7 @@
                         e.returnValue = false;
                     }
                 }
+
             } else {
                 processbar2_main.tabIndex = 1;
                 processbar2_main.style.zIndex = 10000;
@@ -797,9 +892,11 @@
                 processbar2_main.style.top = "0px";
                 processbar2_main.style.left = "0px";
             }
+
             if (!processbar2) {
                 var nTop = document.documentElement.scrollTop + document.documentElement.clientHeight / 2 - parseInt(processMsgHeight) / 2;
                 var nLeft = document.documentElement.scrollLeft + document.documentElement.clientWidth / 2 - parseInt(processMsgWidth) / 2;
+
                 var node2 = document.createElement("div");
                 node2.id = "___processbar2_i";
                 node2.style.position = "absolute";
@@ -810,8 +907,10 @@
                 node2.style.visibility = "visible";
                 node2.style.height = processMsgHeight + "px";
                 node2.style.width = processMsgWidth + "px";
+
                 document.body.appendChild(node2);
                 node2.innerHTML = "<iframe frameborder='0' scrolling='no'ß name='__processbarIFrame' style='position:absolute; width:" + processMsgWidth + "px; height:" + processMsgHeight + "px; top:0px; left:0px' src='" + processMsgURL + "'></iframe>";
+
             } else {
                 var nTop = document.documentElement.scrollTop + document.documentElement.clientHeight / 2 - parseInt(processMsgHeight) / 2;
                 var nLeft = document.documentElement.scrollLeft + document.documentElement.clientWidth / 2 - parseInt(processMsgWidth) / 2;
@@ -851,14 +950,20 @@
         } else {
             delim = "\"" + delim + "\"";
         }
+
         if (typeof str != "string") {
-            if (str === null) {} else {}
+            if( str === null ) {
+            } else {
+			}
             return [];
         }
+
         var re = /^\[\s*\]$/g;
+
         if (str.match(re) != null) {
             return (new Array());
         }
+
         var splitDataIn = str.split(delim);
         splitDataIn[0] = splitDataIn[0].substr(2);
         splitDataIn[splitDataIn.length - 1] = splitDataIn[splitDataIn.length - 1].substr(0, ((splitDataIn[splitDataIn.length - 1]).length - 2));
@@ -871,7 +976,7 @@
     body {
         margin: 0px;
         padding: 0px;
-        font-family: "맑은 고딕";
+        font-family: "Malgun Gothic";
         font-size: 11px;
     }
 
@@ -960,10 +1065,11 @@
         background: #f6f6f6;
     }
 
-    .content .filebox input[type=file] {
-        width: 397px;
-        height: 21px;
-        font-family: Verdana;
+    .content .filebox span {
+        display: inline-block; 
+        width: 300px; 
+        height: 21px; 
+        font-family: Verdana; 
         font-size: 12px;
         background: #fff;
     }
@@ -1010,79 +1116,81 @@
 
         <div class="wrap">
             <div class="header">
-                <p class="title">File Upload</p>
-                <span id="advancedSetting"><input type="checkbox" onclick="check_fun();" id="subcheck" /><label for="subcheck">
-                        <p id="setting" class="title2">고급설정</p>
-                    </label></span>
+                <p class="title" id="file_header">File Upload</p>
+                <span id="advancedSetting"><input type="checkbox" onclick="check_fun();" id="subcheck" />
+                <label for="subcheck">
+                    <p id="setting" class="title2"></p>
+                </label></span>
             </div>
             <div class="content">
                 <div class="filebox">
-                    <input type="file" id="filename" name="filename" />
+                    <button type="button" id="choose_file">Choose File</button>
+                    <span class="fileName" id="choose_span">No file chosen</span>
+                    <input type="file" id="filename" name="filename" style="display:none;">
                 </div>
-                <table id="sub" class="tbl none" summary="공백무시,히든값유무,히든채움,푸터유무,시작Row,시작col,시트no">
-                    <caption id="advaned">파일 업로드 고급설정</caption>
+                <table id="sub" class="tbl none" summary="Ignore blank spaces,Hidden values,Fill Hidden,Footer,Start Row,Start col,Sheet No">
+                    <caption id="advaned">Advanced</caption>
                     <tr>
-                        <th><label id="space_option" for="spaceSelect" class="dot">공백 무시 :</label></th>
+                        <th><label id="space_option" for="spaceSelect" class="dot">Ignore blank spaces</label></th>
                         <td>
                             <select name="skip_space" class="sel" id="spaceSelect">
-                                <option value="true">공백무시</option>
-                                <option value="false">공백포함</option>
+                                <option value="true">Ignore blank spaces</option>
+                                <option value="false">Include blank spaces</option>
                             </select>
                         </td>
-                        <th><label id="start_option" for="gridStartRow" class="dot">시작 Row :</label></th>
+                        <th><label id="start_option" for="gridStartRow" class="dot">Start row</label></th>
                         <td>
                             <input type="text" id="gridStartRow" name="gridStartRow" class="ipt" />
                         </td>
                     </tr>
                     <tr>
-                        <th><label id="hidden_option" for="hiddenSelect" class="dot">히든값유무 :</label></th>
+                        <th><label id="hidden_option" for="hiddenSelect" class="dot">Hidden values</label></th>
                         <td><select name="hidden" id="hiddenSelect" class="sel">
-                                <option value="true">포함</option>
-                                <option value="false">미포함</option>
+                                <option value="true">Include</option>
+                                <option value="false">Not include</option>
                             </select>
                         </td>
-                        <th><label id="start_col" for="gridStartCol" class="dot">시작 Col :</label></th>
+                        <th><label id="start_col" for="gridStartCol" class="dot">Start col</label></th>
                         <td>
                             <input type="text" class="ipt" name="gridStartCol" id="gridStartCol" />
                         </td>
                     </tr>
                     <tr>
-                        <th><label id="hidden_fill" for="fillHidden" class="dot">히든 채움 :</label></th>
+                        <th><label id="hidden_fill" for="fillHidden" class="dot">Fill Hidden</label></th>
                         <td>
                             <select name="fillHidden" id="fillHidden">
-                                <option value="true">채움</option>
-                                <option value="false">무시</option>
+                                <option value="true">fill</option>
+                                <option value="false">ignore</option>
                             </select>
                         </td>
-                        <th><label id="sheet_no" for="gridSheetNo" class="dot">시트 No :</label></th>
+                        <th><label id="sheet_no" for="gridSheetNo" class="dot">Sheet No :</label></th>
                         <td><input type="text" class="ipt" name="gridSheetNo" id="gridSheetNo" /></td>
                     </tr>
                     <tr>
-                        <th><label id="isHeader" for="header" class="dot">헤더 유무 :</label></th>
+                        <th><label id="isHeader" for="header" class="dot">Header</label></th>
                         <td>
                             <select name="header" id="header">
-                                <option value="true">포함</option>
-                                <option value="false">미포함</option>
+                                <option value="true">Include</option>
+                                <option value="false">Not include</option>
                             </select>
                         </td>
-                        <th><label id="isFooter" for="footer" class="dot">푸터 유무 :</label></th>
+                        <th><label id="isFooter" for="footer" class="dot">Footer</label></th>
                         <td>
                             <select name="footer" id="footer">
-                                <option value="true">포함</option>
-                                <option value="false">미포함</option>
+                                <option value="true">Include</option>
+                                <option value="false">Not include</option>
                             </select>
                         </td>
                     </tr>
                     <tr>
-                        <th><label id="isPwd" for="pwd" class="dot">비밀번호 :</label></th>
+                        <th><label id="isPwd" for="pwd" class="dot">Password :</label></th>
                         <td colSpan="2"><input type="password" class="ipt" name="pwd" id="pwd" autocomplete="off" /></td>
                     </tr>
                 </table>
             </div>
 
             <div class="foot">
-                <p><input type="button" id="sendFILE" name="sendFILE" class="btn_file" value="파일 업로드" onclick="return upload(this.form)" /></p>
-                <!-- ie8에서는 form안에 input type="image"가 있으면 form전송이 제대로 되지 않습니다. -->
+                <p><input type="button" id="sendFILE" name="sendFILE" class="btn_file" value="File Upload" onclick="return upload(this.form)" /></p>
             </div>
 
         </div>
@@ -1117,8 +1225,24 @@
         <input type="hidden" id="uploadType" name="uploadType" value="" />
         <input type="hidden" id="filePath" name="filePath" value="" />
         <input type="hidden" id="useDialog" name="useDialog" value="" />
+        <input type="hidden" id="countSkipRow" name="countSkipRow" value="" />
+        <input type="hidden" id="msaName" name="msaName" value="" />
+        <input type="hidden" id="readUntilEmptyRow" name="readUntilEmptyRow" value="" />
     </form>
-
+    <script>
+        var file = document.getElementById("filename");
+        var fileBtn = document.getElementById("choose_file");
+        var fileName = document.querySelector(".fileName");
+        fileBtn.addEventListener("click", function() {
+          file.click();
+        });
+        file.addEventListener("change", function() {
+          if (file.value) {
+            var name = file.value.split("\\").pop();
+            fileName.textContent = name;
+          }
+        });
+    </script>
 </body>
 
 </html>

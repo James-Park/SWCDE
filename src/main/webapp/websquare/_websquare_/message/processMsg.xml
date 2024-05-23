@@ -96,7 +96,7 @@
     <body ev:onpageload="scwin.onpageload" ev:onpageunload="scwin.onpageunload">
         <xf:group class="w2_proc_group_wrapper" id="group_wrapper" style="">
             <w2:textbox class="w2_proc_text_msg" label="" id="text_msg" style=""></w2:textbox>
-            <xf:image class="w2_proc_image_bar" id="image_bar" style="" src="" alt="로딩중"></xf:image>
+            <xf:image class="w2_proc_image_bar" id="image_bar" style="" src="" alt="Loading"></xf:image>
             <xf:trigger type="button" class="w2_proc_btn_hide" id="btn_hide" style="" ev:onclick="scwin.btn_hide_onclick">
             </xf:trigger>
             <xf:trigger type="button" class="w2_proc_btn_cancel" id="btn_cancel" style="" ev:onclick="scwin.btn_cancel_onclick">

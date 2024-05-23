@@ -13,7 +13,9 @@ function ControlVersion() {
         // version will be set for 7.X or greater players
         axo = new ActiveXObject("ShockwaveFlash.ShockwaveFlash.7");
         version = axo.GetVariable("$version");
-    } catch (e) {}
+    } catch (e) {
+        console.log("ShockwaveFlash7");
+    }
     if (!version) {
         try {
             // version will be set for 6.X players only
@@ -27,21 +29,27 @@ function ControlVersion() {
             axo.AllowScriptAccess = "always";
             // safe to call for 6.0r47 or greater
             version = axo.GetVariable("$version");
-        } catch (e) {}
+        } catch (e) {
+            console.log("ShockwaveFlash6");
+        }
     }
     if (!version) {
         try {
             // version will be set for 4.X or 5.X player
             axo = new ActiveXObject("ShockwaveFlash.ShockwaveFlash.3");
             version = axo.GetVariable("$version");
-        } catch (e) {}
+        } catch (e) {
+            console.log("ShockwaveFlash3");
+        }
     }
     if (!version) {
         try {
             // version will be set for 3.X player
             axo = new ActiveXObject("ShockwaveFlash.ShockwaveFlash.3");
             version = "WIN 3,0,18,0";
-        } catch (e) {}
+        } catch (e) {
+            console.log("WIN");
+        }
     }
     if (!version) {
         try {

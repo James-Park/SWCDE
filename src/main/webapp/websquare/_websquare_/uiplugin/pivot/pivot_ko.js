@@ -30,21 +30,8 @@
             decimalSep: "."
         });
         return $.pivotUtilities.locales.ko = {
-            localeStrings: {
-                renderError: "PivotTable을 랜더링하던 중에 에러가 발생했습니다.",
-                computeError: "PivotTable 데이타를 계산하던 중에 에러가 발생했습니다.",
-                uiRenderError: "PivotTable UI를 랜더링하던 중에 에러가 발생했습니다.",
-                dragError: "총합계는 Value 영역으로 드래그할 수 없습니다.",
-                selectAll: "전체 선택",
-                selectNone: "전체 해제",
-                tooMany: "(목록으로 보여 줄 값이 너무 많습니다.)",
-                filterResults: "필터링할 항목을 입력하세요.",
-                totals: "총합계",
-                vs: "vs",
-                by: "by",
-                Pivot_canNotMoveToHiddenList: "숨김 영역으로 이동할 수 없습니다."
-            },
-            aggregators: { // aggregators 추가시 this._aggregatorsName과 동일하게 추가해야 사용자 정의 numberFormat이 적용됨
+            localeStrings: {},
+            aggregators: { // When adding aggregators, you must add the same as this._aggregatorsName for the user-defined numberFormat to be applied.
                 "UniqueValue": tpl.uniqueValue(koFmtUnique),
                 "Count": tpl.count(koFmtInt),
                 "Count Unique Values": tpl.countUnique(koFmtInt),

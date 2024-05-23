@@ -243,13 +243,13 @@ export default {
                 "@value": "true"
             },
             "noResultMessage": {
-                "@value": "데이터가 없음"
+                "@value": "No search result."
             },
             "noResultMessageStyle": {
                 "@value": "position:absolute; left:40%; width:20%; top:40%; border:1px solid #b3b3b3; color:#383d41; font-size:12px; padding:5px; text-align:center; background:#fafafa"
             },
             "pasteMessage": {
-                "@value": "데이터 붙이는 중"
+                "@value": "Processing."
             },
             "getColumnVisible": {
                 "@useRealColIndex": "true"
@@ -266,7 +266,7 @@ export default {
                 {
                     "@inputType": "select",
                     "chooseOptionLabel": {
-                        "@value": "-선택-"
+                        "@value": "-choose-"
                     }
                 },
                 {
@@ -349,13 +349,13 @@ export default {
                 "@value": "true"
             },
             "noResultMessage": {
-                "@value": "데이터가 없음"
+                "@value": "No search result."
             },
             "noResultMessageStyle": {
                 "@value": "position:absolute; left:40%; width:20%; top:40%; border:1px solid #b3b3b3; color:#383d41; font-size:12px; padding:5px; text-align:center; background:#fafafa"
             },
             "pasteMessage": {
-                "@value": "데이터 붙이는 중"
+                "@value": "Processing."
             },
             "getColumnVisible": {
                 "@useRealColIndex": "true"
@@ -372,7 +372,7 @@ export default {
                 {
                     "@inputType": "select",
                     "chooseOptionLabel": {
-                        "@value": "-선택-"
+                        "@value": "-choose-"
                     },
                     "eventPriority": {
                         "@value": "oneditend"
@@ -506,16 +506,25 @@ export default {
             }
         },
         "body": {
-            "toolTipSec": {
+            "tooltipSec": {
                 "@value": "1"
             }
         },
         "editor": {
             "version": {
-                "@value": "4.11.3"
+                "@value": "5.41.1"
             }
         },
-        "fusionchart": {},
+        "fusionchart": {
+            "version": {
+                "@value": "3.23"
+            }
+        },
+        "scheduleCalendar": {
+            "version": {
+                "@value": "6.1.11"
+            }
+        },
         "languagePack": {
             "@useLanguagePack": "false",
             "url": [{
@@ -529,6 +538,10 @@ export default {
                 {
                     "@lang": "ch",
                     "@value": "/langpack/ch.js"
+                },
+                {
+                    "@lang": "ja",
+                    "@value": "/langpack/ja.js"
                 }
             ]
         },

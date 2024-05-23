@@ -8,7 +8,7 @@
 	<title>Source</title>
 	<style type="text/css">
 		body		{ background-color:#F6F4F1; margin-top:0pt; margin-left:0pt; margin-right:0pt }
-		#title 		{ margin-left:5pt;  padding-top:5pt; height:22pt; color:#B3550A; font-size:9pt; font-family:굴림; line-height:14pt; visibility:visible }
+		#title 		{ margin-left:5pt;  padding-top:5pt; height:22pt; color:#B3550A; font-size:9pt; font-family:Gulim; line-height:14pt; visibility:visible }
 		#query 		{ margin: 5px 3px; text-align:left; visibility:visible; font-size: 12px;border: 1px solid #d7d7d7;background: #eee;padding: 5px;}
 		#query select {margin-right: 20px}
 		
@@ -165,16 +165,16 @@
 		<div>
 			<b>dataCollection :</b> 
 			<select id="collection">
-				<option value="all">-전체-</option>
+				<option value="all">-all-</option>
 			</select>
-			<b>데이터 형태 : </b> 
+			<b>Data Type : </b> 
 			<select id="dataType">
 				<option value="json">JSON</option>
 				<option value="xml">XML</option>
 				<option value="xml2">XML(Highlight)</option>				
 				<option value="array">ARRAY</option>
 			</select>
-			<button onclick="javascript:getCollectionData()">조회</button>
+			<button onclick="javascript:getCollectionData()">search</button>
 		</div>
 	</div>
 	<div id="main" style="height:350px"></div>

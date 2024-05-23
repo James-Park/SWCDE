@@ -79,7 +79,7 @@
 
 /* label */
 .w2menu_label {
-	position : static;	/* relative, absolute 주면 min-width는 대신 display:block, none왔다갔다할때 위치를 td안에 잘 못찾음..*/
+	position : static;
 	min-width : 75px;
 	cursor : pointer;
 	overflow : hidden;

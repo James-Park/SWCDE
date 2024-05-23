@@ -13,7 +13,7 @@
         <style type="text/css">
         <![CDATA[ 
                 /*
-                html, body {margin:0px; padding:0px; font-family:"맑은 고딕"; font-size:11px;}
+                html, body {margin:0px; padding:0px; font-family:"Malgun Gothic"; font-size:11px;}
                 p {margin:0px; padding:0px;}
                 img, fieldset {border:0;}
                 table {width:100%; background:#fff; border-collapse:collapse; border-spacing:0; empty-cells:show;}
@@ -67,8 +67,9 @@
                 scwin.useXHR = false;
                 scwin.filePath = "";
                 scwin.useDialog = "";
+                scwin.postMsg = "";
+                scwin.trim = "";
 
-                // 다국어
                 scwin.Upload_ignore_spaces = "";
                 scwin.Upload_include_spaces = "";
                 scwin.Upload_advanced = "";
@@ -81,6 +82,8 @@
                 scwin.Upload_footer = "";
                 scwin.Upload_file = "";
                 scwin.Upload_header = "";
+                scwin.Upload_file_choose = "";
+                scwin.Upload_file_span = "";
 
                 scwin.Upload_msg1 = "";
                 scwin.Upload_msg2 = "";
@@ -101,13 +104,13 @@
                         WebSquare.exception.printStackTrace(e);
                     }
 
-                    scwin.postMsg = scwin.uploadInfo.postdMsg;
+                    scwin.postMsg = scwin.uploadInfo.postMsg + "";
                     if(scwin.postMsg == "true") {
                         if(window.addEventListener) {
-                            window.addEventListener ("message", receiveMessage, false);
+                            window.addEventListener ("message", scwin.receiveMessage, false);
                         } else {
                             if(window.attachEvent) {
-                                window.attachEvent("onmessage", receiveMessage);
+                                window.attachEvent("onmessage", scwin.receiveMessage);
                             }
                         }
                     }
@@ -116,32 +119,37 @@
                     if(scwin.useModalDisable == "true") {
                         WebSquare.layer.showModal();
                     }
-                    scwin.Upload_ignore_spaces = WebSquare.language.getMessage( "Upload_ignore_spaces" ) || "공백무시";
-                    scwin.Upload_include_spaces = WebSquare.language.getMessage( "Upload_include_spaces" ) || "공백포함";
-                    scwin.Upload_advanced = WebSquare.language.getMessage( "Upload_advanced" ) || "고급설정";
-                    scwin.Upload_hidden_values = WebSquare.language.getMessage( "Upload_hidden_values" ) || "히든값유무";
-                    scwin.Upload_include = WebSquare.language.getMessage( "Upload_include" ) || "포함";
-                    scwin.Upload_not_include = WebSquare.language.getMessage( "Upload_not_include" ) || "미포함";
-                    scwin.Upload_fill_hidden = WebSquare.language.getMessage( "Upload_fill_hidden" ) || "히든 채움";
-                    scwin.Upload_starting_row = WebSquare.language.getMessage( "Upload_starting_row" ) || "시작 row";
-                    scwin.Upload_file = WebSquare.language.getMessage( "Upload_file" ) || "파일 업로드";
-                    scwin.Upload_fill = WebSquare.language.getMessage( "Upload_fill" ) || "채움";
-                    scwin.Upload_ignore = WebSquare.language.getMessage( "Upload_ignore" ) || "무시";
-                    scwin.Upload_header = WebSquare.language.getMessage( "Upload_header" ) || "헤더 유무";
+                    scwin.Upload_ignore_spaces = WebSquare.language.getMessage( "Upload_ignore_spaces" ) || "Ignore blank spaces";
+                    scwin.Upload_include_spaces = WebSquare.language.getMessage( "Upload_include_spaces" ) || "Include blank spaces";
+                    scwin.Upload_advanced = WebSquare.language.getMessage( "Upload_advanced" ) || "Advanced";
+                    scwin.Upload_hidden_values = WebSquare.language.getMessage( "Upload_hidden_values" ) || "Hidden values";
+                    scwin.Upload_include = WebSquare.language.getMessage( "Upload_include" ) || "Include";
+                    scwin.Upload_not_include = WebSquare.language.getMessage( "Upload_not_include" ) || "Not include";
+                    scwin.Upload_fill_hidden = WebSquare.language.getMessage( "Upload_fill_hidden" ) || "Fill Hidden";
+                    scwin.Upload_starting_row = WebSquare.language.getMessage( "Upload_starting_row" ) || "Start row";
+                    scwin.Upload_file = WebSquare.language.getMessage( "Upload_file" ) || "File Upload";
+                    scwin.Upload_fill = WebSquare.language.getMessage( "Upload_fill" ) || "Fill";
+                    scwin.Upload_ignore = WebSquare.language.getMessage( "Upload_ignore" ) || "Ignore";
+                    scwin.Upload_header = WebSquare.language.getMessage( "Upload_header" ) || "Header";
+                    scwin.Upload_file_choose = WebSquare.language.getMessage( "Upload_file_choose" ) || "Choose File";
+                    scwin.Upload_file_span = WebSquare.language.getMessage( "Upload_file_span" ) || "No file chosen";
 
-                    scwin.Upload_msg2 = WebSquare.language.getMessage( "Upload_msg2" ) || "파일 사이즈가 제한 용량을 초과 하였습니다.";
-                    scwin.Upload_msg3 = WebSquare.language.getMessage( "Upload_msg3" ) || "정상적으로 처리 되지 않았습니다.";
-                    scwin.Upload_msg4 = WebSquare.language.getMessage( "Upload_msg4" ) || "FileType에 맞지 않는 File의 확장자입니다.";
-                    scwin.Upload_msg5 = WebSquare.language.getMessage( "Upload_msg5" ) || "그리드 반영에 실패하였습니다";
+                    scwin.Upload_msg2 = WebSquare.language.getMessage( "Upload_msg2" ) || "File size exceeding the limit.";
+                    scwin.Upload_msg3 = WebSquare.language.getMessage( "Upload_msg3" ) || "Normal processing failed.";
+                    scwin.Upload_msg4 = WebSquare.language.getMessage( "Upload_msg4" ) || "Check the file extension.";
+                    scwin.Upload_msg5 = WebSquare.language.getMessage( "Upload_msg5" ) || "Failed to reflect on the grid.";
                     scwin.maxFileSize = scwin.uploadInfo.maxFileSize;
                     scwin.maxFileSize = parseInt( scwin.maxFileSize, 10 );
-                    scwin.Grid_warning9 = WebSquare.language.getMessage( "Grid_warning9", scwin.maxFileSize ) || "전송 data가 제한 크기를 초과 하였습니다.\n 제한 크기 : %1 byte";
+                    scwin.Grid_warning9 = WebSquare.language.getMessage( "Grid_warning9", scwin.maxFileSize ) || "Data size exceeding the limit.\n limit : %1 byte";
 
                     setting.render.innerHTML = scwin.Upload_advanced;
                     sub.render.setAttribute( "csvPop_summary", scwin.Upload_ignore_spaces + "," + scwin.Upload_hidden_values + "," + scwin.Upload_fill_hidden + "," + scwin.Upload_footer );
                     advanced.render.innerHTML = scwin.Upload_advanced;
-                    space_option.setValue(scwin.Upload_ignore_spaces);
+                    bul_title.render.innerHTML = scwin.Upload_file;
+                    choose_file.setValue(scwin.Upload_file_choose);
+                    choose_span.setValue(scwin.Upload_file_span);
 
+                    space_option.setValue(scwin.Upload_ignore_spaces);
                     spaceSelect.render.name = "skip_space";
                     scwin.sel1 = document.getElementsByName("skip_space")[0];
                     scwin.sel1[0].text = scwin.Upload_ignore_spaces;
@@ -180,7 +188,21 @@
                     scwin.sizeInfo.height = scwin.uploadInfo.sizeInfo.height;
                     scwin.sizeInfo.width = scwin.uploadInfo.sizeInfo.width;
                     scwin.osName = scwin.uploadInfo.osName;
+                    
+                    scwin.choose_file_onclick = function(e) {
+                        scwin.file.click();
+                    };
 
+                    scwin.change_span = function() {
+                        if (scwin.file.render.value) {
+                            scwin.name = scwin.file.render.value.split("\\").pop();
+                            scwin.fileName.render.textContent = scwin.name;
+                        }
+                    };
+                    scwin.file = filename;
+                    scwin.fileBtn = choose_file;
+                    scwin.fileName = choose_span;
+                    scwin.file.render.addEventListener ("change", scwin.change_span);
 
                     //  header, append, hidden, columnNum, hiddenColumns, action
                     scwin.type = scwin.uploadInfo.type;
@@ -212,9 +234,11 @@
                     scwin.status = scwin.uploadInfo.status;
                     scwin.optionParam = scwin.uploadInfo.optionParam;
                     scwin.columnOrder = scwin.uploadInfo.columnOrder;
+                    scwin.trim = scwin.uploadInfo.trim;
                     scwin.useXHR = scwin.uploadInfo.useXHR + "";
                     scwin.filePath = scwin.uploadInfo.filePath;
                     scwin.useDialog = scwin.uploadInfo.useDialog;
+                    scwin.msaName = scwin.uploadInfo.msaName;
 
                     domain.setValue(scwin.domain);
                     delim.setValue(scwin.delim);
@@ -264,7 +288,6 @@
                         scwin.sel3[1].selected = true;
                     }
 
-                    //header 처리
                     if( typeof scwin.vheader == "string" ) {
                         scwin.vheader  = WebSquare.util.getBoolean(scwin.vheader);
                     }
@@ -285,9 +308,8 @@
                     //document.getElementById("header").value = scwin.vheader;
                     headerRows.setValue(scwin.vheaderRows);
 
-                    // row 조회
-                    scwin.el = WebSquare.xml.getElementsByTagName(window[scwin.gridID].element, "w2:gBody");
-                    scwin.rows = WebSquare.xml.getElementsByTagName(scwin.el[0],"w2:row");
+                    scwin.el = WebSquare.Elem.api.getElementsByTagName(window[scwin.gridID].element, "w2:gBody");
+                    scwin.rows = WebSquare.Elem.api.getElementsByTagName(scwin.el[0],"w2:row");
                     scwin.myrows = scwin.rows.length;
                     bodyRows.setValue(scwin.myrows);
 
@@ -295,14 +317,26 @@
                     ////document.getElementById("gridStartCol").value = gridStartCol;
                     ////document.getElementById("gridEndCol").value = gridEndCol;
 
-                    //grid style을 전송한다. 
-                    gridStyle.setValue(WebSquare.xml.noNameSpaceSerialize(window[scwin.gridID].element));
+                    var elemType = window[scwin.gridID].element._elementType;
+                    var gridStyleStr = "";
+                    if (elemType === "json") {
+                        gridStyleStr = WebSquare.xmljs.json2xml(window[scwin.gridID].element._element, {
+                            "changeKey": {
+                                "w2:select": "w2:column"
+                            }
+                         });
+                    } else {
+                        gridStyleStr = WebSquare.xml.noNameSpaceSerialize(window[scwin.gridID].element._element);
+                    }
+                    gridStyle.setValue(gridStyleStr);
                     expression.setValue(scwin.expression);
                     optionParam.setValue(scwin.optionParam);
                     columnOrder.setValue(scwin.columnOrder);
+                    trim.setValue(scwin.trim);
                     useXHR.setValue(scwin.useXHR);
                     filePath.setValue(scwin.filePath);
                     useDialog.setValue(scwin.useDialog);
+                    msaName.setValue(scwin.msaName);
 
                     with( document.__uploadForm__ ) {
                         action = scwin.actionUrl;
@@ -314,9 +348,9 @@
                 };
 
                 scwin.setImgURL = function() {
-                    scwin.headerURL = "url(" + "'" + WebSquare.baseURI + "uiplugin/grid/upload/images/bg_header.gif" + "')" + "repeat-x left top";
-                    scwin.titleURL = "url(" + "'" + WebSquare.baseURI + "uiplugin/grid/upload/images/bul_title.gif" + "')" + "no-repeat 11px 6px";
-                    scwin.dotURL = "url(" + "'" + WebSquare.baseURI + "uiplugin/grid/upload/images/dot.gif" + "')" + "no-repeat left center";
+                    scwin.headerURL = "url(" + "'" + WebSquare.baseURI + "/_websquare_/uiplugin/grid/upload/images/bg_header.gif" + "')" + "repeat-x left top";
+                    scwin.titleURL = "url(" + "'" + WebSquare.baseURI + "/_websquare_/uiplugin/grid/upload/images/bul_title.gif" + "')" + "no-repeat 11px 6px";
+                    scwin.dotURL = "url(" + "'" + WebSquare.baseURI + "/_websquare_/uiplugin/grid/upload/images/dot.gif" + "')" + "no-repeat left center";
 
                     bg_header.setStyle("background", scwin.headerURL);
                     bul_title.setStyle("background", scwin.titleURL);
@@ -327,7 +361,7 @@
                     header_option.setStyle("background", scwin.dotURL);
                 };
 
-                function returnData( vData ) {
+                window.returnData = function( vData ) {
                     with (WebSquare.util.getComponentById(WebSquare.csvPopUUID).scope) {
                         if( scwin.processMsg != "" ) {
                             scwin.hideProcessMessage();
@@ -414,7 +448,7 @@
 
                                 scwin.fileNameDom = filename;
                                 scwin.fileName = scwin.fileNameDom.getValue();
-                                scwin.fileNameArr = scwin.fileName.split("\\"); //fileName에 대해서 IE에서는 파일 경로가 나오는데 FF chrome은 나오지 않는다. 따라서 '\\'기준으로 나눠준다.
+                                scwin.fileNameArr = scwin.fileName.split("\\");
                                 window[scwin.gridID].fireFileReadEnd( scwin.fileNameArr[scwin.fileNameArr.length-1] );
                             } catch (e) {
                                 WebSquare.exception.printStackTrace(e);
@@ -437,10 +471,11 @@
                     }
                 }
 
-
                 scwin.receiveMessage = function(retObj) {
                     try {
-                        returnData(retObj.data);
+                        if (retObj.currentTarget.WebSquare) {
+                            returnData(retObj.data);
+                        }
                     } catch (e) {
                         WebSquare.exception.printStackTrace(e);
                         alert( scwin.Upload_msg5 );
@@ -464,7 +499,7 @@
                             scwin.processMsgBackgroundColor = "#112233";
                         }
                         if( scwin.processMsgURL == "" ) {
-                            scwin.processMsgURL = WebSquare.baseURI + "message/processMsg.html";
+                            scwin.processMsgURL = WebSquare.baseURI + WebSquare.BootLoader.inquiresPath("message/processMsg.html");
                         }
 
                         scwin.processMsgURL = scwin.processMsgURL + "?param=" + WebSquare.text.URLEncoder(processMsg);
@@ -592,7 +627,7 @@
                             if(scwin.osName == "window") {
                                     scwin.height = 298;
                             } else if(scwin.osName == "mac") {
-                                    scwin.height = 297;
+                                    scwin.height = 298;
                             }
                         }
                     } else if(WebSquare.util.isSafari()) {
@@ -748,7 +783,7 @@
             <xf:group id="" style="" class="exup_wrap">
                 <xf:group id="bg_header" style="" class="exup_header">
                     <xf:group id="advancedSetting" style="" tagname="span" class="exup_spanGroup">
-                        <w2:textbox label="고급설정" id="setting" style="" for="subcheck" tagname="p" class="title2"></w2:textbox>
+                        <w2:textbox label="Advanced" id="setting" style="" for="subcheck" tagname="p" class="title2"></w2:textbox>
                         <xf:select appearance="full" id="subcheck" style="" selectedindex="-1" cols="" rows="" ref="" class="subcheck" ev:oncheckboxclick="scwin.subcheck_oncheckboxclick" tagname="" renderType="native">
                             <xf:choices>
                                 <xf:item>
@@ -767,7 +802,11 @@
                 <xf:group id="" style="" class="exup_content">
 
                     <xf:group id="" style="" class="filebox">
-                        <xf:input adjustMaxLength="false" id="filename" name="filename" style="width:95%;" type="file" class="filename">
+                        <xf:trigger type="button" id="choose_file" style="width: 80px;height: 23px;" ev:onclick="scwin.choose_file_onclick">
+                            <xf:label><![CDATA[Choose File]]></xf:label>
+                        </xf:trigger>
+                        <w2:span label="Insert Text" style="" id="choose_span" class="fileName">No file chosen</w2:span>
+                        <xf:input adjustMaxLength="false" id="filename" name="filename" style="width:95%;display:none;" type="file" class="filename">
                             <w2:attributes>
                                 <w2:name>filename</w2:name>
                             </w2:attributes>
@@ -775,7 +814,7 @@
                     </xf:group>
                     <xf:group id="sub" style="width: 100%" tagname="table" class="exup_tbl none">
                         <w2:attributes>
-                            <w2:summary>공백무시,히든값유무,히든채움,시작Row</w2:summary>
+                            <w2:summary>Ignore blank spaces,Hidden values,Fill Hidden,Footer,Start Row</w2:summary>
                         </w2:attributes>
                         <xf:group tagname="caption" id="advanced"></xf:group>
                         <xf:group tagname="colgroup">
@@ -923,7 +962,7 @@
                     <xf:group id="" style="" tagname="p">
                         <xf:trigger type="button" id="sendFILE" name="sendFILE" style="" class="btn_exup_file" ev:onclick="scwin.sendFILE_onclick">
                             <xf:label>
-                                <![CDATA[파일업로드]]>
+                                <![CDATA[File Upload]]>
                             </xf:label>
                         </xf:trigger>
                     </xf:group>
@@ -946,6 +985,8 @@
             <xf:input adjustMaxLength="false" name="useXHR" id="useXHR" style="" type="hidden"></xf:input>
             <xf:input adjustMaxLength="false" name="filePath" id="filePath" style="" type="hidden"></xf:input>
             <xf:input adjustMaxLength="false" name="useDialog" id="useDialog" style="" type="hidden"></xf:input>
+            <xf:input adjustMaxLength="false" name="msaName" id="msaName" style="" type="hidden"></xf:input>
+            <xf:input adjustMaxLength="false" name="trim" id="trim" style="" type="hidden"></xf:input>
         </form>
 
     </body>

@@ -29,7 +29,7 @@
 }(this, function () {
 
 
-// papaparse.js에서 Object.create 함수를 쓰기 때문에 es5-sham.js의 Object.create 함수만 사용함.
+// papaparse.js Object.create pollyfill
 
 // ES5 15.2.3.5
 // http://es5.github.com/#x15.2.3.5

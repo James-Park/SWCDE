@@ -92,16 +92,16 @@
         <rowMouseOverColor value="#edf3fb" />
         <tooltipStyle value="padding:1px 3px 0;line-height:14px;font-size:12px;border:0;background-color:#5c85d4;color:#fff" />
         <noResultMessageVisible value="true" />
-        <noResultMessage value="데이터가 없음" />
+        <noResultMessage value="No search result." />
         <noResultMessageStyle value="position:absolute; left:40%; width:20%; top:40%; border:1px solid #b3b3b3; color:#383d41; font-size:12px; padding:5px; text-align:center; background:#fafafa" />
-        <pasteMessage value="데이터 붙이는 중" />
+        <pasteMessage value="Processing" />
         <getColumnVisible useRealColIndex="true" />
         <colIdToColIndex value="true" />
         <column inputType="text">
             <editType value="select" />
         </column>
         <column inputType="select">
-            <chooseOptionLabel value="-선택-" />
+            <chooseOptionLabel value="-choose-" />
         </column>
         <column inputType="calendar">
             <dataType value="date" />
@@ -131,16 +131,16 @@
         <rowMouseOverColor value="#edf3fb" />
         <tooltipStyle value="padding:1px 3px 0;line-height:14px;font-size:12px;border:0;background-color:#5c85d4;color:#fff" />
         <noResultMessageVisible value="true" />
-        <noResultMessage value="데이터가 없음" />
+        <noResultMessage value="No search result." />
         <noResultMessageStyle value="position:absolute; left:40%; width:20%; top:40%; border:1px solid #b3b3b3; color:#383d41; font-size:12px; padding:5px; text-align:center; background:#fafafa" />
-        <pasteMessage value="데이터 붙이는 중" />
+        <pasteMessage value="Processing" />
         <getColumnVisible useRealColIndex="true" />
         <colIdToColIndex value="true" />
         <column inputType="text">
             <editType value="select" />
         </column>
         <column inputType="select">
-            <chooseOptionLabel value="-선택-" />
+            <chooseOptionLabel value="-choose-" />
             <eventPriority value="oneditend" />
         </column>
         <column inputType="calendar">
@@ -203,16 +203,23 @@
         <nameScope value="true" />
     </radio>
     <body>
-        <toolTipSec value="1" />
+        <tooltipSec value="1" />
     </body>
     <editor>
-        <version value="4.11.3" />
+        <version value="5.41.1" />
     </editor>
+    <fusionchart>
+        <version value="3.23"/>
+    </fusionchart>
+    <scheduleCalendar>
+        <version value="6.1.11"/>
+    </scheduleCalendar>
     <fusionchart></fusionchart>
     <languagePack useLanguagePack="false">
         <url lang="ko" value="/langpack/ko.js" />
         <url lang="en" value="/langpack/en.js" />
         <url lang="ch" value="/langpack/ch.js" />
+        <url lang="ja" value="/langpack/ja.js" />
     </languagePack>
     <license value="true" />
 </WebSquare>

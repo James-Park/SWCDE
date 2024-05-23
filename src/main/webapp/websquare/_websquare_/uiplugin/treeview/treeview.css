@@ -11,7 +11,7 @@
 }
 
 .w2treeview_node {
-	width : 100%;	/* 이거 안주면 ie8에서 td가 벌어지는 경우있음	*/
+	width : 100%;	/* ie8 td */
 	position : relative;
 	left : 0px;
 	height : 0px;
@@ -34,12 +34,12 @@
 }
 
 .w2treeview_row_depth0 {	
-	/* 하위호환 : 0번째 depths는 보여주지 않는다*/
+	/* compatibility : 0 depths*/
 	display : none;
 }
 
 .w2treeview_col_depth0 {	
-	/* 하위호환 : 0번째 depths는 보여주지 않는다*/
+	/* compatibility : 0 depths*/
 	display : none;
 }
 
@@ -80,7 +80,7 @@
 }
 
 .w2treeview_label {
-	position : relative;	/* relative, absolute 주면 min-width는 대신 display:block, none왔다갔다할때 위치를 td안에 잘 못찾음..*/
+	position : relative;	/* relative, absolute - min-width -> display:block, none td error*/
 /*	min-width : 75px;	*/
 	cursor : pointer;
 /*	background-color : #0080ff; */
@@ -116,7 +116,6 @@
 }
 
 .w2treeview_icon_none {
-/* background 없이 크기만 차지 */
 	width : 16px;
 }
 

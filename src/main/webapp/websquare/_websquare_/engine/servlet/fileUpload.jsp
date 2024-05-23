@@ -5,7 +5,6 @@ if(ref == null || ref.equals("") || param == null || param.equals("")) {
 	response.setStatus(HttpServletResponse.SC_NOT_FOUND);
 	return;
 }
-// 사용자 세션 정보를 이용한  접근제거 필요한 경우 아래 추가
 
 %>
 <!DOCTYPE html>
@@ -28,7 +27,7 @@ if(ref == null || ref.equals("") || param == null || param.equals("")) {
 	            document.domain = domain;   
 	        }
 	    } catch (e) {
-	    	//$l("exception:" + e.message);
+	    	opener.WebSquare.exception.printStackTrace(e);
 	    }
 
 	    //  header, append, hidden, columnNum, hiddenColumns, action
@@ -85,7 +84,8 @@ if(ref == null || ref.equals("") || param == null || param.equals("")) {
 			var isCSVType = document.__uploadForm__.action.indexOf("csvToXML") >= 0;
 
 			if( !(isXlsFile && isXlsType) && !(isCSVFile && isCSVType) ){
-				alert( "FileType에 맞지 않는 File의 확장자입니다." );
+				var errorMsg = opener.WebSquare.language.getMessage("Upload_msg4") || "Check the file extension.";
+				alert( errorMsg );
 				return;
 			}
 			
@@ -137,12 +137,13 @@ if(ref == null || ref.equals("") || param == null || param.equals("")) {
 
 				var fileNameDom = document.getElementById("filename")
 				var fileName = fileNameDom.value;
-				var fileNameArr = fileName.split("\\"); //fileName에 대해서 IE에서는 파일 경로가 나오는데 FF chrome은 나오지 않는다. 따라서 '\\'기준으로 나눠준다.
+				var fileNameArr = fileName.split("\\");
 				opener.window[gridID].fireFileReadEnd( fileNameArr[fileNameArr.length-1] );
 				window.self.close();
 			} catch (e) {
 				opener.WebSquare.exception.printStackTrace(e);
-				alert( "그리드 반영에 실패하였습니다" );			
+				var errorMsg = opener.WebSquare.language.getMessage("Upload_msg5") || "Failed to reflect on the grid.";
+				alert( errorMsg );
 			}
 		}
 	}
@@ -160,13 +161,13 @@ if(ref == null || ref.equals("") || param == null || param.equals("")) {
 	
 			<tr style="height:30px">
 				<td style="font-family:Verdana; font-size:12px;">
-					옵션: <select name="skip_space" style="font-family:Verdana; font-size:12px;">
-						<option value="true">공백무시</option>
-						<option value="false">공백포함</option>
+					option: <select name="skip_space" style="font-family:Verdana; font-size:12px;">
+						<option value="true">Ignore blank spaces</option>
+						<option value="false">Include blank spaces</option>
 					</select>		
 				</td>
 				<td align="right">
-					<input type="button" name="sendFILE" style="width:90px; height:20px;  font-family:Verdana; font-size:12px;" value="파일올리기" onclick="javascript:upload(this.form)" />
+					<input type="button" name="sendFILE" style="width:90px; height:20px;  font-family:Verdana; font-size:12px;" value="File Upload" onclick="javascript:upload(this.form)" />
 				</td>
 			</tr>
 		</table>

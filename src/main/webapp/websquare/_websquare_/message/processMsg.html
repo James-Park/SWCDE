@@ -4,7 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>loading</title>
     <style type="text/css">
-    body {margin:0px; background:#fff;}
+    body {margin:0px; background:#fff;overflow: hidden}
     .ly_loading {padding:20px 0 0 13px; width:280px; height:81px; border:1px solid #b3b3b3; background:url("images/bg_ly.gif") left top repeat-x;position:relative;}
     .pro_loading {width:100%;height:20px;font-size:13px;font-color:#3f3f67;font-weight:bold;}
     </style>
@@ -14,9 +14,16 @@
             try {
                 var prsMsg = parent.WebSquare.layer.processMsg;
                 document.getElementById("processMsgLayer").innerHTML = prsMsg;
-                document.getElementById("abortButton").style.display = "none";
-                document.getElementById("hideButton").style.display = "none";
+                var abortBtn = document.getElementById("abortButton");
+                var hideBtn = document.getElementById("hideButton");
+                abortBtn.style.display = "none";
+                hideBtn.style.display = "none";
                 
+                var abortBtnMsg = parent.WebSquare.language.getMessage("Window_close") || "Close";
+                var hideBtnMsg = parent.WebSquare.language.getMessage("Window_cancel") || "Cancel";
+                abortBtn.value = abortBtnMsg;
+                hideBtn.value = hideBtnMsg;
+
                 if( window.processKey ) {
                     clearInterval( window.processKey );
                 }
@@ -26,18 +33,17 @@
                 var hideTrigger = parent.WebSquare.layer.hideTrigger;
                 if(hideTrigger === "true"){
 
-                    document.getElementById("hideButton").style.display = "block";
-                    document.getElementById("hideButton").onclick = function(){
+                    hideBtn.style.display = "block";
+                    hideBtn.onclick = function(){
                         parent.WebSquare.layer.hideProcessMessage();
                     }
                 }
 
-                // WEF-125 [새마을금고] Submission abort 기능 추가
-                // abortTrigger 클릭시 현재 통신 중인 processMsg 설정된 모든 submission을 abort한다.
+                // WEF-125
                 var abortTrigger = parent.WebSquare.layer.abortTrigger;
                 if(abortTrigger === "true"){
-                    document.getElementById("abortButton").style.display = "block";
-                    document.getElementById("abortButton").onclick = function(){
+                    abortBtn.style.display = "block";
+                    abortBtn.onclick = function(){
                         var t_submissionIDQueue = [];                       
                         for(var i = 0;i < parent.WebSquare.layer.submissionIDQueue.length;i++){
                             t_submissionIDQueue.push(parent.WebSquare.layer.submissionIDQueue[i]);
@@ -67,9 +73,9 @@
 <body>
     <div class="ly_loading">
         <div id="processMsgLayer" class="pro_loading" style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;width:200px;"></div>
-        <img src="images/progressingbar.gif" width="267px" height="23px" class="loading_bar" alt="로딩중">
-        <input id='hideButton' type='button' style="position:absolute;top:20px;right:14px;height:20px;text-align:center;word-wrap:break-word;display:none;" value="창닫기" />
-        <input id='abortButton' type='button' style="position:absolute;top:20px;right:14px;height:20px;text-align:center;word-wrap:break-word;display:none;" value="취소" />
+        <img src="images/progressingbar.gif" width="267px" height="23px" class="loading_bar" alt="Loading">
+        <input id='hideButton' type='button' style="position:absolute;top:20px;right:14px;height:20px;text-align:center;word-wrap:break-word;display:none;" value="" />
+        <input id='abortButton' type='button' style="position:absolute;top:20px;right:14px;height:20px;text-align:center;word-wrap:break-word;display:none;" value="" />
     </div>
 </body>
 </html>

@@ -54,7 +54,7 @@
 			vertical="true">
 		</w2:slider>
 		<xf:output id="output148"
-			style="position:absolute;margin-top:20px;vertical-align:middle;word-wrap:break-word;font-size:20px;font-family:맑은 고딕;;left:44px;top:352px"
+			style="position:absolute;margin-top:20px;vertical-align:middle;word-wrap:break-word;font-size:20px;font-family:'Malgun Gothic';left:44px;top:352px"
 			toolTip="what do you put in here &lt;br/&gt;that makes it taste so good!"
 			dataType="">
 			<xf:label>tooltip</xf:label>
@@ -228,18 +228,6 @@
 			inputStyle="position:absolute;vertical-align:middle;word-wrap:break-word"
 			class="" type="image" disabled="">
 		</w2:upload>
-
-
-
-
-
-
-
-
-
-
-
-
 		<w2:floatingLayer id="floatingLayer5" useResizeDrag="false"
 			title="Title" dragAlwaysView="false"
 			style="width: 290px;height: 213px;left:38px;top:450px;position: absolute ;"

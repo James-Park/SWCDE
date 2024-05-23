@@ -16,8 +16,8 @@
     var action = "";
     var dataList = "";
     var delim  = "";
+	var msaName = "";
 
-   	// 다국어
    	var Upload_ignore_spaces = "";
    	var Upload_include_spaces = "";
    	var Upload_advanced = "";
@@ -29,6 +29,9 @@
    	var Upload_starting_col = "";
    	var Upload_footer = "";
    	var Upload_file = "";
+	var Upload_file_header = "";
+	var Upload_file_choose = "";
+	var Upload_file_span = "";
 
    	var Upload_msg1 = "";
    	var Upload_msg2 = "";
@@ -54,20 +57,37 @@
     	pivotID = getParameter("pivotID");
     	var uploadInfo = opener.JSON.parse( opener[pivotID]._pivotUploadInfo );
 
-        Upload_ignore_spaces = opener.WebSquare.language.getMessage( "Upload_ignore_spaces" ) || "공백무시";
-        Upload_include_spaces = opener.WebSquare.language.getMessage( "Upload_include_spaces" ) || "공백포함";
-		Upload_advanced = opener.WebSquare.language.getMessage( "Upload_advanced" ) || "고급설정";
-		Upload_starting_row = opener.WebSquare.language.getMessage( "Upload_starting_row" ) || "시작 row";
-		Upload_file = opener.WebSquare.language.getMessage( "Upload_file" ) || "파일 업로드";
+		if (uploadInfo.postMsg && uploadInfo.postMsg == "true") {
+            if (window.addEventListener) {
+                window.addEventListener("message", receiveMessage, false);
+            } else {
+                if (window.attachEvent) {
+                    window.attachEvent("onmessage", receiveMessage);
+                }
+            }
+        }
 
-		Upload_msg2 = opener.WebSquare.language.getMessage( "Upload_msg2" ) || "파일 사이즈가 제한 용량을 초과 하였습니다.";
-		Upload_msg3 = opener.WebSquare.language.getMessage( "Upload_msg3" ) || "정상적으로 처리 되지 않았습니다.";
-		Upload_msg4 = opener.WebSquare.language.getMessage( "Upload_msg4" ) || "FileType에 맞지 않는 File의 확장자입니다.";
-		Upload_msg5 = opener.WebSquare.language.getMessage( "Upload_msg5" ) || "Pivot 반영에 실패하였습니다";
+        Upload_ignore_spaces = opener.WebSquare.language.getMessage( "Upload_ignore_spaces" ) || "Ignore blank spaces";
+        Upload_include_spaces = opener.WebSquare.language.getMessage( "Upload_include_spaces" ) || "Include blank spaces";
+		Upload_advanced = opener.WebSquare.language.getMessage( "Upload_advanced" ) || "Advanced";
+		Upload_starting_row = opener.WebSquare.language.getMessage( "Upload_starting_row" ) || "Start row";
+		Upload_file = opener.WebSquare.language.getMessage( "Upload_file" ) || "File Upload";
+		Upload_file_header = opener.WebSquare.language.getMessage( "Upload_file_header" ) || "File Upload";
+		Upload_file_choose = opener.WebSquare.language.getMessage( "Upload_file_choose" ) || "Choose File";
+		Upload_file_span = opener.WebSquare.language.getMessage( "Upload_file_span" ) || "No file chosen";
+
+		Upload_msg2 = opener.WebSquare.language.getMessage( "Upload_msg2" ) || "File size exceeding the limit.";
+		Upload_msg3 = opener.WebSquare.language.getMessage( "Upload_msg3" ) || "Normal processing failed.";
+		Upload_msg4 = opener.WebSquare.language.getMessage( "Upload_msg4" ) || "Check the file extension.";
+		Upload_msg5 = opener.WebSquare.language.getMessage( "Upload_msg5" ) || "Failed to reflect on the grid.";
 
 		document.getElementById( "setting" ).innerHTML = Upload_advanced;
 		document.getElementById( "sub" ).setAttribute( "summary", Upload_ignore_spaces + "," +  Upload_starting_row );
 		document.getElementById( "advaned" ).innerHTML = Upload_advanced;
+		document.getElementById( "file_header" ).innerHTML = Upload_file_header;		
+		document.getElementById( "choose_file" ).innerHTML = Upload_file_choose;
+		document.getElementById( "choose_span" ).innerHTML = Upload_file_span;
+
 		document.getElementById( "space_option" ).innerHTML = Upload_ignore_spaces;
 		var sel1 = document.getElementById( "spaceSelect" );
 		sel1.options[0].text = Upload_ignore_spaces;
@@ -88,6 +108,7 @@
 		processMsg = uploadInfo.processMsg;
 		processMsg = opener.WebSquare.text.BASE64URLDecoder( processMsg );
 		dataList = uploadInfo.dataList;
+		msaName = uploadInfo.msaName;
 
 		document.getElementById("domain").value = domain;
 		document.getElementById("delim").value = delim;
@@ -108,6 +129,7 @@
 		document.getElementById("columnNum").value = vcolumnNum;
 		document.getElementById("startRow").value = startRow;
 		document.getElementById("startCol").value = startCol;
+		document.getElementById("msaName").value = msaName;
 
 		with( document.__uploadForm__ ) {
 			action = actionUrl;
@@ -121,6 +143,14 @@
                 }
             }, 1);
         }
+
+		if (msaName != "") {
+			window.addEventListener('message', function(e) {
+				if (e.currentTarget.WebSquare) {
+					returnData(e.data);
+				}
+			});
+		}
 	}
 	
 	function upload( thisForm ) {
@@ -130,8 +160,8 @@
 				return false;
 			}
 			
-			var isCSVFile = endsWith(filename.toLowerCase(), ".csv") >= 0 ||
-							endsWith(filename.toLowerCase(), ".txt") >= 0;
+			var isCSVFile = endsWith(filename.toLowerCase(), ".csv")  ||
+							endsWith(filename.toLowerCase(), ".txt");
 			var isCSVType = document.__uploadForm__.action.indexOf("csvToPivot") >= 0;
 			if( !(isCSVFile && isCSVType) ) {
 				alert( Upload_msg4 );
@@ -226,13 +256,24 @@
 				
 				var fileNameDom = document.getElementById("filename")
 				var fileName = fileNameDom.value;
-				var fileNameArr = fileName.split("\\"); //fileName에 대해서 IE에서는 파일 경로가 나오는데 FF chrome은 나오지 않는다. 따라서 '\\'기준으로 나눠준다.
+				var fileNameArr = fileName.split("\\");
 				opener.window[pivotID].fireFileReadEnd( fileNameArr[fileNameArr.length-1] );
 				window.self.close();
 			} catch (e) {
 				opener.WebSquare.exception.printStackTrace(e);
 				alert( Upload_msg5 );
 			}
+		}
+	}
+	
+	function receiveMessage(retObj) {
+		try {
+			if (retObj.currentTarget.name == "csvupWindow") {
+				returnData(retObj.data);
+			}
+		} catch (e) {
+			opener.WebSquare.exception.printStackTrace(e);
+			alert( Upload_msg5 );
 		}
 	}
 	
@@ -250,7 +291,7 @@
 		} else if(opener.WebSquare.util.isFF()) {
 			return 37;
 		} else if(opener.WebSquare.util.isChrome()) {
-			return 37;
+			return 40;
 		} else if(opener.WebSquare.util.isSafari()) {
 			return 37;
 		} else if(opener.WebSquare.util.isOpera()) {
@@ -264,11 +305,11 @@
 		if( checkfun == true ) {
 			document.getElementById('sub').style.display='block';
 			var height = crossBrowserHeight();
-			window.resizeBy(0 , height);//resizeBy가 ff7.0에서 안됨 
+			window.resizeBy(0 , height);//resizeBy ff7.0
 		} else {
 			document.getElementById('sub').style.display='none';
 			var height = crossBrowserHeight();
-			window.resizeBy(0 ,-1 * parseInt(height));//resizeBy가 ff7.0에서 안됨 
+			window.resizeBy(0 ,-1 * parseInt(height));//resizeBy ff7.0
 		}
 	}
 	
@@ -415,7 +456,7 @@
 	}
 </script>
 <style type="text/css">
-    html, body {margin:0px; padding:0px; font-family:"맑은 고딕"; font-size:11px;}
+    html, body {margin:0px; padding:0px; font-family:"Malgun Gothic"; font-size:11px;}
     p {margin:0px; padding:0px;}
 	img, fieldset {border:0;}
 	table {width:100%; background:#fff; border-collapse:collapse; border-spacing:0; empty-cells:show;}
@@ -449,24 +490,29 @@
  
 	<div class="wrap">
 		<div class="header">
-			<p class="title">File Upload</p>
-			<span><input type="checkbox" onclick="check_fun();" id="subcheck" /><label for="subcheck"><p id="setting" class="title">고급설정</p></label></span>
+			<p class="title" id="file_header">File Upload</p>
+			<span>
+				<input type="checkbox" onclick="check_fun();" id="subcheck" />
+				<label for="subcheck"><p id="setting" class="title">Advaned</p></label>
+			</span>
 		</div>
 		<div class="content">
 			<div class="filebox">
-				<input type="file" id="filename" name="filename" />
+				<button type="button" id="choose_file">Choose File</button>
+                <span class="fileName" id="choose_span">No file chosen</span>
+				<input type="file" id="filename" name="filename" style="display: none;"/>
 			</div>
-			<table id="sub" class="tbl none" summary="공백무시,히든값유무,히든채움,시작Row">
-			<caption id="advaned">파일 업로드 고급설정</caption>
+			<table id="sub" class="tbl none" summary="Ignore blank spaces,Hidden values,Fill Hidden,Start Row">
+			<caption id="advaned">Advaned</caption>
 				<tr>
-					<th><label id="space_option" for="spaceSelect" class="dot">공백 무시 :</label></th>
+					<th><label id="space_option" for="spaceSelect" class="dot">Ignore blank spaces :</label></th>
 					<td>
 						<select name="skip_space" class="sel" id="spaceSelect">
-						  <option value="true">공백무시</option>
-						  <option value="false">공백포함</option>
+						  <option value="true">Ignore blank spaces</option>
+						  <option value="false">Include blank spaces</option>
 						</select>
 					</td>
-					<th><label id="start_option" for="startRow" class="dot">시작 Row :</label></th>
+					<th><label id="start_option" for="startRow" class="dot">Start Row :</label></th>
 					<td>
 						<input type="text" id="startRow" name="startRow" class="ipt" />
 					</td>
@@ -475,8 +521,7 @@
 		</div>
 		
 		<div class="foot">
-			<p><input type="button" id="sendFILE" name="sendFILE" class="btn_file" value="파일 업로드" onclick="return upload(this.form)" /></p>
-			<!-- ie8에서는 form안에 input type="image"가 있으면 form전송이 제대로 되지 않습니다. -->	
+			<p><input type="button" id="sendFILE" name="sendFILE" class="btn_file" value="File Upload" onclick="return upload(this.form)" /></p>
 		</div>
 
 	</div>
@@ -487,7 +532,21 @@
   <input type="hidden" id="escapeChar" name="escapeChar" value="" />
   <input type="hidden" id="columnNum" name="columnNum" value="" />
   <input type="hidden" id="startCol" name="startCol" value="" />
+  <input type="hidden" id="msaName" name="msaName" value="" />
 </form>
-
+<script>
+	var file = document.getElementById("filename");
+	var fileBtn = document.getElementById("choose_file");
+	var fileName = document.querySelector(".fileName");
+	fileBtn.addEventListener("click", function() {
+	  file.click();
+	});
+	file.addEventListener("change", function() {
+	  if (file.value) {
+		var name = file.value.split("\\").pop();
+		fileName.textContent = name;
+	  }
+	});
+</script>
 </body>
 </html>

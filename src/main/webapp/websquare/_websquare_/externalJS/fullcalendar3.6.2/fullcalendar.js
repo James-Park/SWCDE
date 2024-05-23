@@ -7780,10 +7780,22 @@ var DayTableMixin = FC.DayTableMixin = {
 
 	renderHeadHtml: function() {
 		var theme = this.view.calendar.theme;
+		var theme_options = theme.optionsModel._props;
+
+		var headerTableSummary = theme_options.headerTableSummary || '';
+		var headerTableCaptionStr = theme_options.headerTableCaptionStr || '';
+		var headerTableCaptionClass = theme_options.headerTableCaptionClass || '';
+
+		if (document.doctype != null && document.doctype.name == "html" && document.doctype.publicId == "" && document.doctype.systemId == "") {
+			headerTableSummary = '';
+		} else {
+			headerTableSummary = headerTableSummary ? '" summary="' + headerTableSummary.wq_replaceAll("'", "&#39;") : '';
+		}
 
 		return '' +
 			'<div class="fc-row ' + theme.getClass('headerRow') + '">' +
-				'<table class="' + theme.getClass('tableGrid') + '">' +
+				'<table class="' + theme.getClass('tableGrid') + headerTableSummary + '">' +
+					'<caption class = "' + headerTableCaptionClass + '">' + headerTableCaptionStr + '</caption>' +
 					'<thead>' +
 						this.renderHeadTrHtml() +
 					'</thead>' +
@@ -7844,7 +7856,7 @@ var DayTableMixin = FC.DayTableMixin = {
 		}
 
 		return '' +
-            '<th class="' + classNames.join(' ') + '"' +
+            '<th scope = "col" class="' + classNames.join(' ') + '"' +
 				((isDateValid && this.rowCnt) === 1 ?
 					' data-date="' + date.format('YYYY-MM-DD') + '"' :
 					'') +

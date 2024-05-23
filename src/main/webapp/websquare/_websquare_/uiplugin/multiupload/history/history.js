@@ -449,7 +449,9 @@ BrowserHistory = (function() {
         setTitle: function(title) {
             try {
                 backStack[backStack.length - 1].title = title;
-            } catch (e) {}
+            } catch (e) {
+                console.log(e);
+            }
             //if on safari, set the title to be the empty string. 
             if (browser.safari) {
                 if (title == "") {
@@ -539,12 +541,16 @@ BrowserHistory = (function() {
                 for (var i = 0; i < pl.length; i++) {
                     try {
                         pl[i].browserURLChange(flexAppUrl);
-                    } catch (e) {}
+                    } catch (e) {
+                        console.log(e);
+                    }
                 }
             } else {
                 try {
                     getPlayer(objectId).browserURLChange(flexAppUrl);
-                } catch (e) {}
+                } catch (e) {
+                    console.log(e);
+                }
             }
             currentObjectId = null;
         }

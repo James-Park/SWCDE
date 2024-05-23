@@ -75,7 +75,7 @@
 			var isCSVType = document.__uploadForm__.action.indexOf("csvToXML") >= 0;
 
 			if( !(isXlsFile && isXlsType) && !(isCSVFile && isCSVType) ){
-				alert( "FileType에 맞지 않는 File의 확장자입니다." );
+				alert( "Check the file extension." );
 				return;
 			}
 			
@@ -127,12 +127,12 @@
 
 				var fileNameDom = document.getElementById("filename")
 				var fileName = fileNameDom.value;
-				var fileNameArr = fileName.split("\\"); //fileName에 대해서 IE에서는 파일 경로가 나오는데 FF chrome은 나오지 않는다. 따라서 '\\'기준으로 나눠준다.
+				var fileNameArr = fileName.split("\\");
 				opener.window[gridID].fireFileReadEnd( fileNameArr[fileNameArr.length-1] );
 				window.self.close();
 			} catch (e) {
 				opener.WebSquare.exception.printStackTrace(e);
-				alert( "그리드 반영에 실패하였습니다" );			
+				alert( "Normal processing failed." );			
 			}
 		}
 	}
@@ -150,13 +150,13 @@
 	
 			<tr style="height:30px">
 				<td style="font-family:Verdana; font-size:12px;">
-					옵션: <select name="skip_space" style="font-family:Verdana; font-size:12px;">
-						<option value="true">공백무시</option>
-						<option value="false">공백포함</option>
+					Option: <select name="skip_space" style="font-family:Verdana; font-size:12px;">
+						<option value="true">Ignore blank spaces</option>
+						<option value="false">Include blank spaces</option>
 					</select>		
 				</td>
 				<td align="right">
-					<input type="button" name="sendFILE" style="width:90px; height:20px;  font-family:Verdana; font-size:12px;" value="파일올리기" onclick="javascript:upload(this.form)" />
+					<input type="button" name="sendFILE" style="width:90px; height:20px;  font-family:Verdana; font-size:12px;" value="File Upload" onclick="javascript:upload(this.form)" />
 				</td>
 			</tr>
 		</table>

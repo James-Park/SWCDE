@@ -46,7 +46,9 @@
 				if ( win.CKFinder._.instanceConfig[ tmp ] )
 					config = CKFINDER.tools.extend( {}, win.CKFinder._.instanceConfig[ tmp ] );
 			}
-			catch(e) {}
+			catch(e) {
+				console.log(e);
+			}
 		}
 
 		if ( tmp = get( 'startupPath' ) || get( 'start' ) )

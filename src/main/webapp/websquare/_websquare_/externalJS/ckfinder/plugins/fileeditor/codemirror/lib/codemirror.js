@@ -1373,7 +1373,7 @@
       if (this.cm.options.readOnly != "nocursor" && (!mobile || activeElt() != this.textarea)) {
         try { this.textarea.focus(); 
         } catch (e) {
-          console.log(e);
+          console;
         } // IE8 will throw if the textarea is display: none or not in DOM
       }
     },
@@ -1693,7 +1693,7 @@
 
       try { var rng = range(start.node, start.offset, end.offset, end.node); }
       catch(e) {
-        console.log(e);
+        console;
       } // Our model of the DOM might be outdated, in which case the range we try to set can be impossible
       if (rng) {
         sel.removeAllRanges();
@@ -3029,7 +3029,7 @@
 
     try { fireCallbacksForOps(group); 
     } catch(e) {
-      console.log(e);
+      console;
     } finally {
       operationGroup = null;
       for (var i = 0; i < group.ops.length; i++)
@@ -3170,7 +3170,7 @@
     try { 
       return f(); 
     } catch(e) {
-      console.log(e);
+      console;
     } finally { endOperation(cm); }
   }
   // Wraps a function in an operation. Returns the wrapped function.
@@ -3181,7 +3181,7 @@
       try { 
         return f.apply(cm, arguments); 
       } catch(e) {
-        console.log(e);
+        console;
       } finally { endOperation(cm); }
     };
   }
@@ -3194,7 +3194,7 @@
       try { 
         return f.apply(this, arguments); 
       } catch(e) {
-        console.log(e);
+        console;
       } finally { endOperation(this); }
     };
   }
@@ -3206,7 +3206,7 @@
       try { 
         return f.apply(this, arguments);
       } catch(e) {
-        console.log(e);
+        console;
       } finally { endOperation(cm); }
     };
   }
@@ -3897,7 +3897,7 @@
           cm.display.input.focus();
         }
       } catch(e) {
-        console.log(e);
+        console;
       }
     }
   }
@@ -4094,7 +4094,7 @@
       if (dropShift) cm.display.shift = false;
       done = bound(cm) != Pass;
     } catch(e) {
-      console.log(e);
+      console;
     } finally {
       cm.display.shift = prevShift;
       cm.state.suppressEdits = false;
@@ -5935,7 +5935,7 @@
             form.submit = wrappedSubmit;
           };
         } catch(e) {
-          console.log(e);
+          console;
         }
       }
     }
@@ -6038,7 +6038,7 @@
       try { 
         return inner(); 
       } catch(e) {
-        console.log(e);
+        console;
       } finally { this.lineStart -= n; }
     }
   };
@@ -8312,7 +8312,7 @@
   if (ios) // Mobile Safari apparently has a bug where select() is broken.
     selectInput = function(node) { node.selectionStart = 0; node.selectionEnd = node.value.length; };
   else if (ie) // Suppress mysterious IE10 errors
-    selectInput = function(node) { try { node.select(); } catch(_e) {console.log(_e);} };
+    selectInput = function(node) { try { node.select(); } catch(_e) {console;} };
 
   function indexOf(array, elt) {
     for (var i = 0; i < array.length; ++i)
@@ -8555,7 +8555,7 @@
     catch(e) { return false; }
   } : function(te) {
     try {var range = te.ownerDocument.selection.createRange();}
-    catch(e) {console.log(e);}
+    catch(e) {console;}
     if (!range || range.parentElement() != te) return false;
     return range.compareEndPoints("StartToEnd", range) != 0;
   };

@@ -5,7 +5,6 @@ if(ref == null || ref.equals("") || param == null || param.equals("")) {
     response.setStatus(HttpServletResponse.SC_NOT_FOUND);
     return;
 }
-// 사용자 세션 정보를 이용한  접근제거 필요한 경우 아래 추가
 
 %>
 <!DOCTYPE html>
@@ -33,8 +32,9 @@ if(ref == null || ref.equals("") || param == null || param.equals("")) {
     var wframeId;
     var callbackFunction = "";
     var scopeId = "";
+    var loadingMode = "";
+    var multiIndex = 0;
 
-    // 다국어
     var Upload_ignore_spaces = "";
     var Upload_include_spaces = "";
     var Upload_advanced = "";
@@ -47,6 +47,9 @@ if(ref == null || ref.equals("") || param == null || param.equals("")) {
     var Upload_header = "";
     var Upload_footer = "";
     var Upload_file = "";
+    var Upload_file_header = "";
+    var Upload_file_choose = "";
+    var Upload_file_span = "";
     var Upload_pwd = "";
 
     var Upload_msg2 = "";
@@ -90,7 +93,6 @@ if(ref == null || ref.equals("") || param == null || param.equals("")) {
                 document.domain = domain;
             }
 
-            // 팝업 사이즈 보정
             if(navigator.userAgent.indexOf("Windows") != -1) {
                 osName = "window";
             } else if(navigator.userAgent.indexOf("Macintosh") != -1) {
@@ -104,6 +106,16 @@ if(ref == null || ref.equals("") || param == null || param.equals("")) {
             document.__uploadForm__.multi.value = multi;
 
             uploadInfo = opener.JSON.parse( opener.WebSquare._excelMultiInfo );
+            if (uploadInfo.postMsg && uploadInfo.postMsg == "true") {
+                if (window.addEventListener) {
+                    window.addEventListener("message", receiveMessage, false);
+                } else {
+                    if (window.attachEvent) {
+                        window.attachEvent("onmessage", receiveMessage);
+                    }
+                }
+            }
+
             if(uploadInfo.useModalDisable == "true") {
                 opener.WebSquare.layer.showModal();
                 useModalDisable = "true";
@@ -120,44 +132,53 @@ if(ref == null || ref.equals("") || param == null || param.equals("")) {
             dataList = uploadInfo.dataList;
             wframeId = uploadInfo.wframeId;
             callbackFunction = uploadInfo.callbackFunction;
-            scopeId = uploadInfo.scopeId
+            scopeId = uploadInfo.scopeId;
+            loadingMode = uploadInfo.loadingMode;
 
-            Upload_ignore_spaces = opener.WebSquare.language.getMessage( "Upload_ignore_spaces" ) || "공백무시";
-            Upload_include_spaces = opener.WebSquare.language.getMessage( "Upload_include_spaces" ) || "공백포함";
-            Upload_advanced = opener.WebSquare.language.getMessage( "Upload_advanced" ) || "고급설정";
-            Upload_hidden_values = opener.WebSquare.language.getMessage( "Upload_hidden_values" ) || "히든값유무";
-            Upload_include = opener.WebSquare.language.getMessage( "Upload_include" ) || "포함";
-            Upload_not_include = opener.WebSquare.language.getMessage( "Upload_not_include" ) || "미포함";
-            Upload_fill_hidden = opener.WebSquare.language.getMessage( "Upload_fill_hidden" ) || "히든 채움";
-            Upload_sheet_no = opener.WebSquare.language.getMessage( "Upload_sheet_no" ) || "시트 No";
-            Upload_starting_row = opener.WebSquare.language.getMessage( "Upload_starting_row" ) || "시작 row";
-            Upload_starting_col = opener.WebSquare.language.getMessage( "Upload_starting_col" ) || "시작 col";
-            Upload_header = opener.WebSquare.language.getMessage( "Upload_header" ) || "헤더 유무";
-            Upload_footer = opener.WebSquare.language.getMessage( "Upload_footer" ) || "푸터 유무";
-            Upload_file = opener.WebSquare.language.getMessage( "Upload_file" ) || "파일 업로드";
-            Upload_fill = opener.WebSquare.language.getMessage( "Upload_fill" ) || "채움";
-            Upload_ignore = opener.WebSquare.language.getMessage( "Upload_ignore" ) || "무시";
-            Upload_pwd = opener.WebSquare.language.getMessage( "Upload_pwd" ) || "비밀번호";
+            Upload_ignore_spaces = opener.WebSquare.language.getMessage( "Upload_ignore_spaces" ) || "Ignore blank spaces";
+            Upload_include_spaces = opener.WebSquare.language.getMessage( "Upload_include_spaces" ) || "Include blank spaces";
+            Upload_advanced = opener.WebSquare.language.getMessage( "Upload_advanced" ) || "Advanced";
+            Upload_hidden_values = opener.WebSquare.language.getMessage( "Upload_hidden_values" ) || "Hidden values";
+            Upload_include = opener.WebSquare.language.getMessage( "Upload_include" ) || "Include";
+            Upload_not_include = opener.WebSquare.language.getMessage( "Upload_not_include" ) || "Not include";
+            Upload_fill_hidden = opener.WebSquare.language.getMessage( "Upload_fill_hidden" ) || "Fill Hidden";
+            Upload_sheet_no = opener.WebSquare.language.getMessage( "Upload_sheet_no" ) || "Sheet No";
+            Upload_starting_row = opener.WebSquare.language.getMessage( "Upload_starting_row" ) || "Start row";
+            Upload_starting_col = opener.WebSquare.language.getMessage( "Upload_starting_col" ) || "Start col";
+            Upload_header = opener.WebSquare.language.getMessage( "Upload_header" ) || "Header";
+            Upload_footer = opener.WebSquare.language.getMessage( "Upload_footer" ) || "Footer";
+            Upload_file = opener.WebSquare.language.getMessage( "Upload_file" ) || "File Upload";
+            Upload_file_header = opener.WebSquare.language.getMessage( "Upload_file_header" ) || "File Upload";
+            Upload_file_choose = opener.WebSquare.language.getMessage( "Upload_file_choose" ) || "Choose File";
+            Upload_file_span = opener.WebSquare.language.getMessage( "Upload_file_span" ) || "No file chosen";
+            Upload_fill = opener.WebSquare.language.getMessage( "Upload_fill" ) || "Fill";
+            Upload_ignore = opener.WebSquare.language.getMessage( "Upload_ignore" ) || "Ignore";
+            Upload_pwd = opener.WebSquare.language.getMessage( "Upload_pwd" ) || "Password";
 
-            Upload_msg2 = opener.WebSquare.language.getMessage( "Upload_msg2" ) || "파일 사이즈가 제한 용량을 초과 하였습니다.";
-            Upload_msg3 = opener.WebSquare.language.getMessage( "Upload_msg3" ) || "정상적으로 처리 되지 않았습니다.";
-            Upload_msg4 = opener.WebSquare.language.getMessage( "Upload_msg4" ) || "FileType에 맞지 않는 File의 확장자입니다.";
-            Upload_msg5 = opener.WebSquare.language.getMessage( "Upload_msg5" ) || "그리드 반영에 실패하였습니다";
-            Upload_msg8 = opener.WebSquare.language.getMessage( "Upload_msg8" ) || "비밀번호가 일치하지 않습니다.";
-            Upload_msg9  = opener.WebSquare.language.getMessage( "Upload_msg9" ) || "허용하지 않는 확장자 입니다.";
-            Upload_msg10 = opener.WebSquare.language.getMessage( "Upload_msg10" ) || "DRM 연계시 오류가 발생하였습니다.";
-            Upload_msg11 = opener.WebSquare.language.getMessage( "Upload_msg11" ) || "업로드 제한 건수를 초과하였습니다.";
-            Upload_msg12 = opener.WebSquare.language.getMessage( "Upload_msg12" ) || "유효하지 않은 엑셀 형식입니다.";
-            Upload_msg13 = opener.WebSquare.language.getMessage( "Upload_msg13" ) || "유효하지 않은 셀 서식입니다.";
-            Upload_msg14 = opener.WebSquare.language.getMessage( "Upload_msg14" ) || "업로드 셀건수제한을 초과하였습니다.";
-            Upload_msg15 = opener.WebSquare.language.getMessage( "Upload_msg15" ) || "파일이 암호화되어 있습니다.";
-            Upload_msg16 = opener.WebSquare.language.getMessage( "Upload_msg16" ) || "Excel 5.0/7.0은 지원하지 않습니다.";
-            Upload_msg17 = opener.WebSquare.language.getMessage( "Upload_msg17" ) || "지정 sheet가 존재하지 않습니다.";
+            Upload_msg2 = opener.WebSquare.language.getMessage( "Upload_msg2" ) || "File size exceeding the limit.";
+            Upload_msg3 = opener.WebSquare.language.getMessage( "Upload_msg3" ) || "Normal processing failed.";
+            Upload_msg4 = opener.WebSquare.language.getMessage( "Upload_msg4" ) || "Check the file extension.";
+            Upload_msg5 = opener.WebSquare.language.getMessage( "Upload_msg5" ) || "Failed to reflect on the grid.";
+            Upload_msg8 = opener.WebSquare.language.getMessage( "Upload_msg8" ) || "The password is incorrect.";
+            Upload_msg9  = opener.WebSquare.language.getMessage( "Upload_msg9" ) || "Check the file extension.";
+            Upload_msg10 = opener.WebSquare.language.getMessage( "Upload_msg10" ) || "An error occurred during DRM.";
+            Upload_msg11 = opener.WebSquare.language.getMessage( "Upload_msg11" ) || "Row count exceeding the limit.";
+            Upload_msg12 = opener.WebSquare.language.getMessage( "Upload_msg12" ) || "Invalid file format.";
+            Upload_msg13 = opener.WebSquare.language.getMessage( "Upload_msg13" ) || "Invalid cell format";
+            Upload_msg14 = opener.WebSquare.language.getMessage( "Upload_msg14" ) || "Cell count exceeding the limit.";
+            Upload_msg15 = opener.WebSquare.language.getMessage( "Upload_msg15" ) || "This file is encryped.";
+            Upload_msg16 = opener.WebSquare.language.getMessage( "Upload_msg16" ) || "Not support Excel 5.0/7.0";
+            Upload_msg17 = opener.WebSquare.language.getMessage( "Upload_msg17" ) || "Does not sheet number.";
 
             maxFileSize = uploadInfo.maxFileSize;
             maxFileSize = parseInt( maxFileSize, 10 );
-            Grid_warning9 = opener.WebSquare.language.getMessage( "Grid_warning9", maxFileSize ) || "전송 data가 제한 크기를 초과 하였습니다.\n 제한 크기 : %1 byte";
+            Grid_warning9 = opener.WebSquare.language.getMessage( "Grid_warning9", maxFileSize ) || "Data size exceeding the limit.\n limit : %1 byte";
 
+            document.getElementById( "file_header" ).innerHTML = Upload_file_header;		
+            document.getElementById( "choose_file" ).innerHTML = Upload_file_choose;
+            document.getElementById( "choose_span" ).innerHTML = Upload_file_span;
+            var obj = document.getElementById("sendFILE");
+            obj.value = Upload_file;
         } catch (e) {
             alert(e);
         }
@@ -223,7 +244,7 @@ if(ref == null || ref.equals("") || param == null || param.equals("")) {
                 layerUP.style.border="1px solid blue";
                 layerUP.style.width="100px";
                 layerUP.style.height="100px";
-                layerUP.style.visibility = "hidden";
+                layerUP.style.display = "none";
                 document.body.appendChild(layerUP);
                 src = opener.WebSquare.net.getSSLBlankPage();
                 layerUP.innerHTML = "<iframe frameborder='0px' name='" + thisForm.target + "' scrolling='no' style='width:100px; height:100px' " + src + "></iframe>";
@@ -285,13 +306,25 @@ if(ref == null || ref.equals("") || param == null || param.equals("")) {
             alert(msg);
         } else {
             var child;
+            var dataIndex = 0;
             for( var i = 0; i < gridID.length; i++ ) {
+                dataIndex = i;
+                if (loadingMode == "SAX") {
+                    if (i == multiIndex) {
+                        dataIndex = 0;
+                    } else {
+                        continue;
+                    }
+                }
+
                 if( delim != "," ) {
-                    var childData = (doc.getElementsByTagName("array"))[i].firstChild.nodeValue;
+                    var childData = (doc.getElementsByTagName("array"))[dataIndex].firstChild.nodeValue;
+                    childData = childData.replaceAll("\\n", "\n");
                     //child = toArray( childData, delim );
                     child = "[\"" + toArray( childData, delim ).join("\",\"") + "\"]";
                 } else {
-                    child = (doc.getElementsByTagName("array"))[i].firstChild.nodeValue;
+                    child = (doc.getElementsByTagName("array"))[dataIndex].firstChild.nodeValue;
+                    child = child.replaceAll("\\n", "\n");
                 }
                 
                 if( typeof vappend =="string" ) {
@@ -307,7 +340,7 @@ if(ref == null || ref.equals("") || param == null || param.equals("")) {
                     if( dataList.length != 0 ) {
                         var dcComp = opener.WebSquare.util.getComponentById(dataList[i], wframeId[i]);
                         var preCnt = dcComp.getRowCount();
-                        if( uploadType[i] == 1 || uploadType[i] == 2 ) { // 0:실제데이터, 1:출력그대로, 2: 0+1
+                        if( uploadType[i] == 1 || uploadType[i] == 2 ) {
                             dcComp.setArrayFile(jsonArray, vappend, gridID[i], uploadType[i]);
                          } else if( uploadType[i] == 0 ) {
                             dcComp.setArray(jsonArray, vappend);
@@ -325,8 +358,9 @@ if(ref == null || ref.equals("") || param == null || param.equals("")) {
 
                     var fileNameDom = document.getElementById("filename");
                     var fileName = fileNameDom.value;
-                    var fileNameArr = fileName.split("\\"); //fileName에 대해서 IE에서는 파일 경로가 나오는데 FF chrome은 나오지 않는다. 따라서 '\\'기준으로 나눠준다.
+                    var fileNameArr = fileName.split("\\");
                     opener.window[gridID[i]].fireFileReadEnd( fileNameArr[fileNameArr.length-1] );
+
                 } catch (e) {
                     opener.WebSquare.exception.printStackTrace(e);
                     alert( Upload_msg5 );
@@ -336,20 +370,40 @@ if(ref == null || ref.equals("") || param == null || param.equals("")) {
             opener.WebSquare._excelMultiInfo = "";
             opener.WebSquare._excelMultiUploadInfo = "";
 
-            if(callbackFunction != "") {
-                if(typeof scopeId == "string") {
-                    scopeId = scopeId.slice(0, scopeId.length-1);
-                }
-                var callbackFunc = opener.WebSquare.util.getGlobalFunction(callbackFunction, scopeId);               
-                if(callbackFunc() === true) {
+            if (loadingMode != "SAX" || multiIndex == gridID.length-1) {
+                if(callbackFunction != "") {
+                    if(typeof scopeId == "string") {
+                        scopeId = scopeId.slice(0, scopeId.length-1);
+                    }
+                    var callbackFunc = opener.WebSquare.util.getGlobalFunction(callbackFunction, scopeId);               
+                    if(callbackFunc() === true) {
+                        window.self.close();
+                    }
+                } else {
                     window.self.close();
                 }
-            } else {
-                window.self.close();
             }
+
+            multiIndex++;
         }
     }
-    
+
+    function windowClose() {
+        opener.WebSquare.logger.printLog("SAX mode end.");
+    }
+
+    function receiveMessage(retObj) {
+        try {
+            if (retObj.currentTarget.name = "fileupWindow") {
+                returnData(retObj.data);
+            }
+        } catch (e) {
+            opener.WebSquare.exception.printStackTrace(e);
+            alert(Upload_msg5);
+        }
+    }
+
+
     function getTextNodeValue(element) {
         var returnValue = null;
         var retValue = "";
@@ -407,7 +461,7 @@ if(ref == null || ref.equals("") || param == null || param.equals("")) {
                     sizeInfo.height = 201;
                     sizeInfo.width = 462;
                 } else if(osName == "mac") {
-                    sizeInfo.height = 181;
+                    sizeInfo.height = 198;
                     sizeInfo.width = 446;
                 }
             }
@@ -660,7 +714,7 @@ if(ref == null || ref.equals("") || param == null || param.equals("")) {
 </script>
 
 <style type="text/css">
-    html, body {margin:0px; padding:0px; font-family:"맑은 고딕"; font-size:11px;}
+    html, body {margin:0px; padding:0px; font-family:"Malgun Gothic"; font-size:11px;}
     p {margin:0px; padding:0px;}
     img, fieldset {border:0;}
     table {width:100%; background:#fff; border-collapse:collapse; border-spacing:0; empty-cells:show;}
@@ -692,22 +746,37 @@ if(ref == null || ref.equals("") || param == null || param.equals("")) {
 <form name="__uploadForm__" method="post" action="" enctype="multipart/form-data" target="__targetFrame__">
     <div class="wrap">
         <div class="header">
-            <p class="title">File Upload</p>
+            <p class="title" id="file_header">File Upload</p>
         </div>
         <div class="content">
             <div class="filebox">
-                <input type="file" id="filename" name="filename" />
+                <button type="button" id="choose_file">Choose File</button>
+                <span class="fileName" id="choose_span">No file chosen</span>
+                <input type="file" id="filename" name="filename" style="display:none;"/>
             </div>
         </div>
         
         <div class="foot">
-            <p><input type="button" id="sendFILE" name="sendFILE" class="btn_file" value="파일 업로드" onclick="return upload(this.form)" /></p>
-            <!-- ie8에서는 form안에 input type="image"가 있으면 form전송이 제대로 되지 않습니다. --> 
+            <p><input type="button" id="sendFILE" name="sendFILE" class="btn_file" value="File Upload" onclick="return upload(this.form)" /></p>
         </div>
 
     </div>
     <input type="hidden" id="gridStyle" name="gridStyle" value="" />
     <input type="hidden" id="multi" name="multi" value="" />
 </form>
+<script>
+    var file = document.getElementById("filename");
+    var fileBtn = document.getElementById("choose_file");
+    var fileName = document.querySelector(".fileName");
+    fileBtn.addEventListener("click", function() {
+      file.click();
+    });
+    file.addEventListener("change", function() {
+      if (file.value) {
+        var name = file.value.split("\\").pop();
+        fileName.textContent = name;
+      }
+    });
+</script>
 </body>
 </html>

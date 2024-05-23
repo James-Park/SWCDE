@@ -4,7 +4,6 @@ if(ref == null || ref.equals("")) {
 	response.setStatus(HttpServletResponse.SC_NOT_FOUND);
 	return;
 }
-// 사용자 세션 정보를 이용한  접근제거 필요한 경우 아래 추가
 
 %>
 <!DOCTYPE html>
@@ -17,8 +16,8 @@ if(ref == null || ref.equals("")) {
 	var dataLoadedStr = "";
 	window.onload = doInit;
 	function doInit() {
-		dataLoadStr = opener.WebSquare.language.getMessage( "Upload_msg6" ) || "데이터 수집 중..";
-		dataLoadedStr = opener.WebSquare.language.getMessage( "Upload_msg7" ) || "데이터 변환 완료";
+		dataLoadStr = opener.WebSquare.language.getMessage( "Upload_msg6" ) || "Collecting data..";
+		dataLoadedStr = opener.WebSquare.language.getMessage( "Upload_msg7" ) || "Data conversion completed.";
 		var textlayer = document.getElementById("textLayer");
 		textlayer.innerHTML = dataLoadStr;
 	}
@@ -71,9 +70,7 @@ if(ref == null || ref.equals("")) {
 </head>
 <body style="background-color:#ffffff" onload="init()"> 
 <img style="position:absolute;left:15px;top:15px;" src="../../message/images/progressingbar.gif" /><br />
-<div id="textLayer" style="position:absolute;left:15px;width:150px;top:30px;height:15px;text-align:center;">
-	데이터 수집 중.. 0%
-</div>
+<div id="textLayer" style="position:absolute;left:15px;width:150px;top:30px;height:15px;text-align:center;"></div>
 	<input id='downloadButton' type='button' disabled="true" style="position:absolute;right:55px;width:85px;top:60px;height:30px;text-align:center;word-wrap:break-word;" onclick="sendData()" value="download" />
 	<input id='cancelButton' type='button'  style="position:absolute;left:55px;width:85px;top:60px;height:30px;text-align:center;word-wrap:break-word;" onclick="cancle()" value="cancel" />
 </body>

@@ -863,7 +863,7 @@
                         width += this.w2parent.charWidth[codeValue.toString()];
                     } else if (codeValue == 32) {
                         width += this.w2parent.charWidth["emptyString"];
-                    } else { //한글
+                    } else { //hangul
                         width += 12;
                     }
                 }
@@ -1249,7 +1249,7 @@
                             grandTotalSize.height += this.valAttrs.length * cellSize.height;
                         }
                     }
-                    // 각 column width 값 저장
+                    // Save each column width value
                     w2parent.totalDataCellWidth = 0;
                     var addedCell = 0;
                     w2parent.maxViewCellWidthTotal = 0;
@@ -1279,18 +1279,18 @@
                     var tableSize = {
                         width: Math.ceil(w2parent.totalDataCellWidth + axisAreaSize.width + grandTotalSize.width),
                         height: Math.ceil((this.rowKeys.length * cellSize.height) + axisAreaSize.height + grandTotalSize.height)
-                    }
-                    // 1. X가 넘는가?
-                    //    넘으면 : x show 후, bodyHeight 축소, bar 작업
-                    //    넘지않으면 : x hidden 후, bodyHeight 증가.
-                    // 2. Y가 넘는가?
-                    //    넘으면 : Y show 후, contentWidth 축소, bar 작업
-                    //    넘지않으면 : Y를 hidden 후, contentWidth 100%
+                    };
+                    // 1. Is it over X?
+                    //  If it exceeds: After x show, reduce bodyHeight, work on bar
+                    //  If not exceeded: x hidden, then bodyHeight increases.
+                    // 2. Is it more than Y?
+                    //  If it exceeds: After Y show, reduce contentWidth, work on bar
+                    //  If not exceeded: hide Y, then contentWidth 100%
                     var scrollY = $("#" + w2parent.id + "_container_scrollY");
                     var scrollX = $("#" + w2parent.id + "_container_scrollX");
                     var containerBody = $("#" + w2parent.id + "_container_body");
                     var containerContent = $("#" + w2parent.id + "_container_content");
-                    //scroll 초기화
+                    //scroll initialize
                     if (scrollX[0]) {
                         scrollX[0].scrollLeft = 0;
                     }
@@ -1320,7 +1320,7 @@
                     var contentWidth = 0;
                     if (viewSize.height < tableSize.height) {
                         scrollY.show();
-                        contentWidth = render.width() - scrollY.width() - 1; //scrollY 사라지는 문제로 1px 줄임
+                        contentWidth = render.width() - scrollY.width() - 1; //Reduced by 1px due to issue with scrollY disappearing
                         containerContent.width(contentWidth);
                         $("#" + w2parent.id + "_container_scrollY_barY").css("height", tableSize.height);
                     } else {
@@ -1437,8 +1437,8 @@
                             w2parent.pivotWidth += width;
                         }
                     }
-                    var tableContent = $("#" + w2parent.id + "_pvtTable"); // column resize 기능을 위해 추가함
-                    tableContent.css("table-layout", "fixed"); // table-layout:fixed로 설정한 다음
+                    var tableContent = $("#" + w2parent.id + "_pvtTable"); // Added for column resize function
+                    tableContent.css("table-layout", "fixed"); // table-layout:After setting it to fixed
                     var tableWidth = Math.ceil(w2parent.maxViewCellWidthTotal + axisAreaSize.width);
                     if (w2parent.options.autoFit == "allColumn") {
                         var minWidth = parseInt(w2parent.options.autoFitMinWidth);
@@ -1448,7 +1448,7 @@
                             tableContent.width(tableWidth);
                         }
                     } else {
-                        tableContent.width(tableWidth); // table 전체 width를 설정해야 colgroup을 통한 가로길이 조절이 가능하다.  
+                        tableContent.width(tableWidth); // Set the overall width of the table. Then, the horizontal length can be adjusted through colgroup.
                     }
                     if (w2parent.options.autoFit == "allColumn") {
                         if (contentWidth < Math.ceil(w2parent.maxViewCellWidthTotal + axisAreaSize.width + grandTotalSize.width)) {
@@ -1487,10 +1487,12 @@
                     if (WebSquare.util.isSafari()) {
                         WebSquare.cssStyleSheet.changeRule(".type8", "minWidth", "0");
                     }
-                    //불필요한 pivot Data 초기화
+                    //Initializing unnecessary pivot data
                     this.rowKeyStrings = {};
                     this.colKeyStrings = {};
-                } catch (e) {}
+                } catch (e) {
+                    console.log(e);
+                }
             };
             PivotData.prototype.resizeContentAreaAfterSetColumnWidth = function(result, w2parent) {
                 try {
@@ -1531,7 +1533,7 @@
                             grandTotalSize.height += this.valAttrs.length * w2parent.cellHeight;
                         }
                     }
-                    // 각 column width 값 저장
+                    // Save each column width value
                     w2parent.totalDataCellWidth = 0;
                     var addedCell = 0;
                     if (w2parent.options.showGrandTotal) {
@@ -1575,7 +1577,7 @@
                     var contentWidth = 0;
                     if (viewSize.height < tableSize.height) {
                         scrollY.show();
-                        contentWidth = render.width() - scrollY.width() - 1; //scrollY 사라지는 문제로 1px 줄임
+                        contentWidth = render.width() - scrollY.width() - 1;
                         containerContent.width(contentWidth);
                         $("#" + w2parent.id + "_container_scrollY_barY").css("height", tableSize.height);
                     } else {
@@ -1596,7 +1598,9 @@
                     //w2parent.viewedRowNum = Math.floor(w2parent.viewTotalCellHeight/cellSize.height);
                     //w2parent.viewedColNum = Math.floor(w2parent.viewTotalCellWidth/cellSize.width);
                     //containerContent.height(viewSize.height - w2parent.viewTotalCellHeight%cellSize.height + 2);
-                } catch (e) {}
+                } catch (e) {
+                    console.log(e);
+                }
             };
             return PivotData;
         })();
@@ -1994,7 +1998,7 @@
                                 result.push(thStr);
                             }
                         }
-                        // 데이터 셀 X축
+                        // data cell X axis
                         var drawedColumnX = 0;
                         for (j in colKeys) { // colkey
                             var isDisabledCell = false;
@@ -2040,7 +2044,6 @@
                             } else {
                                 if (w2parent.options.editablePivotMode != "true" && w2parent.options.showZero == true && (val == null || val == "" || val == 0)) {
                                     val = 0;
-                                    //aggregator가 없어 format이 없으므로 aggregator가 존재하는 format을 사용
                                     //aggregator = tempAggregator;
                                 } else {
                                     val = aggregator.format(val);
@@ -2218,7 +2221,7 @@
                                 }
                             }
                         }
-                        // 데이터 셀 X축
+                        // data cell X axis
                         var colKeysIndex = 0;
                         var drawedColumnX = 0;
                         for (j in colKeys) { // colkey
@@ -2257,7 +2260,6 @@
                                 } else {
                                     if (w2parent.options.editablePivotMode != "true" && w2parent.options.showZero == true && (val == null || val == "" || val == 0)) {
                                         val = 0;
-                                        //aggregator가 없어 format이 없으므로 aggregator가 존재하는 format을 사용
                                         //aggregator = tempAggregator;
                                     } else {
                                         if (w2parent.options.valueDataType == "number") {
@@ -2372,7 +2374,6 @@
                         thStr += "</th>";
                         result.push(thStr);
                         idx = _.indexOf(colAttrs, w2parent.options.grandTotalName);
-                        // 표측 토탈
                         var isBroken = false;
                         var drawedColumnX = 0;
                         for (j in colKeys) {
@@ -2697,7 +2698,7 @@
                             var str;
                             if (w2parent.headerDataNameFormatter) {
                                 str = w2parent.headerDataNameFormatter(realRowIndexByColKeys[flatColKey], colAttrs[parseInt(j)], colKeys[i][j] + "", w2parent.data[realRowIndexByColKeys[flatColKey]]);
-                                //불필요한 공백 및 tag 제거
+                                //remove unnecessary spaces and tags
                                 str = str.replace(/&nbsp;/g, "");
                                 str = str.replace(/<\/?[^>]+(>|$)/g, "");
                                 //var div = document.createElement("div");
@@ -2770,7 +2771,7 @@
                                 } else {
                                     str = w2parent.headerDataNameFormatter(realRowIndexByRowKeys[flatRowKey], rowAttrs[j], rowKeyStr, w2parent.data[realRowIndexByRowKeys[flatRowKey]]);
                                 }
-                                //불필요한 공백 및 tag 제거
+                                //remove unnecessary spaces and tags
                                 str = str.replace(/&nbsp;/g, "");
                                 str = str.replace(/<\/?[^>]+(>|$)/g, "");
                                 //var div = document.createElement("div");
@@ -2926,14 +2927,14 @@
                 unusedAttrsVertical: "",
                 autoSortUnusedAttrs: false,
                 rendererOptions: {
-                    localeStrings: locales[locale].localeStrings
+                    localeStrings: inputOpts.localeStrings
                 },
                 onRefresh: null,
                 filter: function() {
                     return true;
                 },
                 sorters: function() {},
-                localeStrings: locales[locale].localeStrings
+                localeStrings: inputOpts.localeStrings
             };
             existingOpts = this.data("pivotUIOptions");
             if ((existingOpts == null) || overwrite) {
@@ -2993,7 +2994,7 @@
                     return results;
                 });
                 // STEP 1
-                // CONTAINER를 만든다.
+                // make CONTAINER.
                 this.html('');
                 var containerHeader = $("<div>")
                     .attr("id", w2parent.id + "_container_header")
@@ -3267,9 +3268,9 @@
                         }
                         $("<p>").appendTo(valueList).append($("<button>", {
                             type: "button"
-                        }).text("적용").bind("click", updateFilter)).append($("<button>", {
+                        }).text(opts.localeStrings.apply).bind("click", updateFilter)).append($("<button>", {
                             type: "button"
-                        }).text("닫기").bind("click", function() {
+                        }).text(opts.localeStrings.cancel).bind("click", function() {
                             valueList.toggle(0);
                         }));
                         popPosition = $target.find('.pvtTriangle').position();
