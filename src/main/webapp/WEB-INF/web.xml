@@ -39,7 +39,7 @@
 		<servlet-class>websquare.http.DefaultRequestDispatcher</servlet-class>
 		<init-param>
 			<param-name>WEBSQUARE_HOME</param-name>
-			<param-value>E:\GitHub_workspace\SWCDE\websquare_home</param-value>
+			<param-value>C:\GitHub_workspace\SWCDE\websquare_home</param-value>
 		</init-param>
 	</servlet>
 	
