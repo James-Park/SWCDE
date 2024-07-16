@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.inswave</groupId>
@@ -27,14 +28,14 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-		
+
 		<!-- Spring Web MVC -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
 			<version>${org.springframework-version}</version>
 		</dependency>
-		
+
 		<!-- Spring JDBC -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -356,7 +357,8 @@
 			<scope>runtime</scope>
 		</dependency>
 
-		<!-- Central Maven Repository에 등록되지 않는 수동 등록 라이브러리 =============================== -->
+		<!-- Central Maven Repository에 등록되지 않는 수동 등록 라이브러리
+		=============================== -->
 		<dependency>
 			<groupId>org.apache</groupId>
 			<artifactId>batik-all</artifactId>
@@ -372,7 +374,7 @@
 		<dependency>
 			<groupId>websquare</groupId>
 			<artifactId>websquare</artifactId>
-			<version>ai_6.0_0.1084B.20240510.163456_1.5</version>
+			<version>ai_6.0_0.1102B.20240711.150800_1.5</version>
 		</dependency>
 	</dependencies>
 	<build>
@@ -382,10 +384,12 @@
 				<version>2.9</version>
 				<configuration>
 					<additionalProjectnatures>
-						<projectnature>org.springframework.ide.eclipse.core.springnature</projectnature>
+						<projectnature>
+							org.springframework.ide.eclipse.core.springnature</projectnature>
 					</additionalProjectnatures>
 					<additionalBuildcommands>
-						<buildcommand>org.springframework.ide.eclipse.core.springbuilder</buildcommand>
+						<buildcommand>
+							org.springframework.ide.eclipse.core.springbuilder</buildcommand>
 					</additionalBuildcommands>
 					<downloadSources>true</downloadSources>
 					<downloadJavadocs>true</downloadJavadocs>

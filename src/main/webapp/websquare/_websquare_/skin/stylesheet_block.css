@@ -1042,10 +1042,6 @@ a.w2trigger_anchor:hover span{background:url(uiplugin/trigger/images/b_blueon_f.
     border:0;
 }
 
-.w2inputCalendar_img_readOnly {
-    cursor:default
-}
-
 .w2inputCalendar_button.w2inputCalendar_img_over {
     background-image : url(uiplugin/inputCalendar/images/icon_calendar_over.gif);
     border:0;
@@ -1091,6 +1087,7 @@ a.w2trigger_anchor:hover span{background:url(uiplugin/trigger/images/b_blueon_f.
 }
 
 .w2inputCalendar_a {
+    display: inline-block;
     position : relative;
 }
 
@@ -1108,6 +1105,14 @@ a.w2trigger_anchor:hover span{background:url(uiplugin/trigger/images/b_blueon_f.
     cursor : pointer;
     border:0;
     overflow:visible;
+}
+
+.w2inputCalendar_button.w2button_disabled {
+	cursor : default;
+}
+
+.w2inputCalendar_img_readOnly {
+	cursor:default
 }
 
 .w2inputCalendar_header_btn_ok_div {
@@ -2306,6 +2311,11 @@ a.w2trigger_anchor:hover span{background:url(uiplugin/trigger/images/b_blueon_f.
     width:16px;height:100%;
 }
 
+.w2autoComplete_ul_col_arrow_hide {
+    display:none !important;
+    width:0px !important;
+}
+
 .w2autoComplete_ul_label{
     display:block;
     overflow: hidden;
@@ -2548,13 +2558,14 @@ a.w2trigger_anchor:hover span{background:url(uiplugin/trigger/images/b_blueon_f.
     padding-right:3px;
     text-align:right;
     box-sizing: border-box;
-    border: 1px solid #b3b3b3
+    border: 1px solid #b3b3b3;
+    background: #ffffff;
 }
 
 .w2checkcombobox_btn_cancel,.w2checkcombobox_btn_confirm {
     position: relative;
     display: inline-block;
-    height: 20px;
+    height: 14px;
     
     text-align: center;
     margin:3px 0 3px 3px;
@@ -6020,6 +6031,7 @@ button.w2calendar_header_next_month {
 
 .w2radio_disabled {
     color : #848684;
+    pointer-events: none;
 }
 
 .w2radio_tooltip {
@@ -9658,6 +9670,10 @@ background-image: linear-gradient(to bottom, #E4E4E4 0%, #EDEDED 1%);
     pointer-events: none;
 }
 
+.w2anchor_readonly {
+    pointer-events: none;
+}
+
 .w2anchor a, .w2anchor2 {
     color:#383d41;
 }
@@ -11213,14 +11229,32 @@ table.pvtTable .pvtTotalLabel {text-align: center;}
     padding: 5px;
     background: skyblue;
 }
-
 .w2mapchart_accessibility {
     width:1px;
     height:1px;
 }
-
 .w2mapchart_accessibility_select {
     visibility: hidden;
+}
+.w2mapchart_map .callout_label {
+    pointer-events: auto;
+    cursor: default;
+}
+.w2mapchart_map .callout_line {
+    stroke: gray;
+    stroke-width: 0.7px;
+    opacity: 0.8;
+}
+.w2mapchart_map .callout_circle {
+    fill: gray;
+    opacity: 0.8;
+}
+.w2mapchart_map .callout_line.highlight {
+    stroke-width: 1.5px;
+    opacity: 1.0;
+}
+.w2mapchart_map .callout_circle.highlight {
+    opacity: 1.0;
 }
 
 .w2grid_groupbyFilterBox{
@@ -11489,6 +11523,9 @@ table.pvtTable .pvtTotalLabel {text-align: center;}
 .w2editor_notification.w2fadeOut {
     -webkit-animation: w2fadeOut .7s;
     animation: w2fadeOut .7s;
+}
+.w2editor_accessibility .cke_button_on:hover {
+    background-color: #e5e5e5;
 }
 @-webkit-keyframes w2fadeIn {
     from { opacity: 0; }

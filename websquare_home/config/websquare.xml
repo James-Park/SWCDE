@@ -5,7 +5,7 @@
 		<useBOM value="true" />
 	</csv>
 	<upload>
-		<baseDir value="E:\Eclipse_Workspace\GitHub_workspace\SWCDE\src\main\webapp\fileUpload">
+		<baseDir value="C:\Github_Workspace\SWCDE\src\main\webapp\fileUpload">
 		</baseDir>
 		<encoding value="UTF-8" />
 		<maxUploadSize value="536870912" />
@@ -23,7 +23,7 @@
 			<removeKeyPath value="true" />
 		</callback>
 		<imgUpload>
-			<baseDir value="E:\Eclipse_Workspace\GitHub_workspace\SWCDE\src\main\webapp\imagesUpload" />
+			<baseDir value="C:\Github_Workspace\SWCDE\src\main\webapp\imagesUpload" />
 			<subDir value="" />
 			<allowedExtension>
 				png,jpg,gif,jpeg,tiff,bmp
@@ -123,10 +123,10 @@
 	--> 
 	<log>
 		<target console="true" description="basic log"
-			dir="E:\Eclipse_Workspace\GitHub_workspace\SWCDE\websquare_home\log\websquare" filename="websquare" level="INFO"
+			dir="C:\Github_Workspace\SWCDE\websquare_home\log\websquare" filename="websquare" level="INFO"
 			lineNumber="true" name="websquare" retentionPeriod="10" thread="true" />
 		<target console="true" description="error log"
-			dir="E:\Eclipse_Workspace\GitHub_workspace\SWCDE\websquare_home\log\exception" filename="exception" level="INFO"
+			dir="C:\Github_Workspace\SWCDE\websquare_home\log\exception" filename="exception" level="INFO"
 			lineNumber="true" name="exception" retentionPeriod="10" thread="true" />
 	</log>
 </websquare>
