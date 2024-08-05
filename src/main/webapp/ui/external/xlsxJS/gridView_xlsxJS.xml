@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:w2="http://www.inswave.com/websquare" xmlns:xf="http://www.w3.org/2002/xforms">
+    <head>
+    	<w2:type>DEFAULT</w2:type>
+        <w2:buildDate/>
+        <xf:model>
+        	<xf:instance>
+        		<data xmlns="" />
+        	</xf:instance>
+        	<w2:dataCollection baseNode="map">
+        		<w2:dataMap baseNode="map" id="dma_searchParam">
+        			<w2:keyInfo>
+        				<w2:key id="name" name="이름" dataType="text"></w2:key>
+        				<w2:key id="tel" name="전화번호" dataType="text"></w2:key>
+        			</w2:keyInfo>
+        		</w2:dataMap>
+        		<w2:dataList baseNode="list" repeatNode="map" id="dlt_userList" saveRemovedData="true">
+        			<w2:columnInfo>
+        				<w2:column id="id" name="아이디" dataType="text"></w2:column>
+        				<w2:column id="name" name="이름" dataType="text"></w2:column>
+        				<w2:column id="tel" name="전화번호" dataType="text"></w2:column>
+        			</w2:columnInfo>
+        			<w2:data use="false">
+        			</w2:data>
+        		</w2:dataList>
+        	</w2:dataCollection>
+        	<w2:workflowCollection></w2:workflowCollection>
+        	<xf:submission id="submission1" ref='data:json,{"id":"dma_searchParam","key":"param"}'
+        		target='data:json,{"id":"dlt_userList","key":"data"}' action="/test/testJsonMap.do" method="post" mediatype="application/json"
+        		encoding="UTF-8" instance="" replace="" errorHandler="" customHandler="" mode="asynchronous" processMsg="" ev:submit=""
+        		ev:submitdone="" ev:submiterror="" abortTrigger="">
+        	</xf:submission>
+        </xf:model>
+        <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+        <script type="text/javascript"><![CDATA[scwin.onpageload = function () {
+    scwin.bindFileChangeEvent(upd_upload1, dlt_userList);
+};
+
+scwin.trigger1_onclick = function (e) {
+    $w.executeSubmission("submission1");
+};
+
+scwin.btn_excelDownload_onclick = function (e) {
+    scwin.downloadExcel(dlt_userList.getAllJSON());
+};
+
+/**
+ * @method
+ * @name bindFileChangeEvent
+ * @description 파일 선택 시 이벤트가 발생하도록 바인딩한다.
+ * @param {object} uploadObj 업로드 컴포넌트 객체
+ * @param {object} dataListObj DataList 객체
+ * @hidden N
+ * @exception 
+ * @example ${example}
+ */
+scwin.bindFileChangeEvent = function (uploadObj, dataListObj) {
+    var fileInputId = uploadObj.getID() + "_fakeinput";
+    document.getElementById(fileInputId).addEventListener('change', function (event) {
+        scwin.handleFile(event, { dataList: dataListObj });
+    }, false);
+};
+
+/**
+ * @method
+ * @name handleFile
+ * @description 파일 선택 시 데이터를 읽은 데이터를 옵션으로 전달한 DataList 객체에 저장한다.
+ * @param {object} e 이벤트 객체
+ * @param {object} option 옵션 정보
+ * @hidden N
+ * @exception 
+ * @example ${example}
+ */
+scwin.handleFile = function (e, option) {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+
+    reader.onload = function (event) {
+        debugger;
+        const data = new Uint8Array(event.target.result);
+        const workbook = XLSX.read(data, { type: 'array' });
+
+        const firstSheetName = workbook.SheetNames[0];
+        const worksheet = workbook.Sheets[firstSheetName];
+        const jsonData = XLSX.utils.sheet_to_row_object_array(worksheet);
+
+        option.dataList.setJSON(jsonData);
+    };
+
+    reader.readAsArrayBuffer(file);
+}
+
+/**
+ * @method JSON 데이터를 엑셀로 변환하고 다운로드하는 함수
+ * @name downloadExcel
+ * @description JSON 데이터를 엑셀 파일로 다운로드한다.
+ * @param {string} jsonData 엑셀 파일로 다운로드 받을 JSON 데이터
+ * @hidden N
+ * @exception 
+ * @example ${example}
+ */
+scwin.downloadExcel = function (jsonData) {
+    // JSON 데이터를 워크시트로 변환
+    const worksheet = XLSX.utils.json_to_sheet(jsonData);
+
+    // 새로운 워크북 생성
+    const workbook = XLSX.utils.book_new();
+
+    // 워크북에 워크시트 추가
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+
+    // 엑셀 파일 생성 및 다운로드
+    XLSX.writeFile(workbook, "data.xlsx");
+};
+
+
+]]></script>
+    </head>
+    <body ev:onpageload="scwin.onpageload">
+    	<xf:group style="width:100.0%;height:37px;" id="" class="">
+    		<w2:textbox label="엑셀 업로드/다운로드 using XLSX.js" style="width:578px;height:44px;font-size:30px;font-weight:bold;float:left;"
+    			id="">
+    		</w2:textbox>
+    		<xf:trigger ev:onclick="scwin.btn_excelDownload_onclick"
+    			style="width:127px;height:27px;float:right;margin-top:5px;margin-right:5px;" id="btn_excelDownload" type="button">
+    			<xf:label><![CDATA[엑셀 다운로드]]></xf:label>
+    		</xf:trigger>
+    		<xf:trigger ev:onclick="scwin.trigger1_onclick" id="trigger1"
+    			style="width: 80px;height: 27px;float:right;margin-top:5px;margin-right:5px;" type="button">
+    			<xf:label><![CDATA[조회]]></xf:label>
+    		</xf:trigger>
+    		<w2:upload imageStyle="position:absolute;vertical-align:middle;word-wrap:break-word"
+    			inputStyle="vertical-align:middle;word-wrap:break-word" style="width: 250px;height: 23px;" id="upd_upload1">
+    		</w2:upload>
+    	</xf:group>
+    	<xf:group tagname="table" style="width:100.00%;" id="" class="w2tb">
+    		<w2:attributes>
+    			<w2:summary></w2:summary>
+    		</w2:attributes>
+    		<xf:group tagname="caption"></xf:group>
+    		<xf:group tagname="colgroup">
+    			<xf:group tagname="col" style="width:25.00%;"></xf:group>
+    			<xf:group tagname="col" style="width:25.00%;"></xf:group>
+    			<xf:group tagname="col" style="width:25.00%;"></xf:group>
+    			<xf:group tagname="col" style="width:25.00%;"></xf:group>
+    		</xf:group>
+    		<xf:group tagname="tr" style="height:32.00px;">
+    			<xf:group tagname="th" style="" class="w2tb_th">
+    				이름
+    				<w2:attributes>
+    					<w2:scope>row</w2:scope>
+    				</w2:attributes>
+    			</xf:group>
+    			<xf:group tagname="td" style="" class="w2tb_td">
+    				<xf:input adjustMaxLength="false" id="" style="width: 144px;height: 21px;" ref="data:dma_searchParam.name"></xf:input>
+    			</xf:group>
+    			<xf:group tagname="th" style="" class="w2tb_th">
+    				전화번호
+    				<w2:attributes>
+    					<w2:scope>row</w2:scope>
+    				</w2:attributes>
+    			</xf:group>
+    			<xf:group tagname="td" style="" class="w2tb_td">
+    				<xf:input adjustMaxLength="false" id="" style="width: 144px;height: 21px;" ref="data:dma_searchParam.tel"></xf:input>
+    			</xf:group>
+    		</xf:group>
+    	</xf:group>
+    	<w2:gridView id="" ignoreToggleOnDisabled="false" useShiftKey="true" style="width:100.0%;height:314px;margin-top:10px"
+    		useFilterList="false" scrollByColumn="false" defaultCellHeight="20" showSortableUseFilter="false" scrollByColumnAdaptive="false"
+    		summaryAuto="false" summaryOnlyAuto="false" applyAllColumnStyle="false" dataList="data:dlt_userList" ignoreCellClick="false"
+    		autoFit="allColumn" tooltipDisplay="true">
+    		<w2:caption style="" id="caption2" value="this is a grid caption."></w2:caption>
+    		<w2:header style="" id="header2">
+    			<w2:row style="" id="row3">
+    				<w2:column width="70" inputType="text" style="" id="column7" value="아이디" blockSelect="false" displayMode="label"></w2:column>
+    				<w2:column width="70" inputType="text" style="" id="column5" value="이름" blockSelect="false" displayMode="label"></w2:column>
+    				<w2:column width="70" inputType="text" style="" id="column3" value="전화번호" blockSelect="false" displayMode="label"></w2:column>
+    			</w2:row>
+    		</w2:header>
+    		<w2:gBody style="" id="gBody2">
+    			<w2:row style="" id="row4">
+    				<w2:column width="70" inputType="text" style="" id="id" value="" blockSelect="false" displayMode="label"></w2:column>
+    				<w2:column width="70" inputType="text" style="" id="name" value="" blockSelect="false" displayMode="label"></w2:column>
+    				<w2:column width="70" inputType="text" style="" id="tel" value="" blockSelect="false" displayMode="label"></w2:column>
+    			</w2:row>
+    		</w2:gBody>
+    	</w2:gridView>
+    </body>
+</html>
