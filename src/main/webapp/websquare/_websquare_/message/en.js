@@ -127,6 +127,7 @@ var WebSquareLang = {
     IC_invalidCalendarSelect: "Invalid date format",
     GRID_noResultMsg: "There is no search result.",
     GRID_useFilterEmptyMsg: " Empty",
+    GRID_useFilterNullMsg:"Null",
     SelectBox_all: "-all-",
     SelectBox_choose: "-choose-",
     //CheckCombobox
@@ -208,10 +209,12 @@ var WebSquareLang = {
     Pagelist_previous: "Previous",
     Pagelist_next_page: "Next Page",
     Pagelist_next: "Next",
-    pagelist_nextList_page: "Next list of pages",
-    pagelist_previousList_page: "Previous list of pages",
+    Pagelist_nextList_page: "Next list of %1 pages",
+    Pagelist_previousList_page: "Previous list of %1 pages",
     Pagelist_last_page: "Last Page",
     Pagelist_selected: "%1 selected",
+    Pagelist_previous_ellipsisText: "Previous items omitted",
+    Pagelist_next_ellipsisText: "Next items omitted",
     // slider
     Slider_warning1: "Enter a value between %1 and %2.",
     Slider_warning2: "Increase the value between %1 and %2 by %3.",
@@ -291,6 +294,9 @@ var WebSquareLang = {
     Chart_main_axis: "Main Axis",
     Chart_auxiliary_axis: "Auxiliary Axis",
     Chart_warning_msg1: "Incorrect data",
+    Chart_warning_load_default_version: "load as the default version %1",
+    Chart_warning_incorrect_chart_version: "Incorrect Chart version",
+    Chart_warning_no_resource: "No resource corresponding to the chart version",
     // tabControl
     TabControl_maxNum_warning: "Maximum %1 tabs are allowed",
     TabControl_close: "Close",
@@ -449,6 +455,12 @@ var WebSquareLang = {
     Upload_msg17: "Does not sheet number.",
     Upload_msg18: "It is a write-only file or an unreadable file.",
     Upload_warning1: "Inaccessible for security purposes.",
+    //datalist
+    DataList_msg1: "An unexpected error occurred during processing.",
+    DataList_msg2: "The user-defined provider class could not be found.",
+    DataList_msg3: "An error occurred while generating data linked to the user-defined provider.",
+    DataList_msg4: "Processing was terminated because the status was set to false.",
+    DataList_msg5: "Processing was stopped because the maximum number of rows that can be received was exceeded.",
     //itemTable
     itemTable_confirm: "confirm",
     itemTable_cancel: "cancel",
@@ -495,6 +507,11 @@ var WebSquareLang = {
     //editor
     Editor_currentChar: "Characters",
     Editor_maxChar_warning: "Cannot exceed %1 characters.",
+    Editor_warning_load_default_version: "load as the default version %1",
+    Editor_warning_incorrect_editor_version: "Incorrect editor version",
+    Editor_warning_no_resource: "No resource corresponding to the editor version",
+    Editor_ariaLabel: "Editor, Press ALT 0 for help",
+    //scheduleCalendar
     scheduleCalendar_schedule: "schedule",
     //performance
     Performance_step1: "Time elapsed from initiating a browser URL call until the 'BootLoader' finishes loading. 'BootLoader' is essential for the initial startup of the WebSquare engine.",
@@ -519,5 +536,7 @@ var WebSquareLang = {
     Performance_wframe_step1: "Time elapsed from wframe creation until completion of WebSquare Page File loading and DOM rendering (toHTML).",
     Performance_wframe_step2: "Time taken to execute wframe's 'initScript', 'onpageload', and 'postScript' events. Marks completion of wframe processing. Total elapsed time is the sum of step1 and end.",
     //accessibility
-    Accssibility_btn_aria_label_windowContainer: "close window"
+    Accssibility_btn_aria_label_windowContainer: "close window",
+    //dragghost
+    Drag_no_data: "no data"
 };

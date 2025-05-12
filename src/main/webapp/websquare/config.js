@@ -24,7 +24,16 @@ export default {
     "docType": {
       "@value": "standard"
     },
+    "errorPage": {
+      "@value": "true",
+      "errorHandler": {
+        "@value": "errorPageHandler"
+      },
+      "E404": {}
+    },
     "debug": {
+      "@errorConsole": "true",
+      "@errorHandler": "errorHandler",
       "@remoteConsole": "false",
       "@value": "true"
     },

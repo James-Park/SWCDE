@@ -1,4 +1,41 @@
 (function() {
+    function _safeInnerHTML(elem, str) {
+        try {
+            if (!elem || typeof elem.textContent !== "string") {
+                return;
+            }
+            if (typeof str !== "string") {
+                str = "";
+            }
+            if (str.indexOf("<") >= 0) {
+                elem.textContent = "";
+                var pattern1 = /<\s*script/ig;
+                var pattern2 = /\s*\/\s*script\s*>/ig;
+                var safeElem = "wq-safescr";
+                str = str.replace(pattern1, "<" + safeElem).replace(pattern2, "/" + safeElem +">");
+                if (location.hostname !== window.document.domain) {
+                    var tempDiv = document.createElement("div");
+                    tempDiv.innerHTML = str;
+                    while (tempDiv.firstChild) {
+                        elem.appendChild(tempDiv.firstChild);
+                    }
+                } else {
+                    var parser = new DOMParser();
+                    var bodyContent = parser.parseFromString(str, "text/html").body;
+                    for (var i = 0; i < bodyContent.childNodes.length; i++) {
+                        var node = bodyContent.childNodes[i];
+                        if (node.nodeType !== 1 || node.tagName.toUpperCase() !== "SCRIPT") {
+                            elem.appendChild(node.cloneNode(true));
+                        }
+                    }
+                }
+            } else {
+                elem.textContent = str;
+            }
+        } catch (e) {
+            console.error(e);
+        }
+    }
     var callWithJQuery,
         indexOf = [].indexOf || function(item) {
             for (var i = 0, l = this.length; i < l; i++) {
@@ -1227,7 +1264,7 @@
                         }
                         axisAreaSize.width += thWidth;
                         colGroupWidth.push(thWidth - colAttrWidth);
-                        $(tableContentTrThList[j])[0].innerHTML = w2parent.firstRowStr[j];
+                        _safeInnerHTML($(tableContentTrThList[j])[0], w2parent.firstRowStr[j]);
                     }
                     if (colAttrWidth != 0) {
                         colGroupWidth.push(colAttrWidth);
@@ -1883,7 +1920,11 @@
                                         var thStr = "<th " + headerTextAlignStr + "class='type3 pvtTotalLabel' rowspan='";
                                         thStr += colAttrs.length + (rowAttrs.length === 0 ? 0 : 1)
                                         thStr += "' >";
-                                        thStr += (opts.attributeLabels[pivotData.valAttrs[k]] || pivotData.valAttrs[k]);
+                                        if (opts.grandTotalRowLabel && opts.grandTotalRowLabel[pivotData.valAttrs[k]]) {
+                                            thStr += (opts.grandTotalRowLabel[pivotData.valAttrs[k]] || (opts.attributeLabels[pivotData.valAttrs[k]] || pivotData.valAttrs[k]));
+                                        } else {
+                                            thStr += (opts.attributeLabels[pivotData.valAttrs[k]] || pivotData.valAttrs[k]);
+                                        }
                                         thStr += "</th>";
                                         result.push(thStr);
                                     }
@@ -2149,7 +2190,7 @@
                                     tempRowData = tempRowData.slice(rowColSpan);
                                     if (rowColSpan !== -1) {
                                         if (tempRowData.length > 0) {
-                                            var thStr = "<th " + headerTextAlignStr + "class='type7 pvtRowLabel' " + dataHeader_data + "='row:" + j + "'" + " rowspan='" + x + "' ";
+                                            var thStr = "<th " + headerTextAlignStr + "class='type7 pvtRowLabel' data-coordinate='" + i + "," + j + "' " + dataHeader_data + "='row:" + j + "'" + " rowspan='" + x + "' ";
                                             thStr += " colspan='" + rowColSpan + "' ";
                                         } else {
                                             if ((tempRowData.length === 0 || parseInt(j) === rowAttrs.length - 1) && colAttrs.length !== 0) {
@@ -2157,7 +2198,7 @@
                                                     var thStr = "<th " + headerTextAlignStr + "class='type7 pvtAxisLabel'" + "data-axis='col:" + j + ":" + txt + "'" + "rowspan='" + x + "' ";
                                                     thStr += " colspan='" + 1 + "' ";
                                                 } else {
-                                                    var thStr = "<th " + headerTextAlignStr + "class='type7 pvtRowLabel' " + dataHeader_data + "='row:" + j + "'" + "rowspan='" + x + "' ";
+                                                    var thStr = "<th " + headerTextAlignStr + "class='type7 pvtRowLabel' data-coordinate='" + i + "," + j + "' " + dataHeader_data + "='row:" + j + "'" + "rowspan='" + x + "' ";
                                                     thStr += " colspan='" + rowColSpan + "' ";
                                                 }
                                             }
@@ -2188,13 +2229,13 @@
                                 }
                             } else {
                                 if (x !== -1) {
-                                    var thStr = "<th " + headerTextAlignStr + "class='type7 pvtRowLabel' " + dataHeader_data + "='row:" + j + "'" + " rowspan='" + x + "' ";
+                                    var thStr = "<th " + headerTextAlignStr + "class='type7 pvtRowLabel' data-coordinate='" + i + "," + j + "' " + dataHeader_data + "='row:" + j + "'" + " rowspan='" + x + "' ";
                                     if (parseInt(j) === rowAttrs.length - 1 && colAttrs.length !== 0) {
                                         if ((this.rows.length == 1 && this.rows[0] == w2parent.options.grandTotalName) || (this.cols.length == 1 && this.cols[0] == w2parent.options.grandTotalName)) {
                                             var thStr = "<th " + headerTextAlignStr + "class='type7 pvtAxisLabel'" + "data-axis='col:" + j + ":" + txt + "'" + "rowspan='" + x + "' ";
                                             thStr += " colspan='1' ";
                                         } else {
-                                            var thStr = "<th " + headerTextAlignStr + "class='type7 pvtRowLabel' " + dataHeader_data + "='row:" + j + "'" + "rowspan='" + x + "' ";
+                                            var thStr = "<th " + headerTextAlignStr + "class='type7 pvtRowLabel' data-coordinate='" + i + "," + j + "' " + dataHeader_data + "='row:" + j + "'" + "rowspan='" + x + "' ";
                                             thStr += " colspan='2' ";
                                         }
                                     }
@@ -2450,7 +2491,11 @@
                                 thStr += (rowAttrs.length + (colAttrs.length === 0 ? 0 : 1));
                             }
                             thStr += "' >";
-                            thStr += (opts.attributeLabels[pivotData.valAttrs[i]] || pivotData.valAttrs[i]);
+                            if (opts.grandTotalRowLabel && opts.grandTotalRowLabel[pivotData.valAttrs[i]]) {
+                                thStr += (opts.grandTotalRowLabel[pivotData.valAttrs[i]] || (opts.attributeLabels[pivotData.valAttrs[i]] || pivotData.valAttrs[i]));
+                            } else {
+                                thStr += (opts.attributeLabels[pivotData.valAttrs[i]] || pivotData.valAttrs[i]);
+                            }
                             thStr += "</th>";
                             result.push(thStr);
                             var isBroken = false;
@@ -3501,6 +3546,9 @@
                             rows: [],
                             vals: []
                         };
+                        if (opts.grandTotalRowLabel) {
+                            subopts.rendererOptions["grandTotalRowLabel"] = opts.grandTotalRowLabel;
+                        }
                         _this.find(".pvtRows li span.pvtAttr").each(function() {
                             return subopts.rows.push($(this).data("attrName"));
                         });

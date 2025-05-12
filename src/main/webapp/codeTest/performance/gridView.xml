@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:w2="http://www.inswave.com/websquare" xmlns:xf="http://www.w3.org/2002/xforms">
+    <head>
+    	<w2:type>DEFAULT</w2:type>
+        <w2:buildDate/>
+        <xf:model>
+        	<xf:instance>
+        		<data xmlns="" />
+        	</xf:instance>
+        	<w2:dataCollection baseNode="map">
+        		<w2:dataMap baseNode="map" id="dma_searchParam">
+        			<w2:keyInfo>
+        				<w2:key id="name" name="이름" dataType="text"></w2:key>
+        				<w2:key id="tel" name="전화번호" dataType="text"></w2:key>
+        			</w2:keyInfo>
+        		</w2:dataMap>
+        		<w2:dataList baseNode="list" repeatNode="map" id="dlt_userList" saveRemovedData="true">
+        			<w2:columnInfo>
+        				<w2:column id="id" name="아이디" dataType="text"></w2:column>
+        				<w2:column id="name" name="이름" dataType="text"></w2:column>
+        				<w2:column id="tel" name="전화번호" dataType="text"></w2:column>
+        			</w2:columnInfo>
+        			<w2:data use="false">
+        			</w2:data>
+        		</w2:dataList>
+        	</w2:dataCollection>
+        	<w2:workflowCollection></w2:workflowCollection>
+        	<xf:submission id="submission1" ref='data:json,{"id":"dma_searchParam","key":"param"}'
+        		target='data:json,{"id":"dlt_userList","key":"data"}' action="/test/testJsonVO.do" method="post" mediatype="application/json"
+        		encoding="UTF-8" instance="" replace="" errorHandler="" customHandler="" mode="asynchronous" processMsg="" ev:submit=""
+        		ev:submitdone="" ev:submiterror="" abortTrigger="">
+        	</xf:submission>
+        	<xf:submission id="submission2" ref='data:json,{"id":"dma_searchParam","key":"param"}'
+        		target='data:json,{"id":"dlt_userList","key":"data"}' action="/test/testJsonVO.do" method="post" mediatype="application/json"
+        		encoding="UTF-8" instance="" replace="" errorHandler="" customHandler="" mode="asynchronous" processMsg="" ev:submit=""
+        		ev:submitdone="scwin.submission2_submitdone" ev:submiterror="" abortTrigger="">
+        	</xf:submission>
+        	<xf:submission id="submission3" ref='data:json,{"id":"dma_searchParam","key":"param"}'
+        		target='data:json,{"id":"dlt_userList","key":"data"}' action="/test/testJsonVO.do" method="post" mediatype="application/json"
+        		encoding="UTF-8" instance="" replace="" errorHandler="" customHandler="" mode="asynchronous" processMsg="" ev:submit=""
+        		ev:submitdone="scwin.submission3_submitdone" ev:submiterror="" abortTrigger="">
+        	</xf:submission>                     
+        </xf:model>
+        <script type="text/javascript"><![CDATA[
+scwin.onpageload = function () {
+    scwin.trigger1_onclick();
+};
+
+
+scwin.trigger1_onclick = function (e) {
+    $p.executeSubmission("submission1");
+};
+
+scwin.btn_createData1_onclick = function (e) {
+    $p.executeSubmission("submission2");
+};
+
+scwin.btn_createData2_onclick = function (e) {
+    $p.executeSubmission("submission3");
+};
+
+scwin.submission2_submitdone = function (e) {
+    var jsonData = dlt_userList.getAllJSON();
+
+    const startTime = performance.now();
+
+    for (let j = 0; j < 1000; j++) {
+        dlt_userList.insertJSON(0, jsonData);
+    }
+
+    const endTime = performance.now();
+    const executionTime = endTime - startTime;
+
+    alert('총 행 개수 : ' + dlt_userList.getRowCount() + `, 총 실행 시간: ${executionTime.toFixed(2)} ms`);
+};
+
+scwin.submission3_submitdone = function (e) {
+    var jsonData = dlt_userList.getAllJSON();
+
+    const startTime = performance.now();
+
+    dlt_userList.setBroadcast(false);
+    for (let j = 0; j < 1000; j++) {
+        dlt_userList.insertJSON(0, jsonData);
+    }
+    dlt_userList.setBroadcast(true);
+
+    const endTime = performance.now();
+    const executionTime = endTime - startTime;
+
+   alert('총 행 개수 : ' + dlt_userList.getRowCount() + `, 총 실행 시간: ${executionTime.toFixed(2)} ms`);
+};
+]]></script>
+    </head>
+    <body ev:onpageload="scwin.onpageload">
+    	<xf:group style="width:100.0%;height:37px;" id="" class="">
+    		<w2:textbox label="리스트 조회" style="width:300px;height:33px;font-size:30px;font-weight:bold;float:left;" id=""></w2:textbox>
+
+    		<xf:trigger id="btn_createData2"
+    			style="width:94px;height:27px;float:right;margin-top:5px;margin-right:5px;" type="button" ev:onclick="scwin.btn_createData2_onclick">
+    			<xf:label><![CDATA[데이터 생성2]]></xf:label>
+    		</xf:trigger>
+    		<xf:trigger type="button" style="width:94px;height:27px;float:right;margin-top:5px;margin-right:5px;" id="btn_createData1" ev:onclick="scwin.btn_createData1_onclick">
+    			<xf:label><![CDATA[데이터 생성1]]></xf:label>
+    		</xf:trigger>
+    		<xf:trigger ev:onclick="scwin.trigger1_onclick" id="trigger2"
+    			style="width: 80px;height: 27px;float:right;margin-top:5px;margin-right:5px;" type="button">
+    			<xf:label><![CDATA[조회]]></xf:label>
+    		</xf:trigger>
+
+    	</xf:group>
+    	<xf:group tagname="table" style="width:100.00%;" id="" class="w2tb">
+    		<w2:attributes>
+    			<w2:summary></w2:summary>
+    		</w2:attributes>
+    		<xf:group tagname="caption"></xf:group>
+    		<xf:group tagname="colgroup">
+    			<xf:group tagname="col" style="width:25.00%;"></xf:group>
+    			<xf:group tagname="col" style="width:25.00%;"></xf:group>
+    			<xf:group tagname="col" style="width:25.00%;"></xf:group>
+    			<xf:group tagname="col" style="width:25.00%;"></xf:group>
+    		</xf:group>
+    		<xf:group tagname="tr" style="height:32.00px;">
+    			<xf:group tagname="th" style="" class="w2tb_th">
+    				이름
+    				<w2:attributes>
+    					<w2:scope>row</w2:scope>
+    				</w2:attributes>
+    			</xf:group>
+    			<xf:group tagname="td" style="" class="w2tb_td">
+    				<xf:input adjustMaxLength="false" id="" style="width: 144px;height: 21px;" ref="data:dma_searchParam.name"></xf:input>
+    			</xf:group>
+    			<xf:group tagname="th" style="" class="w2tb_th">
+    				전화번호
+    				<w2:attributes>
+    					<w2:scope>row</w2:scope>
+    				</w2:attributes>
+    			</xf:group>
+    			<xf:group tagname="td" style="" class="w2tb_td">
+    				<xf:input adjustMaxLength="false" id="" style="width: 144px;height: 21px;" ref="data:dma_searchParam.tel"></xf:input>
+    			</xf:group>
+    		</xf:group>
+    	</xf:group>
+    	<w2:gridView id="" ignoreToggleOnDisabled="false" useShiftKey="true" style="width:100.0%;height:314px;margin-top:10px" useFilterList="false"
+    		scrollByColumn="false" defaultCellHeight="20" showSortableUseFilter="false" scrollByColumnAdaptive="false" summaryAuto="false"
+    		summaryOnlyAuto="false" applyAllColumnStyle="false" dataList="data:dlt_userList" ignoreCellClick="false" autoFit="allColumn"  tooltipDisplay="true">
+    		<w2:caption style="" id="caption2" value="this is a grid caption."></w2:caption>
+    		<w2:header style="" id="header2">
+    			<w2:row style="" id="row3">
+    				<w2:column width="188" inputType="text" style="" id="column7" value="아이디" blockSelect="false" displayMode="label"></w2:column>
+    				<w2:column width="147" inputType="text" style="" id="column5" value="이름" blockSelect="false" displayMode="label"></w2:column>
+    				<w2:column width="260" inputType="text" style="" id="column3" value="전화번호" blockSelect="false" displayMode="label"></w2:column>
+    			</w2:row>
+    		</w2:header>
+    		<w2:gBody style="" id="gBody2">
+    			<w2:row style="" id="row4">
+    				<w2:column width="188" inputType="text" style="" id="id" value="" blockSelect="false" displayMode="label"></w2:column>
+    				<w2:column width="147" inputType="text" style="" id="name" value="" blockSelect="false" displayMode="label"></w2:column>
+    				<w2:column width="260" inputType="text" style="" id="tel" value="" blockSelect="false" displayMode="label"></w2:column>
+    			</w2:row>
+    		</w2:gBody>
+    	</w2:gridView>
+    </body>
+</html>

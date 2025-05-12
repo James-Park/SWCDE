@@ -58,6 +58,26 @@
 			<type>1</type>
 			<locationURI>$%7BPROJECT_LOC%7D/.settings/websquare_home/config/websquare.xml</locationURI>
 		</link>
+		<link>
+			<name>src/main/webapp/websquare/config</name>
+			<type>2</type>
+			<location>C:/Github_Workspace/websquare_engine/ai_mainb/websquare/config</location>
+		</link>
+		<link>
+			<name>src/main/webapp/websquare/control</name>
+			<type>2</type>
+			<location>C:/Github_Workspace/websquare_engine/ai_mainb/websquare/control</location>
+		</link>
+		<link>
+			<name>src/main/webapp/websquare/engine</name>
+			<type>2</type>
+			<location>C:/Github_Workspace/websquare_engine/ai_mainb/websquare/engine</location>
+		</link>
+		<link>
+			<name>src/main/webapp/websquare/uiplugin</name>
+			<type>2</type>
+			<location>C:/Github_Workspace/websquare_engine/ai_mainb/websquare/uiplugin</location>
+		</link>
 	</linkedResources>
 	<filteredResources>
 		<filter>

@@ -14,6 +14,43 @@
 	</style>
 	<script type="text/javascript" src="htmlCommon.js"></script>
     <script>
+        function _safeInnerHTML(elem, str) {
+        try {
+            if (!elem || typeof elem.textContent !== "string") {
+                return;
+            }
+            if (typeof str !== "string") {
+                str = "";
+            }
+            if (str.indexOf("<") >= 0) {
+                elem.textContent = "";
+                var pattern1 = /<\s*script/ig;
+                var pattern2 = /\s*\/\s*script\s*>/ig;
+                var safeElem = "wq-safescr";
+                str = str.replace(pattern1, "<" + safeElem).replace(pattern2, "/" + safeElem +">");
+                if (location.hostname !== window.document.domain) {
+                    var tempDiv = document.createElement("div");
+                    tempDiv.innerHTML = str;
+                    while (tempDiv.firstChild) {
+                        elem.appendChild(tempDiv.firstChild);
+                    }
+                } else {
+                    var parser = new DOMParser();
+                    var bodyContent = parser.parseFromString(str, "text/html").body;
+                    for (var i = 0; i < bodyContent.childNodes.length; i++) {
+                        var node = bodyContent.childNodes[i];
+                        if (node.nodeType !== 1 || node.tagName.toUpperCase() !== "SCRIPT") {
+                            elem.appendChild(node.cloneNode(true));
+                        }
+                    }
+                }
+            } else {
+                elem.textContent = str;
+            }
+        } catch (e) {
+            opener.WebSquare.exception.printStackTrace(e);
+        }
+    }
 		try {
 		    var domain = getParameter("domain"); 
 		    if(domain) {
@@ -73,7 +110,7 @@
 			}
 		
 			if ( typeof obj["title"] != "undefined" ) {
-				document.getElementById("title1").innerHTML = "<img src='images/bullet_info.gif' style='vertical-align:middle; margin-right:5px' /><b>" + obj["title"] + "</b>";
+				_safeInnerHTML(document.getElementById("title1"), "<img src='images/bullet_info.gif' style='vertical-align:middle; margin-right:5px' /><b>" + obj["title"] + "</b>");
 				document.title = obj["title"];
 			}
 		
@@ -123,13 +160,13 @@
 					}
 				}
 			}
-			document.getElementById("main").innerHTML = str;
+			_safeInnerHTML(document.getElementById("main"), str);
 			for( var i = 0 ; i < txtIdx ; i++ ) {
 				document.getElementById("txt_" + i ).value = txtArray[i];
 			}
 		
 			strTitle = "<img src='images/bullet_info.gif' style='vertical-align:middle; margin-right:5px' /><b>" + opener.WebSquare.language.getMessage( "E_debugMsg_DebugInfo" );
-			document.getElementById("title1").innerHTML = strTitle;
+			_safeInnerHTML(document.getElementById("title1"), strTitle);
 			window.setTimeout("callFocus();", 1);
 		}
     </script>

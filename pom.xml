@@ -357,8 +357,7 @@
 			<scope>runtime</scope>
 		</dependency>
 
-		<!-- Central Maven Repository에 등록되지 않는 수동 등록 라이브러리
-		=============================== -->
+		<!-- Central Maven Repository에 등록되지 않는 수동 등록 라이브러리 ============================== -->
 		<dependency>
 			<groupId>org.apache</groupId>
 			<artifactId>batik-all</artifactId>
@@ -366,15 +365,9 @@
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
-			<groupId>batik</groupId>
-			<artifactId>pdf-transcoder</artifactId>
-			<version>1.0beta2</version>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
 			<groupId>websquare</groupId>
 			<artifactId>websquare</artifactId>
-			<version>ai_6.0_0.1102B.20240711.150800_1.5</version>
+			<version>ai_6.0_0.1242B.20250402.154135_1.5</version>
 		</dependency>
 	</dependencies>
 	<build>

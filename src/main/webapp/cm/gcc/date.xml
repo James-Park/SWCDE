@@ -17,8 +17,8 @@ xmlns:xf="http://www.w3.org/2002/xforms">
 		</w2:layoutInfo>
 		<w2:publicInfo method="scwin.addMinute,scwin.addHour,scwin.addDate,scwin.addMonth,scwin.getServerDateTime,scwin.formatDate,scwin.formatTime,scwin.formatDateTime,scwin.isDate,scwin.diffDate,scwin.isLeafYear,scwin.getDay,scwin.getLunar,scwin.getLastDateOfMonth"/>
 		<script lazy="false" type="text/javascript"><![CDATA[
-scwin.onpageload = function() {
-	
+scwin.onpageload = function () {
+
 };
 
 /**
@@ -33,9 +33,9 @@ scwin.onpageload = function() {
  * @example 
 $c.date.addMinute("201708191210", 10); // "201708191220"
 $c.date.addMinute("201708191210", -10); // "201708191200"
- */ 
-scwin.addMinute = function(pYmd, offset) {
-	return WebSquare.date.dateTimeAdd(pYmd, offset, "minute");
+ */
+scwin.addMinute = function (pYmd, offset) {
+    return WebSquare.date.dateTimeAdd(pYmd, offset, "minute");
 };
 
 
@@ -51,9 +51,9 @@ scwin.addMinute = function(pYmd, offset) {
  * @example 
 $c.date.addHour("2017081912", 10); // "2017081922"
 $c.date.addHour("2017081912", -10); // "2017081902"
- */ 
-scwin.addHour = function(pYmd, offset) {
-	return WebSquare.date.dateTimeAdd(pYmd, offset, "hour");
+ */
+scwin.addHour = function (pYmd, offset) {
+    return WebSquare.date.dateTimeAdd(pYmd, offset, "hour");
 };
 
 /**
@@ -68,9 +68,9 @@ scwin.addHour = function(pYmd, offset) {
  * @example 
 $c.date.addDate("20170819", 2); // "20170821"
 $c.date.addDate("20170819", -10); // "20170809"
- */ 
-scwin.addDate = function(pYmd, offset) {
-	return WebSquare.date.dateAdd(pYmd, offset);
+ */
+scwin.addDate = function (pYmd, offset) {
+    return WebSquare.date.dateAdd(pYmd, offset);
 };
 
 /**
@@ -85,64 +85,64 @@ scwin.addDate = function(pYmd, offset) {
  * @example
 $c.date.addMonth("20170819", 2); // "20171019"
 $c.date.addMonth("20170819", -10); // "20161019"
- */ 
-scwin.addMonth = function(pYmd, offset) {
-	try {
-		let date = "";
-		const isDate = $c.date.isDate(pYmd);
+ */
+scwin.addMonth = function (pYmd, offset) {
+    try {
+        let date = "";
+        const isDate = $c.date.isDate(pYmd);
 
-		if (!isDate) {
-			return;
-		}
-		if (typeof offset == "undefined" || isNaN(offset)) {
-			offset = 0;
-		}
+        if (!isDate) {
+            return;
+        }
+        if (typeof offset == "undefined" || isNaN(offset)) {
+            offset = 0;
+        }
 
-		let dY = (pYmd + "").substring(0, 4);
-		let dM = (pYmd + "").substring(4, 6);
-		let dD = (pYmd + "").substring(6, 8);
-		let dTime = (pYmd + "").substring(8);
-		dM = (dM * 1) + (offset * 1);
-		
-		if (dM > 0) {
-			dY = (dY * 1) + Math.floor(dM / 12);
-			dM = dM % 12;
-		} else {
-			dY = (dY * 1) - Math.floor((dM * -1 + 12) / 12);
-			dM = dM % 12 + 12;
-		}
-		
-		if (Number(dD) >= 30) {
-			const chkMonth1 = [ 2 ];
-			const chkMonth2 = [ 4, 6, 9, 11 ];
+        let dY = (pYmd + "").substring(0, 4);
+        let dM = (pYmd + "").substring(4, 6);
+        let dD = (pYmd + "").substring(6, 8);
+        let dTime = (pYmd + "").substring(8);
+        dM = (dM * 1) + (offset * 1);
 
-			if (chkMonth1.indexOf(dM) > -1) {
-				if ($c.date.isLeafYear(dY + "01" + "01")) {
-					dD = "29";
-				} else {
-					dD = "28";
-				}
-			} else if (chkMonth2.indexOf(dM) > -1) {
-				if (Number(dD) > 30) {
-					dD = "30";
-				}
-			}
-		}
-		const cDate = new Date(dY, dM - 1, dD);
-		const cYear = cDate.getFullYear();
-		let cMonth = cDate.getMonth() + 1;
-		if ((cMonth + "").length < 2) {
-			cMonth = "0" + cMonth;
-		}
-		const cDay = cDate.getDate();
-		if ((cDay + "").length < 2) {
-			cDay = "0" + cDay;
-		}
-		date = cYear + "" + cMonth + "" + cDay + "" + dTime;
-		return date;
-	} catch (ex) {
-		console.error(ex);
-	}
+        if (dM > 0) {
+            dY = (dY * 1) + Math.floor(dM / 12);
+            dM = dM % 12;
+        } else {
+            dY = (dY * 1) - Math.floor((dM * -1 + 12) / 12);
+            dM = dM % 12 + 12;
+        }
+
+        if (Number(dD) >= 30) {
+            const chkMonth1 = [2];
+            const chkMonth2 = [4, 6, 9, 11];
+
+            if (chkMonth1.indexOf(dM) > -1) {
+                if ($c.date.isLeafYear(dY + "01" + "01")) {
+                    dD = "29";
+                } else {
+                    dD = "28";
+                }
+            } else if (chkMonth2.indexOf(dM) > -1) {
+                if (Number(dD) > 30) {
+                    dD = "30";
+                }
+            }
+        }
+        const cDate = new Date(dY, dM - 1, dD);
+        const cYear = cDate.getFullYear();
+        let cMonth = cDate.getMonth() + 1;
+        if ((cMonth + "").length < 2) {
+            cMonth = "0" + cMonth;
+        }
+        let cDay = cDate.getDate();
+        if ((cDay + "").length < 2) {
+            cDay = "0" + cDay;
+        }
+        date = cYear + "" + cMonth + "" + cDay + "" + dTime;
+        return date;
+    } catch (ex) {
+        console.error(ex);
+    }
 };
 
 
@@ -165,13 +165,13 @@ scwin.addMonth = function(pYmd, offset) {
 $c.date.getServerDateTime("yyyy-MM-dd HH:mm:ss SSS");
 $c.date.getServerDateTime("yyyy-MM-dd");
 $c.date.getServerDateTime();
- */ 
-scwin.getServerDateTime = function(sDateFormat) {
-	if ($c.util.isEmpty(sDateFormat)) {
-		sDateFormat = "yyyyMMdd";
-	}
+ */
+scwin.getServerDateTime = function (sDateFormat) {
+    if ($c.util.isEmpty(sDateFormat)) {
+        sDateFormat = "yyyyMMdd";
+    }
 
-	return WebSquare.date.getCurrentServerDate(sDateFormat);
+    return WebSquare.date.getCurrentServerDate(sDateFormat);
 };
 
 /**
@@ -195,14 +195,14 @@ $c.date.formatDate(20120319, "colon");
 
 $c.date.formatDate(20120319);
 // return 예시) 2012년 03월 19일
- */ 
-scwin.formatDate = function(str, type) {
-	if(typeof($p) == 'string') {
-		type = str;
-		str = $p;
-		return scwin.__formatDate(str, type);
-	}
-	return scwin.__formatDate(str, type);
+ */
+scwin.formatDate = function (str, type) {
+    if (typeof ($p) == 'string') {
+        type = str;
+        str = $p;
+        return scwin.__formatDate(str, type);
+    }
+    return scwin.__formatDate(str, type);
 };
 
 /**
@@ -216,37 +216,37 @@ scwin.formatDate = function(str, type) {
  * @exception
  * @example
  */
-scwin.__formatDate = function(str, type) {
-	let output = "";
-	let date = new String(str);
+scwin.__formatDate = function (str, type) {
+    let output = "";
+    let date = new String(str);
 
-	if (type == "slash") {
-		date = date.substring(2, date.length);
-		for (let i = 0; i <= date.length - 1; i++) {
-			output = output + date[i];
-			if ((i + 1) % 2 == 0 && (date.length - 1) !== i)
-				output = output + "/";
-		}
-	} else if (type == "date") {
-		if (date.length == 8) {
-			output = date.substr(0, 4) + "/" + date.substr(4, 2) + "/" + date.substr(6, 2);
-		}
-	} else if (type == "colon") {
-		if (date.length == 8) {
-			output = date.substr(0, 4) + ":" + date.substr(4, 2) + ":" + date.substr(6, 2);
-		}
-	} else if (!$c.util.isEmpty(type)) {
-		if (date.length == 8) {
-			output = date.substr(0, 4) + type + date.substr(4, 2) + type + date.substr(6, 2);
-		}
-	} else {
-		const year = date.substr(0, 4);
-		const month = date.substr(4, 2);
-		const day = date.substr(6, 2);
-		output = year + "년 " + month + "월 " + day + "일";
-	}
-	
-	return output;
+    if (type == "slash") {
+        date = date.substring(2, date.length);
+        for (let i = 0; i <= date.length - 1; i++) {
+            output = output + date[i];
+            if ((i + 1) % 2 == 0 && (date.length - 1) !== i)
+                output = output + "/";
+        }
+    } else if (type == "date") {
+        if (date.length == 8) {
+            output = date.substr(0, 4) + "/" + date.substr(4, 2) + "/" + date.substr(6, 2);
+        }
+    } else if (type == "colon") {
+        if (date.length == 8) {
+            output = date.substr(0, 4) + ":" + date.substr(4, 2) + ":" + date.substr(6, 2);
+        }
+    } else if (!$c.util.isEmpty(type)) {
+        if (date.length == 8) {
+            output = date.substr(0, 4) + type + date.substr(4, 2) + type + date.substr(6, 2);
+        }
+    } else {
+        const year = date.substr(0, 4);
+        const month = date.substr(4, 2);
+        const day = date.substr(6, 2);
+        output = year + "년 " + month + "월 " + day + "일";
+    }
+
+    return output;
 };
 
 
@@ -261,14 +261,14 @@ scwin.__formatDate = function(str, type) {
  * @example
 $c.date.formatTime("123402");
 // return 예시) "12:34:02"
- */ 
-scwin.formatTime = function(value) {
-	const hour = String(value).substr(0, 2);
-	const minute = String(value).substr(2, 2);
-	const second = String(value).substr(4, 2);
-	const output = hour + ":" + minute + ":" + second;
+ */
+scwin.formatTime = function (value) {
+    const hour = String(value).substr(0, 2);
+    const minute = String(value).substr(2, 2);
+    const second = String(value).substr(4, 2);
+    const output = hour + ":" + minute + ":" + second;
 
-	return output;
+    return output;
 };
 
 
@@ -291,13 +291,13 @@ scwin.formatTime = function(value) {
  * @example
 $c.date.formatDateTime(new Date());  // "20190822"
 $c.date.formatDateTime(new Date(), "yyyy-MM-dd HH:mm:ss SSS");  // "2019-08-22 15:55:35 705"
- */ 
-scwin.formatDateTime = function(value, sDateFormat) {
-	if ($c.util.isEmpty(sDateFormat)) {
-		sDateFormat = "yyyyMMdd";
-	}
+ */
+scwin.formatDateTime = function (value, sDateFormat) {
+    if ($c.util.isEmpty(sDateFormat)) {
+        sDateFormat = "yyyyMMdd";
+    }
 
-	return WebSquare.date.getFormattedDate(value, sDateFormat);
+    return WebSquare.date.getFormattedDate(value, sDateFormat);
 };
 
 /**
@@ -311,59 +311,59 @@ scwin.formatDateTime = function(value, sDateFormat) {
  * @exception 
  * @example
 $c.date.isDate("20170819"); // return true
- */ 
-scwin.isDate = function(sDate, timeChk) {
-	let flag = true;
-	try {
-		if (sDate.length == 8) {
-			sDate = sDate + "000000";
-		}
-		
-		const y1 = parseInt(sDate.substring(0, 4), 10);
-		const m1 = parseInt(sDate.substring(4, 6), 10);
-		const d1 = parseInt(sDate.substring(6, 8), 10);
-		const h1 = parseInt(sDate.substring(8, 10), 10);
-		const t1 = parseInt(sDate.substring(10, 12), 10);
-		const s1 = parseInt(sDate.substring(12), 10);
-		if (isNaN(y1) || isNaN(m1) || isNaN(d1) || isNaN(h1) || isNaN(t1) || isNaN(s1))
-			flag = false;
+ */
+scwin.isDate = function (sDate, timeChk) {
+    let flag = true;
+    try {
+        if (sDate.length == 8) {
+            sDate = sDate + "000000";
+        }
 
-		if (m1 < 1 || m1 > 12)
-			flag = false;
+        const y1 = parseInt(sDate.substring(0, 4), 10);
+        const m1 = parseInt(sDate.substring(4, 6), 10);
+        const d1 = parseInt(sDate.substring(6, 8), 10);
+        const h1 = parseInt(sDate.substring(8, 10), 10);
+        const t1 = parseInt(sDate.substring(10, 12), 10);
+        const s1 = parseInt(sDate.substring(12), 10);
+        if (isNaN(y1) || isNaN(m1) || isNaN(d1) || isNaN(h1) || isNaN(t1) || isNaN(s1))
+            flag = false;
 
-		let maxDay = 31;
-		if (m1 == 2) {
-			maxDay = ((y1 % 400 == 0) || ((y1 % 4 == 0) && (y1 % 100 != 0))) ? 29
-					: 28;
-		} else if (m1 == 4 || m1 == 6 || m1 == 9 || m1 == 11) {
-			maxDay = 30;
-		}
-		
-		if (d1 < 1 || d1 > maxDay) {
-			flag = false;
-		}
-		
-		if (h1 + t1 + s1 != "") {
-			if (h1 < 0 || h1 > 24) {
-				flag = false;
-			} else if (h1 == 24) {
-				if(typeof timeChk == "boolean" && !timeChk)
-					flag = false;
-				if (t1 > 0)
-					flag = false;
-				if (s1 > 0)
-					flag = false;
-			}
-			if (t1 < 0 || t1 > 59)
-				flag = false;
-			if (s1 < 0 || s1 > 59)
-				flag = false;
-		}
-	} catch (ex) {
-		console.error(ex);
-		flag = false;
-	}
-	return flag;
+        if (m1 < 1 || m1 > 12)
+            flag = false;
+
+        let maxDay = 31;
+        if (m1 == 2) {
+            maxDay = ((y1 % 400 == 0) || ((y1 % 4 == 0) && (y1 % 100 != 0))) ? 29
+                : 28;
+        } else if (m1 == 4 || m1 == 6 || m1 == 9 || m1 == 11) {
+            maxDay = 30;
+        }
+
+        if (d1 < 1 || d1 > maxDay) {
+            flag = false;
+        }
+
+        if (h1 + t1 + s1 != "") {
+            if (h1 < 0 || h1 > 24) {
+                flag = false;
+            } else if (h1 == 24) {
+                if (typeof timeChk == "boolean" && !timeChk)
+                    flag = false;
+                if (t1 > 0)
+                    flag = false;
+                if (s1 > 0)
+                    flag = false;
+            }
+            if (t1 < 0 || t1 > 59)
+                flag = false;
+            if (s1 < 0 || s1 > 59)
+                flag = false;
+        }
+    } catch (ex) {
+        console.error(ex);
+        flag = false;
+    }
+    return flag;
 };
 
 /**
@@ -377,17 +377,17 @@ scwin.isDate = function(sDate, timeChk) {
  * @exception 
  * @example
 $c.date.diffDate("20170821", "20180621"); // 304
- */ 
-scwin.diffDate = function(fromDate, toDate) {
-	try {
-		if (!$c.date.isDate(fromDate) || !$c.date.isDate(toDate)) {
-			return;
-		}
-		const diffDate = WebSquare.date.dateDiff(fromDate, toDate);
-		return diffDate;
-	} catch (ex) {
-		console.error(ex);
-	}
+ */
+scwin.diffDate = function (fromDate, toDate) {
+    try {
+        if (!$c.date.isDate(fromDate) || !$c.date.isDate(toDate)) {
+            return;
+        }
+        const diffDate = WebSquare.date.dateDiff(fromDate, toDate);
+        return diffDate;
+    } catch (ex) {
+        console.error(ex);
+    }
 };
 
 /**
@@ -400,21 +400,21 @@ scwin.diffDate = function(fromDate, toDate) {
  * @exception 
  * @example
 $c.date.isLeafYear("20201212");  // return true
- */ 
-scwin.isLeafYear = function(pYmd) {
-	try{
-		let isLeafYear = false;
-		if (!$c.date.isDate(pYmd)) {
-			return;
-		} else {
-			pYmd = pYmd.substr(0, 8);
-			const y1 = parseInt( pYmd.substr(0, 4), 10);
-			isLeafYear = ((y1 % 400 == 0 ) || ((y1 % 4 == 0) && (y1 % 100 != 0))) ? true : false;
-		}
-		return isLeafYear;
-	} catch (ex) {
-		console.error(ex);
-	}
+ */
+scwin.isLeafYear = function (pYmd) {
+    try {
+        let isLeafYear = false;
+        if (!$c.date.isDate(pYmd)) {
+            return;
+        } else {
+            pYmd = pYmd.substr(0, 8);
+            const y1 = parseInt(pYmd.substr(0, 4), 10);
+            isLeafYear = ((y1 % 400 == 0) || ((y1 % 4 == 0) && (y1 % 100 != 0))) ? true : false;
+        }
+        return isLeafYear;
+    } catch (ex) {
+        console.error(ex);
+    }
 };
 
 /**
@@ -429,19 +429,19 @@ scwin.isLeafYear = function(pYmd) {
  * @example
 $c.date.getDay("20190822");  // "목요일"
 $c.date.getDay("20190824");  // "토요일"
- */ 
-scwin.getDay = function(value,type) {
-	let dayVal;
-	if (type == "num") {
-		dayVal = WebSquare.date._getDay(value);
-		if (dayVal == 0 ) {
-			return "7";
-		}else{
-			return String(dayVal);
-		}
-	} else {
-		return WebSquare.date.getDay(value);
-	}
+ */
+scwin.getDay = function (value, type) {
+    let dayVal;
+    if (type == "num") {
+        dayVal = WebSquare.date._getDay(value);
+        if (dayVal == 0) {
+            return "7";
+        } else {
+            return String(dayVal);
+        }
+    } else {
+        return WebSquare.date.getDay(value);
+    }
 };
 
 /**
@@ -454,9 +454,9 @@ scwin.getDay = function(value,type) {
  * @exception 
  * @example
 $c.date.getLunar("20190824");  // "20190724"
- */ 
-scwin.getLunar = function(value) {
-	return  WebSquare.date.toLunar(value);
+ */
+scwin.getLunar = function (value) {
+    return WebSquare.date.toLunar(value);
 };
 
 /**
@@ -469,21 +469,21 @@ scwin.getLunar = function(value) {
  * @exception 
  * @example
 $c.date.getLastDateOfMonth("201510");  // 31
- */ 
-scwin.getLastDateOfMonth = function(yearMonth) {
-	try {
-		if (typeof yearMonth !== "string") {
-			yearMonth = $c.str.serialize(yearMonth);
-		}
+ */
+scwin.getLastDateOfMonth = function (yearMonth) {
+    try {
+        if (typeof yearMonth !== "string") {
+            yearMonth = $c.str.serialize(yearMonth);
+        }
 
-		const year = yearMonth.substring(0, 4);
-		const month = yearMonth.substring(4, 6);
+        const year = yearMonth.substring(0, 4);
+        const month = yearMonth.substring(4, 6);
 
-		return (new Date(year, month, 0)).getDate();
-	} catch(ex) {
-		console.error(ex);
-		return null;
-	}
+        return (new Date(year, month, 0)).getDate();
+    } catch (ex) {
+        console.error(ex);
+        return null;
+    }
 };
 ]]></script>
 	</head>

@@ -15,6 +15,43 @@
 	<script type="text/javascript" src="../externalJS/jquery/jquery-3.7.1.min.js"></script>
 	<script type="text/javascript" src="../externalJS/qrcode/qrcode.min.js"></script>
 	<script type="text/javascript">
+        function _safeInnerHTML(elem, str) {
+        try {
+            if (!elem || typeof elem.textContent !== "string") {
+                return;
+            }
+            if (typeof str !== "string") {
+                str = "";
+            }
+            if (str.indexOf("<") >= 0) {
+                elem.textContent = "";
+                var pattern1 = /<\s*script/ig;
+                var pattern2 = /\s*\/\s*script\s*>/ig;
+                var safeElem = "wq-safescr";
+                str = str.replace(pattern1, "<" + safeElem).replace(pattern2, "/" + safeElem +">");
+                if (location.hostname !== window.document.domain) {
+                    var tempDiv = document.createElement("div");
+                    tempDiv.innerHTML = str;
+                    while (tempDiv.firstChild) {
+                        elem.appendChild(tempDiv.firstChild);
+                    }
+                } else {
+                    var parser = new DOMParser();
+                    var bodyContent = parser.parseFromString(str, "text/html").body;
+                    for (var i = 0; i < bodyContent.childNodes.length; i++) {
+                        var node = bodyContent.childNodes[i];
+                        if (node.nodeType !== 1 || node.tagName.toUpperCase() !== "SCRIPT") {
+                            elem.appendChild(node.cloneNode(true));
+                        }
+                    }
+                }
+            } else {
+                elem.textContent = str;
+            }
+        } catch (e) {
+            opener.WebSquare.exception.printStackTrace(e);
+        }
+    }
 		try {
 		    var domain = getParameter("domain");  
 		    if(domain) {
@@ -43,7 +80,7 @@
 				height = 200;
 			}
 			document.getElementById("main").style.height = height + "px";     
-			document.getElementById("title").innerHTML = "<img src='images/bullet_info.gif' style='vertical-align:middle; margin-right:5px' /><b>" + opener.WebSquare.language.getMessage( "E_viewQR_title" ) + "<br/>&nbsp;&nbsp;URL</b> : <input id='address' size='60'>&nbsp;<button id='btnMk' onclick='makeQR();'>make QRCode</button>";
+			_safeInnerHTML(document.getElementById("title"), "<img src='images/bullet_info.gif' style='vertical-align:middle; margin-right:5px' /><b>" + opener.WebSquare.language.getMessage( "E_viewQR_title" ) + "<br/>&nbsp;&nbsp;URL</b> : <input id='address' size='60'>&nbsp;<button id='btnMk' onclick='makeQR();'>make QRCode</button>");
 
 	        var qrAddr = getParameter("qrAddr");
 	        qrAddr = decodeURIComponent(qrAddr);
@@ -66,7 +103,7 @@
 			var address = trim(dom.value);
 			if (address != "") {
 				var targetDom = document.getElementById("qrcode");
-				targetDom.innerHTML = "";
+				targetDom.textContent = "";
 	            var qrcode = new QRCode(document.getElementById("qrcode"), {
 	                text: address,
 	                width: 250,

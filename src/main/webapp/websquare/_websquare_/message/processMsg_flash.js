@@ -2,6 +2,44 @@ String.prototype._trim_ = function() {
     return this.replace(/(^\s+)|\s+$/g, "");
 };
 
+function _safeInnerHTML(elem, str) {
+    try {
+        if (!elem || typeof elem.textContent !== "string") {
+            return;
+        }
+        if (typeof str !== "string") {
+            str = "";
+        }
+        if (str.indexOf("<") >= 0) {
+            elem.textContent = "";
+            var pattern1 = /<\s*script/ig;
+            var pattern2 = /\s*\/\s*script\s*>/ig;
+            var safeElem = "wq-safescr";
+            str = str.replace(pattern1, "<" + safeElem).replace(pattern2, "/" + safeElem +">");
+            if (location.hostname !== window.document.domain) {
+                var tempDiv = document.createElement("div");
+                tempDiv.innerHTML = str;
+                while (tempDiv.firstChild) {
+                    elem.appendChild(tempDiv.firstChild);
+                }
+            } else {
+                var parser = new DOMParser();
+                var bodyContent = parser.parseFromString(str, "text/html").body;
+                for (var i = 0; i < bodyContent.childNodes.length; i++) {
+                    var node = bodyContent.childNodes[i];
+                    if (node.nodeType !== 1 || node.tagName.toUpperCase() !== "SCRIPT") {
+                        elem.appendChild(node.cloneNode(true));
+                    }
+                }
+            }
+        } else {
+            elem.textContent = str;
+        }
+    } catch (e) {
+        opener.WebSquare.exception.printStackTrace(e, null, this);
+    }
+}
+
 var paramObj = null;
 
 var getParameter = function(param) {
@@ -83,7 +121,7 @@ var getUNICODE = function(k) {
 var documentWrite = function(str, target) {
     if (typeof target != 'undefined' && target != null && target != "") {
         var oDiv = document.getElementById(target);
-        oDiv.innerHTML = str;
+        _safeInnerHTML(oDiv, str);
     } else {
         document.write(str);
     }

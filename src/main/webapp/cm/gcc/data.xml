@@ -21,9 +21,9 @@ xmlns:xf="http://www.w3.org/2002/xforms">
 scwin.DATA_PREFIX = "dlt_commonCode";
 
 scwin.COMMON_CODE_INFO = {
-	LABEL : "CODE_NM",
-	VALUE : "COM_CD",
-	FILED_ARR : [ "GRP_CD", "COM_CD", "CODE_NM" ]
+    LABEL: "CODE_NM",
+    VALUE: "COM_CD",
+    FILED_ARR: ["GRP_CD", "COM_CD", "CODE_NM"]
 }
 
 // 공통 코드 데이터
@@ -46,29 +46,29 @@ scwin.onpageload = function () {
  * @hidden N
  * @exception 
  * @example $c.data.getValResultMsg(valInfo, value);
- */ 
-scwin.getValResultMsg = function(valInfo, value, dataCollectionObj, rowIndex) {
-	let msgInfo = { msgType : "1", message : "" };
+ */
+scwin.getValResultMsg = function (valInfo, value, dataCollectionObj, rowIndex) {
+    let msgInfo = { msgType: "1", message: "" };
 
-	if ((typeof valInfo.mandatory !== "undefined") && (valInfo.mandatory === true) && (value.length === 0)) {
-		msgInfo.message = "필수 입력 항목 입니다.";
-	} else if ((typeof valInfo.minLength !== "undefined") && (valInfo.minLength > 0) && (value.length < valInfo.minLength)) {
-		msgInfo.message = "최소 길이 " + valInfo.minLength + "자리 이상으로 입력해야 합니다.";
-	} else if ((typeof valInfo.minByteLength !== "undefined") && (valInfo.minByteLength > 0) && ($c.str.getByteLength(value) < valInfo.minByteLength)) {
-		msgInfo.message = "최소 길이 " + valInfo.minByteLength + "자리 이상으로 입력해야 합니다.";
-	} else if ((typeof valInfo.isEmail !== "undefined") && (valInfo.isEmail) && ($c.util.isEmpty(value) === false) && ($c.str.isEmail(value) === false)) {
-		msgInfo.message = "유효한 이메일 주소가 아닙니다.";
-	} else if ((typeof valInfo.isPhone !== "undefined") && (valInfo.isPhone) && ($c.util.isEmpty(value) === false) && ($c.str.isPhone(value) === false)) {
-		msgInfo.message = "유효한 전화번호가 아닙니다.";
-	} else if (typeof valInfo.valFunc === "function") {
-		let resultMsg = valInfo.valFunc(value, dataCollectionObj, rowIndex);
-		if ($c.util.isEmpty(resultMsg) === false) {
-			msgInfo.msgType = "2";
-			msgInfo.message = resultMsg;
-		}
-	}
+    if ((typeof valInfo.mandatory !== "undefined") && (valInfo.mandatory === true) && (value.length === 0)) {
+        msgInfo.message = "필수 입력 항목 입니다.";
+    } else if ((typeof valInfo.minLength !== "undefined") && (valInfo.minLength > 0) && (value.length < valInfo.minLength)) {
+        msgInfo.message = "최소 길이 " + valInfo.minLength + "자리 이상으로 입력해야 합니다.";
+    } else if ((typeof valInfo.minByteLength !== "undefined") && (valInfo.minByteLength > 0) && ($c.str.getByteLength(value) < valInfo.minByteLength)) {
+        msgInfo.message = "최소 길이 " + valInfo.minByteLength + "자리 이상으로 입력해야 합니다.";
+    } else if ((typeof valInfo.isEmail !== "undefined") && (valInfo.isEmail) && ($c.util.isEmpty(value) === false) && ($c.str.isEmail(value) === false)) {
+        msgInfo.message = "유효한 이메일 주소가 아닙니다.";
+    } else if ((typeof valInfo.isPhone !== "undefined") && (valInfo.isPhone) && ($c.util.isEmpty(value) === false) && ($c.str.isPhone(value) === false)) {
+        msgInfo.message = "유효한 전화번호가 아닙니다.";
+    } else if (typeof valInfo.valFunc === "function") {
+        let resultMsg = valInfo.valFunc(value, dataCollectionObj, rowIndex);
+        if ($c.util.isEmpty(resultMsg) === false) {
+            msgInfo.msgType = "2";
+            msgInfo.message = resultMsg;
+        }
+    }
 
-	return msgInfo;
+    return msgInfo;
 };
 
 /**
@@ -80,139 +80,141 @@ scwin.getValResultMsg = function(valInfo, value, dataCollectionObj, rowIndex) {
  * @hidden N
  * @exception 
  * @example $c.data.setDownloadGridViewOption(grdObj, options);
- */ 
-scwin.setDownloadGridViewOption = function(grdObj, options) {
-	if (typeof options === "undefined") {
-		options = {
-			hiddenVisible : false
-		}
-	}
+ */
+scwin.setDownloadGridViewOption = function (grdObj, options) {
+    if (typeof options === "undefined") {
+        options = {
+            hiddenVisible: false
+        }
+    }
 
-	let fileName = options.fileName;
+    let fileName = options.fileName;
 
-	if ($c.util.isEmpty(fileName)) {
-		let dataCollectionId = $c.data.getDataCollection(grdObj).id;
-		if ($c.util.isEmpty(dataCollectionId) === false) {
-			fileName = dataCollectionId;
-		} else {
-			fileName = "excel_download";
-		}
-		if (options.fileType == undefined || options.fileType == "") {
-			fileName = fileName + ".xlsx";
-		} else {
-			fileName = fileName + "." + options.fileType;
-		}
-		options.fileName = fileName;
-	}
+    if ($c.util.isEmpty(fileName)) {
+        let dataCollectionId = $c.data.getDataCollection(grdObj).id;
+        if ($c.util.isEmpty(dataCollectionId) === false) {
+            fileName = dataCollectionId;
+        } else {
+            fileName = "excel_download";
+        }
+        if (options.fileType == undefined || options.fileType == "") {
+            fileName = fileName + ".xlsx";
+        } else {
+            fileName = fileName + "." + options.fileType;
+        }
+        options.fileName = fileName;
+    }
 
-	fileName = fileName.toLowerCase();
-	
-	if (options.useProvider == true) {
-		options.dataProvider = "com.inswave.wrm.provider.ExcelDown";
-	}
-	if (options.useSplitProvider == true) {
-		options.splitProvider = "com.inswave.wrm.provider.ExcelSplitDown";
-	}
-	if (options.useProvider || options.useSplitProvider) {
-		const colCnt = grdObj.getColumnCount();
-		let columnsIDArr = new Array();
+    fileName = fileName.toLowerCase();
 
-		for (let i = 0; i < colCnt; i++) {
-			let isRemoveCol = false;
-			if (typeof options.excludeColumns != "undefined" && options.excludeColumns != null && options.excludeColumns.length > 0) {
-				for (let k = 0; k < options.excludeColumns.length; k++) {
-					if (grdObj.getColumnID(i) == options.excludeColumns[k]) {
-						isRemoveCol = true;
-						break;
-					}
-				}
-			}
-			if (isRemoveCol) {
-				continue;
-			}
-			columnsIDArr.push(grdObj.getColumnID(i));
-		}
+    if (options.useProvider == true) {
+        options.dataProvider = "com.inswave.wrm.provider.ExcelDown";
+    }
+    if (options.useSplitProvider == true) {
+        options.splitProvider = "com.inswave.wrm.provider.ExcelSplitDown";
+    }
+    if (options.useProvider || options.useSplitProvider) {
+        const colCnt = grdObj.getColumnCount();
+        let columnsIDArr = new Array();
 
-		const xmlDoc = WebSquare.xml.parse(options.providerRequestXml, false);
-		WebSquare.xml.setValue(xmlDoc, "data/keyMap", columnsIDArr.join(","));
-		options.providerRequestXml = WebSquare.xml.serialize(xmlDoc);
-		delete options.useProvider;
-		delete options.useSplitProvider;
-	}
-	
-	// options.hiddenVisible=true 설정 시 화면내의 hidden컬럼을 removeColumns에 포함시켜서 엑셀 다운로드를 하지 않도록 한다.
-	if ((typeof options.hiddenVisible === "undefined") || (options.hiddenVisible == false)) {
-		const grdCnt = grdObj.getColCnt();
+        for (let i = 0; i < colCnt; i++) {
+            let isRemoveCol = false;
+            if (typeof options.excludeColumns != "undefined" && options.excludeColumns != null && options.excludeColumns.length > 0) {
+                for (let k = 0; k < options.excludeColumns.length; k++) {
+                    if (grdObj.getColumnID(i) == options.excludeColumns[k]) {
+                        isRemoveCol = true;
+                        break;
+                    }
+                }
+            }
+            if (isRemoveCol) {
+                continue;
+            }
+            columnsIDArr.push(grdObj.getColumnID(i));
+        }
 
-		let hiddenColIndex = [];
-		for (let idx = 0; idx < grdCnt; idx++) {
-			if (!grdObj.getColumnVisible(idx)) {
-				hiddenColIndex.push(idx);
-			}
-		}
+        const xmlDoc = WebSquare.xml.parse(options.providerRequestXml, false);
+        WebSquare.xml.setValue(xmlDoc, "data/keyMap", columnsIDArr.join(","));
+        options.providerRequestXml = WebSquare.xml.serialize(xmlDoc);
+        delete options.useProvider;
+        delete options.useSplitProvider;
+    }
 
-		if (hiddenColIndex.length > 0) {
-			if ((typeof options.removeColumns !== "undefined") && (options.removeColumns.length > 0)) {
-				options.removeColumns = options.removeColumns + "," + hiddenColIndex.join(',');
-			} else {
-				options.removeColumns = hiddenColIndex.join(',');
-			}
+    // options.hiddenVisible=true 설정 시 화면내의 hidden컬럼을 removeColumns에 포함시켜서 엑셀 다운로드를 하지 않도록 한다.
+    if ((typeof options.hiddenVisible === "undefined") || (options.hiddenVisible == false)) {
+        const grdCnt = grdObj.getColCnt();
 
-			// 중복 요소 제거
-			let _removeColumnArr = options.removeColumns.split(",");
-			options.removeColumns = _removeColumnArr.reduce(function (a, b) {
-				if (a.indexOf(b) < 0) {
-					a.push(b);
-				}
-				return a;
-			}, []).join(',');
-		}
-	}
+        let hiddenColIndex = [];
+        for (let idx = 0; idx < grdCnt; idx++) {
+            if (!grdObj.getColumnVisible(idx)) {
+                hiddenColIndex.push(idx);
+            }
+        }
 
-	// checkedColumnId, checkedData 옵션 처리 (데이터 필터링 후 엑셀 다운로드 기능 수행)
-	if (($c.util.isEmpty(options.dataHandler) == true) && (options.checkedData)) {
-		options.dataHandler = function(gridViewId) {
-			return getDataHandlerData($c.util.getComponent(gridViewId), options);
-		};
-		function getDataHandlerData(grdObj, opts) {
-			try {
-				const type = parseInt(opts.type, 10); // exceldown 의 down type 설정
-				const convertIdxList = opts.convertIndex.split(",") || []; // exceldown시 convertIndex 설정
-				const colmId = opts.checkedColumnId ||'chk'; // 대상 컬럼의 id로 기본 값을 'chk'라고 설정
-				const colInfo = grdObj.cellInfoHash[grdObj.getColumnID(colmId)]; // 해당 컬럼의 정보
-				let arrIdx = [];
-				
-				if (("checkbox" == colInfo.options.inputType || "radio" == colInfo.options.inputType || "custom" == colInfo.options.inputType)) {
-					arrIdx = grdObj.getCheckedIndex(colmId);
-				} else {
-					const chkData = opts.checkedData || ""; 
-					arrIdx = grdObj.getMatchedIndex(colmId, chkData);
-				}
- 
-				return (type == 0 || type == 1 || type == 2) ? getData(arrIdx, type, grdObj, convertIdxList) : grdObj.dataList.getAllData();
-						
-				function getData(arrIdx, type, grdObj, convertIdxList) {
-					let rtnData = [];
-					arrIdx.forEach(function(dataIdx) {
-						let displayType = type == 0 ? "realData": "displayData";						
-						let rowData = grdObj.getRowData(dataIdx, displayType);						
-						convertIdxList.forEach(function(convertIdx) {
-							if (convertIdx != "") {
-								displayType = type != 0 ? "displayData": "realData";
-								rowData[convertIdx] = grdObj.getRowData(dataIdx, displayType)[convertIdx];
-							}							
-						});
-						rtnData.push(rowData);			
-					})
-					return rtnData.map(function(item) { return Object.values(item); }).join().split(",");
-				}					
-			} catch(ex) {
-				$c.win.alert($c.data.getMessage("MSG_CM_00067"));
-				console.error(ex.toString());
-				throw ex;
-			}
-		};		
-	}	
+        if (hiddenColIndex.length > 0) {
+            if ((typeof options.removeColumns !== "undefined") && (options.removeColumns.length > 0)) {
+                options.removeColumns = options.removeColumns + "," + hiddenColIndex.join(',');
+            } else {
+                options.removeColumns = hiddenColIndex.join(',');
+            }
+
+            // 중복 요소 제거
+            let _removeColumnArr = options.removeColumns.split(",");
+            options.removeColumns = _removeColumnArr.reduce(function (a, b) {
+                if (a.indexOf(b) < 0) {
+                    a.push(b);
+                }
+                return a;
+            }, []).join(',');
+        }
+    }
+
+    // checkedColumnId, checkedData 옵션 처리 (데이터 필터링 후 엑셀 다운로드 기능 수행)
+    if (($c.util.isEmpty(options.dataHandler) == true) && (options.checkedData)) {
+        options.dataHandler = function (gridViewId) {
+            return getDataHandlerData($c.util.getComponent(gridViewId), options);
+        };
+    };
+
+    function getDataHandlerData(grdObj, opts) {
+        try {
+            const type = parseInt(opts.type, 10); // exceldown 의 down type 설정
+            const convertIdxList = opts.convertIndex.split(",") || []; // exceldown시 convertIndex 설정
+            const colmId = opts.checkedColumnId || 'chk'; // 대상 컬럼의 id로 기본 값을 'chk'라고 설정
+            const colInfo = grdObj.cellInfoHash[grdObj.getColumnID(colmId)]; // 해당 컬럼의 정보
+            let arrIdx = [];
+
+            if (("checkbox" == colInfo.options.inputType || "radio" == colInfo.options.inputType || "custom" == colInfo.options.inputType)) {
+                arrIdx = grdObj.getCheckedIndex(colmId);
+            } else {
+                const chkData = opts.checkedData || "";
+                arrIdx = grdObj.getMatchedIndex(colmId, chkData);
+            }
+
+            return (type == 0 || type == 1 || type == 2) ? getData(arrIdx, type, grdObj, convertIdxList) : grdObj.dataList.getAllData();
+            
+        } catch (ex) {
+            $c.win.alert($c.data.getMessage("MSG_CM_00067"));
+            console.error(ex.toString());
+            throw ex;
+        }
+    };
+
+    function getData(arrIdx, type, grdObj, convertIdxList) {
+        let rtnData = [];
+        arrIdx.forEach(function (dataIdx) {
+            let displayType = type == 0 ? "realData" : "displayData";
+            let rowData = grdObj.getRowData(dataIdx, displayType);
+            convertIdxList.forEach(function (convertIdx) {
+                if (convertIdx != "") {
+                    displayType = type != 0 ? "displayData" : "realData";
+                    rowData[convertIdx] = grdObj.getRowData(dataIdx, displayType)[convertIdx];
+                }
+            });
+            rtnData.push(rowData);
+        })
+        return rtnData.map(function (item) { return Object.values(item); }).join().split(",");
+    };
 };
 
 /**
@@ -223,21 +225,21 @@ scwin.setDownloadGridViewOption = function(grdObj, options) {
  * @hidden N
  * @exception 
  * @example $c.data.loadMessage();
- */ 
-scwin.loadMessage = function() {
-	const lang = $c.util.isEmpty($c.win.getLanguage()) ? "ko" : $c.win.getLanguage();
-	
-	const getMessageOption = {
-		id : "_sbm_getLanguagePack",
-		action : "/message/getAllMessage/" + lang,
-		method : "get",
-		submitDoneHandler : function(e) {
-			WebSquare.WebSquareLang = e.responseJSON.message;
-		},
-		isProcessMsg : false
-	};
-	
-	$c.sbm.executeDynamic(getMessageOption);
+ */
+scwin.loadMessage = function () {
+    const lang = $c.util.isEmpty($c.win.getLanguage()) ? "ko" : $c.win.getLanguage();
+
+    const getMessageOption = {
+        id: "_sbm_getLanguagePack",
+        action: "/message/getAllMessage/" + lang,
+        method: "get",
+        submitDoneHandler: function (e) {
+            WebSquare.WebSquareLang = e.responseJSON.message;
+        },
+        isProcessMsg: false
+    };
+
+    $c.sbm.executeDynamic(getMessageOption);
 };
 
 /**
@@ -247,36 +249,36 @@ scwin.loadMessage = function() {
  * @hidden N
  * @exception 
  * @example $c.data.initChangeCheckedDc = function($p);
- */ 
-scwin.initChangeCheckedDc = function() {
-	const scwinObj = $c.util.getObject("scwin");
-	
-	if (!$c.util.isEmpty($c.data.getParameter("menuInfo"))) {
-		scwinObj._changeCheckDcList = [];
-	}
+ */
+scwin.initChangeCheckedDc = function () {
+    const scwinObj = $c.util.getObject("scwin");
+
+    if (!$c.util.isEmpty($c.data.getParameter("menuInfo"))) {
+        scwinObj._changeCheckDcList = [];
+    }
 };
 
 /**
  * @method
  * @name setChangeCheckedDc
- * @description 데이터가 수정되어있는 경우 창이 닫힐때 창을 닫을 지 여부르를 묻는 컨펌창을 호출한다.
+ * @description 데이터가 수정되어있는 경우 창이 닫힐때 창을 닫을 지 여부를 묻는 컨펌창을 호출한다.
  * @param {Object} dcObjArr 창이 닫힐때 수정된 여부를 체크할 데이터컬렉션 객체(데이터 맵또는 데이터 리스트)
  * @returns {Object} topFrame 객체
  * @hidden N
  * @exception 
  * @example $c.win.setChangeCheckedDc([dma_sample, dlt_grdAllData]);
- */ 
-scwin.setChangeCheckedDc = function(dcObjArr) {
-	const mainFrameScwin = $c.data.getChangeCheckedMainFrame();
-	if (!$c.util.isEmpty(mainFrameScwin) && !$c.util.isEmpty(mainFrameScwin._changeCheckDcList)) {
-		if ($c.util.isArray(dcObjArr)) {
-			for (let id in dcObjArr) {
-				mainFrameScwin._changeCheckDcList.push(dcObjArr[id].getID());
-			}
-		} else {
-			mainFrameScwin._changeCheckDcList.push(dcObjArr.getID());
-		}
-	}
+ */
+scwin.setChangeCheckedDc = function (dcObjArr) {
+    const mainFrameScwin = $c.data.getChangeCheckedMainFrame();
+    if (!$c.util.isEmpty(mainFrameScwin) && $c.util.isEmpty(mainFrameScwin._changeCheckDcList)) {
+        if ($c.util.isArray(dcObjArr)) {
+            for (let id in dcObjArr) {
+                mainFrameScwin._changeCheckDcList.push(dcObjArr[id].getID());
+            }
+        } else {
+            mainFrameScwin._changeCheckDcList.push(dcObjArr.getID());
+        }
+    }
 };
 
 /**
@@ -288,37 +290,37 @@ scwin.setChangeCheckedDc = function(dcObjArr) {
  * @hidden N
  * @exception 
  * @example ${example}
- */ 
-scwin.getChangeCheckedMainFrame = function(scopeApi) {
-	if (typeof(scopeApi) == 'object') {
-		return scwin.__getChangeCheckedMainFrame(scopeApi);
-	}
+ */
+scwin.getChangeCheckedMainFrame = function (scopeApi) {
+    if (typeof (scopeApi) == 'object') {
+        return scwin.__getChangeCheckedMainFrame(scopeApi);
+    }
 
-	return scwin.__getChangeCheckedMainFrame($p);
+    return scwin.__getChangeCheckedMainFrame($p);
 };
 
 /**
  * @method
  * @name __getChangeCheckedMainFrame
  * @description $p파라미터를 직접 받는 getChangeCheckedMainFrame
- * @param {Object} scopeApi WFrame Scope $p
+ * @param {Object} scopeApi pageFrame Scope $p
  * @returns {Object} 
  * @hidden Y
  * @exception
  * @example
  */
 scwin.__getChangeCheckedMainFrame = function (scopeApi) {
-	let $p = scopeApi;
-	const scwinObj = $c.util.getObject("scwin"); 
+    const $p = scopeApi;
+    const scwinObj = $c.util.getObject("scwin");
 
-	if (typeof scwinObj._changeCheckDcList !== "undefined") {
-		return scwinObj;
-	} else if ($p.main().$p.getFrameId() !== $p.getFrameId()) {
-		scopeApi = $p.parent().$p;
-		return $c.data.getChangeCheckedMainFrame(scopeApi);
-	} else {
-		return null; 
-	}
+    if (typeof scwinObj._changeCheckDcList !== "undefined") {
+        return scwinObj;
+    } else if ($p.main().$p.getFrameId() !== $p.getFrameId()) {
+        scopeApi = $p.parent().$p;
+        return $c.data.getChangeCheckedMainFrame(scopeApi);
+    } else {
+        return null;
+    }
 };
 
 /**
@@ -327,7 +329,7 @@ scwin.__getChangeCheckedMainFrame = function (scopeApi) {
  * @description 코드성 데이터와 컴포넌트의 nodeSet(아이템 리스트) 연동 기능을 제공한다.
  * cdgrp별로 JSON객체를 생성하여 array에 담아 첫 번째 파라미터로 넘겨준다.
  * $c.data.setCommonCode 함수에서는 공통 코드 로딩을 위한 Submssion(_sbm_searchCode)을 생성만 한다.
- * Submssion(_sbm_searchCode)의 실행은 config.xml의 wframe > postScript에 정의된 $c.win.processCommonData 함수에서 실행한다.
+ * Submssion(_sbm_searchCode)의 실행은 config.xml의 pageFrame > postScript에 정의된 $c.win.processCommonData 함수에서 실행한다.
  * @param {Object} codeOptions {"code" : "코드그룹", "compID" : "적용할 컴포넌트명", useLocalCache : "로컬 캐시 사용 여부"}
  * @param {String} codeOptions.code 공통 코드 그룹 코드
  * @param {String} codeOptions.compId 로딩한 공통 코드 데이터를 저장한 DataList와 바인딩할 컴포넌트 아이디
@@ -336,140 +338,139 @@ scwin.__getChangeCheckedMainFrame = function (scopeApi) {
  * @hidden N
  * @exception 
  * @example const codeOptions = [ { code : "00001", compID : "sbx_Duty" },
-					{ code : "00002", compID : "sbx_Postion" },
-					{ code : "00021", compID : "sbx_JoinClass" },
-					{ code : "00005", compID : "sbx_CommCodePart1, sbx_CommCodePart2"},
-					{ code : "00024", compID : "grd_CommCodeSample:JOB_CD", useLocalCache : false} ];
+                    { code : "00002", compID : "sbx_Postion" },
+                    { code : "00021", compID : "sbx_JoinClass" },
+                    { code : "00005", compID : "sbx_CommCodePart1, sbx_CommCodePart2"},
+                    { code : "00024", compID : "grd_CommCodeSample:JOB_CD", useLocalCache : false} ];
 $c.data.setCommonCode(codeOptions);
- */ 
-scwin.setCommonCode = function(codeOptions, callbackFunc) { 
-	let codeOptionsLen = 0;
+ */
+scwin.setCommonCode = function (codeOptions, callbackFunc) {
+    let codeOptionsLen = 0;
 
-	if (codeOptions) {
-		codeOptionsLen = codeOptions.length;
-	} else {
-		console.error("=== $c.setCommonCode Parameter Type Error ===\nex) $c.setCommonCode([{\"code:\":\"04\",\"compID\":\"sbx_Gender\"}],\"scwin.callbackFunction\")\n===================================");
-		return;
-	}
+    if (codeOptions) {
+        codeOptionsLen = codeOptions.length;
+    } else {
+        console.error("=== $c.setCommonCode Parameter Type Error ===\nex) $c.setCommonCode([{\"code:\":\"04\",\"compID\":\"sbx_Gender\"}],\"scwin.callbackFunction\")\n===================================");
+        return;
+    }
 
-	let i, j, codeObj, dltId, dltIdArr = [], paramCode = "", compArr, compArrLen, tmpIdArr;
-	const dataListOption = _getCodeDataListOptions(scwin.COMMON_CODE_INFO.FILED_ARR);
+    let i, j, codeObj, dltId, dltIdArr = [], paramCode = "", compArr, compArrLen, tmpIdArr;
+    const dataListOption = _getCodeDataListOptions(scwin.COMMON_CODE_INFO.FILED_ARR);
 
-	for (i = 0; i < codeOptionsLen; i++) {
-		codeObj = codeOptions[i];
+    for (i = 0; i < codeOptionsLen; i++) {
+        codeObj = codeOptions[i];
 
-		try {
-			dltId = scwin.DATA_PREFIX + codeObj.code;
-			
-			if ((typeof scwin.commonCodeList[dltId] !== "undefined") && (codeObj.useLocalCache === false)) {
-				delete scwin.commonCodeList[dltId];
-				$p.data.remove(dltId);
-			}
-			
-			if (typeof scwin.commonCodeList[dltId] === "undefined") {
-				dltIdArr.push(dltId);
+        try {
+            dltId = scwin.DATA_PREFIX + codeObj.code;
 
-				if (i > 0) {
-					paramCode += ",";
-				}
-				paramCode += codeObj.code;
-				dataListOption.id = dltId;
-				$p.data.create(dataListOption); // 동일한 id의 DataCollection이 존재할 경우, 삭제 후 재생성함
-			} else {
-				dataListOption.id = dltId;
-				$p.data.create(dataListOption);
-				let dataListObj = $p.getComponentById(dataListOption.id);
-				dataListObj.setJSON(scwin.commonCodeList[dltId]);
-			}
+            if ((typeof scwin.commonCodeList[dltId] !== "undefined") && (codeObj.useLocalCache === false)) {
+                delete scwin.commonCodeList[dltId];
+                $p.data.remove(dltId);
+            }
 
-			if (codeObj.compID) {
-				compArr = (codeObj.compID).replaceAll(" ", "").split(",");
-				compArrLen = compArr.length;
-				
-				for (j = 0; j < compArrLen; j++) {
-					tmpIdArr = compArr[j].split(":"); 
-					
-					if (tmpIdArr.length === 1) {
-						const comp = $c.util.getComponent(tmpIdArr[0]);
-						if (!$c.util.isEmpty(comp)) {
-							comp.setNodeSet("data:" + dltId, scwin.COMMON_CODE_INFO.LABEL, scwin.COMMON_CODE_INFO.VALUE);
-						} else {
-							console.warn("[$c.setCommonCode] Component(" + tmpIdArr[0] + ")를 찾을 수 없습니다.");
-						}
-					} else {
-						let gridObj = $c.util.getComponent(tmpIdArr[0]);
-						if (!$c.util.isEmpty(gridObj)) {
-							gridObj.setColumnNodeSet(tmpIdArr[1], "data:" + dltId, scwin.COMMON_CODE_INFO.LABEL, scwin.COMMON_CODE_INFO.VALUE);
-						} else {
-							console.warn("[$c.data.setCommonCode] GridView(" + tmpIdArr[0] + ")를 찾을 수 없습니다.");
-						}
-					}
-				}
-			}
-		} catch (ex) {
-			console.error(ex);
-		}
-	}
+            if (typeof scwin.commonCodeList[dltId] === "undefined") {
+                dltIdArr.push(dltId);
 
-	const searchCodeGrpOption = {
-		id : "_sbm_searchCode",
-		action : "/common/selectCodeList",
-		target : "data:json," + $c.str.serialize(dltIdArr),
-		isProcessMsg : false
-	};
+                if (i > 0) {
+                    paramCode += ",";
+                }
+                paramCode += codeObj.code;
+                dataListOption.id = dltId;
+                $p.data.create(dataListOption); // 동일한 id의 DataCollection이 존재할 경우, 삭제 후 재생성함
+            } else {
+                dataListOption.id = dltId;
+                $p.data.create(dataListOption);
+                let dataListObj = $p.getComponentById(dataListOption.id);
+                dataListObj.setJSON(scwin.commonCodeList[dltId]);
+            }
 
-	searchCodeGrpOption.submitDoneHandler = function(e) { 
-		for (let codeGrpDataListId in e.responseJSON) {
-			if (codeGrpDataListId.indexOf(scwin.DATA_PREFIX) > -1) {
-				scwin.commonCodeList[codeGrpDataListId] = e.responseJSON[codeGrpDataListId];
-			}
-		}
+            if (codeObj.compID) {
+                compArr = (codeObj.compID).replaceAll(" ", "").split(",");
+                compArrLen = compArr.length;
 
-		if (typeof callbackFunc === "function") {
-			callbackFunc();
-		}
-	}
+                for (j = 0; j < compArrLen; j++) {
+                    tmpIdArr = compArr[j].split(":");
+                    if (tmpIdArr.length === 1) {
+                        const comp = $c.util.getComponent(tmpIdArr[0]);
+                        if (!$c.util.isEmpty(comp)) {
+                            comp.setNodeSet("data:" + dltId, scwin.COMMON_CODE_INFO.LABEL, scwin.COMMON_CODE_INFO.VALUE);
+                        } else {
+                            console.warn("[$c.setCommonCode] Component(" + tmpIdArr[0] + ")를 찾을 수 없습니다.");
+                        }
+                    } else {
+                        let gridObj = $c.util.getComponent(tmpIdArr[0]);
+                        if (!$c.util.isEmpty(gridObj)) {
+                            gridObj.setColumnNodeSet(tmpIdArr[1], "data:" + dltId, scwin.COMMON_CODE_INFO.LABEL, scwin.COMMON_CODE_INFO.VALUE);
+                        } else {
+                            console.warn("[$c.data.setCommonCode] GridView(" + tmpIdArr[0] + ")를 찾을 수 없습니다.");
+                        }
+                    }
+                }
+            }
+        } catch (ex) {
+            console.error(ex);
+        }
+    }
 
-	if (paramCode !== "") {
-		if ($c.util.isEmpty($c.util.getComponent(searchCodeGrpOption.id))) {
-			$c.sbm.create(searchCodeGrpOption);
-		} else {
-			$p.deleteSubmission(searchCodeGrpOption.id);
-			$c.sbm.create(searchCodeGrpOption);
-		}
-		
-		let sbmObj = $c.util.getComponent(searchCodeGrpOption.id);
-		const reqData = {
-			"dma_commonCode" : {
-				"GRP_CD" : paramCode,
-				"DATA_PREFIX" : scwin.DATA_PREFIX
-			}
-		};
-		sbmObj.setRequestData(reqData);
-	} else {
-		if (typeof callbackFunc === "function") {
-			callbackFunc();
-		}
-	}
+    const searchCodeGrpOption = {
+        id: "_sbm_searchCode",
+        action: "/common/selectCodeList",
+        target: "data:json," + $c.str.serialize(dltIdArr),
+        isProcessMsg: false
+    };
 
-	// dataList를 동적으로 생성하기 위한 옵션 정보를 반환한다.
-	function _getCodeDataListOptions(infoArr) {
-		const option = {
-			"type" : "dataList",
-			"option" : {
-				"baseNode" : "list",
-				"repeatNode" : "map"
-			},
-			"columnInfo" : []
-		};
+    searchCodeGrpOption.submitDoneHandler = function (e) {
+        for (let codeGrpDataListId in e.responseJSON) {
+            if (codeGrpDataListId.indexOf(scwin.DATA_PREFIX) > -1) {
+                scwin.commonCodeList[codeGrpDataListId] = e.responseJSON[codeGrpDataListId];
+            }
+        }
 
-		for ( let idx in infoArr) {
-			option.columnInfo.push({
-				"id" : infoArr[idx]
-			});
-		}
-		return option;
-	}
+        if (typeof callbackFunc === "function") {
+            callbackFunc();
+        }
+    }
+
+    if (paramCode !== "") {
+        if ($c.util.isEmpty($c.util.getComponent(searchCodeGrpOption.id))) {
+            $c.sbm.create(searchCodeGrpOption);
+        } else {
+            $p.deleteSubmission(searchCodeGrpOption.id);
+            $c.sbm.create(searchCodeGrpOption);
+        }
+
+        let sbmObj = $c.util.getComponent(searchCodeGrpOption.id);
+        const reqData = {
+            "dma_commonCode": {
+                "GRP_CD": paramCode,
+                "DATA_PREFIX": scwin.DATA_PREFIX
+            }
+        };
+        sbmObj.setRequestData(reqData);
+    } else {
+        if (typeof callbackFunc === "function") {
+            callbackFunc();
+        }
+    }
+
+    // dataList를 동적으로 생성하기 위한 옵션 정보를 반환한다.
+    function _getCodeDataListOptions(infoArr) {
+        const option = {
+            "type": "dataList",
+            "option": {
+                "baseNode": "list",
+                "repeatNode": "map"
+            },
+            "columnInfo": []
+        };
+
+        for (let idx in infoArr) {
+            option.columnInfo.push({
+                "id": infoArr[idx]
+            });
+        }
+        return option;
+    }
 };
 
 /**
@@ -485,9 +486,9 @@ scwin.setCommonCode = function(codeOptions, callbackFunc) {
  * comDataList1.setColumnFilter( 
  * 	{type:'regExp', colIndex:'COM_CD', key:/01|02|04|05/gi, condition:'and'}
  * );
- */ 
-scwin.getCommonCodeDataList = function(cdGrp) {
-	return $c.util.getComponent(scwin.DATA_PREFIX + cdGrp);
+ */
+scwin.getCommonCodeDataList = function (cdGrp) {
+    return $c.util.getComponent(scwin.DATA_PREFIX + cdGrp);
 };
 
 
@@ -507,10 +508,10 @@ scwin.getCommonCodeDataList = function(cdGrp) {
  *	{ code : "00024", compID : "grd_CommCodeSample:JOB_CD"} ];
  *  $c.data.setCommonCode(codeOptions);
  *  $c.data.executeCommonCode();
- */ 
-scwin.executeCommonCode = function() {
-	const sbmSearchCode = $c.util.getComponent("_sbm_searchCode");
-	$c.sbm.execute(sbmSearchCode);
+ */
+scwin.executeCommonCode = function () {
+    const sbmSearchCode = $c.util.getComponent("_sbm_searchCode");
+    $c.sbm.execute(sbmSearchCode);
 };
 
 
@@ -526,13 +527,13 @@ scwin.executeCommonCode = function() {
  * @exception 
  * @example const code = $c.data.getParameter("code");  // 특정 파라미터 값을 얻어오기
 const param = $c.data.getParameter();	   // 전체 파라미터 값을 얻어오기
- */ 
-scwin.getParameter = function(paramKey, scopeObj, scopeApi) {
-	if (typeof (paramKey) != "string" && paramKey != undefined) {
-		scwin.__getParameter(paramKey, scopeObj, scopeApi)
-		return;
-	}
-	return scwin.__getParameter($p, paramKey, scopeObj);
+ */
+scwin.getParameter = function (paramKey, scopeObj, scopeApi) {
+    if (typeof (paramKey) != "string" && paramKey != undefined) {
+        return scwin.__getParameter(paramKey, scopeObj, scopeApi);
+
+    }
+    return scwin.__getParameter($p, paramKey, scopeObj);
 };
 
 /**
@@ -545,94 +546,95 @@ scwin.getParameter = function(paramKey, scopeObj, scopeApi) {
  * @returns {Object} parameterValue 파라미터 값
  * @hidden Y
  * @exception 
- */ 
-scwin.__getParameter = function(scopeApi, paramKey, scopeObj) {
-	let $p = scopeApi;
-	if (!$c.util.isEmpty(scopeObj)) {
-		$p = scopeObj; 
-	}
-	
-	let paramData = "";
-	try {
-		paramData = $p.getParameter("paramData");
-		if (($c.util.isEmpty(paramData) === false) && $c.util.isJSON(paramData)) {
-			if ($c.util.isEmpty(paramKey) === false) {
-				return paramData[paramKey];
-			} else {
-				return paramData;
-			}
-		} else {
-			paramData = getUrlParameter("paramData");
-			if ($c.util.isEmpty(paramData) === false) {
-				paramData = $c.util.getJSON(WebSquare.text.BASE64Decode(paramData));
-				if ($c.util.isEmpty(paramKey) === false) {
-					return paramData[paramKey];
-				} else {
-					return paramData;
-				}
-			}
-		}
-	} catch (ex) {
-		console.error(ex);
-		return "";
-	}
-	
-	return paramData;
-	
-	function getUrlParameter(paramKey) {
-		let param = [];
-		const paramArray = location.search.split(/[\&\?\#]/);
-		for (let i = 0; i < paramArray.length; i++) {
-			if ($c.util.isEmpty(paramArray[i]) === false) {
-				const valueIdx = paramArray[i].indexOf("=");
-				if (valueIdx > 0) {
-					const key = paramArray[i].substring(0, valueIdx);
-					const value = paramArray[i].substring(valueIdx + 1);
-					if (key === paramKey) {
-						return value;
-					}
-				}
-			}
-		}
-	}
+ */
+scwin.__getParameter = function (scopeApi, paramKey, scopeObj) {
+    let $p = scopeApi;
+    if (!$c.util.isEmpty(scopeObj)) {
+        $p = scopeObj;
+    }
+
+    let paramData = "";
+    try {
+        paramData = $p.getParameter("paramData");
+        if (($c.util.isEmpty(paramData) === false) && $c.util.isJSON(paramData)) {
+            if ($c.util.isEmpty(paramKey) === false) {
+                return paramData[paramKey];
+            } else {
+                return paramData;
+            }
+        } else {
+            paramData = getUrlParameter("paramData");
+            if ($c.util.isEmpty(paramData) === false) {
+                paramData = $c.util.getJSON(WebSquare.text.BASE64Decode(paramData));
+                if ($c.util.isEmpty(paramKey) === false) {
+                    return paramData[paramKey];
+                } else {
+                    return paramData;
+                }
+            }
+        }
+    } catch (ex) {
+        console.error(ex);
+        return "";
+    }
+
+    return paramData;
+
+    function getUrlParameter(paramKey) {
+        let param = [];
+        const paramArray = location.search.split(/[\&\?\#]/);
+        for (let i = 0; i < paramArray.length; i++) {
+            if ($c.util.isEmpty(paramArray[i]) === false) {
+                const valueIdx = paramArray[i].indexOf("=");
+                if (valueIdx > 0) {
+                    const key = paramArray[i].substring(0, valueIdx);
+                    const value = paramArray[i].substring(valueIdx + 1);
+                    if (key === paramKey) {
+                        return value;
+                    }
+                }
+            }
+        }
+    }
 }
 
 /**
  * @method
  * @name getColumnName
- * @description 특정 컴포넌트에 바인된 DataList나 DataMap의 컬럼 이름을 반환한다.
+ * @description 특정 컴포넌트에 바인딩된 DataList나 DataMap의 컬럼 이름을 반환한다.
  * @param {Object} comObj 컴포넌트 객체
  * @returns {String} 컬럼명 컬럼명인 String
  * @hidden N
  * @exception 
  * @example $c.data.getColumnName(ibx_name);
- */ 
-scwin.getColumnName = function(comObj) {
-	try {
-		if ((typeof comObj.getRef) === "function") {
-			const ref = comObj.getRef();
-			const refArray = ref.substring(5).split(".");
-			const dataCollectionName = refArray[0];
-			const columnId = refArray[1];
-			let dataCollection, dataType;
+ */
+scwin.getColumnName = function (comObj) {
+    try {
+        let dataCollection = null; 
+        if ((typeof comObj.getRef) === "function") {
+            const ref = comObj.getRef();
+            const refArray = ref.substring(5).split(".");
+            const dataCollectionName = refArray[0];
+            const columnId = refArray[1];
+            let dataType;
 
-			if ((typeof refArray !== "undefined") && (refArray.length === 2)) {
-				dataCollection = comObj.getScopeWindow().$p.getComponentById(dataCollectionName);
-				dataType = dataCollection.getObjectType().toLowerCase();
-				if (dataType === "datamap") {
-					return dataCollection.getName(columnId);
-				} else if (dataType === 'datalist') {
-					return dataCollection.getColumnName(columnId);
-				}
-			} else {
-				return "";
-			}
-		}
-	} catch (ex) {
-		console.error(ex);
-	} finally {
-		dataCollection = null;
-	}
+            if ((typeof refArray !== "undefined") && (refArray.length === 2)) {
+                dataCollection = comObj.getScopeWindow().$p.getComponentById(dataCollectionName);
+                dataType = dataCollection.getObjectType().toLowerCase();
+                if (dataType === "datamap") {
+                    return dataCollection.getName(columnId);
+                } else if (dataType === 'datalist') {
+                    return dataCollection.getColumnName(columnId);
+                }
+            } else {
+                return "";
+            }
+        }
+    } catch (ex) {
+        console.error(ex);
+    } finally {
+        dataCollection = null;
+    }
 };
 
 /**
@@ -644,33 +646,33 @@ scwin.getColumnName = function(comObj) {
  * @hidden N
  * @exception 
  * @example $c.data.getDataCollection(ibx_applUserId);
- */ 
-scwin.getDataCollection = function(comObj) {
-	try {
-		if ((typeof comObj !== "undefined") && (typeof comObj.getRef === "function")) {
-			if (comObj.getPluginName() === "gridView") {
-				return comObj.getDataListInfo();
-			} else {
-				let ref = comObj.options.ref;
-				if ((typeof ref !== "undefined") && (ref !== "")) {
-					let refArray = ref.substring(5).split(".");
-					if ((typeof refArray !== "undefined") && (refArray.length === 2)) {
-						const dataObjInfo = {};
-						dataObjInfo.runtimeDataCollectionId = comObj.getScopeWindow().$p.getFrameId() + "_" + refArray[0];
-						dataObjInfo.dataColletionId = refArray[0];
-						dataObjInfo.columnId = refArray[1];
-						return dataObjInfo;
-					} else {
-						return null;
-					}
-				} else {
-					return null;
-				}
-			}
-		}
-	} catch (e) {
-		console.error("[$c.data.getDataCollection] Exception :: " + e.message);
-	}
+ */
+scwin.getDataCollection = function (comObj) {
+    try {
+        if ((typeof comObj !== "undefined") && (typeof comObj.getRef === "function")) {
+            if (comObj.getPluginName() === "gridView") {
+                return comObj.getDataListInfo();
+            } else {
+                let ref = comObj.options.ref;
+                if ((typeof ref !== "undefined") && (ref !== "")) {
+                    let refArray = ref.substring(5).split(".");
+                    if ((typeof refArray !== "undefined") && (refArray.length === 2)) {
+                        const dataObjInfo = {};
+                        dataObjInfo.runtimeDataCollectionId = comObj.getScopeWindow().$p.getFrameId() + "_" + refArray[0];
+                        dataObjInfo.dataColletionId = refArray[0];
+                        dataObjInfo.columnId = refArray[1];
+                        return dataObjInfo;
+                    } else {
+                        return null;
+                    }
+                } else {
+                    return null;
+                }
+            }
+        }
+    } catch (e) {
+        console.error("[$c.data.getDataCollection] Exception :: " + e.message);
+    }
 };
 
 
@@ -686,29 +688,29 @@ $c.data.getMessage("MSG_CM_00001");  // "변경된 데이터를 저장하시겠�
 $c.data.getMessage("MSG_CM_00002", $c.str.attachPostposition("전화번호"));  // "전화번호는 필수입력값입니다."
 $c.data.getMessage("MSG_CM_00003", "세션이 종료되어");  // "세션이 종료되어 로그인 화면으로 이동하겠습니다."
 $c.data.getMessage("MSG_CM_00007", "엑셀", "5M");  // 엑셀 파일의 크기가 5M를 초과 했습니다.
- */ 
-scwin.getMessage = function(msgId) {
-	let message = ""
-	if ($c.util.isEmpty(msgId) === false) {
-		message = WebSquare.WebSquareLang[msgId];
-	}
+ */
+scwin.getMessage = function (msgId) {
+    let message = ""
+    if ($c.util.isEmpty(msgId) === false) {
+        message = WebSquare.WebSquareLang[msgId];
+    }
 
-	if ($c.util.isEmpty(message) === false) {
-		let tmpMessage = message;
+    if ($c.util.isEmpty(message) === false) {
+        let tmpMessage = message;
 
-		if (arguments.length > 1) {
-			for(let i = 1; i < arguments.length; i++) {
-				if ($c.util.isEmpty(arguments[i]) === false) {
-					tmpMessage = (tmpMessage.indexOf("$[" + (i-1) + "]") != -1) ? $c.str.replaceAll(tmpMessage, "$[" + (i-1) + "]", arguments[i]) : tmpMessage;
-				}
-			}
-			return tmpMessage;
-		} else {
-			return tmpMessage;
-		}
-	} else {
-		return "";
-	}
+        if (arguments.length > 1) {
+            for (let i = 1; i < arguments.length; i++) {
+                if ($c.util.isEmpty(arguments[i]) === false) {
+                    tmpMessage = (tmpMessage.indexOf("$[" + (i - 1) + "]") != -1) ? $c.str.replaceAll(tmpMessage, "$[" + (i - 1) + "]", arguments[i]) : tmpMessage;
+                }
+            }
+            return tmpMessage;
+        } else {
+            return tmpMessage;
+        }
+    } else {
+        return "";
+    }
 };
 
 /**
@@ -720,38 +722,38 @@ scwin.getMessage = function(msgId) {
  * @hidden N
  * @exception 
  * @example if ($c.data.validateGridView(grd_indexPage, valInfo) && $c.data.isModified(dlt_grdAllData)) {
-	$c.win.confirm("저장하시겠습니까?", "scwin.saveData");
+    $c.win.confirm("저장하시겠습니까?", "scwin.saveData");
 };
- */ 
-scwin.isModified = function(dcObjArr) {
-	let result = false;
-	
-	if ($c.util.getObjectType(dcObjArr) === "array") {
-		for (let idx in dcObjArr) {
-			if ($c.util.getObjectType(dcObjArr[idx]) === "object") {
-				if (isModified(dcObjArr[idx]) === true) {
-					result = true;
-				}
-			}
-		}
-	} else if ($c.util.getObjectType(dcObjArr) === "object") {
-		result = isModified(dcObjArr);
-	}
-	
-	return result;
+ */
+scwin.isModified = function (dcObjArr) {
+    let result = false;
 
-	function isModified(dcObj) {
-		if ((typeof dcObj !== "undefined") && (typeof dcObj !== null)) {
-			const modifiedIndex = dcObj.getModifiedIndex();
-			if (modifiedIndex.length === 0) {
-				return false;
-			} else {
-				return true;
-			}
-		} else {
-			return true;
-		}
-	}
+    if ($c.util.getObjectType(dcObjArr) === "array") {
+        for (let idx in dcObjArr) {
+            if ($c.util.getObjectType(dcObjArr[idx]) === "object") {
+                if (isModified(dcObjArr[idx]) === true) {
+                    result = true;
+                }
+            }
+        }
+    } else if ($c.util.getObjectType(dcObjArr) === "object") {
+        result = isModified(dcObjArr);
+    }
+
+    return result;
+
+    function isModified(dcObj) {
+        if ((typeof dcObj !== "undefined") && (dcObj !== null)) {
+            const modifiedIndex = dcObj.getModifiedIndex();
+            if (modifiedIndex.length === 0) {
+                return false;
+            } else {
+                return true;
+            }
+        } else {
+            return true;
+        }
+    }
 };
 
 /**
@@ -780,7 +782,7 @@ scwin.isModified = function(dcObjArr) {
  * @param {Number}	options.excelInfo.startColumnIndex		[default: 0] excel파일에서 dataList의 데이터가 시작되는 열의 번호(헤더 포함)
  * @param {String}	options.excelInfo.headerColor			[default: #33CCCC] excel파일에서 dataList의 header부분의 색
  * @param {String}	options.excelInfo.headerFontName		[default: 없음] excel파일에서 dataList의 header부분의 font name
- * @param {String}	options.excelInfo.wframeId				[default: 현재 WFrame Id] DataList가 위치한 WFrame Id 정보
+ * @param {String}	options.excelInfo.pageFrameId			[default: 현재 pageFrame Id] DataList가 위치한 pageFrame Id 정보
  * @param {Array}	options.excelInfo.infoArr				dataList에 대한 내용을 추가로 다른 셀에 표현하는 경우 사용하는 배열
  * @param {Number}	options.excelInfo.infoArr.rowIndex		내용을 표시할 행번호
  * @param {Number}	options.excelInfo.infoArr.colIndex		내용을 표시할 열번호
@@ -799,105 +801,105 @@ scwin.isModified = function(dcObjArr) {
  * @example
 // id가 a,b,c,d,e인 5개 컬럼이 존재하는 DataList
 const options = {
-	common: {
-		fileName : "excel_data.xlsx",
-		showProcess : true,
-		multipleSheet : true,
-		printSet : {
-			landScape : "true",
-			fitToPage : "true",
-			fitWidth : "1",
-			fitHeight : "1",
-			scale : "222"
-		}
-	},
-	excelInfo: [
-		{
-			dataListId : "dlt_data1",
-			sheetName : "첫번째 sheet",
-			removeColumns : "1,3",
-			foldColumns : "2",
-			startRowIndex : 3,
-			startColumnIndex : 0,
-			headerColor : "#DBEEF3",
-			bodyColor : "#92CDDC",
-			infoArr : [
-				{
-					rowIndex : 1, colIndex : 3, rowSpan : 1, colSpan : 2, text : "데이터표시" , textAlign : "center"
-				}
-			]
-		},
-		{
-			dataListId : "dlt_data2",
-			sheetName : "두번째 sheet",
-			removeColumns : "1,3",
-			foldColumns : "2",
-			startRowIndex : 3,
-			startColumnIndex : 0,
-			headerColor : "#DBEEF3",
-			bodyColor : "#92CDDC",
-			infoArr : [
-				{
-					rowIndex : 1, colIndex : 3, rowSpan : 1, colSpan : 2, text : "데이터표시" , textAlign : "center"
-				}
-			]
-		}
-	]
+    common: {
+        fileName : "excel_data.xlsx",
+        showProcess : true,
+        multipleSheet : true,
+        printSet : {
+            landScape : "true",
+            fitToPage : "true",
+            fitWidth : "1",
+            fitHeight : "1",
+            scale : "222"
+        }
+    },
+    excelInfo: [
+        {
+            dataListId : "dlt_data1",
+            sheetName : "첫번째 sheet",
+            removeColumns : "1,3",
+            foldColumns : "2",
+            startRowIndex : 3,
+            startColumnIndex : 0,
+            headerColor : "#DBEEF3",
+            bodyColor : "#92CDDC",
+            infoArr : [
+                {
+                    rowIndex : 1, colIndex : 3, rowSpan : 1, colSpan : 2, text : "데이터표시" , textAlign : "center"
+                }
+            ]
+        },
+        {
+            dataListId : "dlt_data2",
+            sheetName : "두번째 sheet",
+            removeColumns : "1,3",
+            foldColumns : "2",
+            startRowIndex : 3,
+            startColumnIndex : 0,
+            headerColor : "#DBEEF3",
+            bodyColor : "#92CDDC",
+            infoArr : [
+                {
+                    rowIndex : 1, colIndex : 3, rowSpan : 1, colSpan : 2, text : "데이터표시" , textAlign : "center"
+                }
+            ]
+        }
+    ]
 };
 $c.data.downloadMultipleDataList(options);
- */ 
-scwin.downloadMultipleDataList = function(optionsParam, infoArrParam) {
-	const options = {
-		common: {
-			fileName : optionsParam.common.fileName || "dataList.xlsx",
-			showProcess :  optionsParam.common.showProcess || true,
-			autoSizeColumn : optionsParam.common.autoSizeColumn || true,
-			multipleSheet : optionsParam.common.multipleSheet || true,
-			printSet : optionsParam.common.printSet || {}
-		},
-		excelInfo: []
-	};
+ */
+scwin.downloadMultipleDataList = function (optionsParam, infoArrParam) {
+    const options = {
+        common: {
+            fileName: optionsParam.common.fileName || "dataList.xlsx",
+            showProcess: optionsParam.common.showProcess || true,
+            autoSizeColumn: optionsParam.common.autoSizeColumn || true,
+            multipleSheet: optionsParam.common.multipleSheet || true,
+            printSet: optionsParam.common.printSet || {}
+        },
+        excelInfo: []
+    };
 
-	if (optionsParam.excelInfo.length > 0) {
-		let excelInfoCount = optionsParam.excelInfo.length;
+    if (optionsParam.excelInfo.length > 0) {
+        let excelInfoCount = optionsParam.excelInfo.length;
 
-		for (let idx = 0; idx < excelInfoCount; idx++) {
-			const wframeId = optionsParam.excelInfo[idx].wframeId || $p.getFrameId();
-			const dataListId = optionsParam.excelInfo[idx].dataListId;
-			
-			let dataListObj = null;
-			if ($c.util.isEmpty(wframeId) === false) {
-				dataListObj = $p.getComponentById(wframeId + "_" + dataListId);
-			} else {
-				dataListObj = $p.getComponentById(dataListId);
-			}
-			
-			if (typeof dataListObj === "undefined") {
-				console.warn("[$c.data.downloadMultipleDataList] excelInfo.dataListId에 설정된 DataList(" + dataListId + ")를 찾을 수 없습니다.");
-				return;
-			}
+        for (let idx = 0; idx < excelInfoCount; idx++) {
+            const pageFrameId = optionsParam.excelInfo[idx].pageFrameId || $p.getFrameId();
+            const dataListId = optionsParam.excelInfo[idx].dataListId;
 
-			const excelInfo = {
-				dataListId : dataListId,
-				sheetName : optionsParam.excelInfo[idx].sheetName || dataListId,
-				removeColumns : optionsParam.excelInfo[idx].removeColumns || "",
-				foldColumns : optionsParam.excelInfo[idx].foldColumns || "",
-				startRowIndex : optionsParam.excelInfo[idx].startRowIndex || 0,
-				startColumnIndex : optionsParam.excelInfo[idx].startColumnIndex || 0,
-				headerColor : optionsParam.excelInfo[idx].headerColor || "#33CCCC",
-				bodyColor : optionsParam.excelInfo[idx].bodyColor || "#FFFFFF",
-				wframeId : wframeId,
-				infoArr : optionsParam.excelInfo[idx].infoArr
-			};
+            let dataListObj = null;
+            if ($c.util.isEmpty(pageFrameId) === false) {
+                dataListObj = $p.getComponentById(pageFrameId + "_" + dataListId);
+            } else {
+                dataListObj = $p.getComponentById(dataListId);
+            }
 
-			options.excelInfo.push(excelInfo);
-		}
-	} else {
-		console.warn("[$c.data.downloadMultipleDataList] options.excelInfo 정보가 입력되지 않았습니다.");
-		return;
-	}
+            if (typeof dataListObj === "undefined") {
+                console.warn("[$c.data.downloadMultipleDataList] excelInfo.dataListId에 설정된 DataList(" + dataListId + ")를 찾을 수 없습니다.");
+                return;
+            }
 
-	WebSquare.util.multipleDataListDownload(options, infoArrParam);
+            const excelInfo = {
+                dataListId: dataListId,
+                sheetName: optionsParam.excelInfo[idx].sheetName || dataListId,
+                removeColumns: optionsParam.excelInfo[idx].removeColumns || "",
+                foldColumns: optionsParam.excelInfo[idx].foldColumns || "",
+                startRowIndex: optionsParam.excelInfo[idx].startRowIndex || 0,
+                startColumnIndex: optionsParam.excelInfo[idx].startColumnIndex || 0,
+                headerColor: optionsParam.excelInfo[idx].headerColor || "#33CCCC",
+                bodyColor: optionsParam.excelInfo[idx].bodyColor || "#FFFFFF",
+                pageFrameId: pageFrameId,
+                infoArr: optionsParam.excelInfo[idx].infoArr
+            };
+
+            options.excelInfo.push(excelInfo);
+        }
+    } else {
+        console.warn("[$c.data.downloadMultipleDataList] options.excelInfo 정보가 입력되지 않았습니다.");
+        return;
+    }
+
+    WebSquare.util.multipleDataListDownload(options, infoArrParam);
 };
 
 /**
@@ -926,7 +928,7 @@ scwin.downloadMultipleDataList = function(optionsParam, infoArrParam) {
  * @param {Number}	options.excelInfo.startColumnIndex		[default: 0] excel파일에서 dataList의 데이터가 시작되는 열의 번호(헤더 포함)
  * @param {String}	options.excelInfo.headerColor			[default: #33CCCC] excel파일에서 dataList의 header부분의 색
  * @param {String}	options.excelInfo.headerFontName		[default: 없음] excel파일에서 dataList의 header부분의 font name
- * @param {String}	options.excelInfo.wframeId				[default: 현재 WFrame Id] DataList가 위치한 WFrame Id 정보
+ * @param {String}	options.excelInfo.pageFrameId			[default: 현재 pageFrame Id] DataList가 위치한 pageFrame Id 정보
  * @param {Array}	options.excelInfo.infoArr				dataList에 대한 내용을 추가로 다른 셀에 표현하는 경우 사용하는 배열
  * @param {Number}	options.excelInfo.infoArr.rowIndex		내용을 표시할 행번호
  * @param {Number}	options.excelInfo.infoArr.colIndex		내용을 표시할 열번호
@@ -946,106 +948,106 @@ scwin.downloadMultipleDataList = function(optionsParam, infoArrParam) {
 
 // id가 a,b,c,d,e인 5개 컬럼이 존재하는 DataList
 const options = {
-	common: {
-		fileName : "excel_data.xlsx",
-		showProcess : true,
-		multipleSheet : true,
-		printSet : {
-			landScape : "true",
-			fitToPage : "true",
-			fitWidth : "1",
-			fitHeight : "1",
-			scale : "222"
-		}
-	},
-	excelInfo: [
-		{
-			gridId : "grd_data1",
-			sheetName : "첫번째 sheet",
-			removeColumns : "1,3",
-			foldColumns : "2",
-			startRowIndex : 3,
-			startColumnIndex : 0,
-			headerColor : "#DBEEF3",
-			bodyColor : "#92CDDC",
-			infoArr : [
-				{
-					rowIndex : 1, colIndex : 3, rowSpan : 1, colSpan : 2, text : "데이터표시" , textAlign : "center"
-				}
-			]
-		},
-		{
-			gridId : "grd_data2",
-			sheetName : "두번째 sheet",
-			removeColumns : "1,3",
-			foldColumns : "2",
-			startRowIndex : 3,
-			startColumnIndex : 0,
-			headerColor : "#DBEEF3",
-			bodyColor : "#92CDDC",
-			infoArr : [
-				{
-					rowIndex : 1, colIndex : 3, rowSpan : 1, colSpan : 2, text : "데이터표시" , textAlign : "center"
-				}
-			]
-		}
-	]
+    common: {
+        fileName : "excel_data.xlsx",
+        showProcess : true,
+        multipleSheet : true,
+        printSet : {
+            landScape : "true",
+            fitToPage : "true",
+            fitWidth : "1",
+            fitHeight : "1",
+            scale : "222"
+        }
+    },
+    excelInfo: [
+        {
+            gridId : "grd_data1",
+            sheetName : "첫번째 sheet",
+            removeColumns : "1,3",
+            foldColumns : "2",
+            startRowIndex : 3,
+            startColumnIndex : 0,
+            headerColor : "#DBEEF3",
+            bodyColor : "#92CDDC",
+            infoArr : [
+                {
+                    rowIndex : 1, colIndex : 3, rowSpan : 1, colSpan : 2, text : "데이터표시" , textAlign : "center"
+                }
+            ]
+        },
+        {
+            gridId : "grd_data2",
+            sheetName : "두번째 sheet",
+            removeColumns : "1,3",
+            foldColumns : "2",
+            startRowIndex : 3,
+            startColumnIndex : 0,
+            headerColor : "#DBEEF3",
+            bodyColor : "#92CDDC",
+            infoArr : [
+                {
+                    rowIndex : 1, colIndex : 3, rowSpan : 1, colSpan : 2, text : "데이터표시" , textAlign : "center"
+                }
+            ]
+        }
+    ]
 };
 $c.data.downloadMultipleGridView(options);
- */ 
-scwin.downloadMultipleGridView = function(optionsParam, infoArrParam) {
-	const options = {
-		common: {
-			fileName : optionsParam.common.fileName || "gridView.xlsx",
-			showProcess :  optionsParam.common.showProcess || true,
-			autoSizeColumn : optionsParam.common.autoSizeColumn || true,
-			multipleSheet : optionsParam.common.multipleSheet || true,
-			printSet : optionsParam.common.printSet || {},
-			msaName : optionsParam.common.msaName || ""
-		},
-		excelInfo: []
-	};
+ */
+scwin.downloadMultipleGridView = function (optionsParam, infoArrParam) {
+    const options = {
+        common: {
+            fileName: optionsParam.common.fileName || "gridView.xlsx",
+            showProcess: optionsParam.common.showProcess || true,
+            autoSizeColumn: optionsParam.common.autoSizeColumn || true,
+            multipleSheet: optionsParam.common.multipleSheet || true,
+            printSet: optionsParam.common.printSet || {},
+            msaName: optionsParam.common.msaName || ""
+        },
+        excelInfo: []
+    };
 
-	if (optionsParam.excelInfo.length > 0) {
-		let excelInfoCount = optionsParam.excelInfo.length;
+    if (optionsParam.excelInfo.length > 0) {
+        let excelInfoCount = optionsParam.excelInfo.length;
 
-		for (let idx = 0; idx < excelInfoCount; idx++) {
-			const wframeId = optionsParam.excelInfo[idx].wframeId || $p.getFrameId();
-			const gridId = optionsParam.excelInfo[idx].gridId;
+        for (let idx = 0; idx < excelInfoCount; idx++) {
+            const pageFrameId = optionsParam.excelInfo[idx].pageFrameId || $p.getFrameId();
+            const gridId = optionsParam.excelInfo[idx].gridId;
 
-			let gridObj = null;
-			if ($c.util.isEmpty(wframeId) === false) {
-				gridObj = $p.getComponentById(wframeId + "_" + gridId);
-			} else {
-				gridObj = $p.getComponentById(gridId);
-			}
-			
-			if (typeof gridObj === "undefined") {
-				console.warn("[$c.data.downloadMultipleDataList] excelInfo.gridId에 설정된 " + gridId + " GridView를 찾을 수 없습니다.");
-				return;
-			}
+            let gridObj = null;
+            if ($c.util.isEmpty(pageFrameId) === false) {
+                gridObj = $p.getComponentById(pageFrameId + "_" + gridId);
+            } else {
+                gridObj = $p.getComponentById(gridId);
+            }
 
-			const excelInfo = {
-				gridId : gridId,
-				sheetName : optionsParam.excelInfo[idx].sheetName || gridId,
-				removeColumns : optionsParam.excelInfo[idx].removeColumns || "",
-				foldColumns : optionsParam.excelInfo[idx].foldColumns || "",
-				startRowIndex : optionsParam.excelInfo[idx].startRowIndex || 0,
-				startColumnIndex : optionsParam.excelInfo[idx].startColumnIndex || 0,
-				headerColor : optionsParam.excelInfo[idx].headerColor || "#33CCCC",
-				bodyColor : optionsParam.excelInfo[idx].bodyColor || "#FFFFFF",
-				wframeId : wframeId,
-				infoArr : optionsParam.excelInfo[idx].infoArr
-			};
+            if (typeof gridObj === "undefined") {
+                console.warn("[$c.data.downloadMultipleDataList] excelInfo.gridId에 설정된 " + gridId + " GridView를 찾을 수 없습니다.");
+                return;
+            }
 
-			options.excelInfo.push(excelInfo);
-		}
-	} else {
-		console.warn("[$c.data.downloadMultipleGridView] options.excelInfo 정보가 입력되지 않았습니다.");
-		return;
-	}
+            const excelInfo = {
+                gridId: gridId,
+                sheetName: optionsParam.excelInfo[idx].sheetName || gridId,
+                removeColumns: optionsParam.excelInfo[idx].removeColumns || "",
+                foldColumns: optionsParam.excelInfo[idx].foldColumns || "",
+                startRowIndex: optionsParam.excelInfo[idx].startRowIndex || 0,
+                startColumnIndex: optionsParam.excelInfo[idx].startColumnIndex || 0,
+                headerColor: optionsParam.excelInfo[idx].headerColor || "#33CCCC",
+                bodyColor: optionsParam.excelInfo[idx].bodyColor || "#FFFFFF",
+                pageFrameId: pageFrameId,
+                infoArr: optionsParam.excelInfo[idx].infoArr
+            };
 
-	WebSquare.util.multipleExcelDownload(options, infoArrParam);
+            options.excelInfo.push(excelInfo);
+        }
+    } else {
+        console.warn("[$c.data.downloadMultipleGridView] options.excelInfo 정보가 입력되지 않았습니다.");
+        return;
+    }
+
+    WebSquare.util.multipleExcelDownload(options, infoArrParam);
 };
 
 
@@ -1176,115 +1178,115 @@ const options = {
    fileName : "downLoadExcel.xlsx" //[default : excel.xlsx] options.fileName 값이 없을 경우 default값 세팅
 };
 $c.data.downloadGridViewExcel(grdObj, options, infoArr);
- */ 
-scwin.downloadGridViewExcel = function(grdObj, options, infoArr) {
-	if ($c.util.isEmpty(options)) {
-		options = {};
-	}
-	
-	if (typeof infoArr === "undefined") {
-		infoArr = [];
-	}
+ */
+scwin.downloadGridViewExcel = function (grdObj, options, infoArr) {
+    if ($c.util.isEmpty(options)) {
+        options = {};
+    }
 
-	const opts = {
-		fileName: options.fileName || "excel.xlsx", //String, [defalut: excel.xlsx] 다운로드하려는 파일의 이름으로 필수 입력 값이다.
-		sheetName: options.sheetName || "sheet", //String, [defalut: sheet] excel의 sheet의 이름
-		type: options.type || "0", //String, [defalut: 0] type이 0인 경우 실제 데이터 1인 경우 눈에 보이는 데이터를  2이면 들어가 있는 data 그대로(filter무시 expression 타입의 셀은 나오지 않음)
-		removeColumns: options.removeColumns || "", //String, [defalut: 없음] 다운로드시 excel에서 삭제하려는 열의 번호(여러 개일 경우 ,로 구분)
-		convertIndex: options.convertIndex || "", // [default: 없음] type이 "0" 또는 "1"인 경우, 특정 컬럼만 type이 "1" 또는 "0"인 데이터로 다운로드. type="1"인 상태에서 convertIndex="0,2"인 경우, index가 0,2인 컬럼은 컬름은 type="1"로 다운로드.
-		removeHeaderRows: options.removeHeaderRows || "", //String, [defalut: 없음]	다운로드시 excel에서 삭제하려는 Header의 row index(여러 개일 경우 ,로 구분)
-		foldColumns: options.foldColumns || "", //String, [defalut: 없음] 다운로드시 excel에서 fold하려는 열의 번호(여러 개일 경우 ,로 구분)
-		useHeaderCheckBoxLabel : options.useHeaderCheckBoxLabel || "true", // String, [default: false] 다운로드시 header가 checkbox인 경우 checked 값 대신 label을 출력 할지 여부 ("true"는 value를 출력, "false"는 checked 값 출력.)
-		startRowIndex: options.startRowIndex || 0, //Number, excel파일에서 그리드의 데이터가 시작되는 행의 번호(헤더 포함)
-		startColumnIndex: options.startColumnIndex || 0, //Number, excel파일에서 그리드의 데이터가 시작되는 열의 번호(헤더 포함)
-		headerColor: options.headerColor || "#eeeeee", //String, excel파일에서 그리드의 header부분의 색
+    if (typeof infoArr === "undefined") {
+        infoArr = [];
+    }
 
-		headerFontName: options.headerFontName || "", //String, [defalut: 없음] excel파일에서 그리드의 header부분의 font name
-		headerFontSize: options.headerFontSize || "10", //String, excel파일에서 그리드의 header부분의 font size
-		headerFontColor: options.headerFontColor || "", //String, excel파일에서 그리드의 header부분의 font색
-		bodyColor: options.bodyColor || "#FFFFFF", //String, excel파일에서 그리드의 body부분의 색
-		bodyFontName: options.bodyFontName || "", //String, [defalut: 없음] excel파일에서 그리드의 body부분의 font name
-		bodyFontSize: options.bodyFontSize || "10", //String, excel파일에서 그리드의 body부분의 font size
-		bodyFontColor: options.bodyFontColor || "", //String, excel파일에서 그리드의 body부분의 font색
-		subTotalColor: options.subTotalColor || "#CCFFCC", //String, [defalut: #CCFFCC] excel파일에서 그리드의 subtotal부분의 색
-		subTotalFontName: options.subTotalFontName || "", //String, [defalut: 없음] excel파일에서 그리드의 subtotal부분의 font name
-		subTotalFontSize: options.subTotalFontSize || "10", //String, [defalut: 10] excel파일에서 그리드의 subtotal부분의 font size
-		subTotalFontColor: options.subTotalFontColor || "", //String, [defalut: 없음] excel파일에서 그리드의 subtotal부분의 font색
-		footerColor: options.footerColor || "#008000", //String, [defalut: #008000] excel파일에서 그리드의 footer부분의 색
-		footerFontName: options.footerFontName || "", //String, [defalut: 없음] excel파일에서 그리드의 footer부분의 font name
-		footerFontSize: options.footerFontSize || "10", //String, [defalut: 10] excel파일에서 그리드의 footer부분의 font size
-		footerFontColor: options.footerFontColor || "", //String, [defalut: 없음] excel파일에서 그리드의 footer부분의 font색
-		oddRowBackgroundColor: options.oddRowBackgroundColor || "", //String, excel파일에서 그리드 body의 홀수줄의 배경색
-		evenRowBackgroundColor: options.evenRowBackgroundColor || "", //String, [defalut: 없음] excel파일에서 그리드 body의 짝수줄의 배경색
-		rowNumHeaderColor: options.rowNumHeaderColor || "", //String, [defalut: 없음] rowNumVisible 속성이 true인 경우 순서출력 header 영역의 배경색
-		rowNumHeaderFontName: options.rowNumHeaderFontName || "", //String, [defalut: 없음] rowNumVisible 속성이 true인 경우 순서출력 header 영역의 폰트이름
-		rowNumHeaderFontSize: options.rowNumHeaderFontSize || "", //String, [defalut: 없음] rowNumVisible 속성이 true인 경우 순서출력 header 영역의 폰트크기
-		rowNumHeaderFontColor: options.rowNumHeaderFontColor || "", //String, [defalut: 없음] rowNumVisible 속성이 true인 경우 순서출력 header 영역의 폰트색상
-		rowNumBodyColor: options.rowNumBodyColor || "", //String, [defalut: 없음] rowNumVisible 속성이 true인 경우 순서출력 Body 영역의 배경색
-		rowNumBodyFontName: options.rowNumBodyFontName || "", //String, [defalut: 없음] rowNumVisible 속성이 true인 경우 순서출력 Body 영역의 폰트이름
-		rowNumBodyFontSize: options.rowNumBodyFontSize || "", //String, [defalut: 없음] rowNumVisible 속성이 true인 경우 순서출력 Body 영역의 폰트크기
-		rowNumBodyFontColor: options.rowNumBodyFontColor || "", //String, [defalut: 없음] rowNumVisible 속성이 true인 경우 순서출력 Body 영역의 폰트색상
-		rowNumFooterColor: options.rowNumFooterColor || "", //String, [defalut: 없음] rowNumVisible 속성이 true인 경우 순서출력 Footer 영역의 배경색
-		rowNumFooterFontName: options.rowNumFooterFontName || "", //String, [defalut: 없음] rowNumVisible 속성이 true인 경우 순서출력 Footer 영역의 폰트이름
-		rowNumFooterFontSize: options.rowNumFooterFontSize || "", //String, [defalut: 없음] rowNumVisible 속성이 true인 경우 순서출력 Footer 영역의 폰트크기
-		rowNumFooterFontColor: options.rowNumFooterFontColor || "", //String, [defalut: 없음] rowNumVisible 속성이 true인 경우 순서출력 Footer 영역의 폰트색상
-		rowNumSubTotalColor: options.rowNumSubTotalColor || "", //String, [defalut: 없음] rowNumVisible 속성이 true인 경우 순서출력 Subtotal 영역의 배경색
-		rowNumSubTotalFontName: options.rowNumSubTotalFontName || "", //String, [defalut: 없음] rowNumVisible 속성이 true인 경우 순서출력 Subtotal 영역의 폰트이름
-		rowNumSubTotalFontSize: options.rowNumSubTotalFontSize || "", //String, [defalut: 없음] rowNumVisible 속성이 true인 경우 순서출력 Subtotal 영역의 폰트크기
-		rowNumSubTotalFontColor: options.rowNumSubTotalFontColor || "", //String, [defalut: 없음] rowNumVisible 속성이 true인 경우 순서출력 Subtotal 영역의 폰트색상
-		rowNumHeaderValue: options.rowNumHeaderValue || "", //String, [defalut: 없음] rowNumVisible 속성이 true인 경우 순서출력 Header 영역의 출력값
-		rowNumVisible: options.rowNumVisible || "false", //String, [defalut: false] 순서출력 유무
-		showProcess: WebSquare.util.getBoolean(options.showProcess) || true, //Boolean, [defalut: true] 다운로드 시 프로세스 창을 보여줄지 여부
-		massStorage: WebSquare.util.getBoolean(options.massStorage) || true, //Boolean, [defalut: true] 대용량 다운로드 여부 (default는 true 이 옵션을 true로 하고 showConfirm을 false로 한 경우에 IE에서 신뢰할만한 사이트를 체크하는 옵션이 뜬다.)
-		showConfirm: WebSquare.util.getBoolean(options.showConfirm) || false, //Boolean, [defalut: false] 다운로드 확인창을 띄울지 여부(옵션을 킨 경우 advancedExcelDownload를 호출후 사용자가 window의 버튼을 한번더 클릭해야 한다. massStorage는 자동으로 true가 된다)
-		useProvider: options.useProvider || false, //boolean, Provider 사용 여부 설정
-		useSplitProvider : options.useSplitProvider || false, // boolean, split Provider 사용 여부 설정
-		dataProvider : options.dataProvider || "", // String, ExcelHeaderDown 설정을 위한 속성
-		providerRequestXml: options.providerRequestXml || "", //String, [defalut: 없음] Provider 내부에서 사용할 XML 문자열
-		userDataXml: options.userDataXml || "", //String, [defalut: 없음] 사용자가 서버모듈 개발 시 필요한 데이터를 전송 할 수 있는 변수
-		bodyWordwrap: WebSquare.util.getBoolean(options.bodyWordwrap) || false, //Boolean, [defalut: false] 다운로드시 바디의 줄 바꿈 기능
-		useEuroLocale: options.useEuroLocale || "false", //String, [defalut: false] 다운로드시 유로화 처리 기능(,와 .이 반대인 경우처리)
-		useHeader: options.useHeader || "true", //String, [defalut: true] 다운로드시 Header를 출력 할지 여부( "true"인경우 출력, "false"인경우 미출력)
-		useSubTotal: options.useSubTotal || "false", //String, [defalut: false] 다운로드시 SubTotal을 출력 할지 여부( "true"인경우 출력, "false"인경우 미출력), expression을 지정한 경우 avg,sum,min,max,targetColValue,숫자를 지원 함.
-		useFooter: options.useFooter || "true", //String, [defalut: true] 다운로드시 Footer를 출력 할지 여부( "true"인경우 출력, "false"인경우 미출력)
-		separator: options.separator || ",", //String, [defalut: ,] 다운로드시 서버로 데이터 전송할때, 데이터를 구분짓는 구분자, default는 comma(,)
-		subTotalScale: options.subTotalScale || -1, //Number, [defalut: -1] 다운로드시 subTotal 평균계산시 소수점 자리수를 지정
-		subTotalRoundingMode: options.subTotalRoundingMode || "", //String, [defalut: 없음] 다운로드시 subTotal 평균계산시 Round를 지정 한다. ("CEILING","FLOOR","HALF_UP")
-		useStyle: options.useStyle || "", //String, [defalut: false] 다운로드시 css를 제외한, style을 excel에도 적용할 지 여부 (배경색,폰트)
-		freezePane: options.freezePane || "", //String, [defalut: ""] 틀고정을 위한 좌표값 및 좌표값의 오픈셋 ( ex) freezePane="3,4" X축 3, Y축 4에서 틀고정, freezePane="0,1,0,5" X축 0, Y축 1에서 X축으로 0, Y축으로 5로 틀공정  )
-		autoSizeColumn: options.autoSizeColumn || "true", //String, [defalut: false] 너비자동맞춤 설정 유무 - 2016.08.18 옵션 설정을 true로 변경
-		displayGridlines: options.displayGridlines || "", //String, [defalut: false] 엑셀 전체 셀의 눈금선 제거 유무
-		colMerge: options.colMerge || "", //String, [defalut: false] colMerge된 컬럼을 Merge해서 출력 할 지 여부
-		useDataFormat: options.useDataFormat || "", //String, [defalut: 없음] 그리드 dataType이 text인 경우, 엑셀의 표시형식 '텍스트' 출력 유무( "true"인 경우 표시형식 텍스트, "false"인 경우 표시형식 일반 출력)
-		indent: options.indent || "", //String, [defalut: 없음] 그리드 dataType이 drilldown인 경우, indent 표시를 위한 공백 삽입 개수, default값은 0
-		columnMove: options.columnMove || "", //String, [defalut: false] 그리드 컬럼이동시 이동된 상태로 다운로드 유무 ( "true"인경우 컬럼이동 순서대로 출력 )
-		columnOrder: options.columnOrder || "", //String, [defalut: 없음] 엑셀 다운로드시 다운로드되는 컬럼 순서를 지정 할 수 있는 속성 ( ex) "0,3,2,1"로 지정시 지정한 순서로 다운로드된다 )
-		fitToPage: options.fitToPage || "false", //String, [defalut: false] 엑셀 프린터 출력시 쪽맞춤 사용 유무
-		landScape: options.landScape || "false", //String, [defalut: false] 엑셀 프린터 출력시 가로 방향 출력 유무
-		fitWidth: options.fitWidth || "1", //String, [defalut: 1] 엑셀 프린터 출력시 용지너비
-		fitHeight: options.fitHeight || "1", //String, [defalut: 1] 엑셀 프린터 출력시 용지높이
-		scale: options.scale || "100", //String, [defalut: 100] 엑셀 프린터 출력시 확대/축소 배율, scale을 사용할 경우 fitToPage는 false로 설정 해야 한다.
-		pageSize: options.pageSize || "A4", //String, [defalut: A4] 엑셀 프린터 출력시 인쇄용지 설정 ( ex) "A3", "A4", "A5", "B4" )
-		checkedData : options.checkedData || false, // check 되어있는 데이터만 내려받을것인가?
-		dataHandler : options.dataHandler || "", // [default:없음] DataHandler 함수 정의
-		checkedColumnId : options.checkedColumnId || "", // check를 확인하려는 대상의 컬럼 id default:chk 
-		onSuccessCallback : function (e) {
-		},
-		onFailureCallback : function (e) {
-		}
-	};
-	
-	//infoArr 처리
-	// colIndex, rowIndex, rowSpan, colSpan의 값이 JSON에선 String으로 처리되기 때문에 Number로 형변환.
-	if(infoArr.length > 0) {
-		infoArr[0].rowIndex = Number(infoArr[0].rowIndex) || 0; // Number [ default : 0 ] 
-		infoArr[0].colIndex = Number(infoArr[0].colIndex) || 0; // Number [ default : 0 ] 
-		infoArr[0].rowSpan = Number(infoArr[0].rowSpan) || 0; // Number [ default : 0 ] 
-		infoArr[0].colSpan = Number(infoArr[0].colSpan) || 0; // Number [ default : 0 ] 
-	}
+    const opts = {
+        fileName: options.fileName || "excel.xlsx", //String, [defalut: excel.xlsx] 다운로드하려는 파일의 이름으로 필수 입력 값이다.
+        sheetName: options.sheetName || "sheet", //String, [defalut: sheet] excel의 sheet의 이름
+        type: options.type || "0", //String, [defalut: 0] type이 0인 경우 실제 데이터 1인 경우 눈에 보이는 데이터를  2이면 들어가 있는 data 그대로(filter무시 expression 타입의 셀은 나오지 않음)
+        removeColumns: options.removeColumns || "", //String, [defalut: 없음] 다운로드시 excel에서 삭제하려는 열의 번호(여러 개일 경우 ,로 구분)
+        convertIndex: options.convertIndex || "", // [default: 없음] type이 "0" 또는 "1"인 경우, 특정 컬럼만 type이 "1" 또는 "0"인 데이터로 다운로드. type="1"인 상태에서 convertIndex="0,2"인 경우, index가 0,2인 컬럼은 컬름은 type="1"로 다운로드.
+        removeHeaderRows: options.removeHeaderRows || "", //String, [defalut: 없음]	다운로드시 excel에서 삭제하려는 Header의 row index(여러 개일 경우 ,로 구분)
+        foldColumns: options.foldColumns || "", //String, [defalut: 없음] 다운로드시 excel에서 fold하려는 열의 번호(여러 개일 경우 ,로 구분)
+        useHeaderCheckBoxLabel: options.useHeaderCheckBoxLabel || "true", // String, [default: false] 다운로드시 header가 checkbox인 경우 checked 값 대신 label을 출력 할지 여부 ("true"는 value를 출력, "false"는 checked 값 출력.)
+        startRowIndex: options.startRowIndex || 0, //Number, excel파일에서 그리드의 데이터가 시작되는 행의 번호(헤더 포함)
+        startColumnIndex: options.startColumnIndex || 0, //Number, excel파일에서 그리드의 데이터가 시작되는 열의 번호(헤더 포함)
+        headerColor: options.headerColor || "#eeeeee", //String, excel파일에서 그리드의 header부분의 색
 
-	$c.data.setDownloadGridViewOption(grdObj, opts);
-	grdObj.advancedExcelDownload(opts, infoArr);
+        headerFontName: options.headerFontName || "", //String, [defalut: 없음] excel파일에서 그리드의 header부분의 font name
+        headerFontSize: options.headerFontSize || "10", //String, excel파일에서 그리드의 header부분의 font size
+        headerFontColor: options.headerFontColor || "", //String, excel파일에서 그리드의 header부분의 font색
+        bodyColor: options.bodyColor || "#FFFFFF", //String, excel파일에서 그리드의 body부분의 색
+        bodyFontName: options.bodyFontName || "", //String, [defalut: 없음] excel파일에서 그리드의 body부분의 font name
+        bodyFontSize: options.bodyFontSize || "10", //String, excel파일에서 그리드의 body부분의 font size
+        bodyFontColor: options.bodyFontColor || "", //String, excel파일에서 그리드의 body부분의 font색
+        subTotalColor: options.subTotalColor || "#CCFFCC", //String, [defalut: #CCFFCC] excel파일에서 그리드의 subtotal부분의 색
+        subTotalFontName: options.subTotalFontName || "", //String, [defalut: 없음] excel파일에서 그리드의 subtotal부분의 font name
+        subTotalFontSize: options.subTotalFontSize || "10", //String, [defalut: 10] excel파일에서 그리드의 subtotal부분의 font size
+        subTotalFontColor: options.subTotalFontColor || "", //String, [defalut: 없음] excel파일에서 그리드의 subtotal부분의 font색
+        footerColor: options.footerColor || "#008000", //String, [defalut: #008000] excel파일에서 그리드의 footer부분의 색
+        footerFontName: options.footerFontName || "", //String, [defalut: 없음] excel파일에서 그리드의 footer부분의 font name
+        footerFontSize: options.footerFontSize || "10", //String, [defalut: 10] excel파일에서 그리드의 footer부분의 font size
+        footerFontColor: options.footerFontColor || "", //String, [defalut: 없음] excel파일에서 그리드의 footer부분의 font색
+        oddRowBackgroundColor: options.oddRowBackgroundColor || "", //String, excel파일에서 그리드 body의 홀수줄의 배경색
+        evenRowBackgroundColor: options.evenRowBackgroundColor || "", //String, [defalut: 없음] excel파일에서 그리드 body의 짝수줄의 배경색
+        rowNumHeaderColor: options.rowNumHeaderColor || "", //String, [defalut: 없음] rowNumVisible 속성이 true인 경우 순서출력 header 영역의 배경색
+        rowNumHeaderFontName: options.rowNumHeaderFontName || "", //String, [defalut: 없음] rowNumVisible 속성이 true인 경우 순서출력 header 영역의 폰트이름
+        rowNumHeaderFontSize: options.rowNumHeaderFontSize || "", //String, [defalut: 없음] rowNumVisible 속성이 true인 경우 순서출력 header 영역의 폰트크기
+        rowNumHeaderFontColor: options.rowNumHeaderFontColor || "", //String, [defalut: 없음] rowNumVisible 속성이 true인 경우 순서출력 header 영역의 폰트색상
+        rowNumBodyColor: options.rowNumBodyColor || "", //String, [defalut: 없음] rowNumVisible 속성이 true인 경우 순서출력 Body 영역의 배경색
+        rowNumBodyFontName: options.rowNumBodyFontName || "", //String, [defalut: 없음] rowNumVisible 속성이 true인 경우 순서출력 Body 영역의 폰트이름
+        rowNumBodyFontSize: options.rowNumBodyFontSize || "", //String, [defalut: 없음] rowNumVisible 속성이 true인 경우 순서출력 Body 영역의 폰트크기
+        rowNumBodyFontColor: options.rowNumBodyFontColor || "", //String, [defalut: 없음] rowNumVisible 속성이 true인 경우 순서출력 Body 영역의 폰트색상
+        rowNumFooterColor: options.rowNumFooterColor || "", //String, [defalut: 없음] rowNumVisible 속성이 true인 경우 순서출력 Footer 영역의 배경색
+        rowNumFooterFontName: options.rowNumFooterFontName || "", //String, [defalut: 없음] rowNumVisible 속성이 true인 경우 순서출력 Footer 영역의 폰트이름
+        rowNumFooterFontSize: options.rowNumFooterFontSize || "", //String, [defalut: 없음] rowNumVisible 속성이 true인 경우 순서출력 Footer 영역의 폰트크기
+        rowNumFooterFontColor: options.rowNumFooterFontColor || "", //String, [defalut: 없음] rowNumVisible 속성이 true인 경우 순서출력 Footer 영역의 폰트색상
+        rowNumSubTotalColor: options.rowNumSubTotalColor || "", //String, [defalut: 없음] rowNumVisible 속성이 true인 경우 순서출력 Subtotal 영역의 배경색
+        rowNumSubTotalFontName: options.rowNumSubTotalFontName || "", //String, [defalut: 없음] rowNumVisible 속성이 true인 경우 순서출력 Subtotal 영역의 폰트이름
+        rowNumSubTotalFontSize: options.rowNumSubTotalFontSize || "", //String, [defalut: 없음] rowNumVisible 속성이 true인 경우 순서출력 Subtotal 영역의 폰트크기
+        rowNumSubTotalFontColor: options.rowNumSubTotalFontColor || "", //String, [defalut: 없음] rowNumVisible 속성이 true인 경우 순서출력 Subtotal 영역의 폰트색상
+        rowNumHeaderValue: options.rowNumHeaderValue || "", //String, [defalut: 없음] rowNumVisible 속성이 true인 경우 순서출력 Header 영역의 출력값
+        rowNumVisible: options.rowNumVisible || "false", //String, [defalut: false] 순서출력 유무
+        showProcess: WebSquare.util.getBoolean(options.showProcess) || true, //Boolean, [defalut: true] 다운로드 시 프로세스 창을 보여줄지 여부
+        massStorage: WebSquare.util.getBoolean(options.massStorage) || true, //Boolean, [defalut: true] 대용량 다운로드 여부 (default는 true 이 옵션을 true로 하고 showConfirm을 false로 한 경우에 IE에서 신뢰할만한 사이트를 체크하는 옵션이 뜬다.)
+        showConfirm: WebSquare.util.getBoolean(options.showConfirm) || false, //Boolean, [defalut: false] 다운로드 확인창을 띄울지 여부(옵션을 킨 경우 advancedExcelDownload를 호출후 사용자가 window의 버튼을 한번더 클릭해야 한다. massStorage는 자동으로 true가 된다)
+        useProvider: options.useProvider || false, //boolean, Provider 사용 여부 설정
+        useSplitProvider: options.useSplitProvider || false, // boolean, split Provider 사용 여부 설정
+        dataProvider: options.dataProvider || "", // String, ExcelHeaderDown 설정을 위한 속성
+        providerRequestXml: options.providerRequestXml || "", //String, [defalut: 없음] Provider 내부에서 사용할 XML 문자열
+        userDataXml: options.userDataXml || "", //String, [defalut: 없음] 사용자가 서버모듈 개발 시 필요한 데이터를 전송 할 수 있는 변수
+        bodyWordwrap: WebSquare.util.getBoolean(options.bodyWordwrap) || false, //Boolean, [defalut: false] 다운로드시 바디의 줄 바꿈 기능
+        useEuroLocale: options.useEuroLocale || "false", //String, [defalut: false] 다운로드시 유로화 처리 기능(,와 .이 반대인 경우처리)
+        useHeader: options.useHeader || "true", //String, [defalut: true] 다운로드시 Header를 출력 할지 여부( "true"인경우 출력, "false"인경우 미출력)
+        useSubTotal: options.useSubTotal || "false", //String, [defalut: false] 다운로드시 SubTotal을 출력 할지 여부( "true"인경우 출력, "false"인경우 미출력), expression을 지정한 경우 avg,sum,min,max,targetColValue,숫자를 지원 함.
+        useFooter: options.useFooter || "true", //String, [defalut: true] 다운로드시 Footer를 출력 할지 여부( "true"인경우 출력, "false"인경우 미출력)
+        separator: options.separator || ",", //String, [defalut: ,] 다운로드시 서버로 데이터 전송할때, 데이터를 구분짓는 구분자, default는 comma(,)
+        subTotalScale: options.subTotalScale || -1, //Number, [defalut: -1] 다운로드시 subTotal 평균계산시 소수점 자리수를 지정
+        subTotalRoundingMode: options.subTotalRoundingMode || "", //String, [defalut: 없음] 다운로드시 subTotal 평균계산시 Round를 지정 한다. ("CEILING","FLOOR","HALF_UP")
+        useStyle: options.useStyle || "", //String, [defalut: false] 다운로드시 css를 제외한, style을 excel에도 적용할 지 여부 (배경색,폰트)
+        freezePane: options.freezePane || "", //String, [defalut: ""] 틀고정을 위한 좌표값 및 좌표값의 오픈셋 ( ex) freezePane="3,4" X축 3, Y축 4에서 틀고정, freezePane="0,1,0,5" X축 0, Y축 1에서 X축으로 0, Y축으로 5로 틀공정  )
+        autoSizeColumn: options.autoSizeColumn || "true", //String, [defalut: false] 너비자동맞춤 설정 유무 - 2016.08.18 옵션 설정을 true로 변경
+        displayGridlines: options.displayGridlines || "", //String, [defalut: false] 엑셀 전체 셀의 눈금선 제거 유무
+        colMerge: options.colMerge || "", //String, [defalut: false] colMerge된 컬럼을 Merge해서 출력 할 지 여부
+        useDataFormat: options.useDataFormat || "", //String, [defalut: 없음] 그리드 dataType이 text인 경우, 엑셀의 표시형식 '텍스트' 출력 유무( "true"인 경우 표시형식 텍스트, "false"인 경우 표시형식 일반 출력)
+        indent: options.indent || "", //String, [defalut: 없음] 그리드 dataType이 drilldown인 경우, indent 표시를 위한 공백 삽입 개수, default값은 0
+        columnMove: options.columnMove || "", //String, [defalut: false] 그리드 컬럼이동시 이동된 상태로 다운로드 유무 ( "true"인경우 컬럼이동 순서대로 출력 )
+        columnOrder: options.columnOrder || "", //String, [defalut: 없음] 엑셀 다운로드시 다운로드되는 컬럼 순서를 지정 할 수 있는 속성 ( ex) "0,3,2,1"로 지정시 지정한 순서로 다운로드된다 )
+        fitToPage: options.fitToPage || "false", //String, [defalut: false] 엑셀 프린터 출력시 쪽맞춤 사용 유무
+        landScape: options.landScape || "false", //String, [defalut: false] 엑셀 프린터 출력시 가로 방향 출력 유무
+        fitWidth: options.fitWidth || "1", //String, [defalut: 1] 엑셀 프린터 출력시 용지너비
+        fitHeight: options.fitHeight || "1", //String, [defalut: 1] 엑셀 프린터 출력시 용지높이
+        scale: options.scale || "100", //String, [defalut: 100] 엑셀 프린터 출력시 확대/축소 배율, scale을 사용할 경우 fitToPage는 false로 설정 해야 한다.
+        pageSize: options.pageSize || "A4", //String, [defalut: A4] 엑셀 프린터 출력시 인쇄용지 설정 ( ex) "A3", "A4", "A5", "B4" )
+        checkedData: options.checkedData || false, // check 되어있는 데이터만 내려받을것인가?
+        dataHandler: options.dataHandler || "", // [default:없음] DataHandler 함수 정의
+        checkedColumnId: options.checkedColumnId || "", // check를 확인하려는 대상의 컬럼 id default:chk 
+        onSuccessCallback: function (e) {
+        },
+        onFailureCallback: function (e) {
+        }
+    };
+
+    //infoArr 처리
+    // colIndex, rowIndex, rowSpan, colSpan의 값이 JSON에선 String으로 처리되기 때문에 Number로 형변환.
+    if (infoArr != undefined && infoArr.length > 0) {
+        infoArr[0].rowIndex = Number(infoArr[0].rowIndex) || 0; // Number [ default : 0 ] 
+        infoArr[0].colIndex = Number(infoArr[0].colIndex) || 0; // Number [ default : 0 ] 
+        infoArr[0].rowSpan = Number(infoArr[0].rowSpan) || 0; // Number [ default : 0 ] 
+        infoArr[0].colSpan = Number(infoArr[0].colSpan) || 0; // Number [ default : 0 ] 
+    }
+
+    $c.data.setDownloadGridViewOption(grdObj, opts);
+    grdObj.advancedExcelDownload(opts, infoArr);
 };
 
 /**
@@ -1314,30 +1316,30 @@ scwin.downloadGridViewExcel = function(grdObj, options, infoArr) {
  * @example 
  * const gridId = "grd_AdvancedExcel";
 const options = {
-	fileName : "downLoadCSV.csv" //[default : excel.csv] options.fileName 값이 없을 경우 default값 세팅
+    fileName : "downLoadCSV.csv" //[default : excel.csv] options.fileName 값이 없을 경우 default값 세팅
 };
 $c.data.downloadGridViewCSV(grdObj, options);
 //return 예시) 엑셀 파일 다운로드
- */ 
-scwin.downloadGridViewCSV = function(grdObj, options) {
-	if ($c.util.isEmpty(options)) {
-		options = {};
-	}
-	
-	$c.data.setDownloadGridViewOption(grdObj, options);
-	
-	const opts = {
-		fileName: options.fileName || "excel.csv", //[default: excel.csv] 저장 될 파일 이름
-		type: options.type || "1", //[default: 1] Grid 저장 형태 (0이면 데이터 형태,1이면 표시 방식)
-		delim: options.delim || ",", //[default: ,] CSV 파일에서 데이터를 구분할 구분자
-		removeColumns: options.removeColumns || "", //[default: 없음] 저장 하지 않을 columns index, 여러컬럼인 경우 콤마(,)로 구분해서 정의 한다.
-		header: options.header || "1", //[default: 1] Grid의 숨겨진 Column에 대한 저장 여부(0이면 저장 하지 않음,1이면 저장)
-		hidden: options.hidden || 0, //[defalut: 0] Grid의 숨겨진 Column에 대한 저장 여부(0이면 저장 하지 않음,1이면 저장)
-		checkButton: options.checkButton || "1", //[default: 1] Grid의 Control(Check, Radio, Button) Column에 대해 히든 여부 (0이면 control Column히든,1이면 보여줌)
-		saveList: options.saveList || "" //[default: 없음] hidden에 관계없이 저장할 column id들의 array
-	}
-	
-	grdObj.saveCSV(opts);
+ */
+scwin.downloadGridViewCSV = function (grdObj, options) {
+    if ($c.util.isEmpty(options)) {
+        options = {};
+    }
+
+    $c.data.setDownloadGridViewOption(grdObj, options);
+
+    const opts = {
+        fileName: options.fileName || "excel.csv", //[default: excel.csv] 저장 될 파일 이름
+        type: options.type || "1", //[default: 1] Grid 저장 형태 (0이면 데이터 형태,1이면 표시 방식)
+        delim: options.delim || ",", //[default: ,] CSV 파일에서 데이터를 구분할 구분자
+        removeColumns: options.removeColumns || "", //[default: 없음] 저장 하지 않을 columns index, 여러컬럼인 경우 콤마(,)로 구분해서 정의 한다.
+        header: options.header || "1", //[default: 1] Grid의 숨겨진 Column에 대한 저장 여부(0이면 저장 하지 않음,1이면 저장)
+        hidden: options.hidden || 0, //[defalut: 0] Grid의 숨겨진 Column에 대한 저장 여부(0이면 저장 하지 않음,1이면 저장)
+        checkButton: options.checkButton || "1", //[default: 1] Grid의 Control(Check, Radio, Button) Column에 대해 히든 여부 (0이면 control Column히든,1이면 보여줌)
+        saveList: options.saveList || "" //[default: 없음] hidden에 관계없이 저장할 column id들의 array
+    }
+
+    grdObj.saveCSV(opts);
 };
 
 
@@ -1377,51 +1379,51 @@ scwin.downloadGridViewCSV = function(grdObj, options) {
  * @example const gridId = "grd_AdvancedExcel";
 const type = "xlsx";
 const options = {
-	fileName : "gridDataUpload.xlsx" // default값이 존재하지 않으므로 꼭 fileName 값을 넣어야 한다.
+    fileName : "gridDataUpload.xlsx" // default값이 존재하지 않으므로 꼭 fileName 값을 넣어야 한다.
 };
 $c.data.uploadGridViewExcel(grd_basicInfo,  options);
- */ 
-scwin.uploadGridViewExcel = function(grdObj, options) {
-	if ($c.util.isEmpty(options)) {
-		options = {};
-	}
-	
-	const width = "490";
-	const height = "218";
-	const top = ((document.body.offsetHeight / 2) - (parseInt(height) / 2) + $(document).scrollTop());
-	const left = ((document.body.offsetWidth / 2) - (parseInt(width) / 2) + $(document).scrollLeft());
-	
-	const opts = {
-		type: options.type || "0",                          // String, 1이면 엑셀 파일이 그리드의 보이는 결과로 만들어져있을때  0이면 엑셀 파일이 그리드의 실제 데이터로 구성되어있을때
-		sheetNo: options.sheetNo || 0,                      // Number, excel파일에서 그리드의 데이터가 있는 sheet번호
-		startRowIndex: options.startRowIndex || 1,          // Number, [defalut:0] excel파일에서 그리드의 데이터가 시작되는 행의 번호(헤더 포함)
-		startColumnIndex: options.startColumnIndex || 0,    // Number, [defalut:0] excel파일에서 그리드의 데이터가 시작되는 열의 번호
-		endColumnIndex: options.endColumnIndex || 0,        // Number, [defalut: 0] excel파일에서 그리드의 데이터가 끝나는 열의 index
-		                                                    //( 엑셀컬럼수가 그리드컬럼수 보다 작은 경우 그리드 컬러수를 설정)
-		headerExist: options.headerExist || "0",            // String, [defalut:0] excel파일에서 그리드의 데이터에 header가 있는지 여부
-												            // (1이면 header 존재 0이면 없음)
-		footerExist: options.footerExist || "1",            //String, [defalut: 1] excel파일에서 그리드의 데이터에 footer가 있는지 여부
-		                                                    // (1이면 footer 존재 0이면 없음 기본값은 1 그리드에 footer가 없으면 적용되지 않음)
-		append: options.append || "0",                      // String, [defalut: 0] excel파일에서 가져온 데이터를 그리드에 append시킬지 여부
-									                        // (1이면 현재 그리드에 데이터를 추가로 넣어줌 0이면 현재 그리드의 데이터를 삭제하고 넣음)
-		hidden: options.hidden || "0",                      // String, [defalut: 0] 읽어들이려는 엑셀파일에 hidden column이 저장되어 있는지 여부를 설정하는 int형 숫자(0이면
-									                        // 엑셀파일에 hidden 데이터가 없으므로 그리드 hidden column에 빈 데이터를 삽입
-									                        // 1 : 엑셀파일에 hidden 데이터가 있으므로 엑셀 파일로부터 hidden 데이터를 삽입 )
-		fillHidden: options.fillHidden || "0",              // String, [defalut: 0] Grid에 hiddenColumn에 빈 값을 넣을지를 결정하기
-											                // 위한 int형 숫자(1이면 hidden Column에 빈 값을 저장하지 않음,0이면 hidden
-											                // column이 저장되어있지 않은 Excel  File이라 간주하고 hidden Column에 빈
-											                // 값을 넣어줌)(hidden이 0인 경우에는 fillhidden은 영향을 끼치지 않음)
-		skipSpace: options.skipSpace || "0",                // String, [defalut: 0] 공백무시 여부(1이면 무시 0이면 포함)
-		insertColumns: options.insertColumns || "",         // Array, radio, checkbox와 같은 컬럼을 엑셀에서 받아 오지 않고
-												            // 사용자 컬럼 설정 으로 업로드 ( 데이터 구조 : [ { columnIndex:1, columnValue:"1" } ] )
-		popupUrl: options.popupUrl || "",                   // String, 업로드시에 호출할 popup의 url
-		status: options.status || "R",                      // String, [defalut: R]업로드된 데이터의 초기 상태값, 설정하지 않으면 "R"로 설정되며 "C"값을 설정 할 수 있다.
-		pwd: options.pwd || "",                             // String, 엑셀파일에 암호가 걸려 있는 경우, 비밀번호
-		features : "top="+top+",height="+height+",left="+left+",width="+width+",location=no,menubar=no,resizable=yes,scrollbars=auto,status=no,titlebar=yes,toolbar=no",
-		wframe: true
-	};
+ */
+scwin.uploadGridViewExcel = function (grdObj, options) {
+    if ($c.util.isEmpty(options)) {
+        options = {};
+    }
 
-	grdObj.advancedExcelUpload(opts);
+    const width = "490";
+    const height = "218";
+    const top = ((document.body.offsetHeight / 2) - (parseInt(height) / 2) + $(document).scrollTop());
+    const left = ((document.body.offsetWidth / 2) - (parseInt(width) / 2) + $(document).scrollLeft());
+
+    const opts = {
+        type: options.type || "0",                          // String, 1이면 엑셀 파일이 그리드의 보이는 결과로 만들어져있을때  0이면 엑셀 파일이 그리드의 실제 데이터로 구성되어있을때
+        sheetNo: options.sheetNo || 0,                      // Number, excel파일에서 그리드의 데이터가 있는 sheet번호
+        startRowIndex: options.startRowIndex || 1,          // Number, [defalut:0] excel파일에서 그리드의 데이터가 시작되는 행의 번호(헤더 포함)
+        startColumnIndex: options.startColumnIndex || 0,    // Number, [defalut:0] excel파일에서 그리드의 데이터가 시작되는 열의 번호
+        endColumnIndex: options.endColumnIndex || 0,        // Number, [defalut: 0] excel파일에서 그리드의 데이터가 끝나는 열의 index
+        //( 엑셀컬럼수가 그리드컬럼수 보다 작은 경우 그리드 컬러수를 설정)
+        headerExist: options.headerExist || "0",            // String, [defalut:0] excel파일에서 그리드의 데이터에 header가 있는지 여부
+        // (1이면 header 존재 0이면 없음)
+        footerExist: options.footerExist || "1",            //String, [defalut: 1] excel파일에서 그리드의 데이터에 footer가 있는지 여부
+        // (1이면 footer 존재 0이면 없음 기본값은 1 그리드에 footer가 없으면 적용되지 않음)
+        append: options.append || "0",                      // String, [defalut: 0] excel파일에서 가져온 데이터를 그리드에 append시킬지 여부
+        // (1이면 현재 그리드에 데이터를 추가로 넣어줌 0이면 현재 그리드의 데이터를 삭제하고 넣음)
+        hidden: options.hidden || "0",                      // String, [defalut: 0] 읽어들이려는 엑셀파일에 hidden column이 저장되어 있는지 여부를 설정하는 int형 숫자(0이면
+        // 엑셀파일에 hidden 데이터가 없으므로 그리드 hidden column에 빈 데이터를 삽입
+        // 1 : 엑셀파일에 hidden 데이터가 있으므로 엑셀 파일로부터 hidden 데이터를 삽입 )
+        fillHidden: options.fillHidden || "0",              // String, [defalut: 0] Grid에 hiddenColumn에 빈 값을 넣을지를 결정하기
+        // 위한 int형 숫자(1이면 hidden Column에 빈 값을 저장하지 않음,0이면 hidden
+        // column이 저장되어있지 않은 Excel  File이라 간주하고 hidden Column에 빈
+        // 값을 넣어줌)(hidden이 0인 경우에는 fillhidden은 영향을 끼치지 않음)
+        skipSpace: options.skipSpace || "0",                // String, [defalut: 0] 공백무시 여부(1이면 무시 0이면 포함)
+        insertColumns: options.insertColumns || "",         // Array, radio, checkbox와 같은 컬럼을 엑셀에서 받아 오지 않고
+        // 사용자 컬럼 설정 으로 업로드 ( 데이터 구조 : [ { columnIndex:1, columnValue:"1" } ] )
+        popupUrl: options.popupUrl || "",                   // String, 업로드시에 호출할 popup의 url
+        status: options.status || "R",                      // String, [defalut: R]업로드된 데이터의 초기 상태값, 설정하지 않으면 "R"로 설정되며 "C"값을 설정 할 수 있다.
+        pwd: options.pwd || "",                             // String, 엑셀파일에 암호가 걸려 있는 경우, 비밀번호
+        features: "top=" + top + ",height=" + height + ",left=" + left + ",width=" + width + ",location=no,menubar=no,resizable=yes,scrollbars=auto,status=no,titlebar=yes,toolbar=no",
+        wframe: true
+    };
+
+    grdObj.advancedExcelUpload(opts);
 };
 
 /**
@@ -1450,34 +1452,34 @@ scwin.uploadGridViewExcel = function(grdObj, options) {
 const options = {};
 $c.data.uploadGridViewCSV(gridId,  options);
 // return 예시) 엑셀 파일(.CSV) 업로드
- */ 
-scwin.uploadGridViewCSV = function(grdObj, options) {
-	if ($c.util.isEmpty(options)) {
-		options = {};
-	}
-	
-	const width = "490";
-	const height = "218";
-	const top = ((document.body.offsetHeight / 2) - (parseInt(height) / 2) + $(document).scrollTop());
-	const left = ((document.body.offsetWidth / 2) - (parseInt(width) / 2) + $(document).scrollLeft());
-	
-	const opts = {
-		type: options.type || "0",					// String, [default: 1, 0]데이터 형태 (0이면 실 데이터 형태,1이면 display 표시 방식)
-		header: options.header || "0",				// String, [default: 1, 0]Grid header 존재 유무 (0이면 header row수를 무시하고 전부 업로드하고 1이면 header row수 만큼 skip한다.)
-		delim: options.delim || ",", 				// String, [default: ',']CSV 파일에서 데이터를 구분할 구분자
-		escapeChar: options.escapeChar || "",		// String, CSV 데이터에서 제거해야 되는 문자셋 ( ex) '\'' )
-		startRowIndex: options.startRowIndex || 0,	// Number, [defalut: 0] csv파일에서 그리드의 데이터가 시작되는 행의 번호, startRowIndex가 설정되면, header 설정은 무시된다.
-		append: options.append || "0", 				// String, [defalut: 0, 1]csv파일에서 가져온 데이터를 그리드에 append시킬지 여부(1이면 현재 그리드에 데이터를 추가로 넣어줌 0이면 현재 그리드의 데이터를 삭제하고 넣음)
-		hidden: options.hidden || 1, 				// Number, [defalut: 0, 1]hidden Column에 대한 저장 여부(0이면 저장하지않음,1이면 저장)
-		fillHidden: options.fillHidden || "0",		// String, [defalut: 0, 1]hidden Column에 빈 값을 넣을지를 결정하기 위한 int형 숫자(1이면 hidden Column에 빈 값을 저장하지 않음,0이면 hidden column이 저장되어있지 않은 csv File이라 간주하고 hidden Column에 빈 값을 넣어줌)(hidden이 0인 경우에는 fillhidden은 영향을 끼치지 않음)
-		skipSpace: options.skipSpace || "0", 		// String, [defalut: 0, 1]공백무시 여부(1이면 무시 0이면 포함)
-		expression: options.expression || "1",		// String, [defalut: 1, 0]expression 컬럼 데이터를 포함하고 있는지 여부, 기본값은 미포함(1이면 미포함, 0이면 포함)
-		popupUrl: options.popupUrl || "", 			// String, 업로드시에 호출할 popup의 url
-		features : "top="+top+",height="+height+",left="+left+",width="+width+",location=no,menubar=no,resizable=yes,scrollbars=auto,status=no,titlebar=yes,toolbar=no",
-		wframe: true
-	}
-	
-	grdObj.readCSV(opts);
+ */
+scwin.uploadGridViewCSV = function (grdObj, options) {
+    if ($c.util.isEmpty(options)) {
+        options = {};
+    }
+
+    const width = "490";
+    const height = "218";
+    const top = ((document.body.offsetHeight / 2) - (parseInt(height) / 2) + $(document).scrollTop());
+    const left = ((document.body.offsetWidth / 2) - (parseInt(width) / 2) + $(document).scrollLeft());
+
+    const opts = {
+        type: options.type || "0",					// String, [default: 1, 0]데이터 형태 (0이면 실 데이터 형태,1이면 display 표시 방식)
+        header: options.header || "0",				// String, [default: 1, 0]Grid header 존재 유무 (0이면 header row수를 무시하고 전부 업로드하고 1이면 header row수 만큼 skip한다.)
+        delim: options.delim || ",", 				// String, [default: ',']CSV 파일에서 데이터를 구분할 구분자
+        escapeChar: options.escapeChar || "",		// String, CSV 데이터에서 제거해야 되는 문자셋 ( ex) '\'' )
+        startRowIndex: options.startRowIndex || 0,	// Number, [defalut: 0] csv파일에서 그리드의 데이터가 시작되는 행의 번호, startRowIndex가 설정되면, header 설정은 무시된다.
+        append: options.append || "0", 				// String, [defalut: 0, 1]csv파일에서 가져온 데이터를 그리드에 append시킬지 여부(1이면 현재 그리드에 데이터를 추가로 넣어줌 0이면 현재 그리드의 데이터를 삭제하고 넣음)
+        hidden: options.hidden || 1, 				// Number, [defalut: 0, 1]hidden Column에 대한 저장 여부(0이면 저장하지않음,1이면 저장)
+        fillHidden: options.fillHidden || "0",		// String, [defalut: 0, 1]hidden Column에 빈 값을 넣을지를 결정하기 위한 int형 숫자(1이면 hidden Column에 빈 값을 저장하지 않음,0이면 hidden column이 저장되어있지 않은 csv File이라 간주하고 hidden Column에 빈 값을 넣어줌)(hidden이 0인 경우에는 fillhidden은 영향을 끼치지 않음)
+        skipSpace: options.skipSpace || "0", 		// String, [defalut: 0, 1]공백무시 여부(1이면 무시 0이면 포함)
+        expression: options.expression || "1",		// String, [defalut: 1, 0]expression 컬럼 데이터를 포함하고 있는지 여부, 기본값은 미포함(1이면 미포함, 0이면 포함)
+        popupUrl: options.popupUrl || "", 			// String, 업로드시에 호출할 popup의 url
+        features: "top=" + top + ",height=" + height + ",left=" + left + ",width=" + width + ",location=no,menubar=no,resizable=yes,scrollbars=auto,status=no,titlebar=yes,toolbar=no",
+        wframe: true
+    }
+
+    grdObj.readCSV(opts);
 };
 
 /**
@@ -1505,44 +1507,44 @@ scwin.uploadGridViewCSV = function(grdObj, options) {
  * @example
 
 if ($c.data.validateGroup(grp_LoginInfo)) {
-	if (confirm("변경된 데이터를 저장하시겠습니까?")) {
-		$c.sbm.execute(sbm_saveData);
-	}
+    if (confirm("변경된 데이터를 저장하시겠습니까?")) {
+        $c.sbm.execute(sbm_saveData);
+    }
 }
 
 const valInfo = [ { id : "grpCd", mandatory : true, minLength : 5 },
-				{ id : "grpNm", mandatory : true } ];
+                { id : "grpNm", mandatory : true } ];
 
 if ($c.data.validateGroup(grp_LoginInfo, valInfo)) {
-	if (confirm("변경된 데이터를 저장하시겠습니까?")) {
-		$c.sbm.execute(sbm_saveCode);
-	}
+    if (confirm("변경된 데이터를 저장하시겠습니까?")) {
+        $c.sbm.execute(sbm_saveCode);
+    }
 }
 
 const valInfo = [ { id : "grpCd", label : "공통그룹코드", mandatory : true, minLength : 5 },
-				{ id : "grpNm", label : "공통그룹명", mandatory : true } ];
+                { id : "grpNm", label : "공통그룹명", mandatory : true } ];
 
 if ($c.data.validateGroup(grp_code, valInfo)) {
-	if (win.$c.win.confirm("변경된 데이터를 저장하시겠습니까?")) {
-		$c.sbm.execute(sbm_saveCode);
-	}
+    if (win.$c.win.confirm("변경된 데이터를 저장하시겠습니까?")) {
+        $c.sbm.execute(sbm_saveCode);
+    }
 };
 
 const valInfo = [ { id : "prntMenuCd", mandatory : true },
-				{ id : "menuCd", mandatory : true,
-					valFunc : function($p, value) {
-						if (dmaMenu.get("prntMenuCd") == dmaMenu.get("menuCd")) {
-							return "상위 메뉴 코드와 메뉴 코드가 같아서는 안됩니다.";
-						}
-					} },
-				 { id : "menuNm", mandatory : true },
-				 { id : "menuLevel", mandatory : true },
-				 { id : "menuSeq", mandatory : true },
-				 { id : "urlPath", mandatory : true },
-				 { id : "isUse", mandatory : true } ];
+                { id : "menuCd", mandatory : true,
+                    valFunc : function($p, value) {
+                        if (dmaMenu.get("prntMenuCd") == dmaMenu.get("menuCd")) {
+                            return "상위 메뉴 코드와 메뉴 코드가 같아서는 안됩니다.";
+                        }
+                    } },
+                 { id : "menuNm", mandatory : true },
+                 { id : "menuLevel", mandatory : true },
+                 { id : "menuSeq", mandatory : true },
+                 { id : "urlPath", mandatory : true },
+                 { id : "isUse", mandatory : true } ];
 
 if ($c.data.validateGroup(tblMenuInfo, valInfo, tacMenuInfo, "tabMenuInfo1") == false) {
-	return false;
+    return false;
 } 
 
  * @description 그룹안에 포함된 컴포넌트의 입력 값에 대한 유효성을 검사한다.
@@ -1556,151 +1558,153 @@ if ($c.data.validateGroup(tblMenuInfo, valInfo, tacMenuInfo, "tabMenuInfo1") == 
 - ignoreChar : 입력 허용 불가 문자 <br/>
 - maxLength : 최대 입력 문자수 <br/>
 - maxByteLength : 최대 입력 바이트수 <br/>
- */ 
-scwin.validateGroup = function(grpObj, valInfoArr, tacObj, tabId) {
-	if (!$c.util.isEmpty(tacObj) && tacObj.getPluginName() === 'tabControl') {
-		grpObj = tacObj.getWindow(tabId)[grpObj];
-	}
+ */
+scwin.validateGroup = function (grpObj, valInfoArr, tacObj, tabId) {
+    if (!$c.util.isEmpty(tacObj) && tacObj.getPluginName() === 'tabControl') {
+        grpObj = tacObj.getWindow(tabId)[grpObj];
+    }
 
-	let objArr = $c.util.getChildren(grpObj, {
-		includePlugin: "checkbox checkcombobox datePicker editor input inputCalendar multiselect radio selectbox searchbox secret textarea",
-		recursive: true
-	});
+    let objArr = $c.util.getChildren(grpObj, {
+        includePlugin: "checkbox checkcombobox datePicker editor input inputCalendar multiselect radio selectbox searchbox secret textarea",
+        recursive: true
+    });
 
-	const errors = [];
+    const errors = [];
 
-	try {
-		for (let objIdx in objArr) {
-			const obj = objArr[objIdx];
+    try {
+        for (let objIdx in objArr) {
+            const obj = objArr[objIdx];
 
-			const dataObjInfo = $c.data.getDataCollection(obj);
-			let dataCollection = null;
-			let columnId = null;
-			let value = null;
+            const dataObjInfo = $c.data.getDataCollection(obj);
+            let dataCollection = null;
+            let columnId = null;
+            let value = null;
 
-			if ((dataObjInfo !== undefined) && (dataObjInfo !== null)) {
-				dataCollection = $p.getComponentById(dataObjInfo.runtimeDataCollectionId);
-				columnId = dataObjInfo.columnId;
-			}
+            if ((dataObjInfo !== undefined) && (dataObjInfo !== null)) {
+                dataCollection = $p.getComponentById(dataObjInfo.runtimeDataCollectionId);
+                columnId = dataObjInfo.columnId;
+            }
 
-			if ((dataCollection !== null) && (dataCollection.getObjectType() === "dataMap")) {
-				value = dataCollection.get(dataObjInfo.columnId);
-				if (typeof value === "string") {
-					value = value.trim();
-				}
-			} else {
-				let tempIdArr = obj.getID().split("_");
-				if (obj.getPluginName() !== "editor") {
-					if ((typeof obj.getValue === "function")) {
-						value = obj.getValue();
-						if (typeof value === "string") {
-							value = value.trim();
-						}
-					} else {
-						continue;
-					}
-				} else {
-					value = obj.getHTML();
-					if (typeof value === "string") {
-						value = value.trim();
-					}
-				}
-			}
+            if ((dataCollection !== null) && (dataCollection.getObjectType() === "dataMap")) {
+                value = dataCollection.get(dataObjInfo.columnId);
+                if (typeof value === "string") {
+                    value = value.trim();
+                }
+            } else {
+                let tempIdArr = obj.getID().split("_");
+                if (obj.getPluginName() !== "editor") {
+                    if ((typeof obj.getValue === "function")) {
+                        value = obj.getValue();
+                        if (typeof value === "string") {
+                            value = value.trim();
+                        }
+                    } else {
+                        continue;
+                    }
+                } else {
+                    value = obj.getHTML();
+                    if (typeof value === "string") {
+                        value = value.trim();
+                    }
+                }
+            }
 
-			let valInfo = { id : columnId };
-			let isVaild = false;
+            let valInfo = { id: columnId };
+            let isVaild = false;
 
-			for (let valIdx in valInfoArr) {
-				if ((typeof valInfoArr[valIdx].id !== "undefined") && (valInfoArr[valIdx].id === columnId)) {
-					valInfo = valInfoArr[valIdx];
-					isVaild = true;
-					break;
-				}
-			}
+            for (let valIdx in valInfoArr) {
+                if ((typeof valInfoArr[valIdx].id !== "undefined") && (valInfoArr[valIdx].id === columnId)) {
+                    valInfo = valInfoArr[valIdx];
+                    isVaild = true;
+                    break;
+                }
+            }
 
-			if ((typeof objArr[objIdx].options.mandatory !== "undefined") && (objArr[objIdx].options.mandatory)) {
-				valInfo.mandatory = true;
-				isVaild = true;
-			}
+            if ((typeof objArr[objIdx].options.mandatory !== "undefined") && (objArr[objIdx].options.mandatory)) {
+                valInfo.mandatory = true;
+                isVaild = true;
+            }
 
-			if ((typeof objArr[objIdx].options.minlength !== "undefined") && (objArr[objIdx].options.minlength > 0)
-					&& (objArr[objIdx].getPluginName() !== "inputCalendar")) {
-				valInfo.minLength = objArr[objIdx].options.minlength;
-				isVaild = true;
-			}
+            if ((typeof objArr[objIdx].options.minlength !== "undefined") && (objArr[objIdx].options.minlength > 0)
+                && (objArr[objIdx].getPluginName() !== "inputCalendar")) {
+                valInfo.minLength = objArr[objIdx].options.minlength;
+                isVaild = true;
+            }
 
-			if ((typeof objArr[objIdx].options.minByteLength !== "undefined") && (objArr[objIdx].options.minByteLength > 0)
-					&& (objArr[objIdx].getPluginName() !== "inputCalendar")) {
-				valInfo.minByteLength = objArr[objIdx].options.minByteLength;
-				isVaild = true;
-			}
+            if ((typeof objArr[objIdx].options.minByteLength !== "undefined") && (objArr[objIdx].options.minByteLength > 0)
+                && (objArr[objIdx].getPluginName() !== "inputCalendar")) {
+                valInfo.minByteLength = objArr[objIdx].options.minByteLength;
+                isVaild = true;
+            }
 
-			if (isVaild === true) {
-				_setResult(dataCollection, obj.getID(), valInfo, value);
-			}
-		}
+            if (isVaild === true) {
+                _setResult(dataCollection, obj.getID(), valInfo, value);
+            }
+        }
 
-		if (errors.length > 0) {
-			if ((typeof tacObj !== "undefined") && (typeof tabId !== "undefined") && (tabId !== "")) {
-				const tabIndex = tacObj.getTabIndex(tabId);
-				
-				Promise.resolve().then(function($p, ) {
-					 return tacObj.setSelectedTabIndex(tabIndex);
-				});
-			}
+        if (errors.length > 0) {
+            if ((typeof tacObj !== "undefined") && (typeof tabId !== "undefined") && (tabId !== "")) {
+                const tabIndex = tacObj.getTabIndex(tabId);
 
-			const option = {
-				callBackParam : {
-					"objId" : errors[0].objId
-				}
-			}
+                Promise.resolve().then(function ($p,) {
+                    return tacObj.setSelectedTabIndex(tabIndex);
+                });
+            }
 
-			$c.win.alert(errors[0].message, function(param) {
-				const obj = $p.getComponentById(param.objId);
-				obj.focus();
-			}, option);
+            const option = {
+                callBackParam: {
+                    "objId": errors[0].objId
+                }
+            }
 
-			return false;
-		} else {
-			return true;
-		}
+            $c.win.alert(errors[0].message, function (param) {
+                if ((typeof param !== "undefined") && (typeof param.objId !== "undefined")) {
+                    const obj = $p.getComponentById(param.objId);
+                    obj.focus();
+                }
+            }, option);
 
-		function _setResult(dataCollection, objId, valInfo, value) {
-			const msgInfo = $c.data.getValResultMsg(valInfo, value);
+            return false;
+        } else {
+            return true;
+        }
 
-			if ($c.util.isEmpty(msgInfo.message) === false) {
-				const comObj = $p.getComponentById(objId);
+        function _setResult(dataCollection, objId, valInfo, value) {
+            const msgInfo = $c.data.getValResultMsg(valInfo, value);
 
-				const errIdx = errors.length;
-				errors[errIdx] = {};
-				errors[errIdx].columnId = valInfo.id;
-				errors[errIdx].objId = objId;
+            if ($c.util.isEmpty(msgInfo.message) === false) {
+                const comObj = $p.getComponentById(objId);
 
-				if ($c.util.isEmpty(valInfo.label) === false) {
-					errors[errIdx].columnName = valInfo.label;
-				} else if ($c.util.isEmpty(dataCollection) === false) {
-					// var scope = $c.win.getScope(dataCollection);
-					errors[errIdx].columnName = $c.data.getColumnName(comObj);
-				} else if (typeof comObj.getInvalidMessage === "function") {
-					errors[errIdx].columnName = comObj.getInvalidMessage();
-				}
+                const errIdx = errors.length;
+                errors[errIdx] = {};
+                errors[errIdx].columnId = valInfo.id;
+                errors[errIdx].objId = objId;
 
-				if (msgInfo.msgType == "2") {
-					errors[errIdx].message = msgInfo.message;
-				} else {
-					if ($c.util.isEmpty(errors[errIdx].columnName) === false) {
-						errors[errIdx].message = $c.str.attachPostposition(errors[errIdx].columnName) + " " + msgInfo.message;
-					} else {
-						errors[errIdx].message = msgInfo.message;
-					}
-				}
-			}
-		}
-	} catch (ex) {
-		console.error("Exception :: Object Id : " + obj.getID() + ", Plug-in Name: " + obj.getPluginName() + ", " + ex.message);
-	} finally {
-		objArr = null;
-	}
+                if ($c.util.isEmpty(valInfo.label) === false) {
+                    errors[errIdx].columnName = valInfo.label;
+                } else if ($c.util.isEmpty(dataCollection) === false) {
+                    // var scope = $c.win.getScope(dataCollection);
+                    errors[errIdx].columnName = $c.data.getColumnName(comObj);
+                } else if (typeof comObj.getInvalidMessage === "function") {
+                    errors[errIdx].columnName = comObj.getInvalidMessage();
+                }
+
+                if (msgInfo.msgType == "2") {
+                    errors[errIdx].message = msgInfo.message;
+                } else {
+                    if ($c.util.isEmpty(errors[errIdx].columnName) === false) {
+                        errors[errIdx].message = $c.str.attachPostposition(errors[errIdx].columnName) + " " + msgInfo.message;
+                    } else {
+                        errors[errIdx].message = msgInfo.message;
+                    }
+                }
+            }
+        }
+    } catch (ex) {
+        console.error("Exception :: Object Id : " + obj.getID() + ", Plug-in Name: " + obj.getPluginName() + ", " + ex.message);
+    } finally {
+        objArr = null;
+    }
 };
 
 /**
@@ -1726,125 +1730,127 @@ scwin.validateGroup = function(grpObj, valInfoArr, tacObj, tabId) {
  * @hidden N
  * @exception 
  * @example const valInfo = [ {id: "grpCd", mandatory: true, minLength: 5},
-			   {id: "grpNm", mandatory: true} ];
+               {id: "grpNm", mandatory: true} ];
 
 if ($c.data.validateGridView(grd_MenuAuthority, valInfo)) {
    if (confirm("변경된 데이터를 저장하시겠습니까?")) {
-	   scwin.saveGroup();
+       scwin.saveGroup();
    }
 }
 
 const valInfo = [ {id: "grpCd", label : "공통그룹코드", mandatory: true, minLength: 5},
-			   {id: "grpNm", label : "공통그룹명", mandatory: true} ];
+               {id: "grpNm", label : "공통그룹명", mandatory: true} ];
 
 if ($c.data.validateGridView(grd_MenuAuthority, valInfo)) {
    if (confirm("변경된 데이터를 저장하시겠습니까?")) {
-	   scwin.saveGroup();
+       scwin.saveGroup();
    }
 }
 
 const valInfo = [ { id : "prntMenuCd", mandatory : true },
-				{ id : "menuCd", mandatory : true,
-				  valFunc : function($p, value, dataCollectionObj, rowIndex) {
-					if (dmaMenu.get("prntMenuCd") == dmaMenu.get("menuCd")) {
-						return "상위 메뉴 코드와 메뉴 코드가 같아서는 안됩니다.";
-					}
-				  }
-				},
-				{ id : "menuNm", mandatory : true },
-				{ id : "menuLevel", mandatory : true },
-				{ id : "menuSeq", mandatory : true },
-				{ id : "urlPath", mandatory : true },
-				{ id : "isUse", mandatory : true } ];
+                { id : "menuCd", mandatory : true,
+                  valFunc : function($p, value, dataCollectionObj, rowIndex) {
+                    if (dmaMenu.get("prntMenuCd") == dmaMenu.get("menuCd")) {
+                        return "상위 메뉴 코드와 메뉴 코드가 같아서는 안됩니다.";
+                    }
+                  }
+                },
+                { id : "menuNm", mandatory : true },
+                { id : "menuLevel", mandatory : true },
+                { id : "menuSeq", mandatory : true },
+                { id : "urlPath", mandatory : true },
+                { id : "isUse", mandatory : true } ];
 
 if ($c.data.validateGridView(grd_MenuAuthority, valInfo, tacMenuInfo, "tabMenuInfo1") == false) {
    return false;
 }
- */ 
-scwin.validateGridView = function(gridViewObj, valInfoArr, tacObj, tabId) {
-	if (gridViewObj === null) {
-		return false;
-	}
+ */
+scwin.validateGridView = function (gridViewObj, valInfoArr, tacObj, tabId) {
+    if (gridViewObj === null) {
+        return false;
+    }
 
-	const dataList = $c.util.getGridViewDataList(gridViewObj);
-	if (dataList === null) {
-		return false;
-	}
+    const dataList = $c.util.getGridViewDataList(gridViewObj);
+    if (dataList === null) {
+        return false;
+    }
 
-	const errors = [];
+    const errors = [];
 
-	try {
-		const modifiedIdx = dataList.getModifiedIndex();
-		for (let dataIdx = 0; dataIdx < modifiedIdx.length; dataIdx++) {
-			let valInfo = {};
-			let isVaild = false;
+    try {
+        const modifiedIdx = dataList.getModifiedIndex();
+        for (let dataIdx = 0; dataIdx < modifiedIdx.length; dataIdx++) {
+            let valInfo = {};
+            let isVaild = false;
 
-			let modifiedData = dataList.getRowJSON(modifiedIdx[dataIdx]);
-			if (modifiedData.rowStatus === "D") {
-				continue;
-			}
+            let modifiedData = dataList.getRowJSON(modifiedIdx[dataIdx]);
+            if (modifiedData.rowStatus === "D") {
+                continue;
+            }
 
-			for (let valIdx in valInfoArr) {
-				if ((typeof valInfoArr[valIdx].id !== "undefined") && (modifiedData[valInfoArr[valIdx].id] !== "undefined")) {
-					let value = modifiedData[valInfoArr[valIdx].id];
-					if (typeof value === "string") {
-						value = value.trim();
-					}
-					_setResult(modifiedIdx[dataIdx], dataList, gridViewObj.getID(), valInfoArr[valIdx], value);
-				}
-			}
-		}
+            for (let valIdx in valInfoArr) {
+                if ((typeof valInfoArr[valIdx].id !== "undefined") && (modifiedData[valInfoArr[valIdx].id] !== "undefined")) {
+                    let value = modifiedData[valInfoArr[valIdx].id];
+                    if (typeof value === "string") {
+                        value = value.trim();
+                    }
+                    _setResult(modifiedIdx[dataIdx], dataList, gridViewObj.getID(), valInfoArr[valIdx], value);
+                }
+            }
+        }
 
-		if (errors.length > 0) {
-			if ((typeof tacObj !== "undefined") && (typeof tabId !== "undefined") && (tabId !== "")) {
-				const tabIndex = tacObj.getTabIndex(tabId);
-				tacObj.setSelectedTabIndex(tabIndex);
-			}
+        if (errors.length > 0) {
+            if ((typeof tacObj !== "undefined") && (typeof tabId !== "undefined") && (tabId !== "")) {
+                const tabIndex = tacObj.getTabIndex(tabId);
+                tacObj.setSelectedTabIndex(tabIndex);
+            }
 
-			const option = {
-				callBackParam : {
-					"objId" : errors[0].objId,
-					"columnId" : errors[0].columnId,
-					"rowIndex" : errors[0].rowIndex,
-				}
-			};
+            const option = {
+                callBackParam: {
+                    "objId": errors[0].objId,
+                    "columnId": errors[0].columnId,
+                    "rowIndex": errors[0].rowIndex,
+                }
+            };
 
-			$c.win.alert(errors[0].message, function(param) {
-				const grdiViewObj = $p.getComponentById(param.objId);
-				grdiViewObj.setFocusedCell(param.rowIndex, param.columnId, true);
-			}, option);
+            $c.win.alert(errors[0].message, function (param) {
+                if ((typeof param !== "undefined") && (typeof param.objId !== "undefined")) {
+                    const grdiViewObj = $p.getComponentById(param.objId);
+                    grdiViewObj.setFocusedCell(param.rowIndex, param.columnId, true);
+                }
+            }, option);
 
-			return false;
-		} else {
-			return true;
-		}
+            return false;
+        } else {
+            return true;
+        }
 
-		function _setResult(rowIndex, dataList, gridViewObjId, valInfo, value) {
+        function _setResult(rowIndex, dataList, gridViewObjId, valInfo, value) {
 
-			const msgInfo = $c.data.getValResultMsg(valInfo, value, dataList, rowIndex);
+            const msgInfo = $c.data.getValResultMsg(valInfo, value, dataList, rowIndex);
 
-			if ($c.util.isEmpty(msgInfo.message) === false) {
-				const errIdx = errors.length;
-				errors[errIdx] = {};
-				errors[errIdx].columnId = valInfo.id;
-				errors[errIdx].objId = gridViewObjId;
-				if ($c.util.isEmpty(valInfo.label) === false) {
-					errors[errIdx].columnName = valInfo.label;
-				} else {
-					errors[errIdx].columnName = dataList.getColumnName(valInfo.id);
-				}
-				errors[errIdx].rowIndex = rowIndex;
+            if ($c.util.isEmpty(msgInfo.message) === false) {
+                const errIdx = errors.length;
+                errors[errIdx] = {};
+                errors[errIdx].columnId = valInfo.id;
+                errors[errIdx].objId = gridViewObjId;
+                if ($c.util.isEmpty(valInfo.label) === false) {
+                    errors[errIdx].columnName = valInfo.label;
+                } else {
+                    errors[errIdx].columnName = dataList.getColumnName(valInfo.id);
+                }
+                errors[errIdx].rowIndex = rowIndex;
 
-				if (msgInfo.msgType == "2") {
-					errors[errIdx].message = msgInfo.message;
-				} else {
-					errors[errIdx].message = $c.str.attachPostposition(errors[errIdx].columnName) + " " + msgInfo.message;
-				}
-			}
-		}
-	} catch (ex) {
-		console.error(ex);
-	}
+                if (msgInfo.msgType == "2") {
+                    errors[errIdx].message = msgInfo.message;
+                } else {
+                    errors[errIdx].message = $c.str.attachPostposition(errors[errIdx].columnName) + " " + msgInfo.message;
+                }
+            }
+        }
+    } catch (ex) {
+        console.error(ex);
+    }
 };
 
 /**
@@ -1859,61 +1865,61 @@ scwin.validateGridView = function(gridViewObj, valInfoArr, tacObj, tabId) {
  * @hidden N
  * @exception 
  * @example const dcoptions = {
-	baseNode : "list",
-	repeatNode : "map",
-	saveRemovedData : "true"
+    baseNode : "list",
+    repeatNode : "map",
+    saveRemovedData : "true"
 };
 const dlObj = $c.data.createDataList("dlt_code", ["cdGrp", "cd", "nm","ord"], ["text", "text", "text", "text"] , dcoptions);
- */ 
-scwin.createDataList = function(dsId, colArr, typeArr, options) {
-	try {
-		const dltObj = $c.util.getComponent(dsId);
-		if (!$c.util.isEmpty(dltObj)) {
-			$p.data.remove( dsId );
-		}
+ */
+scwin.createDataList = function (dsId, colArr, typeArr, options) {
+    try {
+        const dltObj = $c.util.getComponent(dsId);
+        if (!$c.util.isEmpty(dltObj)) {
+            $p.data.remove(dsId);
+        }
 
-		let colInfoJSON = [];
-		if (typeof colArr !== "undefined") {
+        let colInfoJSON = [];
+        if (typeof colArr !== "undefined") {
 
-			colInfoJSON = [];
+            colInfoJSON = [];
 
-			for (let i=0; i < colArr.length; i++) {
-				let dataType = "text";
-				if (typeof typeArr !== "undefined") {
-					dataType = typeArr[i];
-				}
-				const colInfo = {
-					"id" : colArr[i],
-					"dataType" : dataType,
-					"name" : colArr[i]
-				};
-				colInfoJSON.push(colInfo);
-			}
-		}
+            for (let i = 0; i < colArr.length; i++) {
+                let dataType = "text";
+                if (typeof typeArr !== "undefined") {
+                    dataType = typeArr[i];
+                }
+                const colInfo = {
+                    "id": colArr[i],
+                    "dataType": dataType,
+                    "name": colArr[i]
+                };
+                colInfoJSON.push(colInfo);
+            }
+        }
 
-		if (typeof options === "undefined") {
-			options = {};
-			options.baseNode = "list";
-			options.repeatNode = "map";
-			options.saveRemovedData = "true";
-		};
+        if (typeof options === "undefined") {
+            options = {};
+            options.baseNode = "list";
+            options.repeatNode = "map";
+            options.saveRemovedData = "true";
+        };
 
-		const dataCollectionJSON = {
-			id : dsId,
-			type : "dataList",
-			option : {
-				"baseNode" : options.baseNode || "list",
-				"repeatNode" : options.repeatNode || "map",
-				"saveRemovedData" : options.saveRemovedData || "true",
-			},
-			columnInfo : colInfoJSON
-		};
+        const dataCollectionJSON = {
+            id: dsId,
+            type: "dataList",
+            option: {
+                "baseNode": options.baseNode || "list",
+                "repeatNode": options.repeatNode || "map",
+                "saveRemovedData": options.saveRemovedData || "true",
+            },
+            columnInfo: colInfoJSON
+        };
 
-		const codeDataObj = $p.data.create(dataCollectionJSON);
-		return $c.util.getComponent(dsId);
-	} catch (ex) {
-		console.error(ex);
-	}
+        const codeDataObj = $p.data.create(dataCollectionJSON);
+        return $c.util.getComponent(dsId);
+    } catch (ex) {
+        console.error(ex);
+    }
 };
 
 
@@ -1929,51 +1935,51 @@ scwin.createDataList = function(dsId, colArr, typeArr, options) {
  * @hidden N
  * @exception 
  * @example const mapObj = $c.data.createDataMap("dma_test", ["col1", "col2", "col3"] , ["text", "text", "text"]);
- */ 
-scwin.createDataMap = function(dsId, colArr, typeArr, options) {
-	try{
-		const dltObj = $c.util.getComponent(dsId);
-		if (!$c.util.isEmpty(dltObj)) {
-			$p.data.remove( dsId );
-		}
+ */
+scwin.createDataMap = function (dsId, colArr, typeArr, options) {
+    try {
+        const dltObj = $c.util.getComponent(dsId);
+        if (!$c.util.isEmpty(dltObj)) {
+            $p.data.remove(dsId);
+        }
 
-		let colInfoJSON = [];
-		if (typeof colArr !== "undefined") {
-			colInfoJSON = [];
-			for (let i=0; i < colArr.length; i++) {
-				let dataType = "text";
-				if (typeof typeArr !== "undefined") {
-					dataType = typeArr[i];
-				}
-				const colInfo = {
-					"id" : colArr[i],
-					"type" : dataType,
-					"name" : colArr[i]
-				};
-				colInfoJSON.push(colInfo);
-			}
-		}
+        let colInfoJSON = [];
+        if (typeof colArr !== "undefined") {
+            colInfoJSON = [];
+            for (let i = 0; i < colArr.length; i++) {
+                let dataType = "text";
+                if (typeof typeArr !== "undefined") {
+                    dataType = typeArr[i];
+                }
+                const colInfo = {
+                    "id": colArr[i],
+                    "type": dataType,
+                    "name": colArr[i]
+                };
+                colInfoJSON.push(colInfo);
+            }
+        }
 
-		if (typeof options === "undefined") {
-			options = {
-				"baseNode" :  "map",
-			};
-		};
+        if (typeof options === "undefined") {
+            options = {
+                "baseNode": "map",
+            };
+        };
 
-		const dataCollectionJSON = {
-			"id" : dsId,
-			"type" : "dataMap",
-			"option" : {
-				"baseNode" : options.baseNode || "map",
-			},
-			"keyInfo" : colInfoJSON
-		};
+        const dataCollectionJSON = {
+            "id": dsId,
+            "type": "dataMap",
+            "option": {
+                "baseNode": options.baseNode || "map",
+            },
+            "keyInfo": colInfoJSON
+        };
 
-		$p.data.create(dataCollectionJSON);
-		return $c.util.getComponent(dsId);
-	} catch (ex) {
-		console.error(ex);
-	}
+        $p.data.create(dataCollectionJSON);
+        return $c.util.getComponent(dsId);
+    } catch (ex) {
+        console.error(ex);
+    }
 };
 
 
@@ -1987,37 +1993,37 @@ scwin.createDataMap = function(dsId, colArr, typeArr, options) {
  * @hidden N
  * @exception 
  * @example $c.data.undoAll(dlt_grdAllData);
- */ 
-scwin.undoAll = function(dltId) {
-	try {
-		let dltObj = null;
-		if (typeof dltId === "string") {
-			dltObj = $c.util.getComponent(dltId);
-		} else {
-			dltObj = dltId;
-		}
+ */
+scwin.undoAll = function (dltId) {
+    try {
+        let dltObj = null;
+        if (typeof dltId === "string") {
+            dltObj = $c.util.getComponent(dltId);
+        } else {
+            dltObj = dltId;
+        }
 
-		const rowCount = dltObj.getRowCount();
-		const removeIdx = [];
-		const undoIdx =[];
+        const rowCount = dltObj.getRowCount();
+        const removeIdx = [];
+        const undoIdx = [];
 
-		dltObj.setBroadcast(false);
+        dltObj.setBroadcast(false);
 
-		for (let i = 0; i <rowCount; i++) {
-			if(dltObj.getRowStatus(i) == "C") {
-				removeIdx.push(i);
-				continue;
-			}
-			undoIdx.push(i)
-		}
+        for (let i = 0; i < rowCount; i++) {
+            if (dltObj.getRowStatus(i) == "C") {
+                removeIdx.push(i);
+                continue;
+            }
+            undoIdx.push(i)
+        }
 
-		dltObj.removeRows(removeIdx);
-		dltObj.undoRows(undoIdx);
+        dltObj.removeRows(removeIdx);
+        dltObj.undoRows(undoIdx);
 
-		dltObj.setBroadcast(true, true);
-	} catch (ex) {
-		console.error(ex)
-	}
+        dltObj.setBroadcast(true, true);
+    } catch (ex) {
+        console.error(ex)
+    }
 };
 
 /**
@@ -2028,32 +2034,32 @@ scwin.undoAll = function(dltId) {
  * @hidden N
  * @exception 
  * @example $c.data.undoRow(dlt_data1);
- */ 
-scwin.undoRow = function(dltId) {
-	try {
-		let dltObj = null;
-		if (typeof dltId === "string") {
-			dltObj = $c.util.getComponent(dltId);
-		} else {
-			dltObj = dltId;
-		}
+ */
+scwin.undoRow = function (dltId) {
+    try {
+        let dltObj = null;
+        if (typeof dltId === "string") {
+            dltObj = $c.util.getComponent(dltId);
+        } else {
+            dltObj = dltId;
+        }
 
-		const checkedIdx = dltObj.getMatchedIndex("chk", "1");
+        const checkedIdx = dltObj.getMatchedIndex("chk", "1");
 
-		dltObj.setBroadcast(false);
+        dltObj.setBroadcast(false);
 
-		for (let idx = checkedIdx.length - 1; idx >= 0; idx--) {
-			if(dltObj.getRowStatus(checkedIdx[idx]) == "C") {
-				dltObj.removeRow(checkedIdx[idx]);
-			} else {
-				dltObj.undoRow(checkedIdx[idx]);
-			}
-		}
+        for (let idx = checkedIdx.length - 1; idx >= 0; idx--) {
+            if (dltObj.getRowStatus(checkedIdx[idx]) == "C") {
+                dltObj.removeRow(checkedIdx[idx]);
+            } else {
+                dltObj.undoRow(checkedIdx[idx]);
+            }
+        }
 
-		dltObj.setBroadcast(true, true);
-	} catch (ex) {
-		console.error(ex);
-	}
+        dltObj.setBroadcast(true, true);
+    } catch (ex) {
+        console.error(ex);
+    }
 };
 
 /**
@@ -2064,31 +2070,31 @@ scwin.undoRow = function(dltId) {
  * @hidden N
  * @exception 
  * @example $c.data.undoGridView(dlt_grdAllData);
- */ 
-scwin.undoGridView = async function(grdId) {
-	try {
-		let grdObj = null;
-		if (typeof grdId === "string") {
-			grdObj = $c.util.getComponent(grdId);
-		} else {
-			grdObj = grdId;
-		}
-		
-		if ((typeof grdObj === "object") && (grdObj !== "")) {
-			const dltObj = $c.util.getGridViewDataList(grdObj);
-			if (dltObj === null) {
-				return;
-			}
-			
-			if ($c.data.isModified(dltObj)) {
-				if(await $c.win.confirm($c.data.getMessage("MSG_CM_00052"))) {
-					$c.data.undoAll(dltObj);
-				};
-			};
-		}
-	} catch (ex) {
-		console.error(ex);
-	}	
+ */
+scwin.undoGridView = async function (grdId) {
+    try {
+        let grdObj = null;
+        if (typeof grdId === "string") {
+            grdObj = $c.util.getComponent(grdId);
+        } else {
+            grdObj = grdId;
+        }
+
+        if ((typeof grdObj === "object") && (grdObj !== "")) {
+            const dltObj = $c.util.getGridViewDataList(grdObj);
+            if (dltObj === null) {
+                return;
+            }
+
+            if ($c.data.isModified(dltObj)) {
+                if (await $c.win.confirm($c.data.getMessage("MSG_CM_00052"))) {
+                    $c.data.undoAll(dltObj);
+                };
+            };
+        }
+    } catch (ex) {
+        console.error(ex);
+    }
 };
 
 /**
@@ -2099,33 +2105,33 @@ scwin.undoGridView = async function(grdId) {
  * @hidden N
  * @exception 
  * @example $c.data.deleteRow(dlt_data1);
- */ 
-scwin.deleteRow = function(dltId) {
-	try {
-		let dltObj = null;
-		if (typeof dltId === "string") {
-			dltObj = $c.util.getComponent(dltId);
-		} else {
-			dltObj = dltId;
-		}
+ */
+scwin.deleteRow = function (dltId) {
+    try {
+        let dltObj = null;
+        if (typeof dltId === "string") {
+            dltObj = $c.util.getComponent(dltId);
+        } else {
+            dltObj = dltId;
+        }
 
-		const checkedIdx = dltObj.getMatchedIndex("chk", "1");
+        const checkedIdx = dltObj.getMatchedIndex("chk", "1");
 
-		dltObj.setBroadcast(false);
+        dltObj.setBroadcast(false);
 
-		for (let idx = checkedIdx.length - 1; idx >= 0; idx--) {
-			if(dltObj.getRowStatus(checkedIdx[idx]) == "C") {
-				dltObj.removeRow(checkedIdx[idx]);
-			} else {
-				dltObj.deleteRow(checkedIdx[idx]);
-				dltObj.setCellData(checkedIdx[idx], "chk", "");
-			}
-		}
+        for (let idx = checkedIdx.length - 1; idx >= 0; idx--) {
+            if (dltObj.getRowStatus(checkedIdx[idx]) == "C") {
+                dltObj.removeRow(checkedIdx[idx]);
+            } else {
+                dltObj.deleteRow(checkedIdx[idx]);
+                dltObj.setCellData(checkedIdx[idx], "chk", "");
+            }
+        }
 
-		dltObj.setBroadcast(true, true);
-	} catch (ex) {
-		console.error(ex);
-	}
+        dltObj.setBroadcast(true, true);
+    } catch (ex) {
+        console.error(ex);
+    }
 };
 
 /**
@@ -2137,32 +2143,32 @@ scwin.deleteRow = function(dltId) {
  * @hidden N
  * @exception 
  * @example $c.data.insertRow(grd_data1);
- */ 
-scwin.insertRow = function(grdId) {
-	try {
-		let grdObj = null;
-		if (typeof grdId === "string") {
-			grdObj = $c.util.getComponent(grdId);
-		} else {
-			grdObj = grdId;
-		}
-		
-		if ((typeof grdObj === "object") && (grdObj !== "")) {
-			const dltObj = $c.util.getGridViewDataList(grdObj);
-			if (dltObj === null) {
-				return;
-			}
-			
-			const focusedRowIdx = grdObj.getFocusedRowIndex();
-			if (focusedRowIdx > -1) {
-				return dltObj.insertRow(focusedRowIdx + 1);
-			} else {
-				return dltObj.insertRow();
-			}
-		}
-	} catch (ex) {
-		console.error(ex);
-	}
+ */
+scwin.insertRow = function (grdId) {
+    try {
+        let grdObj = null;
+        if (typeof grdId === "string") {
+            grdObj = $c.util.getComponent(grdId);
+        } else {
+            grdObj = grdId;
+        }
+
+        if ((typeof grdObj === "object") && (grdObj !== "")) {
+            const dltObj = $c.util.getGridViewDataList(grdObj);
+            if (dltObj === null) {
+                return;
+            }
+
+            const focusedRowIdx = grdObj.getFocusedRowIndex();
+            if (focusedRowIdx > -1) {
+                return dltObj.insertRow(focusedRowIdx + 1);
+            } else {
+                return dltObj.insertRow();
+            }
+        }
+    } catch (ex) {
+        console.error(ex);
+    }
 }
 
 /**
@@ -2181,129 +2187,129 @@ scwin.insertRow = function(grdId) {
  * @example $c.data.getMatchedJSON(dlt_memberList, { columnId : "POSITION_CD", operator : "==", value : "03"});
 
 $c.data.getMatchedJSON(dlt_memberList, [
-	{ columnId : "POSITION_CD", operator : "==", value : "03" },
-	{ columnId : "DUTY_CD", operator : "==", value : "02", logical : "&&" }
+    { columnId : "POSITION_CD", operator : "==", value : "03" },
+    { columnId : "DUTY_CD", operator : "==", value : "02", logical : "&&" }
 ]);
 
 $c.data.getMatchedJSON(dlt_memberList, [
-	{ columnId : "POSITION_CD", operator : "==", value : "03" },
-	{ columnId : "DUTY_CD", operator : "==", value : "02" }
+    { columnId : "POSITION_CD", operator : "==", value : "03" },
+    { columnId : "DUTY_CD", operator : "==", value : "02" }
 ]);
 
 $c.data.getMatchedJSON(dlt_memberList, [
-	{ columnId : "POSITION_CD", operator : "==", value : "03"},
-	{ columnId : "DUTY_CD", operator : "lIKE", value : "0", logical : "||" }
+    { columnId : "POSITION_CD", operator : "==", value : "03"},
+    { columnId : "DUTY_CD", operator : "lIKE", value : "0", logical : "||" }
 ]);
- */ 
-scwin.getMatchedJSON = function(dataListObj, condArr) {
-	if (typeof dataListObj === "string") {
-		dataListObj = $p.getComponentById(dataListObj);
-	}
-	
-	const returnData = [];
-	const allData = dataListObj.getAllJSON();
+ */
+scwin.getMatchedJSON = function (dataListObj, condArr) {
+    if (typeof dataListObj === "string") {
+        dataListObj = $p.getComponentById(dataListObj);
+    }
 
-	if ($c.util.isArray(condArr) === false) {
-		condArr = [ condArr ];
-	}
-	
-	for (let idx = 0; idx < allData.length; idx++) { 
-		let result = true;
-		
-		for (let conIdx = 0; conIdx < condArr.length; conIdx++) {
-			const colValue = allData[idx][condArr[conIdx].columnId.trim()];
-			const value = condArr[conIdx].value;
-			const operator = condArr[conIdx].operator.trim();
-			const logical = (condArr[conIdx].logical || "&&").trim();
+    const returnData = [];
+    const allData = dataListObj.getAllJSON();
 
-			if (operator === "==") {
-				if (colValue == value) {
-					if (logical === "||") {
-						result = true;
-						break;
-					}
-				} else {
-					if (logical === "&&"){
-						result = false;
-					}
-				}
-			} else if (operator === "!=") {
-				if (colValue != value) {
-					if (logical === "||") {
-						result = true;
-						break;
-					}
-				} else {
-					if (logical === "&&") {
-						result = false;
-					}
-				}
-			} else if (operator === ">") {
-				if (colValue > value) {
-					if (logical === "||") {
-						result = true;
-						break;
-					}
-				} else {
-					if (logical === "&&") {
-						result = false;
-					}
-				}
-			} else if (operator === "<") {
-				if (colValue < value) {
-					if (logical === "||") {
-						result = true;
-						break;
-					}
-				} else {
-					if (logical === "&&") {
-						result = false;
-					}
-				}
-			} else if (operator === ">=") {
-				if (colValue >= value) {
-					if (logical === "||") {
-						result = true;
-						break;
-					}
-				} else {
-					if (logical === "&&") {
-						result = false;
-					}
-				}
-			} else if (operator === "<=") {
-				if (colValue <= value) {
-					if (logical === "||") {
-						result = true;
-						break;
-					}
-				} else {
-					if (logical === "&&") {
-						result = false;
-					}
-				}
-			} else if (operator === "LIKE") {
-				if (colValue.indexOf(value) > -1) {
-					if (logical === "||") {
-						result = true;
-						break;
-					}
-				} else {
-					if (logical === "&&") {
-						result = false;
-					}
-				}
-			} else {
-				result = false;
-			}
-		}
-		
-		if (result === true) {
-			returnData.push(allData[idx]);
-		}
-	}
-	
-	return returnData;
+    if ($c.util.isArray(condArr) === false) {
+        condArr = [condArr];
+    }
+
+    for (let idx = 0; idx < allData.length; idx++) {
+        let result = true;
+
+        for (let conIdx = 0; conIdx < condArr.length; conIdx++) {
+            const colValue = allData[idx][condArr[conIdx].columnId.trim()];
+            const value = condArr[conIdx].value;
+            const operator = condArr[conIdx].operator.trim();
+            const logical = (condArr[conIdx].logical || "&&").trim();
+
+            if (operator === "==") {
+                if (colValue == value) {
+                    if (logical === "||") {
+                        result = true;
+                        break;
+                    }
+                } else {
+                    if (logical === "&&") {
+                        result = false;
+                    }
+                }
+            } else if (operator === "!=") {
+                if (colValue != value) {
+                    if (logical === "||") {
+                        result = true;
+                        break;
+                    }
+                } else {
+                    if (logical === "&&") {
+                        result = false;
+                    }
+                }
+            } else if (operator === ">") {
+                if (colValue > value) {
+                    if (logical === "||") {
+                        result = true;
+                        break;
+                    }
+                } else {
+                    if (logical === "&&") {
+                        result = false;
+                    }
+                }
+            } else if (operator === "<") {
+                if (colValue < value) {
+                    if (logical === "||") {
+                        result = true;
+                        break;
+                    }
+                } else {
+                    if (logical === "&&") {
+                        result = false;
+                    }
+                }
+            } else if (operator === ">=") {
+                if (colValue >= value) {
+                    if (logical === "||") {
+                        result = true;
+                        break;
+                    }
+                } else {
+                    if (logical === "&&") {
+                        result = false;
+                    }
+                }
+            } else if (operator === "<=") {
+                if (colValue <= value) {
+                    if (logical === "||") {
+                        result = true;
+                        break;
+                    }
+                } else {
+                    if (logical === "&&") {
+                        result = false;
+                    }
+                }
+            } else if (operator === "LIKE") {
+                if (colValue.indexOf(value) > -1) {
+                    if (logical === "||") {
+                        result = true;
+                        break;
+                    }
+                } else {
+                    if (logical === "&&") {
+                        result = false;
+                    }
+                }
+            } else {
+                result = false;
+            }
+        }
+
+        if (result === true) {
+            returnData.push(allData[idx]);
+        }
+    }
+
+    return returnData;
 };
 
 /**
@@ -2316,9 +2322,9 @@ scwin.getMatchedJSON = function(dataListObj, condArr) {
  * @hidden N
  * @exception 
  * @example $c.data.setUserData(btn_search, "userId", "M000001");
- */ 
-scwin.setUserData = function(comObj, key, value) {
-	comObj.setUserData("__" + key, value);
+ */
+scwin.setUserData = function (comObj, key, value) {
+    comObj.setUserData("__" + key, value);
 };
 
 /**
@@ -2331,9 +2337,9 @@ scwin.setUserData = function(comObj, key, value) {
  * @hidden N
  * @exception 
  * @example const userId = $c.data.getUserData(btn_search, "userId");
- */ 
-scwin.getUserData = function(comObj, key) {
-	return comObj.getUserData("__" + key);
+ */
+scwin.getUserData = function (comObj, key) {
+    return comObj.getUserData("__" + key);
 };
 
 /**
@@ -2343,24 +2349,24 @@ scwin.getUserData = function(comObj, key) {
  * @hidden N
  * @exception 
  * @example $c.data.createHolidayDataList($p);
- */ 
-scwin.createHolidayDataList = function() {
-	const dcOption = {
-		baseNode : "list",
-		repeatNode : "map",
-		saveRemovedData : "true"
-	};
-	$c.data.createDataList("dlt_holiday", ["REST_DATE", "REST_NAME", "REST_CODE", "NOTE", "REST_SEQ"], ["text", "text", "text", "text", "text"] , dcOption);
-	
-	// config.js 파일의 "inputCalendar/holidayRef/@value" 속성에 공휴일 데이터가 저장된 $p.top().dlt_holiday 정보를 세팅한다.
-	// ※ 주의사항 
-	// WebSquare.BootLoader.configurationJSON[0].WebSquare 정보에 직접 접근하는 방식은 비공개입니다.
-	// WebSquare.BootLoader.configurationJSON[0].WebSquare 객체는 엔진 업데이트에 따라서 변경될 수 있으니, 공통 코드에서만 제한적으로 사용하시기 바랍니다.
-	const webSquareConfig = WebSquare.BootLoader.configurationJSON[0].WebSquare;
-	webSquareConfig.inputCalendar.holidayRef = {};
-	webSquareConfig.inputCalendar.holidayRef["@value"] = "data:" + $p.top().$p.getFrameId() + "_dlt_holiday.REST_DATE";
-	webSquareConfig.calendar.holidayRef = {};
-	webSquareConfig.calendar.holidayRef["@value"] = "data:" + $p.top().$p.getFrameId() + "_dlt_holiday.REST_DATE";		
+ */
+scwin.createHolidayDataList = function () {
+    const dcOption = {
+        baseNode: "list",
+        repeatNode: "map",
+        saveRemovedData: "true"
+    };
+    $c.data.createDataList("dlt_holiday", ["REST_DATE", "REST_NAME", "REST_CODE", "NOTE", "REST_SEQ"], ["text", "text", "text", "text", "text"], dcOption);
+
+    // config.js 파일의 "inputCalendar/holidayRef/@value" 속성에 공휴일 데이터가 저장된 $p.top().dlt_holiday 정보를 세팅한다.
+    // ※ 주의사항 
+    // WebSquare.BootLoader.configurationJSON[0].WebSquare 정보에 직접 접근하는 방식은 비공개입니다.
+    // WebSquare.BootLoader.configurationJSON[0].WebSquare 객체는 엔진 업데이트에 따라서 변경될 수 있으니, 공통 코드에서만 제한적으로 사용하시기 바랍니다.
+    const webSquareConfig = WebSquare.BootLoader.configurationJSON[0].WebSquare;
+    webSquareConfig.inputCalendar.holidayRef = {};
+    webSquareConfig.inputCalendar.holidayRef["@value"] = "data:" + $p.top().$p.getFrameId() + "_dlt_holiday.REST_DATE";
+    webSquareConfig.calendar.holidayRef = {};
+    webSquareConfig.calendar.holidayRef["@value"] = "data:" + $p.top().$p.getFrameId() + "_dlt_holiday.REST_DATE";
 };
 
 /**
@@ -2370,22 +2376,22 @@ scwin.createHolidayDataList = function() {
  * @hidden N
  * @exception 
  * @example $c.data.loadHoliday($p);
- */ 
-scwin.loadHoliday = function() {
-	const getHolidayOption = {
-		id : "_sbm_getHoliday",
-		action : "/holiday/selectHoliday",
-		target : "data:json,dlt_holiday",
-		method : "post",
-		submitDoneHandler : function(e) {
-			if (typeof $p.top().dlt_holiday === "object") {
-				$p.top().dlt_holiday.setJSON(e.responseJSON.dlt_holiday);
-			}
-		},
-		isProcessMsg : false
-	};
+ */
+scwin.loadHoliday = function () {
+    const getHolidayOption = {
+        id: "_sbm_getHoliday",
+        action: "/holiday/selectHoliday",
+        target: "data:json,dlt_holiday",
+        method: "post",
+        submitDoneHandler: function (e) {
+            if (typeof $p.top().dlt_holiday === "object") {
+                $p.top().dlt_holiday.setJSON(e.responseJSON.dlt_holiday);
+            }
+        },
+        isProcessMsg: false
+    };
 
-	$c.sbm.executeDynamic(getHolidayOption, {});
+    $c.sbm.executeDynamic(getHolidayOption, {});
 };
 ]]></script>
 	</head>

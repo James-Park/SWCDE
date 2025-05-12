@@ -128,6 +128,7 @@ var WebSquareLang = {
     IC_invalidCalendarSelect: "날짜 형식이 잘못 되었습니다.",
     GRID_noResultMsg: "조회결과가 없습니다.",
     GRID_useFilterEmptyMsg: " 빈 값",
+    GRID_useFilterNullMsg:"Null",
     SelectBox_all: "-전체-",
     SelectBox_choose: "-선택-",
     //CheckCombobox
@@ -209,10 +210,12 @@ var WebSquareLang = {
     Pagelist_previous: "이전",
     Pagelist_next_page: "다음 페이지",
     Pagelist_next: "다음",
-    pagelist_nextList_page: "다음 목록 페이지",
-    pagelist_previousList_page: "이전 목록 페이지",
+    Pagelist_nextList_page: "다음 %1 페이지 목록",
+    Pagelist_previousList_page: "이전 %1 페이지 목록",
     Pagelist_last_page: "마지막 페이지",
     Pagelist_selected: "%1 선택",
+    Pagelist_previous_ellipsisText: "이전 목록 생략",
+    Pagelist_next_ellipsisText: "다음 목록 생략",
     // slider
     Slider_warning1: "%1 에서 %2 사이의 값을 입력해야 합니다.",
     Slider_warning2: "%1 에서 %2 까지의 값들 중 %3 씩 증가한 값을 입력해야 합니다.",
@@ -292,6 +295,9 @@ var WebSquareLang = {
     Chart_main_axis: "주축",
     Chart_auxiliary_axis: "보조축",
     Chart_warning_msg1: "데이터가 올바르지 않습니다",
+    Chart_warning_load_default_version: "기본 버전인 %1로 로딩됩니다",
+    Chart_warning_incorrect_chart_version: "차트 버전이 올바르지 않습니다",
+    Chart_warning_no_resource: "차트 버전에 해당하는 리소스가 없습니다",
     // tabControl
     TabControl_maxNum_warning: "tab개수는 최대 %1개까지만 허용됩니다.",
     TabControl_close: "닫기",
@@ -451,6 +457,12 @@ var WebSquareLang = {
     Upload_msg17: "지정 sheet가 존재하지 않습니다.",
     Upload_msg18: "쓰기 전용 파일이거나 읽을수 없는 파입니다.",
     Upload_warning1: "보안상의 문제로 사용할 수 없는 기능입니다.",
+    //datalist
+    DataList_msg1: "처리 도중 예기치 못한 오류가 발생하였습니다.",
+    DataList_msg2: "사용자 정의 프로바이더(Provider) 클래스를 찾을 수 없습니다.",
+    DataList_msg3: "사용자 정의 프로바이더(Provider) 연계 데이터 생성 도중 오류가 발생하였습니다.",
+    DataList_msg4: "status가 false로 설정되어 처리가 종료되었습니다.",
+    DataList_msg5: "수신 가능한 최대 행의 개수를 초과하여 처리가 중단되었습니다.",
     //itemTable
     itemTable_confirm: "선택적용",
     itemTable_cancel: "선택해제",
@@ -497,6 +509,11 @@ var WebSquareLang = {
     //editor
     Editor_currentChar: "글자",
     Editor_maxChar_warning: "%1자를 초과할 수 없습니다.",
+    Editor_warning_load_default_version: "기본 버전인 %1로 로딩됩니다",
+    Editor_warning_incorrect_editor_version: "에디터 버전이 올바르지 않습니다",
+    Editor_warning_no_resource: "에디터 버전에 해당하는 리소스가 없습니다",
+    Editor_ariaLabel: "리치 텍스트 편집기, 도움이 필요하면 ALT 0 을 누르세요",
+    //scheduleCalendar
     scheduleCalendar_schedule: "일정",
     //performance
     Performance_step1 : "브라우저 URL 호출을 시작하는 순간부터 BootLoader 로딩이 완료될 때까지 걸리는 시간입니다. BootLoader는 웹스퀘어 엔진 초기 시작에 필수적인 요소입니다",
@@ -521,5 +538,7 @@ var WebSquareLang = {
     Performance_wframe_step1: "wframe 생성부터 웹스퀘어 페이지 파일 로딩과 DOM 렌더링(toHTML) 완료까지 걸리는 시간입니다.",
     Performance_wframe_step2: "wframe의 initScript, onpageload, postScript 이벤트 실행 시간입니다. 이는 wframe 처리가 완료되었음을 나타냅니다. 총 경과 시간은 step1과 step2의 합입니다.",
     //accessibility
-    Accssibility_btn_aria_label_windowContainer: "창 닫기"
+    Accssibility_btn_aria_label_windowContainer: "창 닫기",
+    //dragghost
+    Drag_no_data: "데이터 없음"
 };

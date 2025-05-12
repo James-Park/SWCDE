@@ -1664,8 +1664,20 @@ if (typeof jQuery === 'undefined') {
     return title
   }
 
+  var safeRandom = function() {
+    try {
+        if (window.crypto && typeof window.crypto.getRandomValues === "function") {
+            return window.crypto.getRandomValues(new Uint32Array(1))[0];
+        } else {
+            return new Date().getTime() % 10000000000;
+        }
+    } catch (e) {
+        window.console && window.console.error(e);
+    }
+  };
+  
   Tooltip.prototype.getUID = function (prefix) {
-    do prefix += ~~(Math.random() * 1000000)
+    do prefix += ~~(safeRandom())
     while (document.getElementById(prefix))
     return prefix
   }

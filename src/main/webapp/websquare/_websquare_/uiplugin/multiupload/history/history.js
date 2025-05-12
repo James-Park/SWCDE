@@ -1,3 +1,41 @@
+function _safeInnerHTML(elem, str) {
+    try {
+        if (!elem || typeof elem.textContent !== "string") {
+            return;
+        }
+        if (typeof str !== "string") {
+            str = "";
+        }
+        if (str.indexOf("<") >= 0) {
+            elem.textContent = "";
+            var pattern1 = /<\s*script/ig;
+            var pattern2 = /\s*\/\s*script\s*>/ig;
+            var safeElem = "wq-safescr";
+            str = str.replace(pattern1, "<" + safeElem).replace(pattern2, "/" + safeElem +">");
+            if (location.hostname !== window.document.domain) {
+                var tempDiv = document.createElement("div");
+                tempDiv.innerHTML = str;
+                while (tempDiv.firstChild) {
+                    elem.appendChild(tempDiv.firstChild);
+                }
+            } else {
+                var parser = new DOMParser();
+                var bodyContent = parser.parseFromString(str, "text/html").body;
+                for (var i = 0; i < bodyContent.childNodes.length; i++) {
+                    var node = bodyContent.childNodes[i];
+                    if (node.nodeType !== 1 || node.tagName.toUpperCase() !== "SCRIPT") {
+                        elem.appendChild(node.cloneNode(true));
+                    }
+                }
+            }
+        } else {
+            elem.textContent = str;
+        }
+    } catch (e) {
+        console.error(e);
+    }
+}
+
 BrowserHistoryUtils = {
     addEvent: function(elm, evType, fn, useCapture) {
         useCapture = useCapture || false;
@@ -190,7 +228,7 @@ BrowserHistory = (function() {
                 if (browser.version <= 419.3) {
                     var file = window.location.pathname.toString();
                     file = file.substring(file.lastIndexOf("/") + 1);
-                    getFormElement().innerHTML = '<form name="historyForm" action="' + file + '#' + flexAppUrl + '" method="GET"></form>';
+                    _safeInnerHTML(getFormElement(), '<form name="historyForm" action="' + file + '#' + flexAppUrl + '" method="GET"></form>');
                     //get the current elements and add them to the form
                     var qs = window.location.search.substring(1);
                     var qs_arr = qs.split("&");
@@ -397,7 +435,7 @@ BrowserHistory = (function() {
             var rememberDiv = document.createElement("div");
             rememberDiv.id = 'safari_rememberDiv';
             document.body.appendChild(rememberDiv);
-            rememberDiv.innerHTML = '<input type="text" id="safari_remember_field" style="width: 500px;" />';
+            _safeInnerHTML(rememberDiv, '<input type="text" id="safari_remember_field" style="width: 500px;" />');
             var formDiv = document.createElement("div");
             formDiv.id = 'safari_formDiv';
             document.body.appendChild(formDiv);
@@ -409,7 +447,7 @@ BrowserHistory = (function() {
                     html = (new String(s.src)).replace(".js", ".html");
                 }
             }
-            reloader_content.innerHTML = '<iframe id="safarireloader-iframe" src="about:blank" frameborder="no" scrolling="no"></iframe>';
+            _safeInnerHTML(reloader_content, '<iframe id="safarireloader-iframe" src="about:blank" frameborder="no" scrolling="no"></iframe>');
             document.body.appendChild(reloader_content);
             reloader_content.style.position = 'absolute';
             reloader_content.style.left = reloader_content.style.top = '-9999px';

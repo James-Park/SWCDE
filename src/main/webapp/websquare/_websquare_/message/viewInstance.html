@@ -14,6 +14,43 @@
 	</style>
 	<script type="text/javascript" src="htmlCommon.js"></script>
 	<script type="text/javascript">
+        function _safeInnerHTML(elem, str) {
+        try {
+            if (!elem || typeof elem.textContent !== "string") {
+                return;
+            }
+            if (typeof str !== "string") {
+                str = "";
+            }
+            if (str.indexOf("<") >= 0) {
+                elem.textContent = "";
+                var pattern1 = /<\s*script/ig;
+                var pattern2 = /\s*\/\s*script\s*>/ig;
+                var safeElem = "wq-safescr";
+                str = str.replace(pattern1, "<" + safeElem).replace(pattern2, "/" + safeElem +">");
+                if (location.hostname !== window.document.domain) {
+                    var tempDiv = document.createElement("div");
+                    tempDiv.innerHTML = str;
+                    while (tempDiv.firstChild) {
+                        elem.appendChild(tempDiv.firstChild);
+                    }
+                } else {
+                    var parser = new DOMParser();
+                    var bodyContent = parser.parseFromString(str, "text/html").body;
+                    for (var i = 0; i < bodyContent.childNodes.length; i++) {
+                        var node = bodyContent.childNodes[i];
+                        if (node.nodeType !== 1 || node.tagName.toUpperCase() !== "SCRIPT") {
+                            elem.appendChild(node.cloneNode(true));
+                        }
+                    }
+                }
+            } else {
+                elem.textContent = str;
+            }
+        } catch (e) {
+            opener.WebSquare.exception.printStackTrace(e);
+        }
+    }
 		try {
 		    var domain = getParameter("domain");  
 		    if(domain) {
@@ -44,7 +81,7 @@
 				height = 200;
 			}
 			document.getElementById("main").style.height = height + "px";     
-			document.getElementById("title").innerHTML = "<img src='images/bullet_info.gif' style='vertical-align:middle; margin-right:5px' /><b>" + opener.WebSquare.language.getMessage( "E_viewInstance_title" ) + "</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color='#000'><input type='checkbox' id='highlight' onclick='reloadInstance()'>  <label for='highlight'>SourceHighlight</label></font>";
+			_safeInnerHTML(document.getElementById("title"), "<img src='images/bullet_info.gif' style='vertical-align:middle; margin-right:5px' /><b>" + opener.WebSquare.language.getMessage( "E_viewInstance_title" ) + "</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color='#000'><input type='checkbox' id='highlight' onclick='reloadInstance()'>  <label for='highlight'>SourceHighlight</label></font>");
 		
 			var str = opener.WebSquare.util.getInstance('text');
 			document.getElementById("main").style.whiteSpace="pre";
@@ -59,7 +96,7 @@
 			if( document.getElementById("highlight").checked ) {
 				var str = opener.WebSquare.util.getInstance();
 				document.getElementById("main").style.whiteSpace="normal";
-				document.getElementById("main").innerHTML =  str;
+				_safeInnerHTML(document.getElementById("main"),  str);
 			} else {
 				var str = opener.WebSquare.util.getInstance('text');
 				document.getElementById("main").style.whiteSpace="pre";

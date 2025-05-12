@@ -72,6 +72,45 @@ if(ref == null || ref.equals("") || param == null || param.equals("")) {
 
     window.onload = doInit;
     window.onbeforeunload = doFinish;
+    
+    function _safeInnerHTML(elem, str) {
+        try {
+            if (!elem || typeof elem.textContent !== "string") {
+                return;
+            }
+            if (typeof str !== "string") {
+                str = "";
+            }
+            if (str.indexOf("<") >= 0) {
+                elem.textContent = "";
+                var pattern1 = /<\s*script/ig;
+                var pattern2 = /\s*\/\s*script\s*>/ig;
+                var safeElem = "wq-safescr";
+                str = str.replace(pattern1, "<" + safeElem).replace(pattern2, "/" + safeElem +">");
+                if (location.hostname !== window.document.domain) {
+                    var tempDiv = document.createElement("div");
+                    tempDiv.innerHTML = str;
+                    while (tempDiv.firstChild) {
+                        elem.appendChild(tempDiv.firstChild);
+                    }
+                } else {
+                    var parser = new DOMParser();
+                    var bodyContent = parser.parseFromString(str, "text/html").body;
+                    for (var i = 0; i < bodyContent.childNodes.length; i++) {
+                        var node = bodyContent.childNodes[i];
+                        if (node.nodeType !== 1 || node.tagName.toUpperCase() !== "SCRIPT") {
+                            elem.appendChild(node.cloneNode(true));
+                        }
+                    }
+                }
+            } else {
+                elem.textContent = str;
+            }
+        } catch (e) {
+            opener.WebSquare.exception.printStackTrace(e);
+        }
+    }
+    
     function doInit() {
         if(opener.WebSquare.util.isOpera()) {
             check_fun();
@@ -125,24 +164,24 @@ if(ref == null || ref.equals("") || param == null || param.equals("")) {
         maxFileSize = parseInt( maxFileSize, 10 );
         Grid_warning9 = opener.WebSquare.language.getMessage( "Grid_warning9", maxFileSize ) || "Data size exceeding the limit.\n limit : %1 byte";
 
-        document.getElementById( "setting" ).innerHTML = Upload_advanced;
+        document.getElementById( "setting" ).textContent = Upload_advanced;
         document.getElementById( "sub" ).setAttribute( "summary", Upload_ignore_spaces + "," + Upload_hidden_values + "," + Upload_fill_hidden + "," + Upload_footer );
-        document.getElementById( "advaned" ).innerHTML = Upload_advanced;
-        document.getElementById( "space_option" ).innerHTML = Upload_ignore_spaces;
-        document.getElementById( "file_header" ).innerHTML = Upload_file_header;
-        document.getElementById( "choose_file" ).innerHTML = Upload_file_choose;
-        document.getElementById( "choose_span" ).innerHTML = Upload_file_span;
-        document.getElementById( "header_option").innerHTML =  Upload_header;
+        document.getElementById( "advaned" ).textContent = Upload_advanced;
+        document.getElementById( "space_option" ).textContent = Upload_ignore_spaces;
+        document.getElementById( "file_header" ).textContent = Upload_file_header;
+        document.getElementById( "choose_file" ).textContent = Upload_file_choose;
+        document.getElementById( "choose_span" ).textContent = Upload_file_span;
+        document.getElementById( "header_option").textContent =  Upload_header;
 
         var sel1 = document.getElementById( "spaceSelect" );
         sel1.options[0].text = Upload_ignore_spaces;
         sel1.options[1].text = Upload_include_spaces;
-        document.getElementById( "start_option" ).innerHTML = Upload_starting_row;
-        document.getElementById( "hidden_option").innerHTML = Upload_hidden_values;
+        document.getElementById( "start_option" ).textContent = Upload_starting_row;
+        document.getElementById( "hidden_option").textContent = Upload_hidden_values;
         var sel2 = document.getElementById( "hiddenSelect" );
         sel2.options[0].text = Upload_include;
         sel2.options[1].text = Upload_not_include;
-        document.getElementById( "hidden_fill").innerHTML = Upload_hidden_values;
+        document.getElementById( "hidden_fill").textContent = Upload_hidden_values;
         var sel3 = document.getElementById( "fillHidden" );
         sel3.options[0].text = Upload_fill;
         sel3.options[1].text = Upload_ignore;
@@ -328,7 +367,7 @@ if(ref == null || ref.equals("") || param == null || param.equals("")) {
                 layerUP.style.visibility = "hidden";
                 document.body.appendChild(layerUP);
                 src = opener.WebSquare.net.getSSLBlankPage();
-                layerUP.innerHTML = "<iframe frameborder='0px' name='" + thisForm.target + "' scrolling='no' style='width:100px; height:100px' " + src + "></iframe>";
+                _safeInnerHTML(layerUP, "<iframe frameborder='0px' name='" + thisForm.target + "' scrolling='no' style='width:100px; height:100px' " + src + "></iframe>");
             }
             
             showProcessMessage( processMsg );
@@ -564,7 +603,7 @@ if(ref == null || ref.equals("") || param == null || param.equals("")) {
                 node2.style.width = processMsgWidth + "px";
 
                 document.body.appendChild( node2 );
-                node2.innerHTML = "<iframe frameborder='0' scrolling='no'ß name='__processbarIFrame' style='position:absolute; width:"+processMsgWidth+"px; height:"+ processMsgHeight +"px; top:0px; left:0px' src='" + processMsgURL + "'></iframe>";
+                _safeInnerHTML(node2, "<iframe frameborder='0' scrolling='no' name='__processbarIFrame' style='position:absolute; width:"+processMsgWidth+"px; height:"+ processMsgHeight +"px; top:0px; left:0px' src='" + processMsgURL + "'></iframe>");
                 
             } else {
                 var nTop = document.documentElement.scrollTop + document.documentElement.clientHeight/2 - parseInt(processMsgHeight)/2;
@@ -588,7 +627,7 @@ if(ref == null || ref.equals("") || param == null || param.equals("")) {
                 processbar2.style.zIndex = -1;
                 processbar2.style.display = "none";
                 processbar2.tabIndex = "-1";
-                processbar2.innerHTML = '';
+                processbar2.textContent = '';
             }
             if( typeof processbar2i != "undefined" && processbar2i != null ) {
                 processbar2i.style.zIndex = -1;

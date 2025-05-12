@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:w2="http://www.inswave.com/websquare" xmlns:xf="http://www.w3.org/2002/xforms">
+    <head>
+        <w2:type>COMPONENT</w2:type>
+        <w2:buildDate/>
+        <w2:MSA/>
+        <xf:model>
+            <w2:dataCollection baseNode="map"/>
+            <w2:workflowCollection/>
+        </xf:model>
+        <w2:layoutInfo/>
+        <w2:publicInfo method=""/>
+        <script lazy="false" type="text/javascript"><![CDATA[
+scwin.onpageload = function() {
+	
+};
+
+scwin.btn_refresh_onclick = function (e) {
+    pfm_pageFrame1.setSrc("gridView.xml");
+};
+]]></script>
+    </head>
+    <body ev:onpageload="scwin.onpageload">
+    	<xf:group id="" style="padding:20px;">
+    		<xf:group meta_snippetCategory="00_화면시작" meta_snippetName="0_01 페이지시작" meta_snippetKeyComponent="true" style="" id=""
+    			class="sub_contents">
+    			<xf:group meta_snippetCategory="03_조회영역" meta_snippetName="3_01 조회조건1행" meta_snippetKeyComponent="true" style="" id=""
+    				class="schbox">
+    			</xf:group>
+    		</xf:group>
+    		<xf:group style="width:100.0%;height:37px;" id="" class="">
+    			<w2:textbox style="width:300px;height:33px;font-size:30px;font-weight:bold;float:left;" id="" label="메인 페이지"></w2:textbox>
+    			<xf:trigger style="width: 80px;height: 27px;float:right;margin-top:5px;margin-right:5px;" id="btn_refresh" type="button" ev:onclick="scwin.btn_refresh_onclick">
+    				<xf:label><![CDATA[화면 재로딩]]></xf:label>
+    			</xf:trigger>
+    		</xf:group>
+    		<w2:pageFrame src="gridView.xml" style="height: 500px;" id="pfm_pageFrame1"></w2:pageFrame>
+    	</xf:group>
+    </body>
+</html>

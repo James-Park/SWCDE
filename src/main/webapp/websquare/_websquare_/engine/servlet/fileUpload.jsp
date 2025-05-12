@@ -20,6 +20,45 @@ if(ref == null || ref.equals("") || param == null || param.equals("")) {
 	var vCallbackMethod	= "";
 	var domain = "";
 	window.onload = doInit;
+	
+    function _safeInnerHTML(elem, str) {
+        try {
+            if (!elem || typeof elem.textContent !== "string") {
+                return;
+            }
+            if (typeof str !== "string") {
+                str = "";
+            }
+            if (str.indexOf("<") >= 0) {
+                elem.textContent = "";
+                var pattern1 = /<\s*script/ig;
+                var pattern2 = /\s*\/\s*script\s*>/ig;
+                var safeElem = "wq-safescr";
+                str = str.replace(pattern1, "<" + safeElem).replace(pattern2, "/" + safeElem +">");
+                if (location.hostname !== window.document.domain) {
+                    var tempDiv = document.createElement("div");
+                    tempDiv.innerHTML = str;
+                    while (tempDiv.firstChild) {
+                        elem.appendChild(tempDiv.firstChild);
+                    }
+                } else {
+                    var parser = new DOMParser();
+                    var bodyContent = parser.parseFromString(str, "text/html").body;
+                    for (var i = 0; i < bodyContent.childNodes.length; i++) {
+                        var node = bodyContent.childNodes[i];
+                        if (node.nodeType !== 1 || node.tagName.toUpperCase() !== "SCRIPT") {
+                            elem.appendChild(node.cloneNode(true));
+                        }
+                    }
+                }
+            } else {
+                elem.textContent = str;
+            }
+        } catch (e) {
+            opener.WebSquare.exception.printStackTrace(e);
+        }
+    }
+	
 	function doInit() {
 	    try {
 	        domain = getParameter("domain");  
@@ -105,7 +144,7 @@ if(ref == null || ref.equals("") || param == null || param.equals("")) {
 				layerUP.style.visibility = "hidden";
 				document.body.appendChild(layerUP);
 				src = opener.WebSquare.net.getSSLBlankPage();
-				layerUP.innerHTML = "<iframe frameborder='0px' name='" + thisForm.target + "' scrolling='no' style='width:100px; height:100px' " + src + "></iframe>";
+				_safeInnerHTML(layerUP, "<iframe frameborder='0px' name='" + thisForm.target + "' scrolling='no' style='width:100px; height:100px' " + src + "></iframe>");
 			}
 			thisForm.submit();
 		} catch(e) {

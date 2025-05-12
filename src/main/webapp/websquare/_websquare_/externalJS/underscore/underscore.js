@@ -1310,13 +1310,25 @@
     return accum;
   };
 
+  var safeRandom = function() {
+    try {
+        if (window.crypto && typeof window.crypto.getRandomValues === "function") {
+            return window.crypto.getRandomValues(new Uint32Array(1))[0];
+        } else {
+            return new Date().getTime() % 10000000000;
+        }
+    } catch (e) {
+        window.console && window.console.error(e);
+    }
+};
+
   // Return a random integer between min and max (inclusive).
   _.random = function(min, max) {
     if (max == null) {
       max = min;
       min = 0;
     }
-    return min + Math.floor(Math.random() * (max - min + 1));
+    return min + Math.floor(safeRandom() * (max - min + 1));
   };
 
   // A (possibly faster) way to get the current timestamp as an integer.

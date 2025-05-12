@@ -142,10 +142,10 @@
                     scwin.maxFileSize = parseInt( scwin.maxFileSize, 10 );
                     scwin.Grid_warning9 = WebSquare.language.getMessage( "Grid_warning9", scwin.maxFileSize ) || "Data size exceeding the limit.\n limit : %1 byte";
 
-                    setting.render.innerHTML = scwin.Upload_advanced;
+                    WebSquare.core._safeInnerHTML(setting.render, scwin.Upload_advanced);
                     sub.render.setAttribute( "csvPop_summary", scwin.Upload_ignore_spaces + "," + scwin.Upload_hidden_values + "," + scwin.Upload_fill_hidden + "," + scwin.Upload_footer );
-                    advanced.render.innerHTML = scwin.Upload_advanced;
-                    bul_title.render.innerHTML = scwin.Upload_file;
+                    WebSquare.core._safeInnerHTML(advanced.render, scwin.Upload_advanced);
+                    WebSquare.core._safeInnerHTML(bul_title.render, scwin.Upload_file);
                     choose_file.setValue(scwin.Upload_file_choose);
                     choose_span.setValue(scwin.Upload_file_span);
 
@@ -348,9 +348,9 @@
                 };
 
                 scwin.setImgURL = function() {
-                    scwin.headerURL = "url(" + "'" + WebSquare.baseURI + "/_websquare_/uiplugin/grid/upload/images/bg_header.gif" + "')" + "repeat-x left top";
-                    scwin.titleURL = "url(" + "'" + WebSquare.baseURI + "/_websquare_/uiplugin/grid/upload/images/bul_title.gif" + "')" + "no-repeat 11px 6px";
-                    scwin.dotURL = "url(" + "'" + WebSquare.baseURI + "/_websquare_/uiplugin/grid/upload/images/dot.gif" + "')" + "no-repeat left center";
+                    scwin.headerURL = "url(" + "'" + WebSquare.baseURI + "_websquare_/uiplugin/grid/upload/images/bg_header.gif" + "')" + "repeat-x left top";
+                    scwin.titleURL = "url(" + "'" + WebSquare.baseURI + "_websquare_/uiplugin/grid/upload/images/bul_title.gif" + "')" + "no-repeat 11px 6px";
+                    scwin.dotURL = "url(" + "'" + WebSquare.baseURI + "_websquare_/uiplugin/grid/upload/images/dot.gif" + "')" + "no-repeat left center";
 
                     bg_header.setStyle("background", scwin.headerURL);
                     bul_title.setStyle("background", scwin.titleURL);
@@ -561,7 +561,7 @@
                             scwin.node2.style.width = scwin.processMsgWidth + "px";
 
                             document.body.appendChild( scwin.node2 );
-                            scwin.node2.innerHTML = "<iframe frameborder='0' scrolling='no' name='__processbarIFrame' style='position:absolute; width:"+scwin.processMsgWidth+"px; height:"+ scwin.processMsgHeight +"px; top:0px; left:0px' src='" + scwin.processMsgURL + "'></iframe>";
+                            WebSquare.core._safeInnerHTML(scwin.node2, "<iframe frameborder='0' scrolling='no' name='__processbarIFrame' style='position:absolute; width:"+scwin.processMsgWidth+"px; height:"+ scwin.processMsgHeight +"px; top:0px; left:0px' src='" + scwin.processMsgURL + "'></iframe>");
 
                         } else {
                             scwin.nTop = document.documentElement.scrollTop + document.documentElement.clientHeight/2 - parseInt(scwin.processMsgHeight)/2;
@@ -585,7 +585,7 @@
                             scwin.processbar2.style.zIndex = -1;
                             scwin.processbar2.style.display = "none";
                             scwin.processbar2.tabIndex = "-1";
-                            scwin.processbar2.innerHTML = '';
+                            scwin.processbar2.textContent = '';
                         }
                         if( typeof scwin.processbar2i != "undefined" && scwin.processbar2i != null ) {
                             scwin.processbar2i.style.zIndex = -1;
@@ -720,7 +720,7 @@
                             scwin.layerUP.style.visibility = "hidden";
                             document.body.appendChild(scwin.layerUP);
                             scwin.src = WebSquare.net.getSSLBlankPage();
-                            scwin.layerUP.innerHTML = "<iframe frameborder='0px' name='" + scwin.thisForm.target + "' scrolling='no' style='width:100px; height:100px' " + scwin.src + "></iframe>";
+                            WebSquare.core._safeInnerHTML(scwin.layerUP, "<iframe frameborder='0px' name='" + scwin.thisForm.target + "' scrolling='no' style='width:100px; height:100px' " + scwin.src + "></iframe>");
                             scwin.parentElem = scwin.layerUP.parentElement;
                         }
                         

@@ -60,6 +60,8 @@ scwin.printExampleLog = function (argStrLog, argCmpTarget) {
 	scwin.scrollToBottom(argCmpTarget);
 };
 
+
+
 scwin.scrollToBottom = function (argCmp) {
 	var eleObj;
 	eleObj = argCmp.render;

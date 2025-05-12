@@ -8,7 +8,36 @@
     </wpack>
     <allValue value="all"/>
     <docType value="standard"/>
-    <debug remoteConsole="false" value="true"/>
+	<errorPage value="true">
+        <errorHandler value="errorPageHandler"/>
+		<E404>
+		<![CDATA[
+	        <?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:w2="http://www.inswave.com/websquare" xmlns:xf="http://www.w3.org/2002/xforms">
+    <head>
+        <w2:type>COMPONENT</w2:type>
+        <w2:buildDate/>
+        <w2:MSA/>
+        <xf:model>
+            <w2:dataCollection baseNode="map"/>
+            <w2:workflowCollection/>
+        </xf:model>
+        <w2:layoutInfo/>
+        <w2:publicInfo method=""/>
+    </head>
+    <body ev:onpageload="">
+    	<xf:group class="sub_contents" id="" style="">
+    		<w2:textbox class="txt_error" dataType="" id="" label="404 Error" style="font-size : 20px;font-weight: bold"></w2:textbox>
+    	</xf:group>
+    </body>
+</html>
+		]]>
+		</E404>
+	</errorPage>      
+    <debug errorConsole="true" errorHandler="errorHandler" remoteConsole="false" value="true"/>    
+    <!-- <debug remoteConsole="false" value="true"/> -->
     <debugKey value=""/>
     <language value="ko"/>
     <useItemLocale value="true"/>
